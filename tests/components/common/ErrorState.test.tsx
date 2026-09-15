@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ErrorState } from './ErrorState';
-import { renderWithProviders } from '@/test/test-utils';
+import { ErrorState } from '@/components/common/ErrorState';
+import { renderWithProviders } from '@tests/utils/test-utils';
 
 describe('ErrorState', () => {
   it('renders the error message and retry action', async () => {

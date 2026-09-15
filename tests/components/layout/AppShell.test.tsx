@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { screen } from '@testing-library/react';
-import { AppShell } from './AppShell';
-import { renderWithProviders } from '@/test/test-utils';
+import { AppShell } from '@/components/layout/AppShell';
+import { renderWithProviders } from '@tests/utils/test-utils';
 
 describe('AppShell', () => {
   it('renders the application landmarks and navigation', () => {

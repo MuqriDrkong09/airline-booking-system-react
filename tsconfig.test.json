@@ -19,14 +19,9 @@
     "isolatedModules": true,
     "types": ["jest", "@testing-library/jest-dom", "node"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@tests/*": ["./tests/*"]
     }
   },
-  "include": [
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
-    "src/test/**/*.ts",
-    "src/test/**/*.tsx",
-    "jest.setup.ts"
-  ]
+  "include": ["tests/**/*.ts", "tests/**/*.tsx", "jest.setup.ts"]
 }

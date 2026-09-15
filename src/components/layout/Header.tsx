@@ -14,6 +14,7 @@ import {
 import { Menu, Plane, X } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useUiStore } from '@/app/store/uiStore';
+import { ThemeModeToggle } from '@/components/common/ThemeModeToggle';
 import { PRIMARY_NAV_ITEMS } from '@/constants/nav';
 import { APP_ROUTES } from '@/constants/routes';
 
@@ -84,6 +85,8 @@ export function Header({ appName }: HeaderProps) {
         </Box>
 
         <Box sx={{ flexGrow: 1 }} />
+
+        <ThemeModeToggle />
 
         <Button component={NavLink} to={APP_ROUTES.profile} color="inherit" variant="outlined">
           Sign in

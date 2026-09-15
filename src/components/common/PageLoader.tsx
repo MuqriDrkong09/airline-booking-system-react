@@ -1,29 +1,13 @@
-import { Box, CircularProgress, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import { LoadingSpinner } from './LoadingSpinner';
 
-interface PageLoaderProps {
+export interface PageLoaderProps {
   fullPage?: boolean;
   label?: string;
 }
 
 export function PageLoader({ fullPage = false, label = 'Loading' }: PageLoaderProps) {
-  const content = (
-    <Box
-      role="status"
-      aria-live="polite"
-      aria-busy="true"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 2,
-        py: 6,
-      }}
-    >
-      <CircularProgress aria-hidden="true" />
-      <Typography variant="body1">{label}</Typography>
-    </Box>
-  );
+  const content = <LoadingSpinner label={label} size={40} centered={!fullPage} />;
 
   if (!fullPage) {
     return content;
@@ -38,7 +22,7 @@ export function PageLoader({ fullPage = false, label = 'Loading' }: PageLoaderPr
         px: 2,
       }}
     >
-      {content}
+      <LoadingSpinner label={label} size={40} />
     </Box>
   );
 }

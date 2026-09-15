@@ -1,13 +1,16 @@
-import { Box, Button, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { CircleAlert } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { AppButton } from './AppButton';
 
-interface ErrorStateProps {
+export interface ErrorStateProps {
   title?: string;
   message: string;
   onRetry?: () => void;
   retryLabel?: string;
   action?: ReactNode;
+  icon?: ReactNode;
 }
 
 export function ErrorState({
@@ -16,6 +19,7 @@ export function ErrorState({
   onRetry,
   retryLabel = 'Try again',
   action,
+  icon,
 }: ErrorStateProps) {
   return (
     <Box
@@ -30,7 +34,7 @@ export function ErrorState({
         px: 2,
       }}
     >
-      <CircleAlert aria-hidden="true" size={40} />
+      {icon ?? <CircleAlert aria-hidden="true" size={40} />}
       <Typography variant="h5" component="h1">
         {title}
       </Typography>
@@ -38,9 +42,9 @@ export function ErrorState({
         {message}
       </Typography>
       {onRetry ? (
-        <Button variant="contained" onClick={onRetry} sx={{ mt: 1 }}>
+        <AppButton variant="contained" onClick={onRetry} sx={{ mt: 1 }}>
           {retryLabel}
-        </Button>
+        </AppButton>
       ) : null}
       {action}
     </Box>

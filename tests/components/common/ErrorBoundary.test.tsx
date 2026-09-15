@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ErrorBoundary } from './ErrorBoundary';
-import { renderWithProviders } from '@/test/test-utils';
+import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+import { renderWithProviders } from '@tests/utils/test-utils';
 
 function ProblemChild(): never {
   throw new Error('Boom');

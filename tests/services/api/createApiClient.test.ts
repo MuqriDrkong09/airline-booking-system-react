@@ -1,4 +1,4 @@
-import { createApiClient } from './createApiClient';
+import { createApiClient } from '@/services/api/createApiClient';
 
 describe('createApiClient', () => {
   it('creates an axios instance with the provided base URL', () => {

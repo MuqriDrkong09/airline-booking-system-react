@@ -1,4 +1,4 @@
-import { createEnv } from './createEnv';
+import { createEnv } from '@/config/createEnv';
 
 describe('createEnv', () => {
   const baseSource = {

@@ -1,14 +1,16 @@
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { Inbox } from 'lucide-react';
 import type { ReactNode } from 'react';
 
-interface EmptyStateProps {
+export interface EmptyStateProps {
   title: string;
   message: string;
   action?: ReactNode;
+  icon?: ReactNode;
 }
 
-export function EmptyState({ title, message, action }: EmptyStateProps) {
+export function EmptyState({ title, message, action, icon }: EmptyStateProps) {
   return (
     <Box
       role="status"
@@ -22,7 +24,7 @@ export function EmptyState({ title, message, action }: EmptyStateProps) {
         px: 2,
       }}
     >
-      <Inbox aria-hidden="true" size={40} />
+      {icon ?? <Inbox aria-hidden="true" size={40} />}
       <Typography variant="h5" component="h1">
         {title}
       </Typography>

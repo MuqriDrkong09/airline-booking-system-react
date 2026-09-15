@@ -1,4 +1,4 @@
-import { Box, Container } from '@mui/material';
+import Box from '@mui/material/Box';
 import { Outlet } from 'react-router-dom';
 import { Footer } from './Footer';
 import { Header } from './Header';
@@ -19,9 +19,7 @@ export function AppShell({ appName }: AppShellProps) {
         tabIndex={-1}
         sx={{ flex: 1, outline: 'none', py: { xs: 3, md: 5 } }}
       >
-        <Container maxWidth="lg">
-          <Outlet />
-        </Container>
+        <Outlet />
       </Box>
       <Footer appName={appName} />
     </Box>

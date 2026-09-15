@@ -33,7 +33,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.test.{ts,tsx}', 'src/test/**/*.{ts,tsx}', 'jest.setup.ts'],
+    files: ['tests/**/*.{ts,tsx}', 'jest.setup.ts'],
     languageOptions: {
       globals: {
         ...globals.jest,

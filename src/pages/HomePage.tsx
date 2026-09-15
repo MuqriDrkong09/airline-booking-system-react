@@ -1,6 +1,9 @@
-import { Box, Button, Card, CardContent, Stack, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { CalendarCheck, Search, Ticket } from 'lucide-react';
 import { Link as RouterLink } from 'react-router-dom';
+import { AppButton, AppCard, PageContainer, SectionHeader } from '@/components/common';
 import { env } from '@/config/env';
 import { APP_ROUTES } from '@/constants/routes';
 
@@ -27,22 +30,20 @@ const highlights = [
 
 export function HomePage() {
   return (
-    <Stack spacing={4}>
+    <PageContainer>
       <Stack spacing={2} sx={{ maxWidth: 720 }}>
-        <Typography variant="h3" component="h1">
-          Book your next journey with confidence
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {env.appName} is a modern airline booking platform. Core booking, payment, and passenger
-          flows will be added next. This shell is ready for those features.
-        </Typography>
+        <SectionHeader
+          component="h1"
+          title="Book your next journey with confidence"
+          description={`${env.appName} is a modern airline booking platform. Core booking, payment, and passenger flows will be added next. This shell is ready for those features.`}
+        />
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
-          <Button component={RouterLink} to={APP_ROUTES.flights} variant="contained" size="large">
+          <AppButton component={RouterLink} to={APP_ROUTES.flights} variant="contained" size="large">
             Browse flights
-          </Button>
-          <Button component={RouterLink} to={APP_ROUTES.checkIn} variant="outlined" size="large">
+          </AppButton>
+          <AppButton component={RouterLink} to={APP_ROUTES.checkIn} variant="outlined" size="large">
             Go to check-in
-          </Button>
+          </AppButton>
         </Stack>
       </Stack>
 
@@ -54,22 +55,27 @@ export function HomePage() {
         }}
       >
         {highlights.map((item) => (
-          <Card key={item.title} variant="outlined" sx={{ height: '100%' }}>
-            <CardContent>
-              <item.icon aria-hidden="true" size={28} />
-              <Typography variant="h6" component="h2" sx={{ mt: 1.5, mb: 1 }}>
-                {item.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                {item.description}
-              </Typography>
-              <Button component={RouterLink} to={item.to} size="small">
+          <AppCard
+            key={item.title}
+            title={
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <item.icon aria-hidden="true" size={22} />
+                <Typography component="span">{item.title}</Typography>
+              </Box>
+            }
+            footer={
+              <AppButton component={RouterLink} to={item.to} size="small">
                 Open {item.title.toLowerCase()}
-              </Button>
-            </CardContent>
-          </Card>
+              </AppButton>
+            }
+            sx={{ height: '100%' }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              {item.description}
+            </Typography>
+          </AppCard>
         ))}
       </Box>
-    </Stack>
+    </PageContainer>
   );
 }
