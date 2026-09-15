@@ -4,12 +4,11 @@ import { Footer } from './Footer';
 import { PublicHeader } from './PublicHeader';
 import { SkipLink } from './SkipLink';
 
-interface AppShellProps {
+export interface PublicLayoutProps {
   appName: string;
 }
 
-/** @deprecated Prefer PublicLayout. Kept for compatibility with existing tests. */
-export function AppShell({ appName }: AppShellProps) {
+export function PublicLayout({ appName }: PublicLayoutProps) {
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <SkipLink />

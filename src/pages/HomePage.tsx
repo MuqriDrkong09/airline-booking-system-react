@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { CalendarCheck, Search, Ticket } from 'lucide-react';
+import { CalendarCheck, Gauge, Search, Ticket } from 'lucide-react';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppButton, AppCard, PageContainer, SectionHeader } from '@/components/common';
 import { env } from '@/config/env';
@@ -10,21 +10,27 @@ import { APP_ROUTES } from '@/constants/routes';
 const highlights = [
   {
     title: 'Search flights',
-    description: 'Compare routes and schedules when flight search is enabled.',
+    description: 'Compare routes and schedules in the customer workspace.',
     icon: Search,
-    to: APP_ROUTES.flights,
+    to: APP_ROUTES.customer.flights,
   },
   {
     title: 'Manage bookings',
     description: 'Review upcoming trips and booking details in one place.',
     icon: Ticket,
-    to: APP_ROUTES.bookings,
+    to: APP_ROUTES.customer.bookings,
   },
   {
     title: 'Online check-in',
     description: 'Complete check-in and access boarding information faster.',
     icon: CalendarCheck,
-    to: APP_ROUTES.checkIn,
+    to: APP_ROUTES.customer.checkIn,
+  },
+  {
+    title: 'Admin dashboard',
+    description: 'Manage flights, airports, bookings, and reporting tools.',
+    icon: Gauge,
+    to: APP_ROUTES.admin.dashboard,
   },
 ] as const;
 
@@ -35,14 +41,24 @@ export function HomePage() {
         <SectionHeader
           component="h1"
           title="Book your next journey with confidence"
-          description={`${env.appName} is a modern airline booking platform. Core booking, payment, and passenger flows will be added next. This shell is ready for those features.`}
+          description={`${env.appName} is a modern airline booking platform. Choose a customer or admin workspace to explore the application layouts.`}
         />
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
-          <AppButton component={RouterLink} to={APP_ROUTES.flights} variant="contained" size="large">
+          <AppButton
+            component={RouterLink}
+            to={APP_ROUTES.customer.flights}
+            variant="contained"
+            size="large"
+          >
             Browse flights
           </AppButton>
-          <AppButton component={RouterLink} to={APP_ROUTES.checkIn} variant="outlined" size="large">
-            Go to check-in
+          <AppButton
+            component={RouterLink}
+            to={APP_ROUTES.admin.dashboard}
+            variant="outlined"
+            size="large"
+          >
+            Open admin
           </AppButton>
         </Stack>
       </Stack>
@@ -50,7 +66,7 @@ export function HomePage() {
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: { xs: '1fr', md: 'repeat(3, minmax(0, 1fr))' },
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(2, minmax(0, 1fr))' },
           gap: 2,
         }}
       >

@@ -5,22 +5,29 @@ import { MemoryRouter } from 'react-router-dom';
 import { AppThemeProvider } from '@/app/providers/ThemeProvider';
 import { QueryProvider } from '@/app/providers/QueryProvider';
 
-interface ProvidersProps {
-  children: ReactNode;
+interface RenderWithProvidersOptions extends Omit<RenderOptions, 'wrapper'> {
+  initialEntries?: string[];
 }
 
-function Providers({ children }: ProvidersProps) {
-  return (
-    <QueryProvider>
-      <AppThemeProvider>
-        <MemoryRouter>{children}</MemoryRouter>
-      </AppThemeProvider>
-    </QueryProvider>
-  );
+function createProviders(initialEntries?: string[]) {
+  return function Providers({ children }: { children: ReactNode }) {
+    return (
+      <QueryProvider>
+        <AppThemeProvider>
+          <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
+        </AppThemeProvider>
+      </QueryProvider>
+    );
+  };
 }
 
-export function renderWithProviders(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
-  return render(ui, { wrapper: Providers, ...options });
+export function renderWithProviders(ui: ReactElement, options?: RenderWithProvidersOptions) {
+  const { initialEntries, ...renderOptions } = options ?? {};
+
+  return render(ui, {
+    wrapper: createProviders(initialEntries),
+    ...renderOptions,
+  });
 }
 
 export { screen } from '@testing-library/react';

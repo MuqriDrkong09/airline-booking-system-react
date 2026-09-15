@@ -1,9 +1,28 @@
 export const APP_ROUTES = {
-  home: '/',
-  flights: '/flights',
-  bookings: '/bookings',
-  checkIn: '/check-in',
-  profile: '/profile',
+  public: {
+    home: '/',
+    login: '/login',
+  },
+  customer: {
+    root: '/app',
+    home: '/app',
+    flights: '/app/flights',
+    bookings: '/app/bookings',
+    checkIn: '/app/check-in',
+    notifications: '/app/notifications',
+    profile: '/app/profile',
+  },
+  admin: {
+    root: '/admin',
+    dashboard: '/admin',
+    flights: '/admin/flights',
+    airports: '/admin/airports',
+    aircraft: '/admin/aircraft',
+    bookings: '/admin/bookings',
+    users: '/admin/users',
+    promoCodes: '/admin/promo-codes',
+    reports: '/admin/reports',
+  },
 } as const;
 
-export type AppRoute = (typeof APP_ROUTES)[keyof typeof APP_ROUTES];
+export const SIDEBAR_WIDTH = 260;

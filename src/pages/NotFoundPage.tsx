@@ -9,7 +9,12 @@ export function NotFoundPage() {
         title="Page not found"
         message="The page you are looking for does not exist or has been moved."
         action={
-          <AppButton component={RouterLink} to={APP_ROUTES.home} variant="contained" sx={{ mt: 1 }}>
+          <AppButton
+            component={RouterLink}
+            to={APP_ROUTES.public.home}
+            variant="contained"
+            sx={{ mt: 1 }}
+          >
             Back to home
           </AppButton>
         }

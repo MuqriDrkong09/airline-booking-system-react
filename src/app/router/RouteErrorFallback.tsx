@@ -23,7 +23,7 @@ export function RouteErrorFallback() {
       title="We could not load this page"
       message={getErrorMessage(error)}
       onRetry={() => {
-        void navigate(APP_ROUTES.home);
+        void navigate(APP_ROUTES.public.home);
       }}
       retryLabel="Back to home"
     />
