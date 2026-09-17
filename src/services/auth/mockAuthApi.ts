@@ -102,7 +102,7 @@ function writePersistedState(state: MockPersistedState): void {
   window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-let persisted = readPersistedState();
+const persisted = readPersistedState();
 
 function persist(): void {
   writePersistedState(persisted);
@@ -184,6 +184,14 @@ export const mockAuthApi: AuthApi = {
     const email = normalizeEmail(payload.email);
     requirePasswordMatch(payload.password, payload.confirmPassword);
 
+    if (!payload.termsAccepted) {
+      throw new AuthApiError('You must accept the terms and conditions.', {
+        status: 400,
+        code: 'TERMS_REQUIRED',
+        fieldErrors: { termsAccepted: ['You must accept the terms and conditions.'] },
+      });
+    }
+
     if (persisted.accounts[email]) {
       throw new AuthApiError('An account with this email already exists.', {
         status: 409,
@@ -199,6 +207,10 @@ export const mockAuthApi: AuthApi = {
       lastName: payload.lastName.trim(),
       role: 'USER' satisfies UserRole,
       emailVerified: false,
+      title: payload.title,
+      phone: payload.phone.trim(),
+      dateOfBirth: payload.dateOfBirth,
+      nationality: payload.nationality,
     };
 
     persisted.accounts[email] = { password: payload.password, user };

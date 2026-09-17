@@ -1,9 +1,13 @@
+import type { UserTitleValue } from '@/constants/registration';
+
 export const UserRole = {
   USER: 'USER',
   ADMIN: 'ADMIN',
 } as const;
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole];
+
+export type UserTitle = UserTitleValue;
 
 export interface AuthUser {
   id: string;
@@ -12,6 +16,10 @@ export interface AuthUser {
   lastName: string;
   role: UserRole;
   emailVerified: boolean;
+  title?: UserTitle;
+  phone?: string;
+  dateOfBirth?: string;
+  nationality?: string;
 }
 
 export interface AuthTokens {
@@ -31,11 +39,16 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
+  title: UserTitle;
   firstName: string;
   lastName: string;
   email: string;
+  phone: string;
   password: string;
   confirmPassword: string;
+  dateOfBirth: string;
+  nationality: string;
+  termsAccepted: boolean;
 }
 
 export interface ForgotPasswordRequest {

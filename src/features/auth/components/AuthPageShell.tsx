@@ -5,18 +5,28 @@ import Typography from '@mui/material/Typography';
 import type { ReactNode } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppCard, PageContainer } from '@/components/common';
+import type { PageContainerProps } from '@/components/common/PageContainer';
 
 interface AuthPageShellProps {
   title: string;
   description: string;
   children: ReactNode;
   footer?: ReactNode;
+  maxWidth?: PageContainerProps['maxWidth'];
+  contentMaxWidth?: number | string;
 }
 
-export function AuthPageShell({ title, description, children, footer }: AuthPageShellProps) {
+export function AuthPageShell({
+  title,
+  description,
+  children,
+  footer,
+  maxWidth = 'sm',
+  contentMaxWidth = 480,
+}: AuthPageShellProps) {
   return (
-    <PageContainer maxWidth="sm">
-      <Box sx={{ maxWidth: 480, mx: 'auto', width: '100%' }}>
+    <PageContainer maxWidth={maxWidth}>
+      <Box sx={{ maxWidth: contentMaxWidth, mx: 'auto', width: '100%' }}>
         <AppCard
           title={
             <Typography variant="h4" component="h1">

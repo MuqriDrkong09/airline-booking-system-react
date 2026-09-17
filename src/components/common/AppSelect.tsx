@@ -20,6 +20,8 @@ export interface AppSelectProps<T extends string | number = string>
   helperText?: ReactNode;
   error?: boolean;
   fullWidth?: boolean;
+  /** When true, skips the floating InputLabel so an external FormField label can be used. */
+  hideLabel?: boolean;
   formControlProps?: Omit<FormControlProps, 'error' | 'fullWidth' | 'disabled' | 'required'>;
   onChange?: (value: T, event: SelectChangeEvent<T>) => void;
 }
@@ -30,6 +32,7 @@ export function AppSelect<T extends string | number = string>({
   helperText,
   error = false,
   fullWidth = true,
+  hideLabel = false,
   formControlProps,
   id,
   value,
@@ -50,15 +53,17 @@ export function AppSelect<T extends string | number = string>({
       disabled={disabled}
       {...formControlProps}
     >
-      <InputLabel id={labelId}>{label}</InputLabel>
+      {hideLabel ? null : <InputLabel id={labelId}>{label}</InputLabel>}
       <Select
         {...props}
         id={selectId}
-        labelId={labelId}
-        label={label}
+        labelId={hideLabel ? undefined : labelId}
+        label={hideLabel ? undefined : label}
+        displayEmpty={hideLabel || props.displayEmpty}
         value={value}
         required={required}
         disabled={disabled}
+        aria-label={hideLabel ? label : undefined}
         aria-describedby={helperId}
         onChange={(event) => {
           onChange?.(event.target.value as T, event);

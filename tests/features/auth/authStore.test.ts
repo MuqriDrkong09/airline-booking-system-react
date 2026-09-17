@@ -126,11 +126,16 @@ describe('createAuthStore', () => {
 
     await expect(
       store.getState().register({
+        title: 'MR',
         firstName: 'Alex',
         lastName: 'Traveler',
         email: 'alex@example.com',
+        phone: '+1 555 0100',
         password: 'Password123!',
         confirmPassword: 'Password123!',
+        dateOfBirth: '1990-01-01',
+        nationality: 'US',
+        termsAccepted: true,
       }),
     ).resolves.toBe('Registered');
 

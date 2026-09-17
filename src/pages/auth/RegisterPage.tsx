@@ -16,6 +16,8 @@ export function RegisterPage() {
     <AuthPageShell
       title="Create account"
       description="Register for a customer account to book and manage flights."
+      maxWidth="md"
+      contentMaxWidth={720}
       footer={
         <Typography variant="body2">
           Already have an account? <AuthTextLink to={APP_ROUTES.public.login}>Sign in</AuthTextLink>
@@ -24,21 +26,25 @@ export function RegisterPage() {
     >
       <Stack spacing={2}>
         {successMessage ? (
-          <AppAlert severity="success" title="Check your email">
+          <AppAlert severity="success" title="Account created">
             {successMessage}
           </AppAlert>
         ) : null}
-        <RegisterForm
-          onSuccess={(message) => {
-            setSuccessMessage(message);
-            const token = extractDemoToken(message);
-            void navigate(
-              token
-                ? `${APP_ROUTES.public.verifyEmail}?token=${encodeURIComponent(token)}`
-                : APP_ROUTES.public.verifyEmail,
-            );
-          }}
-        />
+        {!successMessage ? (
+          <RegisterForm
+            onSuccess={(message) => {
+              setSuccessMessage(message);
+              const token = extractDemoToken(message);
+              window.setTimeout(() => {
+                void navigate(
+                  token
+                    ? `${APP_ROUTES.public.verifyEmail}?token=${encodeURIComponent(token)}`
+                    : APP_ROUTES.public.verifyEmail,
+                );
+              }, 1200);
+            }}
+          />
+        ) : null}
       </Stack>
     </AuthPageShell>
   );

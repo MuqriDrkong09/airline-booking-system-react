@@ -34,11 +34,16 @@ describe('mockAuthApi', () => {
     const email = `traveler-${Date.now()}@example.com`;
 
     const registerResponse = await api.register({
+      title: 'MS',
       firstName: 'Sam',
       lastName: 'Flyer',
       email,
+      phone: '+44 7700 900123',
       password: 'Password123!',
       confirmPassword: 'Password123!',
+      dateOfBirth: '1992-03-20',
+      nationality: 'GB',
+      termsAccepted: true,
     });
 
     const verifyTokenMatch = /"([^"]+)"/.exec(registerResponse.message);
