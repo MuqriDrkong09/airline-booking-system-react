@@ -8,6 +8,10 @@ export interface BreadcrumbItem {
 const BREADCRUMB_LABELS: Readonly<Record<string, string>> = {
   [APP_ROUTES.public.home]: 'Home',
   [APP_ROUTES.public.login]: 'Sign in',
+  [APP_ROUTES.public.register]: 'Register',
+  [APP_ROUTES.public.forgotPassword]: 'Forgot password',
+  [APP_ROUTES.public.resetPassword]: 'Reset password',
+  [APP_ROUTES.public.verifyEmail]: 'Verify email',
   [APP_ROUTES.customer.root]: 'Customer',
   [APP_ROUTES.customer.flights]: 'Search Flights',
   [APP_ROUTES.customer.bookings]: 'My Bookings',

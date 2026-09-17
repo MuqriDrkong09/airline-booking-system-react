@@ -4,10 +4,17 @@ import userEvent from '@testing-library/user-event';
 import { useUiStore } from '@/app/store/uiStore';
 import { CustomerLayout } from '@/components/layout/CustomerLayout';
 import { renderWithProviders } from '@tests/utils/test-utils';
+import {
+  mockCustomerUser,
+  resetAuthStore,
+  seedAuthenticatedUser,
+} from '@tests/utils/authTestUtils';
 
 describe('CustomerLayout', () => {
   beforeEach(() => {
     useUiStore.setState({ isMobileNavOpen: false });
+    resetAuthStore();
+    seedAuthenticatedUser(mockCustomerUser);
   });
 
   it('renders customer navigation, breadcrumbs, and page content', () => {

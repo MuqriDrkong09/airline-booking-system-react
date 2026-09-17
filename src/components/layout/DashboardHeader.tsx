@@ -17,6 +17,7 @@ export interface DashboardHeaderProps {
   profileTo: string;
   onOpenMobileNav: () => void;
   isMobileNavOpen: boolean;
+  onLogout?: () => void;
 }
 
 export function DashboardHeader({
@@ -27,6 +28,7 @@ export function DashboardHeader({
   profileTo,
   onOpenMobileNav,
   isMobileNavOpen,
+  onLogout,
 }: DashboardHeaderProps) {
   return (
     <AppBar
@@ -79,7 +81,7 @@ export function DashboardHeader({
         <Box sx={{ flexGrow: 1 }} />
 
         <ThemeModeToggle />
-        <UserMenu user={user} profileTo={profileTo} />
+        <UserMenu user={user} profileTo={profileTo} onLogout={onLogout} />
       </Toolbar>
     </AppBar>
   );

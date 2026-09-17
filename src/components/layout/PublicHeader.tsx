@@ -1,26 +1,46 @@
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import { LogIn, Menu, Plane, User } from 'lucide-react';
+import { LogIn, Menu, Plane, User, UserPlus } from 'lucide-react';
+import { useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useUiStore } from '@/app/store/uiStore';
 import { ThemeModeToggle } from '@/components/common/ThemeModeToggle';
 import { PUBLIC_NAV_ITEMS, type NavItem } from '@/constants/nav';
 import { APP_ROUTES } from '@/constants/routes';
+import { getPostLoginRedirect, useAuth } from '@/features/auth';
+import { UserRole } from '@/types/auth';
 import { MobileNavDrawer } from './MobileNavDrawer';
 
 interface PublicHeaderProps {
   appName: string;
 }
 
-const PUBLIC_MOBILE_NAV_ITEMS: readonly NavItem[] = [
-  ...PUBLIC_NAV_ITEMS,
-  { label: 'Sign in', to: APP_ROUTES.public.login, icon: LogIn },
-  { label: 'My account', to: APP_ROUTES.customer.home, icon: User },
-] as const;
-
 export function PublicHeader({ appName }: PublicHeaderProps) {
   const isMobileNavOpen = useUiStore((state) => state.isMobileNavOpen);
   const openMobileNav = useUiStore((state) => state.openMobileNav);
   const closeMobileNav = useUiStore((state) => state.closeMobileNav);
+  const { isAuthenticated, user } = useAuth();
+
+  const accountTo = user ? getPostLoginRedirect(user.role) : APP_ROUTES.public.login;
+  const isAdmin = user?.role === UserRole.ADMIN;
+
+  const mobileNavItems = useMemo((): readonly NavItem[] => {
+    if (isAuthenticated && user) {
+      return [
+        ...PUBLIC_NAV_ITEMS,
+        {
+          label: isAdmin ? 'Admin dashboard' : 'My account',
+          to: accountTo,
+          icon: User,
+        },
+      ] as const;
+    }
+
+    return [
+      ...PUBLIC_NAV_ITEMS,
+      { label: 'Sign in', to: APP_ROUTES.public.login, icon: LogIn },
+      { label: 'Create account', to: APP_ROUTES.public.register, icon: UserPlus },
+    ] as const;
+  }, [accountTo, isAdmin, isAuthenticated, user]);
 
   return (
     <>
@@ -85,23 +105,36 @@ export function PublicHeader({ appName }: PublicHeaderProps) {
 
           <ThemeModeToggle />
 
-          <Button
-            component={NavLink}
-            to={APP_ROUTES.public.login}
-            color="inherit"
-            variant="outlined"
-            sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
-          >
-            Sign in
-          </Button>
-          <Button
-            component={NavLink}
-            to={APP_ROUTES.customer.home}
-            color="secondary"
-            variant="contained"
-          >
-            My account
-          </Button>
+          {isAuthenticated && user ? (
+            <Button
+              component={NavLink}
+              to={accountTo}
+              color="secondary"
+              variant="contained"
+            >
+              {isAdmin ? 'Admin dashboard' : 'My account'}
+            </Button>
+          ) : (
+            <>
+              <Button
+                component={NavLink}
+                to={APP_ROUTES.public.login}
+                color="inherit"
+                variant="outlined"
+                sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
+              >
+                Sign in
+              </Button>
+              <Button
+                component={NavLink}
+                to={APP_ROUTES.public.register}
+                color="secondary"
+                variant="contained"
+              >
+                Create account
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
 
@@ -109,7 +142,7 @@ export function PublicHeader({ appName }: PublicHeaderProps) {
         open={isMobileNavOpen}
         onClose={closeMobileNav}
         title="Menu"
-        items={PUBLIC_MOBILE_NAV_ITEMS}
+        items={mobileNavItems}
         ariaLabel="Mobile"
       />
     </>

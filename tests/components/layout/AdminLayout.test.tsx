@@ -4,10 +4,17 @@ import userEvent from '@testing-library/user-event';
 import { useUiStore } from '@/app/store/uiStore';
 import { AdminLayout } from '@/components/layout/AdminLayout';
 import { renderWithProviders } from '@tests/utils/test-utils';
+import {
+  mockAdminUser,
+  resetAuthStore,
+  seedAuthenticatedUser,
+} from '@tests/utils/authTestUtils';
 
 describe('AdminLayout', () => {
   beforeEach(() => {
     useUiStore.setState({ isMobileNavOpen: false });
+    resetAuthStore();
+    seedAuthenticatedUser(mockAdminUser);
   });
 
   it('renders admin navigation and logout action', async () => {

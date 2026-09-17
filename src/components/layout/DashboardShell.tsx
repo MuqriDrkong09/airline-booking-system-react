@@ -20,6 +20,7 @@ export interface DashboardShellProps {
   navItems: readonly NavItem[];
   navAriaLabel: string;
   user: DemoUser;
+  onLogout?: () => void;
 }
 
 export function DashboardShell({
@@ -30,6 +31,7 @@ export function DashboardShell({
   navItems,
   navAriaLabel,
   user,
+  onLogout,
 }: DashboardShellProps) {
   const isMobileNavOpen = useUiStore((state) => state.isMobileNavOpen);
   const openMobileNav = useUiStore((state) => state.openMobileNav);
@@ -90,6 +92,7 @@ export function DashboardShell({
           profileTo={profileTo}
           onOpenMobileNav={openMobileNav}
           isMobileNavOpen={isMobileNavOpen}
+          onLogout={onLogout}
         />
 
         <Box

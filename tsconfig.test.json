@@ -17,7 +17,7 @@
     "skipLibCheck": true,
     "noEmit": true,
     "isolatedModules": true,
-    "types": ["jest", "@testing-library/jest-dom", "node"],
+    "types": ["jest", "@testing-library/jest-dom", "node", "vite/client"],
     "paths": {
       "@/*": ["./src/*"],
       "@tests/*": ["./tests/*"]

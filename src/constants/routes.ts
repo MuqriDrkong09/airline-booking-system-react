@@ -2,6 +2,10 @@ export const APP_ROUTES = {
   public: {
     home: '/',
     login: '/login',
+    register: '/register',
+    forgotPassword: '/forgot-password',
+    resetPassword: '/reset-password',
+    verifyEmail: '/verify-email',
   },
   customer: {
     root: '/app',

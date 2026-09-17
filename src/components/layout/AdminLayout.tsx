@@ -1,6 +1,6 @@
-import { DEMO_ADMIN } from '@/constants/demoUser';
 import { ADMIN_NAV_ITEMS } from '@/constants/nav';
 import { APP_ROUTES } from '@/constants/routes';
+import { useAuth, toUserMenuModel } from '@/features/auth';
 import { DashboardShell } from './DashboardShell';
 
 export interface AdminLayoutProps {
@@ -8,6 +8,12 @@ export interface AdminLayoutProps {
 }
 
 export function AdminLayout({ appName }: AdminLayoutProps) {
+  const { user, logout } = useAuth();
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <DashboardShell
       appName={appName}
@@ -16,7 +22,10 @@ export function AdminLayout({ appName }: AdminLayoutProps) {
       profileTo={APP_ROUTES.admin.dashboard}
       navItems={ADMIN_NAV_ITEMS}
       navAriaLabel="Admin"
-      user={DEMO_ADMIN}
+      user={toUserMenuModel(user)}
+      onLogout={() => {
+        void logout();
+      }}
     />
   );
 }

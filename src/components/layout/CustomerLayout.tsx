@@ -1,6 +1,6 @@
-import { DEMO_CUSTOMER } from '@/constants/demoUser';
 import { CUSTOMER_NAV_ITEMS } from '@/constants/nav';
 import { APP_ROUTES } from '@/constants/routes';
+import { useAuth, toUserMenuModel } from '@/features/auth';
 import { DashboardShell } from './DashboardShell';
 
 export interface CustomerLayoutProps {
@@ -8,6 +8,12 @@ export interface CustomerLayoutProps {
 }
 
 export function CustomerLayout({ appName }: CustomerLayoutProps) {
+  const { user, logout } = useAuth();
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <DashboardShell
       appName={appName}
@@ -16,7 +22,10 @@ export function CustomerLayout({ appName }: CustomerLayoutProps) {
       profileTo={APP_ROUTES.customer.profile}
       navItems={CUSTOMER_NAV_ITEMS}
       navAriaLabel="Customer"
-      user={DEMO_CUSTOMER}
+      user={toUserMenuModel(user)}
+      onLogout={() => {
+        void logout();
+      }}
     />
   );
 }
