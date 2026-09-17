@@ -179,7 +179,7 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
         )}
       />
 
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="flex-start">
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ alignItems: 'flex-start' }}>
         <Box sx={fieldColumnSx}>
           <Controller
             name="dateOfBirth"

@@ -80,15 +80,20 @@ describe('createAuthStore', () => {
 
   it('persists tokens on login and clears them on logout', async () => {
     const storage = createMemoryTokenStorage();
+    const setRememberSession = jest.fn();
+    storage.setRememberSession = setRememberSession;
+
     const api = createMockApi();
     const store = createAuthStore({ api, storage });
 
     const user = await store.getState().login({
       email: 'user@example.com',
       password: 'Password123!',
+      rememberMe: true,
     });
 
     expect(user).toEqual(mockUser);
+    expect(setRememberSession).toHaveBeenCalledWith(true);
     expect(storage.getAccessToken()).toBe('access-token');
     expect(storage.getRefreshToken()).toBe('refresh-token');
     expect(store.getState().status).toBe('authenticated');

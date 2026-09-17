@@ -18,5 +18,6 @@ export {
   tokenStorage,
   createLocalTokenStorage,
   createMemoryTokenStorage,
+  createBrowserTokenStorage,
 } from './tokenStorage';
 export type { TokenStorage } from './tokenStorage';

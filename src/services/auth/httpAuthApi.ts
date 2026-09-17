@@ -16,7 +16,8 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
   return {
     async login(payload: LoginRequest): Promise<AuthSession> {
       try {
-        const { data } = await client.post<AuthSession>('/auth/login', payload);
+        const { email, password } = payload;
+        const { data } = await client.post<AuthSession>('/auth/login', { email, password });
         return data;
       } catch (error) {
         throw toAuthApiError(error);

@@ -1,8 +1,7 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { APP_ROUTES } from '@/constants/routes';
-import { AuthPageShell, AuthTextLink } from '@/features/auth/components/AuthPageShell';
+import { AuthPageShell } from '@/features/auth/components/AuthPageShell';
 import { LoginForm } from '@/features/auth/components/LoginForm';
 import { getPostLoginRedirect } from '@/features/auth/utils/authHelpers';
 
@@ -29,14 +28,7 @@ export function LoginPage() {
       title="Sign in"
       description="Access your AeroBook customer or admin workspace."
       footer={
-        <Stack spacing={1}>
-          <Typography variant="body2">
-            <AuthTextLink to={APP_ROUTES.public.forgotPassword}>Forgot password?</AuthTextLink>
-          </Typography>
-          <Typography variant="body2">
-            Need an account?{' '}
-            <AuthTextLink to={APP_ROUTES.public.register}>Create one</AuthTextLink>
-          </Typography>
+        <Stack spacing={0.5}>
           <Typography variant="caption" color="text.secondary">
             Demo: user@example.com / Password123! or admin@example.com / Password123!
           </Typography>

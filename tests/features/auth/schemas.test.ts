@@ -27,6 +27,7 @@ describe('auth schemas', () => {
     const result = loginSchema.safeParse({
       email: 'user@example.com',
       password: 'secret',
+      rememberMe: true,
     });
     expect(result.success).toBe(true);
   });
@@ -35,6 +36,7 @@ describe('auth schemas', () => {
     const result = loginSchema.safeParse({
       email: 'not-an-email',
       password: 'secret',
+      rememberMe: false,
     });
     expect(result.success).toBe(false);
   });

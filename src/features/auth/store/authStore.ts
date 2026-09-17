@@ -103,7 +103,10 @@ export function createAuthStore(options: AuthStoreOptions = {}) {
       set({ isSubmitting: true, error: null });
 
       try {
-        const session = await api.login(payload);
+        const { rememberMe = false, ...credentials } = payload;
+        storage.setRememberSession?.(rememberMe);
+
+        const session = await api.login(credentials);
         persistSession(storage, session.tokens.accessToken, session.tokens.refreshToken);
         set({
           user: session.user,
