@@ -27,6 +27,8 @@ function createMockApi(overrides: Partial<AuthApi> = {}): AuthApi {
     register: jest.fn().mockResolvedValue({ message: 'Registered' }),
     logout: jest.fn().mockResolvedValue(undefined),
     getCurrentUser: jest.fn().mockResolvedValue(mockUser),
+    updateProfile: jest.fn().mockResolvedValue(mockUser),
+    changePassword: jest.fn().mockResolvedValue({ message: 'Password updated' }),
     forgotPassword: jest.fn().mockResolvedValue({ message: 'Reset sent' }),
     resetPassword: jest.fn().mockResolvedValue({ message: 'Password reset' }),
     verifyEmail: jest.fn().mockResolvedValue({ message: 'Verified' }),

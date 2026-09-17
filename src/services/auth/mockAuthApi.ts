@@ -9,6 +9,8 @@ import type {
   UserRole,
   VerifyEmailRequest,
 } from '@/types/auth';
+import type { ChangePasswordRequest, UpdateProfileRequest } from '@/types/profile';
+import { DEFAULT_TRAVEL_PREFERENCES } from '@/types/profile';
 import type { AuthApi } from './authApi.types';
 import { AuthApiError } from './errors';
 
@@ -30,6 +32,11 @@ const DEFAULT_ACCOUNTS: Record<string, MockAccount> = {
       lastName: 'Traveler',
       role: 'USER',
       emailVerified: true,
+      title: 'MR',
+      phone: '+1 555 0100',
+      dateOfBirth: '1990-04-12',
+      nationality: 'US',
+      travelPreferences: { ...DEFAULT_TRAVEL_PREFERENCES },
     },
   },
   'admin@example.com': {
@@ -41,6 +48,11 @@ const DEFAULT_ACCOUNTS: Record<string, MockAccount> = {
       lastName: 'Admin',
       role: 'ADMIN',
       emailVerified: true,
+      title: 'MS',
+      phone: '+1 555 0199',
+      dateOfBirth: '1985-09-01',
+      nationality: 'GB',
+      travelPreferences: { ...DEFAULT_TRAVEL_PREFERENCES, preferredCabin: 'BUSINESS' },
     },
   },
 };
@@ -211,6 +223,7 @@ export const mockAuthApi: AuthApi = {
       phone: payload.phone.trim(),
       dateOfBirth: payload.dateOfBirth,
       nationality: payload.nationality,
+      travelPreferences: { ...DEFAULT_TRAVEL_PREFERENCES },
     };
 
     persisted.accounts[email] = { password: payload.password, user };
@@ -229,6 +242,16 @@ export const mockAuthApi: AuthApi = {
 
   async getCurrentUser(): Promise<AuthUser> {
     await delay(200);
+    throw new AuthApiError('Unauthorized.', { status: 401, code: 'UNAUTHORIZED' });
+  },
+
+  async updateProfile(_payload: UpdateProfileRequest): Promise<AuthUser> {
+    await delay();
+    throw new AuthApiError('Unauthorized.', { status: 401, code: 'UNAUTHORIZED' });
+  },
+
+  async changePassword(_payload: ChangePasswordRequest): Promise<MessageResponse> {
+    await delay();
     throw new AuthApiError('Unauthorized.', { status: 401, code: 'UNAUTHORIZED' });
   },
 
@@ -303,23 +326,63 @@ export const mockAuthApi: AuthApi = {
 export function createMockAuthApiWithSessionLookup(
   getAccessToken: () => string | null,
 ): AuthApi {
+  function requireAccount(): MockAccount {
+    const token = getAccessToken();
+    if (!token) {
+      throw new AuthApiError('Unauthorized.', { status: 401, code: 'UNAUTHORIZED' });
+    }
+
+    const userId = persisted.sessions[token];
+    const account = userId ? findAccountById(userId) : undefined;
+
+    if (!account) {
+      throw new AuthApiError('Unauthorized.', { status: 401, code: 'UNAUTHORIZED' });
+    }
+
+    return account;
+  }
+
   return {
     ...mockAuthApi,
     async getCurrentUser(): Promise<AuthUser> {
       await delay(200);
-      const token = getAccessToken();
-      if (!token) {
-        throw new AuthApiError('Unauthorized.', { status: 401, code: 'UNAUTHORIZED' });
-      }
+      return requireAccount().user;
+    },
+    async updateProfile(payload: UpdateProfileRequest): Promise<AuthUser> {
+      await delay();
+      const account = requireAccount();
 
-      const userId = persisted.sessions[token];
-      const account = userId ? findAccountById(userId) : undefined;
-
-      if (!account) {
-        throw new AuthApiError('Unauthorized.', { status: 401, code: 'UNAUTHORIZED' });
-      }
+      account.user = {
+        ...account.user,
+        title: payload.title as AuthUser['title'],
+        firstName: payload.firstName.trim(),
+        lastName: payload.lastName.trim(),
+        phone: payload.phone.trim(),
+        dateOfBirth: payload.dateOfBirth,
+        nationality: payload.nationality,
+        travelPreferences: { ...payload.travelPreferences },
+      };
+      persist();
 
       return account.user;
+    },
+    async changePassword(payload: ChangePasswordRequest): Promise<MessageResponse> {
+      await delay();
+      const account = requireAccount();
+      requirePasswordMatch(payload.newPassword, payload.confirmPassword);
+
+      if (account.password !== payload.currentPassword) {
+        throw new AuthApiError('Current password is incorrect.', {
+          status: 400,
+          code: 'INVALID_CURRENT_PASSWORD',
+          fieldErrors: { currentPassword: ['Current password is incorrect.'] },
+        });
+      }
+
+      account.password = payload.newPassword;
+      persist();
+
+      return { message: 'Password updated successfully.' };
     },
     async logout(): Promise<void> {
       await delay(150);

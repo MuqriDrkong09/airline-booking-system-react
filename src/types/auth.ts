@@ -1,4 +1,5 @@
 import type { UserTitleValue } from '@/constants/registration';
+import type { TravelPreferences } from '@/types/profile';
 
 export const UserRole = {
   USER: 'USER',
@@ -20,6 +21,7 @@ export interface AuthUser {
   phone?: string;
   dateOfBirth?: string;
   nationality?: string;
+  travelPreferences?: TravelPreferences;
 }
 
 export interface AuthTokens {

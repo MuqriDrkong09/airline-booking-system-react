@@ -9,6 +9,7 @@ import type {
   ResetPasswordRequest,
   VerifyEmailRequest,
 } from '@/types/auth';
+import type { ChangePasswordRequest, UpdateProfileRequest } from '@/types/profile';
 import type { AuthApi } from './authApi.types';
 import { toAuthApiError } from './errors';
 
@@ -44,6 +45,24 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
     async getCurrentUser(): Promise<AuthUser> {
       try {
         const { data } = await client.get<AuthUser>('/auth/me');
+        return data;
+      } catch (error) {
+        throw toAuthApiError(error);
+      }
+    },
+
+    async updateProfile(payload: UpdateProfileRequest): Promise<AuthUser> {
+      try {
+        const { data } = await client.patch<AuthUser>('/auth/me', payload);
+        return data;
+      } catch (error) {
+        throw toAuthApiError(error);
+      }
+    },
+
+    async changePassword(payload: ChangePasswordRequest): Promise<MessageResponse> {
+      try {
+        const { data } = await client.post<MessageResponse>('/auth/change-password', payload);
         return data;
       } catch (error) {
         throw toAuthApiError(error);

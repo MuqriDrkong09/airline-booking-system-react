@@ -28,7 +28,7 @@ describe('mockAuthApi', () => {
     ).rejects.toMatchObject({ message: 'Invalid email or password.' });
   });
 
-  it('supports register, verify, forgot, and reset flows', async () => {
+  it('supports register, verify, forgot, reset, profile update, and password change', async () => {
     const storage = createMemoryTokenStorage();
     const api = createMockAuthApiWithSessionLookup(() => storage.getAccessToken());
     const email = `traveler-${Date.now()}@example.com`;
@@ -51,17 +51,45 @@ describe('mockAuthApi', () => {
 
     await api.verifyEmail({ token: verifyTokenMatch![1]! });
 
+    const session = await api.login({ email, password: 'Password123!' });
+    storage.setAccessToken(session.tokens.accessToken);
+    storage.setRefreshToken(session.tokens.refreshToken);
+
+    const updated = await api.updateProfile({
+      title: 'MS',
+      firstName: 'Samantha',
+      lastName: 'Flyer',
+      phone: '+44 7700 900999',
+      dateOfBirth: '1992-03-20',
+      nationality: 'GB',
+      travelPreferences: {
+        preferredCabin: 'BUSINESS',
+        seatPreference: 'AISLE',
+        mealPreference: 'VEGETARIAN',
+        newsletterOptIn: false,
+      },
+    });
+
+    expect(updated.firstName).toBe('Samantha');
+    expect(updated.travelPreferences?.preferredCabin).toBe('BUSINESS');
+
+    await api.changePassword({
+      currentPassword: 'Password123!',
+      newPassword: 'Password456!',
+      confirmPassword: 'Password456!',
+    });
+
     const forgotResponse = await api.forgotPassword({ email });
     const resetTokenMatch = /"([^"]+)"/.exec(forgotResponse.message);
     expect(resetTokenMatch?.[1]).toBeTruthy();
 
     await api.resetPassword({
       token: resetTokenMatch![1]!,
-      password: 'Password456!',
-      confirmPassword: 'Password456!',
+      password: 'Password789!',
+      confirmPassword: 'Password789!',
     });
 
-    const session = await api.login({ email, password: 'Password456!' });
-    expect(session.user.email).toBe(email);
+    const nextSession = await api.login({ email, password: 'Password789!' });
+    expect(nextSession.user.email).toBe(email);
   });
 });
