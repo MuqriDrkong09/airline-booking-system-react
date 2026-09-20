@@ -11,6 +11,7 @@ export type {
   FlightAirline,
   FlightBaggage,
   FlightEndpoint,
+  FlightFilterBounds,
   FlightFilterState,
   FlightOffer,
   FlightPriceAmount,

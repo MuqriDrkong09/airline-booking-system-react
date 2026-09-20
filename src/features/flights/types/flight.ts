@@ -40,15 +40,32 @@ export interface FlightOffer {
   baggage: FlightBaggage;
   price: FlightPriceAmount;
   availableSeats: number;
+  refundable: boolean;
+  baggageIncluded: boolean;
 }
 
 export type FlightSortOption = 'price_asc' | 'price_desc' | 'duration_asc' | 'departure_asc' | 'arrival_asc';
 
+/** Minutes from midnight (0–1440). Null means unconstrained. */
 export interface FlightFilterState {
-  stops: Array<0 | 1 | 2>;
+  priceMin: number | null;
+  priceMax: number | null;
   airlines: string[];
-  maxPrice: number | null;
-  minSeats: number | null;
+  stops: Array<0 | 1 | 2>;
+  departureHourStart: number | null;
+  departureHourEnd: number | null;
+  arrivalHourStart: number | null;
+  arrivalHourEnd: number | null;
+  durationMax: number | null;
+  cabinClasses: CabinClass[];
+  refundableOnly: boolean;
+  baggageIncludedOnly: boolean;
+}
+
+export interface FlightFilterBounds {
+  priceMin: number;
+  priceMax: number;
+  durationMax: number;
 }
 
 export interface FlightSearchRequest {

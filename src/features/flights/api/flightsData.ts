@@ -110,8 +110,21 @@ export function generateMockFlightOffers(request: FlightSearchRequest): FlightOf
     const durationMinutes = baseDuration + (from === 'KUL' && to === 'NRT' ? 300 : 0);
     const arrivalTime = addMinutes(departureTime, durationMinutes);
     const basePrice = 180 + ((seed + index * 17) % 420) + stops * 35;
-    const amount = Math.round(basePrice * cabinMultiplier(request.cabinClass) * passengers);
     const availableSeats = Math.max(1, 3 + ((seed + index * 5) % 12));
+    const cabinOptions: CabinClass[] = [
+      request.cabinClass,
+      'ECONOMY',
+      'PREMIUM_ECONOMY',
+      'BUSINESS',
+      'FIRST',
+    ];
+    const cabinClass = cabinOptions[(seed + index) % cabinOptions.length]!;
+    const baggage =
+      index % 5 === 0
+        ? { cabinKg: 7, checkedKg: 0, pieces: 0 }
+        : baggageForCabin(cabinClass);
+    const baggageIncluded = baggage.checkedKg > 0;
+    const refundable = (seed + index) % 2 === 0;
 
     offers.push({
       id: `flt-${from}-${to}-${request.departure}-${index + 1}`,
@@ -132,13 +145,15 @@ export function generateMockFlightOffers(request: FlightSearchRequest): FlightOf
       durationMinutes,
       stops: stopAirports.length,
       stopAirports,
-      cabinClass: request.cabinClass,
-      baggage: baggageForCabin(request.cabinClass),
+      cabinClass,
+      baggage,
       price: {
-        amount,
+        amount: Math.round(basePrice * cabinMultiplier(cabinClass) * passengers),
         currency: 'MYR',
       },
       availableSeats,
+      refundable,
+      baggageIncluded,
     });
   }
 

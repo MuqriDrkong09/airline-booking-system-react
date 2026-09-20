@@ -24,11 +24,13 @@ describe('flights API', () => {
     expect(first[0]).toMatchObject({
       origin: { code: 'KUL' },
       destination: { code: 'NRT' },
-      cabinClass: 'ECONOMY',
     });
+    expect(['ECONOMY', 'PREMIUM_ECONOMY', 'BUSINESS', 'FIRST']).toContain(first[0]?.cabinClass);
+    expect(typeof first[0]?.refundable).toBe('boolean');
+    expect(typeof first[0]?.baggageIncluded).toBe('boolean');
     expect(first[0]?.airline.logoUrl).toBeTruthy();
     expect(first[0]?.flightNumber).toMatch(/^[A-Z]{2}\d+$/);
-    expect(first[0]?.baggage.checkedKg).toBeGreaterThan(0);
+    expect(first[0]?.baggageIncluded).toBe(first[0]!.baggage.checkedKg > 0);
     expect(first[0]?.availableSeats).toBeGreaterThan(0);
   });
 

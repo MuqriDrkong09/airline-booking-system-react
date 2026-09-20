@@ -1,21 +1,28 @@
 import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useEffect, useMemo, useState } from 'react';
-import { EmptyState, ErrorState, LoadingSpinner } from '@/components/common';
-import { useSearchFlightsQuery } from '../../hooks/useFlights';
-import type {
-  FlightFilterState,
-  FlightOffer,
-  FlightSearchRequest,
-  FlightSortOption,
-} from '../../types/flight';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import { SlidersHorizontal, X } from 'lucide-react';
 import {
-  DEFAULT_FLIGHT_FILTERS,
+  memo,
+  useCallback,
+  useDeferredValue,
+  useMemo,
+  useState,
+} from 'react';
+import { AppBadge, AppButton, EmptyState, ErrorState, LoadingSpinner } from '@/components/common';
+import { useFlightFilters } from '../../hooks/useFlightFilters';
+import { useSearchFlightsQuery } from '../../hooks/useFlights';
+import type { FlightOffer, FlightSearchRequest } from '../../types/flight';
+import {
   filterFlightOffers,
   getAirlineOptions,
-  getMaxPriceCeiling,
+  getCabinOptions,
+  getFilterBounds,
   sortFlightOffers,
 } from '../../utils/flightResults';
 import { FlightFilters } from './FlightFilters';
@@ -30,11 +37,7 @@ export interface FlightSearchResultsProps {
 
 function ResultsSkeleton() {
   return (
-    <Stack
-      spacing={1.75}
-      aria-hidden="true"
-      sx={{ width: '100%' }}
-    >
+    <Stack spacing={1.75} aria-hidden="true" sx={{ width: '100%' }}>
       {[0, 1, 2].map((item) => (
         <Skeleton key={item} variant="rounded" height={280} />
       ))}
@@ -42,28 +45,50 @@ function ResultsSkeleton() {
   );
 }
 
-export function FlightSearchResults({
+const MemoFlightList = memo(FlightList);
+
+function FlightSearchResultsComponent({
   request,
   enabled = true,
   onSelectFlight,
 }: FlightSearchResultsProps) {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'), { defaultMatches: true });
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
   const query = useSearchFlightsQuery(request, { enabled });
-  const [filters, setFilters] = useState<FlightFilterState>(DEFAULT_FLIGHT_FILTERS);
-  const [sort, setSort] = useState<FlightSortOption>('price_asc');
-
   const flights = query.data?.flights ?? [];
-  const airlineOptions = useMemo(() => getAirlineOptions(flights), [flights]);
-  const maxPriceCeiling = useMemo(() => getMaxPriceCeiling(flights), [flights]);
 
-  useEffect(() => {
-    setFilters(DEFAULT_FLIGHT_FILTERS);
-    setSort('price_asc');
-  }, [request?.from, request?.to, request?.departure, request?.cabinClass]);
+  const bounds = useMemo(() => getFilterBounds(flights), [flights]);
+  const airlineOptions = useMemo(() => getAirlineOptions(flights), [flights]);
+  const cabinOptions = useMemo(() => getCabinOptions(flights), [flights]);
+
+  const {
+    filters,
+    sort,
+    activeFilterCount,
+    setFilters,
+    setSort,
+    clearFilters,
+  } = useFlightFilters(bounds);
+
+  const deferredFilters = useDeferredValue(filters);
+  const deferredSort = useDeferredValue(sort);
 
   const visibleFlights = useMemo(
-    () => sortFlightOffers(filterFlightOffers(flights, filters), sort),
-    [filters, flights, sort],
+    () => sortFlightOffers(filterFlightOffers(flights, deferredFilters), deferredSort),
+    [deferredFilters, deferredSort, flights],
   );
+
+  const handleSelectFlight = useCallback(
+    (flight: FlightOffer) => {
+      onSelectFlight?.(flight);
+    },
+    [onSelectFlight],
+  );
+
+  const openMobileFilters = useCallback(() => setMobileFiltersOpen(true), []);
+  const closeMobileFilters = useCallback(() => setMobileFiltersOpen(false), []);
 
   if (!enabled || !request) {
     return null;
@@ -104,6 +129,20 @@ export function FlightSearchResults({
     );
   }
 
+  const filterPanel = (
+    <FlightFilters
+      value={filters}
+      airlineOptions={airlineOptions}
+      cabinOptions={cabinOptions}
+      bounds={bounds}
+      currency={query.data?.currency}
+      activeFilterCount={activeFilterCount}
+      onChange={setFilters}
+      onClear={clearFilters}
+      embedded={!isDesktop}
+    />
+  );
+
   return (
     <Box component="section" aria-label="Flight search results">
       <Stack
@@ -111,22 +150,22 @@ export function FlightSearchResults({
         spacing={2.5}
         sx={{ alignItems: { md: 'flex-start' } }}
       >
-        <Box
-          sx={{
-            width: { xs: '100%', md: 280 },
-            flexShrink: 0,
-            position: { md: 'sticky' },
-            top: { md: 16 },
-          }}
-        >
-          <FlightFilters
-            value={filters}
-            airlineOptions={airlineOptions}
-            maxPriceCeiling={maxPriceCeiling}
-            currency={query.data?.currency}
-            onChange={setFilters}
-          />
-        </Box>
+        {isDesktop ? (
+          <Box
+            component="aside"
+            aria-label="Flight filters"
+            sx={{
+              width: 300,
+              flexShrink: 0,
+              position: 'sticky',
+              top: 16,
+              maxHeight: 'calc(100vh - 32px)',
+              overflow: 'auto',
+            }}
+          >
+            {filterPanel}
+          </Box>
+        ) : null}
 
         <Stack spacing={2} sx={{ flex: 1, minWidth: 0, width: '100%' }}>
           <Stack
@@ -134,22 +173,99 @@ export function FlightSearchResults({
             spacing={1.5}
             sx={{ alignItems: { sm: 'center' }, justifyContent: 'space-between' }}
           >
-            <Typography variant="h6" component="h2" sx={{ fontWeight: 700 }}>
-              Available flights
-            </Typography>
-            <FlightSort value={sort} onChange={setSort} />
+            <Stack direction="row" spacing={1} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
+              <Typography variant="h6" component="h2" sx={{ fontWeight: 700 }}>
+                Available flights
+              </Typography>
+              {activeFilterCount > 0 ? (
+                <AppBadge
+                  label={`${activeFilterCount} active filter${activeFilterCount === 1 ? '' : 's'}`}
+                  tone="primary"
+                  size="small"
+                />
+              ) : null}
+            </Stack>
+
+            <Stack direction="row" spacing={1} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
+              {!isDesktop ? (
+                <AppButton
+                  variant="outlined"
+                  startIcon={<SlidersHorizontal aria-hidden="true" size={16} />}
+                  onClick={openMobileFilters}
+                  aria-haspopup="dialog"
+                  aria-expanded={mobileFiltersOpen}
+                >
+                  Filters
+                  {activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
+                </AppButton>
+              ) : null}
+              <FlightSort value={sort} onChange={setSort} />
+            </Stack>
           </Stack>
 
           {visibleFlights.length === 0 ? (
             <EmptyState
               title="No flights match your filters"
               message="Clear or adjust filters to see more results."
+              action={
+                <AppButton variant="contained" onClick={clearFilters}>
+                  Clear filters
+                </AppButton>
+              }
             />
           ) : (
-            <FlightList flights={visibleFlights} onSelectFlight={onSelectFlight} />
+            <MemoFlightList flights={visibleFlights} onSelectFlight={handleSelectFlight} />
           )}
         </Stack>
       </Stack>
+
+      <Drawer
+        anchor="bottom"
+        open={!isDesktop && mobileFiltersOpen}
+        onClose={closeMobileFilters}
+        ModalProps={{ keepMounted: true }}
+        slotProps={{
+          paper: {
+            sx: {
+              maxHeight: '88vh',
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+              p: 2,
+            },
+          },
+        }}
+      >
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 1 }}
+        >
+          <Typography variant="h6" component="h2" id="mobile-filters-title">
+            Filters
+          </Typography>
+          <IconButton aria-label="Close filters" onClick={closeMobileFilters}>
+            <X aria-hidden="true" size={18} />
+          </IconButton>
+        </Stack>
+        <Box
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mobile-filters-title"
+          sx={{ overflow: 'auto', pb: 1 }}
+        >
+          {filterPanel}
+          <AppButton
+            variant="contained"
+            fullWidth
+            onClick={closeMobileFilters}
+            sx={{ mt: 2 }}
+          >
+            Show results
+          </AppButton>
+        </Box>
+      </Drawer>
     </Box>
   );
 }
+
+export const FlightSearchResults = memo(FlightSearchResultsComponent);

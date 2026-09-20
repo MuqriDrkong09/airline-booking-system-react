@@ -5,6 +5,7 @@ export type {
   FlightAirline,
   FlightBaggage,
   FlightEndpoint,
+  FlightFilterBounds,
   FlightFilterState,
   FlightLegValues,
   FlightOffer,
@@ -45,6 +46,7 @@ export {
   isCompleteFlightSearchRequest,
   useSearchFlightsQuery,
 } from './hooks/useFlights';
+export { useFlightFilters } from './hooks/useFlightFilters';
 export { useFlightSearchHydration } from './hooks/useFlightSearchHydration';
 export { AirportAutocomplete } from './components/AirportAutocomplete';
 export type { AirportAutocompleteProps } from './components/AirportAutocomplete';
@@ -80,14 +82,24 @@ export {
   serializeFlightSearchCriteria,
 } from './utils/searchParams';
 export {
+  countActiveFlightFilters,
+  clearFlightFilterParams,
+  parseFlightFilterParams,
+  writeFlightFilterParams,
+} from './utils/filterParams';
+export {
   DEFAULT_FLIGHT_FILTERS,
   filterFlightOffers,
   formatDuration,
   formatFlightDate,
   formatFlightTime,
+  formatHourLabel,
   formatPrice,
   formatStopsLabel,
   getAirlineOptions,
+  getCabinOptions,
+  getFilterBounds,
+  getHourOfDay,
   getMaxPriceCeiling,
   sortFlightOffers,
 } from './utils/flightResults';

@@ -90,4 +90,33 @@ describe('FlightSearchResults', () => {
 
     expect(screen.getByLabelText(/Sort by/i)).toHaveTextContent(/Duration: shortest/i);
   }, 15000);
+
+  it('lets the user toggle a stop filter and shows the active count', async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(
+      <FlightSearchResults
+        request={{
+          from: 'KUL',
+          to: 'SIN',
+          departure: '2026-10-20',
+          adults: 1,
+          children: 0,
+          infants: 0,
+          cabinClass: 'ECONOMY',
+        }}
+      />,
+      { initialEntries: ['/app/flights?from=KUL&to=SIN&departure=2026-10-20&adults=1&cabin=ECONOMY'] },
+    );
+
+    await screen.findByText(/Available flights/i);
+
+    const nonstop = await screen.findByRole('checkbox', { name: /Nonstop/i });
+    await user.click(nonstop);
+
+    await waitFor(() => {
+      expect(nonstop).toBeChecked();
+      expect(screen.getByText(/1 active filter/i)).toBeInTheDocument();
+    });
+  }, 15000);
 });

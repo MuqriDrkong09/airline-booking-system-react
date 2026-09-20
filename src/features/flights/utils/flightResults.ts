@@ -1,11 +1,13 @@
-import type { FlightFilterState, FlightOffer, FlightSortOption } from '../types/flight';
+import type { CabinClass } from '../types';
+import type {
+  FlightFilterBounds,
+  FlightFilterState,
+  FlightOffer,
+  FlightSortOption,
+} from '../types/flight';
+import { DEFAULT_FLIGHT_FILTERS } from './filterParams';
 
-export const DEFAULT_FLIGHT_FILTERS: FlightFilterState = {
-  stops: [],
-  airlines: [],
-  maxPrice: null,
-  minSeats: null,
-};
+export { DEFAULT_FLIGHT_FILTERS } from './filterParams';
 
 export function formatDuration(minutes: number): string {
   const hours = Math.floor(minutes / 60);
@@ -59,11 +61,42 @@ export function formatStopsLabel(stops: number, stopAirports: string[] = []): st
   return `${stops} stops${via}`;
 }
 
+export function getHourOfDay(isoLocal: string): number {
+  const timePart = isoLocal.includes('T') ? (isoLocal.split('T')[1] ?? '0:0') : '0:0';
+  const [hoursText = '0'] = timePart.split(':');
+  return Number.parseInt(hoursText, 10) || 0;
+}
+
+function matchesHourRange(
+  hour: number,
+  start: number | null,
+  end: number | null,
+): boolean {
+  if (start !== null && hour < start) {
+    return false;
+  }
+  if (end !== null && hour > end) {
+    return false;
+  }
+  return true;
+}
+
 export function filterFlightOffers(
   flights: FlightOffer[],
   filters: FlightFilterState,
 ): FlightOffer[] {
   return flights.filter((flight) => {
+    if (filters.priceMin !== null && flight.price.amount < filters.priceMin) {
+      return false;
+    }
+    if (filters.priceMax !== null && flight.price.amount > filters.priceMax) {
+      return false;
+    }
+
+    if (filters.airlines.length > 0 && !filters.airlines.includes(flight.airline.code)) {
+      return false;
+    }
+
     if (filters.stops.length > 0) {
       const bucket = flight.stops >= 2 ? 2 : (flight.stops as 0 | 1);
       if (!filters.stops.includes(bucket)) {
@@ -71,15 +104,32 @@ export function filterFlightOffers(
       }
     }
 
-    if (filters.airlines.length > 0 && !filters.airlines.includes(flight.airline.code)) {
+    const departureHour = getHourOfDay(flight.departureTime);
+    if (!matchesHourRange(departureHour, filters.departureHourStart, filters.departureHourEnd)) {
       return false;
     }
 
-    if (filters.maxPrice !== null && flight.price.amount > filters.maxPrice) {
+    const arrivalHour = getHourOfDay(flight.arrivalTime);
+    if (!matchesHourRange(arrivalHour, filters.arrivalHourStart, filters.arrivalHourEnd)) {
       return false;
     }
 
-    if (filters.minSeats !== null && flight.availableSeats < filters.minSeats) {
+    if (filters.durationMax !== null && flight.durationMinutes > filters.durationMax) {
+      return false;
+    }
+
+    if (
+      filters.cabinClasses.length > 0 &&
+      !filters.cabinClasses.includes(flight.cabinClass)
+    ) {
+      return false;
+    }
+
+    if (filters.refundableOnly && !flight.refundable) {
+      return false;
+    }
+
+    if (filters.baggageIncludedOnly && !flight.baggageIncluded) {
       return false;
     }
 
@@ -122,9 +172,44 @@ export function getAirlineOptions(flights: FlightOffer[]): Array<{ code: string;
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-export function getMaxPriceCeiling(flights: FlightOffer[]): number {
+export function getCabinOptions(flights: FlightOffer[]): CabinClass[] {
+  return [...new Set(flights.map((flight) => flight.cabinClass))];
+}
+
+export function getFilterBounds(flights: FlightOffer[]): FlightFilterBounds {
   if (flights.length === 0) {
-    return 0;
+    return { priceMin: 0, priceMax: 0, durationMax: 0 };
   }
-  return Math.max(...flights.map((flight) => flight.price.amount));
+
+  return {
+    priceMin: Math.min(...flights.map((flight) => flight.price.amount)),
+    priceMax: Math.max(...flights.map((flight) => flight.price.amount)),
+    durationMax: Math.max(...flights.map((flight) => flight.durationMinutes)),
+  };
+}
+
+/** @deprecated Prefer getFilterBounds().priceMax */
+export function getMaxPriceCeiling(flights: FlightOffer[]): number {
+  return getFilterBounds(flights).priceMax;
+}
+
+export function createDefaultFiltersForBounds(bounds: FlightFilterBounds): FlightFilterState {
+  return {
+    ...DEFAULT_FLIGHT_FILTERS,
+    priceMin: bounds.priceMin,
+    priceMax: bounds.priceMax,
+    departureHourStart: 0,
+    departureHourEnd: 24,
+    arrivalHourStart: 0,
+    arrivalHourEnd: 24,
+    durationMax: bounds.durationMax,
+  };
+}
+
+export function formatHourLabel(hour: number): string {
+  const clamped = Math.max(0, Math.min(24, hour));
+  if (clamped === 24) {
+    return '24:00';
+  }
+  return `${String(clamped).padStart(2, '0')}:00`;
 }

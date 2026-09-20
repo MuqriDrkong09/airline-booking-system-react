@@ -102,6 +102,14 @@ export function FlightCard({ flight, onSelect }: FlightCardProps) {
           tone={flight.availableSeats <= 4 ? 'warning' : 'default'}
           variant="outlined"
         />
+        {flight.refundable ? (
+          <AppBadge label="Refundable" tone="success" variant="outlined" />
+        ) : null}
+        {flight.baggageIncluded ? (
+          <AppBadge label="Baggage included" variant="outlined" />
+        ) : (
+          <AppBadge label="No checked bag" tone="warning" variant="outlined" />
+        )}
       </Stack>
 
       <Divider />

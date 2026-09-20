@@ -119,6 +119,9 @@ Registration, email verification, and password reset also work in mock mode. Ver
   baggage, price, and seats
 - Reusable results UI: `FlightCard`, `FlightList`, `FlightPrice`, `FlightTimeline`,
   `FlightFilters`, `FlightSort`
+- Filters: price range, airlines, stops, departure/arrival time, duration, cabin,
+  refundable, baggage — synced to the URL, with clear action, active count,
+  desktop sidebar, and mobile drawer
 - Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation

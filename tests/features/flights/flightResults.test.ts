@@ -23,6 +23,8 @@ const sampleFlights: FlightOffer[] = [
     baggage: { cabinKg: 7, checkedKg: 20, pieces: 1 },
     price: { amount: 900, currency: 'MYR' },
     availableSeats: 8,
+    refundable: true,
+    baggageIncluded: true,
   },
   {
     id: '2',
@@ -35,10 +37,12 @@ const sampleFlights: FlightOffer[] = [
     durationMinutes: 600,
     stops: 1,
     stopAirports: ['SIN'],
-    cabinClass: 'ECONOMY',
-    baggage: { cabinKg: 7, checkedKg: 20, pieces: 1 },
+    cabinClass: 'BUSINESS',
+    baggage: { cabinKg: 7, checkedKg: 0, pieces: 0 },
     price: { amount: 700, currency: 'MYR' },
     availableSeats: 3,
+    refundable: false,
+    baggageIncluded: false,
   },
 ];
 
@@ -57,6 +61,28 @@ describe('flightResults helpers', () => {
     });
 
     expect(filtered.map((flight) => flight.id)).toEqual(['1']);
+  });
+
+  it('filters by time, duration, cabin, refundable, and baggage', () => {
+    const filtered = filterFlightOffers(sampleFlights, {
+      ...DEFAULT_FLIGHT_FILTERS,
+      departureHourStart: 9,
+      departureHourEnd: 12,
+      durationMax: 650,
+      cabinClasses: ['BUSINESS'],
+      refundableOnly: false,
+      baggageIncludedOnly: false,
+    });
+
+    expect(filtered.map((flight) => flight.id)).toEqual(['2']);
+
+    expect(
+      filterFlightOffers(sampleFlights, {
+        ...DEFAULT_FLIGHT_FILTERS,
+        refundableOnly: true,
+        baggageIncludedOnly: true,
+      }).map((flight) => flight.id),
+    ).toEqual(['1']);
   });
 
   it('sorts by price ascending by default helper', () => {
