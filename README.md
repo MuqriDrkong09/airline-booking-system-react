@@ -105,6 +105,17 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Loading skeleton, save-button state, success and error alerts
 - Data fetching/mutations with TanStack Query
 
+### Flight search (`src/features/flights/`)
+
+- Trip types: one-way, round-trip, multi-city
+- Airport autocomplete with origin/destination swap
+- Departure / return date validation (and per-leg dates for multi-city)
+- Passenger selector (adults, children, infants) and cabin class
+  (`ECONOMY`, `PREMIUM_ECONOMY`, `BUSINESS`, `FIRST`)
+- Zod + React Hook Form validation
+- Search criteria persisted in URL query parameters for sharing/bookmarks  
+  Example: `/app/flights?from=KUL&to=NRT&departure=2026-10-20&return=2026-10-27&adults=2&cabin=ECONOMY`
+
 ### Layouts & navigation
 
 - **Public** — marketing shell, sign-in / create-account CTAs

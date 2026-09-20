@@ -1,162 +1,77 @@
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { ArrowLeftRight } from 'lucide-react';
-import { useState } from 'react';
-import { AppAlert, AppButton, AppCard, AppInput, PageContainer } from '@/components/common';
-import { FormField } from '@/components/forms/FormField';
-import { AirportAutocomplete, formatAirportOptionLabel, type Airport } from '@/features/flights';
-
-function tomorrowIsoDate(): string {
-  const date = new Date();
-  date.setUTCDate(date.getUTCDate() + 1);
-  return date.toISOString().slice(0, 10);
-}
+import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { AppAlert, PageContainer, PageLoader } from '@/components/common';
+import {
+  criteriaFromFormValues,
+  FlightSearchForm,
+  formatSearchSummary,
+  serializeFlightSearchCriteria,
+  useFlightSearchHydration,
+  type FlightSearchFormValues,
+} from '@/features/flights';
 
 export function SearchFlightsPage() {
-  const [origin, setOrigin] = useState<Airport | null>(null);
-  const [destination, setDestination] = useState<Airport | null>(null);
-  const [departureDate, setDepartureDate] = useState(tomorrowIsoDate);
-  const [originError, setOriginError] = useState<string | undefined>();
-  const [destinationError, setDestinationError] = useState<string | undefined>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { defaultValues, isHydrating, hydrationKey, parsedCriteria } =
+    useFlightSearchHydration(searchParams);
   const [searchSummary, setSearchSummary] = useState<string | null>(null);
 
-  const swapAirports = () => {
-    setOrigin(destination);
-    setDestination(origin);
-    setOriginError(undefined);
-    setDestinationError(undefined);
-    setSearchSummary(null);
+  const initialSummary = useMemo(() => {
+    if (!parsedCriteria || isHydrating) {
+      return null;
+    }
+
+    const hasRoute =
+      parsedCriteria.tripType === 'MULTI_CITY'
+        ? Boolean(parsedCriteria.legs?.length) &&
+          defaultValues.legs.every((leg) => leg.origin && leg.destination)
+        : Boolean(defaultValues.origin && defaultValues.destination && defaultValues.departureDate);
+
+    if (!hasRoute) {
+      return null;
+    }
+
+    return formatSearchSummary(defaultValues);
+  }, [defaultValues, isHydrating, parsedCriteria]);
+
+  const handleSearch = (values: FlightSearchFormValues) => {
+    const criteria = criteriaFromFormValues(values);
+    setSearchParams(serializeFlightSearchCriteria(criteria), { replace: true });
+    setSearchSummary(formatSearchSummary(values));
   };
 
-  const handleSearch = () => {
-    let hasError = false;
-
-    if (!origin) {
-      setOriginError('Select a departure airport');
-      hasError = true;
-    } else {
-      setOriginError(undefined);
-    }
-
-    if (!destination) {
-      setDestinationError('Select an arrival airport');
-      hasError = true;
-    } else {
-      setDestinationError(undefined);
-    }
-
-    if (origin && destination && origin.code === destination.code) {
-      setDestinationError('Arrival airport must be different from departure');
-      hasError = true;
-    }
-
-    if (hasError || !origin || !destination) {
-      setSearchSummary(null);
-      return;
-    }
-
-    setSearchSummary(
-      `Searching ${formatAirportOptionLabel(origin)} → ${formatAirportOptionLabel(destination)} on ${departureDate}. Flight results will be added in a later update.`,
-    );
-  };
+  const summary = searchSummary ?? initialSummary;
 
   return (
     <PageContainer
       title="Search flights"
-      description="Choose origin and destination airports to start planning your trip."
+      description="Choose trip type, airports, dates, passengers, and cabin class. Your search is saved in the URL so you can share or bookmark it."
     >
-      <Stack spacing={3} sx={{ maxWidth: 880 }}>
-        <AppCard title="Where are you flying?">
-          <Stack spacing={2.5}>
-            <Stack
-              direction={{ xs: 'column', md: 'row' }}
-              spacing={2}
-              sx={{ alignItems: { md: 'flex-end' } }}
-            >
-              <Box sx={{ flex: 1, minWidth: 0, width: '100%' }}>
-                <AirportAutocomplete
-                  id="flight-origin"
-                  label="From"
-                  value={origin}
-                  onChange={(airport) => {
-                    setOrigin(airport);
-                    setOriginError(undefined);
-                    setSearchSummary(null);
-                  }}
-                  required
-                  errorMessage={originError}
-                  excludeAirportCode={destination?.code}
-                  helperText="Search by code, city, airport name, or country"
-                />
-              </Box>
+      <Stack spacing={3} sx={{ maxWidth: 960 }}>
+        {isHydrating ? (
+          <PageLoader label="Loading search criteria…" />
+        ) : (
+          <FlightSearchForm
+            key={hydrationKey}
+            defaultValues={defaultValues}
+            formKey={hydrationKey}
+            onSearch={handleSearch}
+          />
+        )}
 
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: { xs: 'flex-end', md: 'center' },
-                  pb: { md: 0.5 },
-                }}
-              >
-                <IconButton
-                  aria-label="Swap origin and destination"
-                  onClick={swapAirports}
-                  disabled={!origin && !destination}
-                  color="primary"
-                >
-                  <ArrowLeftRight aria-hidden="true" size={20} />
-                </IconButton>
-              </Box>
-
-              <Box sx={{ flex: 1, minWidth: 0, width: '100%' }}>
-                <AirportAutocomplete
-                  id="flight-destination"
-                  label="To"
-                  value={destination}
-                  onChange={(airport) => {
-                    setDestination(airport);
-                    setDestinationError(undefined);
-                    setSearchSummary(null);
-                  }}
-                  required
-                  errorMessage={destinationError}
-                  excludeAirportCode={origin?.code}
-                  helperText="Search by code, city, airport name, or country"
-                />
-              </Box>
-            </Stack>
-
-            <Box sx={{ maxWidth: { sm: 280 } }}>
-              <FormField id="flight-departure-date" label="Departure date" required>
-                <AppInput
-                  type="date"
-                  value={departureDate}
-                  onChange={(event) => {
-                    setDepartureDate(event.target.value);
-                    setSearchSummary(null);
-                  }}
-                  slotProps={{
-                    inputLabel: { shrink: true },
-                    htmlInput: { min: tomorrowIsoDate() },
-                  }}
-                />
-              </FormField>
-            </Box>
-
-            <AppButton variant="contained" size="large" onClick={handleSearch} sx={{ alignSelf: 'flex-start' }}>
-              Search flights
-            </AppButton>
-          </Stack>
-        </AppCard>
-
-        {searchSummary ? (
-          <AppAlert severity="info" title="Search ready">
-            {searchSummary}
+        {summary ? (
+          <AppAlert severity="info" title="Search criteria">
+            {summary}. Flight results will appear here in a later update.
           </AppAlert>
         ) : (
           <Typography variant="body2" color="text.secondary">
-            Try searching for airports like <strong>KUL</strong>, <strong>Singapore</strong>, or{' '}
+            Try a shared link like{' '}
+            <strong>
+              /app/flights?from=KUL&to=NRT&departure=2026-10-20&return=2026-10-27&adults=2&cabin=ECONOMY
+            </strong>
+            , or search for airports such as <strong>KUL</strong>, <strong>Singapore</strong>, or{' '}
             <strong>Tokyo</strong>.
           </Typography>
         )}
