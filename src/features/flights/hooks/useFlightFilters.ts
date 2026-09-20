@@ -4,7 +4,13 @@ import {
   useMemo,
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import type { FlightFilterBounds, FlightFilterState, FlightSortOption } from '../types/flight';
+import {
+  DEFAULT_FLIGHT_SORT,
+  isFlightSortOption,
+  type FlightFilterBounds,
+  type FlightFilterState,
+  type FlightSortOption,
+} from '../types/flight';
 import {
   areFlightFiltersEqual,
   clearFlightFilterParams,
@@ -14,19 +20,11 @@ import {
   writeFlightFilterParams,
 } from '../utils/filterParams';
 
-const SORT_OPTIONS: FlightSortOption[] = [
-  'price_asc',
-  'price_desc',
-  'duration_asc',
-  'departure_asc',
-  'arrival_asc',
-];
-
 function parseSort(value: string | null): FlightSortOption {
-  if (value && (SORT_OPTIONS as string[]).includes(value)) {
-    return value as FlightSortOption;
+  if (value && isFlightSortOption(value)) {
+    return value;
   }
-  return 'price_asc';
+  return DEFAULT_FLIGHT_SORT;
 }
 
 export function useFlightFilters(bounds?: FlightFilterBounds | null) {
@@ -68,7 +66,6 @@ export function useFlightFilters(bounds?: FlightFilterBounds | null) {
       setSearchParams(
         (previous) => {
           const cleared = clearFlightFilterParams(previous);
-          // Keep sort when clearing filters.
           const sortValue = previous.get('sort');
           if (sortValue) {
             cleared.set('sort', sortValue);
@@ -86,7 +83,7 @@ export function useFlightFilters(bounds?: FlightFilterBounds | null) {
         setSearchParams(
           (previous) => {
             const params = new URLSearchParams(previous);
-            if (next === 'price_asc') {
+            if (next === DEFAULT_FLIGHT_SORT) {
               params.delete('sort');
             } else {
               params.set('sort', next);

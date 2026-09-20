@@ -1,30 +1,48 @@
+import { memo } from 'react';
 import { AppSelect } from '@/components/common';
-import type { FlightSortOption } from '../../types/flight';
+import {
+  FLIGHT_SORT_OPTION_LABELS,
+  FLIGHT_SORT_OPTIONS,
+  type FlightSortOption,
+} from '../../types/flight';
 
 export interface FlightSortProps {
   value: FlightSortOption;
   onChange: (value: FlightSortOption) => void;
   disabled?: boolean;
+  fullWidth?: boolean;
+  id?: string;
+  label?: string;
 }
 
-const SORT_OPTIONS: ReadonlyArray<{ value: FlightSortOption; label: string }> = [
-  { value: 'price_asc', label: 'Price: low to high' },
-  { value: 'price_desc', label: 'Price: high to low' },
-  { value: 'duration_asc', label: 'Duration: shortest' },
-  { value: 'departure_asc', label: 'Departure: earliest' },
-  { value: 'arrival_asc', label: 'Arrival: earliest' },
-];
+export const FLIGHT_SORT_SELECT_OPTIONS: ReadonlyArray<{
+  value: FlightSortOption;
+  label: string;
+}> = FLIGHT_SORT_OPTIONS.map((value) => ({
+  value,
+  label: FLIGHT_SORT_OPTION_LABELS[value],
+}));
 
-export function FlightSort({ value, onChange, disabled = false }: FlightSortProps) {
+function FlightSortComponent({
+  value,
+  onChange,
+  disabled = false,
+  fullWidth = true,
+  id = 'flight-sort',
+  label = 'Sort by',
+}: FlightSortProps) {
   return (
     <AppSelect
-      id="flight-sort"
-      label="Sort by"
-      options={SORT_OPTIONS}
+      id={id}
+      label={label}
+      options={FLIGHT_SORT_SELECT_OPTIONS}
       value={value}
       disabled={disabled}
+      fullWidth={fullWidth}
       onChange={(next) => onChange(next)}
       sx={{ minWidth: { sm: 220 } }}
     />
   );
 }
+
+export const FlightSort = memo(FlightSortComponent);

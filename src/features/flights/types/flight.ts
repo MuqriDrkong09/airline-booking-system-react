@@ -44,7 +44,31 @@ export interface FlightOffer {
   baggageIncluded: boolean;
 }
 
-export type FlightSortOption = 'price_asc' | 'price_desc' | 'duration_asc' | 'departure_asc' | 'arrival_asc';
+export const FLIGHT_SORT_OPTIONS = [
+  'recommended',
+  'lowest_price',
+  'shortest_duration',
+  'earliest_departure',
+  'latest_departure',
+  'earliest_arrival',
+] as const;
+
+export type FlightSortOption = (typeof FLIGHT_SORT_OPTIONS)[number];
+
+export const DEFAULT_FLIGHT_SORT: FlightSortOption = 'recommended';
+
+export const FLIGHT_SORT_OPTION_LABELS: Record<FlightSortOption, string> = {
+  recommended: 'Recommended',
+  lowest_price: 'Lowest Price',
+  shortest_duration: 'Shortest Duration',
+  earliest_departure: 'Earliest Departure',
+  latest_departure: 'Latest Departure',
+  earliest_arrival: 'Earliest Arrival',
+};
+
+export function isFlightSortOption(value: string): value is FlightSortOption {
+  return (FLIGHT_SORT_OPTIONS as readonly string[]).includes(value);
+}
 
 /** Minutes from midnight (0–1440). Null means unconstrained. */
 export interface FlightFilterState {

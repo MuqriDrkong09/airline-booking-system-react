@@ -186,7 +186,22 @@ function FlightSearchResultsComponent({
               ) : null}
             </Stack>
 
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <Stack
+              direction="row"
+              spacing={isDesktop ? 1 : undefined}
+              useFlexGap={!isDesktop}
+              sx={
+                isDesktop
+                  ? { alignItems: 'center', flexWrap: 'wrap' }
+                  : {
+                      alignItems: 'flex-end',
+                      flexWrap: 'wrap',
+                      columnGap: 1.5,
+                      rowGap: 2,
+                      width: '100%',
+                    }
+              }
+            >
               {!isDesktop ? (
                 <AppButton
                   variant="outlined"
@@ -199,7 +214,11 @@ function FlightSearchResultsComponent({
                   {activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
                 </AppButton>
               ) : null}
-              <FlightSort value={sort} onChange={setSort} />
+              <FlightSort
+                value={sort}
+                onChange={setSort}
+                fullWidth={isDesktop}
+              />
             </Stack>
           </Stack>
 

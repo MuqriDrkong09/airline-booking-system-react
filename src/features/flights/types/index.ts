@@ -19,3 +19,9 @@ export type {
   FlightSearchResponse,
   FlightSortOption,
 } from './flight';
+export {
+  DEFAULT_FLIGHT_SORT,
+  FLIGHT_SORT_OPTION_LABELS,
+  FLIGHT_SORT_OPTIONS,
+  isFlightSortOption,
+} from './flight';

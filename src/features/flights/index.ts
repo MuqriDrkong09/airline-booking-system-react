@@ -17,7 +17,14 @@ export type {
   FlightSortOption,
   TripType,
 } from './types';
-export { CABIN_CLASSES, TRIP_TYPES } from './types';
+export {
+  CABIN_CLASSES,
+  DEFAULT_FLIGHT_SORT,
+  FLIGHT_SORT_OPTION_LABELS,
+  FLIGHT_SORT_OPTIONS,
+  isFlightSortOption,
+  TRIP_TYPES,
+} from './types';
 export {
   airportKeys,
   airportsApi,
@@ -64,7 +71,7 @@ export { FlightTimeline } from './components/results/FlightTimeline';
 export type { FlightTimelineProps } from './components/results/FlightTimeline';
 export { FlightFilters } from './components/results/FlightFilters';
 export type { FlightFiltersProps } from './components/results/FlightFilters';
-export { FlightSort } from './components/results/FlightSort';
+export { FlightSort, FLIGHT_SORT_SELECT_OPTIONS } from './components/results/FlightSort';
 export type { FlightSortProps } from './components/results/FlightSort';
 export { FlightSearchResults } from './components/results/FlightSearchResults';
 export type { FlightSearchResultsProps } from './components/results/FlightSearchResults';

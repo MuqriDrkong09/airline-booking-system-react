@@ -86,9 +86,9 @@ describe('FlightSearchResults', () => {
     await screen.findByText(/Available flights/i);
 
     await user.click(screen.getByLabelText(/Sort by/i));
-    await user.click(await screen.findByRole('option', { name: /Duration: shortest/i }));
+    await user.click(await screen.findByRole('option', { name: /Shortest Duration/i }));
 
-    expect(screen.getByLabelText(/Sort by/i)).toHaveTextContent(/Duration: shortest/i);
+    expect(screen.getByLabelText(/Sort by/i)).toHaveTextContent(/Shortest Duration/i);
   }, 15000);
 
   it('lets the user toggle a stop filter and shows the active count', async () => {

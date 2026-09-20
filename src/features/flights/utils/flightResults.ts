@@ -138,24 +138,32 @@ export function filterFlightOffers(
 }
 
 export function sortFlightOffers(
-  flights: FlightOffer[],
+  flights: readonly FlightOffer[],
   sort: FlightSortOption,
 ): FlightOffer[] {
-  const next = [...flights];
+  // Always return a new array so callers never mutate the API result.
+  const next = flights.slice();
+
+  if (sort === 'recommended') {
+    return next;
+  }
 
   next.sort((left, right) => {
     switch (sort) {
-      case 'price_desc':
-        return right.price.amount - left.price.amount;
-      case 'duration_asc':
-        return left.durationMinutes - right.durationMinutes;
-      case 'departure_asc':
-        return left.departureTime.localeCompare(right.departureTime);
-      case 'arrival_asc':
-        return left.arrivalTime.localeCompare(right.arrivalTime);
-      case 'price_asc':
-      default:
+      case 'lowest_price':
         return left.price.amount - right.price.amount;
+      case 'shortest_duration':
+        return left.durationMinutes - right.durationMinutes;
+      case 'earliest_departure':
+        return left.departureTime.localeCompare(right.departureTime);
+      case 'latest_departure':
+        return right.departureTime.localeCompare(left.departureTime);
+      case 'earliest_arrival':
+        return left.arrivalTime.localeCompare(right.arrivalTime);
+      default: {
+        const _exhaustive: never = sort;
+        return _exhaustive;
+      }
     }
   });
 

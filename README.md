@@ -122,6 +122,8 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Filters: price range, airlines, stops, departure/arrival time, duration, cabin,
   refundable, baggage — synced to the URL, with clear action, active count,
   desktop sidebar, and mobile drawer
+- Sort: Recommended, Lowest Price, Shortest Duration, Earliest/Latest Departure,
+  Earliest Arrival — type-safe, non-mutating, synced via `sort` URL param
 - Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation

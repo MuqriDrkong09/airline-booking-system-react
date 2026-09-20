@@ -1,5 +1,6 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { ComponentProps } from 'react';
 import { AppSelect } from '@/components/common/AppSelect';
 import { renderWithProviders } from '@tests/utils/test-utils';
 
@@ -144,7 +145,11 @@ describe('AppSelect', () => {
         label="Cabin class"
         options={cabinOptions}
         value="ECONOMY"
-        formControlProps={{ 'data-testid': 'cabin-form-control', sx: { mt: 2 } }}
+        formControlProps={
+          { 'data-testid': 'cabin-form-control', sx: { mt: 2 } } as NonNullable<
+            ComponentProps<typeof AppSelect>['formControlProps']
+          >
+        }
       />,
     );
 

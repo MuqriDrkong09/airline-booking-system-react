@@ -85,8 +85,35 @@ describe('flightResults helpers', () => {
     ).toEqual(['1']);
   });
 
-  it('sorts by price ascending by default helper', () => {
-    const sorted = sortFlightOffers(sampleFlights, 'price_asc');
+  it('sorts without mutating the original array', () => {
+    const originalOrder = sampleFlights.map((flight) => flight.id);
+    const sorted = sortFlightOffers(sampleFlights, 'lowest_price');
+
     expect(sorted.map((flight) => flight.id)).toEqual(['2', '1']);
+    expect(sampleFlights.map((flight) => flight.id)).toEqual(originalOrder);
+    expect(sorted).not.toBe(sampleFlights);
+  });
+
+  it('keeps API order for recommended and supports the other sort options', () => {
+    expect(sortFlightOffers(sampleFlights, 'recommended').map((flight) => flight.id)).toEqual([
+      '1',
+      '2',
+    ]);
+    expect(sortFlightOffers(sampleFlights, 'shortest_duration').map((flight) => flight.id)).toEqual([
+      '1',
+      '2',
+    ]);
+    expect(sortFlightOffers(sampleFlights, 'earliest_departure').map((flight) => flight.id)).toEqual([
+      '1',
+      '2',
+    ]);
+    expect(sortFlightOffers(sampleFlights, 'latest_departure').map((flight) => flight.id)).toEqual([
+      '2',
+      '1',
+    ]);
+    expect(sortFlightOffers(sampleFlights, 'earliest_arrival').map((flight) => flight.id)).toEqual([
+      '1',
+      '2',
+    ]);
   });
 });
