@@ -2,9 +2,18 @@ export type {
   Airport,
   AirportSearchParams,
   CabinClass,
+  FlightAirline,
+  FlightBaggage,
+  FlightEndpoint,
+  FlightFilterState,
   FlightLegValues,
+  FlightOffer,
+  FlightPriceAmount,
   FlightSearchCriteria,
   FlightSearchFormValues,
+  FlightSearchRequest,
+  FlightSearchResponse,
+  FlightSortOption,
   TripType,
 } from './types';
 export { CABIN_CLASSES, TRIP_TYPES } from './types';
@@ -12,19 +21,30 @@ export {
   airportKeys,
   airportsApi,
   createHttpAirportsApi,
+  createHttpFlightsApi,
   createMockAirportsApi,
+  createMockFlightsApi,
+  flightKeys,
+  flightsApi,
+  generateMockFlightOffers,
   getAirportByCode,
   getAirports,
   MOCK_AIRPORTS,
   mockAirportsApi,
+  mockFlightsApi,
   searchAirports,
+  searchFlights,
 } from './api';
-export type { AirportsApi } from './api';
+export type { AirportsApi, FlightsApi } from './api';
 export {
   useAirportByCodeQuery,
   useAirportsQuery,
   useSearchAirportsQuery,
 } from './hooks/useAirports';
+export {
+  isCompleteFlightSearchRequest,
+  useSearchFlightsQuery,
+} from './hooks/useFlights';
 export { useFlightSearchHydration } from './hooks/useFlightSearchHydration';
 export { AirportAutocomplete } from './components/AirportAutocomplete';
 export type { AirportAutocompleteProps } from './components/AirportAutocomplete';
@@ -32,6 +52,20 @@ export { FlightSearchForm } from './components/FlightSearchForm';
 export type { FlightSearchFormProps } from './components/FlightSearchForm';
 export { PassengerCountControl } from './components/PassengerSelector';
 export { TripTypeSelector } from './components/TripTypeSelector';
+export { FlightCard } from './components/results/FlightCard';
+export type { FlightCardProps } from './components/results/FlightCard';
+export { FlightList } from './components/results/FlightList';
+export type { FlightListProps } from './components/results/FlightList';
+export { FlightPrice } from './components/results/FlightPrice';
+export type { FlightPriceProps } from './components/results/FlightPrice';
+export { FlightTimeline } from './components/results/FlightTimeline';
+export type { FlightTimelineProps } from './components/results/FlightTimeline';
+export { FlightFilters } from './components/results/FlightFilters';
+export type { FlightFiltersProps } from './components/results/FlightFilters';
+export { FlightSort } from './components/results/FlightSort';
+export type { FlightSortProps } from './components/results/FlightSort';
+export { FlightSearchResults } from './components/results/FlightSearchResults';
+export type { FlightSearchResultsProps } from './components/results/FlightSearchResults';
 export {
   formatAirportInputValue,
   formatAirportOptionLabel,
@@ -46,6 +80,18 @@ export {
   serializeFlightSearchCriteria,
 } from './utils/searchParams';
 export {
+  DEFAULT_FLIGHT_FILTERS,
+  filterFlightOffers,
+  formatDuration,
+  formatFlightDate,
+  formatFlightTime,
+  formatPrice,
+  formatStopsLabel,
+  getAirlineOptions,
+  getMaxPriceCeiling,
+  sortFlightOffers,
+} from './utils/flightResults';
+export {
   createDefaultFlightSearchValues,
   createEmptyLeg,
   flightSearchSchema,
@@ -58,3 +104,4 @@ export {
   MIN_MULTI_CITY_LEGS,
   TRIP_TYPE_OPTIONS,
 } from './constants/search';
+export { MOCK_AIRLINES } from './constants/airlines';

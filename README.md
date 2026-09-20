@@ -115,6 +115,11 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Zod + React Hook Form validation
 - Search criteria persisted in URL query parameters for sharing/bookmarks  
   Example: `/app/flights?from=KUL&to=NRT&departure=2026-10-20&return=2026-10-27&adults=2&cabin=ECONOMY`
+- Search results with airline, logo, flight number, times, duration, stops, cabin,
+  baggage, price, and seats
+- Reusable results UI: `FlightCard`, `FlightList`, `FlightPrice`, `FlightTimeline`,
+  `FlightFilters`, `FlightSort`
+- Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation
 
