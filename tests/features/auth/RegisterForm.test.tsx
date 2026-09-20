@@ -48,38 +48,49 @@ describe('RegisterForm', () => {
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
-  it('calls onSuccess after a successful registration', async () => {
-    const user = userEvent.setup();
-    const onSuccess = jest.fn();
-    useAuthStore.setState({
-      register: jest.fn().mockResolvedValue('Registration successful'),
-    });
+  it(
+    'calls onSuccess after a successful registration',
+    async () => {
+      // Instant keystrokes — full form fill is otherwise too slow for the default timeout.
+      const user = userEvent.setup({ delay: null });
+      const onSuccess = jest.fn();
+      useAuthStore.setState({
+        register: jest.fn().mockResolvedValue('Registration successful'),
+      });
 
-    renderWithProviders(<RegisterForm onSuccess={onSuccess} />);
-    await fillValidRegistrationForm(user);
-    await user.click(screen.getByRole('button', { name: 'Create account' }));
+      renderWithProviders(<RegisterForm onSuccess={onSuccess} />);
+      await fillValidRegistrationForm(user);
+      await user.click(screen.getByRole('button', { name: 'Create account' }));
 
-    await waitFor(() => {
-      expect(onSuccess).toHaveBeenCalledWith('Registration successful');
-    });
-  });
+      await waitFor(() => {
+        expect(onSuccess).toHaveBeenCalledWith('Registration successful');
+      });
+    },
+    15000,
+  );
 
-  it('surfaces API errors from the auth store', async () => {
-    const user = userEvent.setup();
-    useAuthStore.setState({
-      register: jest.fn().mockImplementation(async () => {
-        useAuthStore.setState({ error: 'An account with this email already exists.' });
-        throw new AuthApiError('An account with this email already exists.', { status: 409 });
-      }),
-    });
+  it(
+    'surfaces API errors from the auth store',
+    async () => {
+      const user = userEvent.setup({ delay: null });
+      useAuthStore.setState({
+        register: jest.fn().mockImplementation(async () => {
+          useAuthStore.setState({ error: 'An account with this email already exists.' });
+          throw new AuthApiError('An account with this email already exists.', { status: 409 });
+        }),
+      });
 
-    renderWithProviders(<RegisterForm />);
-    await fillValidRegistrationForm(user);
-    await user.click(screen.getByRole('button', { name: 'Create account' }));
+      renderWithProviders(<RegisterForm />);
+      await fillValidRegistrationForm(user);
+      await user.click(screen.getByRole('button', { name: 'Create account' }));
 
-    expect(
-      await screen.findByText('An account with this email already exists.'),
-    ).toBeInTheDocument();
-    expect(within(screen.getByRole('alert')).getByText(/Registration failed/i)).toBeInTheDocument();
-  });
+      expect(
+        await screen.findByText('An account with this email already exists.'),
+      ).toBeInTheDocument();
+      expect(
+        within(screen.getByRole('alert')).getByText(/Registration failed/i),
+      ).toBeInTheDocument();
+    },
+    15000,
+  );
 });
