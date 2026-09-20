@@ -9,6 +9,7 @@ import { RegisterPage } from '@/pages/auth/RegisterPage';
 import { ResetPasswordPage } from '@/pages/auth/ResetPasswordPage';
 import { VerifyEmailPage } from '@/pages/auth/VerifyEmailPage';
 import { ProfilePage } from '@/pages/customer/ProfilePage';
+import { FlightDetailsPage } from '@/pages/customer/FlightDetailsPage';
 import { SearchFlightsPage } from '@/pages/customer/SearchFlightsPage';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -43,6 +44,7 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <PlaceholderPage title="Customer Home" /> },
               { path: 'flights', element: <SearchFlightsPage /> },
+              { path: 'flights/:flightId', element: <FlightDetailsPage /> },
               { path: 'bookings', element: <PlaceholderPage title="My Bookings" /> },
               { path: 'check-in', element: <PlaceholderPage title="Check-in" /> },
               { path: 'notifications', element: <PlaceholderPage title="Notifications" /> },

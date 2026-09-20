@@ -7,31 +7,82 @@ import {
   type FlightOffer,
 } from '@/features/flights';
 
-const sampleFlights: FlightOffer[] = [
-  {
-    id: '1',
-    airline: { code: 'MH', name: 'Malaysia Airlines' },
-    flightNumber: 'MH1',
-    origin: { code: 'KUL', city: 'Kuala Lumpur', airportName: 'KLIA' },
-    destination: { code: 'NRT', city: 'Tokyo', airportName: 'Narita' },
-    departureTime: '2026-10-20T08:00',
-    arrivalTime: '2026-10-20T16:00',
-    durationMinutes: 480,
+function createSampleFlight(overrides: Partial<FlightOffer> & Pick<FlightOffer, 'id'>): FlightOffer {
+  const origin = overrides.origin ?? {
+    code: 'KUL',
+    city: 'Kuala Lumpur',
+    airportName: 'KLIA',
+    terminal: '1',
+  };
+  const destination = overrides.destination ?? {
+    code: 'NRT',
+    city: 'Tokyo',
+    airportName: 'Narita',
+    terminal: '2',
+  };
+  const airline = overrides.airline ?? { code: 'MH', name: 'Malaysia Airlines' };
+  const aircraft = overrides.aircraft ?? { model: 'Boeing 737-800', registration: '9M-100' };
+  const departureTime = overrides.departureTime ?? '2026-10-20T08:00';
+  const arrivalTime = overrides.arrivalTime ?? '2026-10-20T16:00';
+  const durationMinutes = overrides.durationMinutes ?? 480;
+  const flightNumber = overrides.flightNumber ?? 'MH1';
+
+  return {
+    airline,
+    flightNumber,
+    aircraft,
+    origin,
+    destination,
+    departureTime,
+    arrivalTime,
+    durationMinutes,
     stops: 0,
     stopAirports: [],
     cabinClass: 'ECONOMY',
-    baggage: { cabinKg: 7, checkedKg: 20, pieces: 1 },
+    baggage: {
+      cabinKg: 7,
+      checkedKg: 20,
+      pieces: 1,
+      allowanceSummary: '1 checked piece up to 20kg · 7kg cabin bag',
+    },
+    amenities: {
+      meals: 'Hot meal and soft drinks',
+      wifi: true,
+      wifiNotes: 'Wi-Fi available for purchase',
+      seatInformation: 'Standard seat · 30–32" pitch',
+    },
+    policies: {
+      refundPolicy: 'Refundable before departure with a fee.',
+      changePolicy: 'Changes allowed with fare difference.',
+      fareConditions: ['Name changes are not permitted after ticketing.'],
+    },
+    segments: [
+      {
+        id: `${overrides.id}-seg-1`,
+        flightNumber,
+        airline,
+        aircraft,
+        origin,
+        destination,
+        departureTime,
+        arrivalTime,
+        durationMinutes,
+      },
+    ],
     price: { amount: 900, currency: 'MYR' },
     availableSeats: 8,
     refundable: true,
     baggageIncluded: true,
-  },
-  {
+    ...overrides,
+  };
+}
+
+const sampleFlights: FlightOffer[] = [
+  createSampleFlight({ id: '1' }),
+  createSampleFlight({
     id: '2',
     airline: { code: 'SQ', name: 'Singapore Airlines' },
     flightNumber: 'SQ2',
-    origin: { code: 'KUL', city: 'Kuala Lumpur', airportName: 'KLIA' },
-    destination: { code: 'NRT', city: 'Tokyo', airportName: 'Narita' },
     departureTime: '2026-10-20T10:00',
     arrivalTime: '2026-10-20T20:00',
     durationMinutes: 600,
@@ -43,7 +94,7 @@ const sampleFlights: FlightOffer[] = [
     availableSeats: 3,
     refundable: false,
     baggageIncluded: false,
-  },
+  }),
 ];
 
 describe('flightResults helpers', () => {

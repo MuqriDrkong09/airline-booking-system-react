@@ -124,6 +124,9 @@ Registration, email verification, and password reset also work in mock mode. Ver
   desktop sidebar, and mobile drawer
 - Sort: Recommended, Lowest Price, Shortest Duration, Earliest/Latest Departure,
   Earliest Arrival — type-safe, non-mutating, synced via `sort` URL param
+- Flight details at `/app/flights/:flightId` with airline, aircraft, terminals,
+  schedule, segments, baggage, meals, Wi-Fi, seats, refund/change policies, and
+  fare conditions — plus a **Select Flight** action
 - Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation

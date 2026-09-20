@@ -11,12 +11,47 @@ export interface FlightEndpoint {
   code: string;
   city: string;
   airportName: string;
+  /** Departure or arrival terminal when known. */
+  terminal?: string;
+}
+
+export interface FlightAircraft {
+  model: string;
+  registration?: string;
 }
 
 export interface FlightBaggage {
   cabinKg: number;
   checkedKg: number;
   pieces: number;
+  /** Human-readable allowance summary for details views. */
+  allowanceSummary?: string;
+}
+
+export interface FlightAmenities {
+  meals: string;
+  wifi: boolean;
+  wifiNotes: string;
+  seatInformation: string;
+}
+
+export interface FlightFarePolicies {
+  refundPolicy: string;
+  changePolicy: string;
+  fareConditions: string[];
+}
+
+export interface FlightOfferSegment {
+  id: string;
+  flightNumber: string;
+  airline: FlightAirline;
+  aircraft: FlightAircraft;
+  origin: FlightEndpoint;
+  destination: FlightEndpoint;
+  /** ISO local-ish datetime string: YYYY-MM-DDTHH:mm */
+  departureTime: string;
+  arrivalTime: string;
+  durationMinutes: number;
 }
 
 export interface FlightPriceAmount {
@@ -28,6 +63,7 @@ export interface FlightOffer {
   id: string;
   airline: FlightAirline;
   flightNumber: string;
+  aircraft: FlightAircraft;
   origin: FlightEndpoint;
   destination: FlightEndpoint;
   /** ISO local-ish datetime string: YYYY-MM-DDTHH:mm */
@@ -38,6 +74,9 @@ export interface FlightOffer {
   stopAirports: string[];
   cabinClass: CabinClass;
   baggage: FlightBaggage;
+  amenities: FlightAmenities;
+  policies: FlightFarePolicies;
+  segments: FlightOfferSegment[];
   price: FlightPriceAmount;
   availableSeats: number;
   refundable: boolean;

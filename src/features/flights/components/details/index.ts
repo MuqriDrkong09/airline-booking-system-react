@@ -1,0 +1,14 @@
+export { BaggageInfo } from './BaggageInfo';
+export type { BaggageInfoProps } from './BaggageInfo';
+export { FareDetails } from './FareDetails';
+export type { FareDetailsProps } from './FareDetails';
+export { FlightDetails } from './FlightDetails';
+export type { FlightDetailsProps } from './FlightDetails';
+export { FlightDetailsHeader } from './FlightDetailsHeader';
+export type { FlightDetailsHeaderProps } from './FlightDetailsHeader';
+export { FlightPolicies } from './FlightPolicies';
+export type { FlightPoliciesProps } from './FlightPolicies';
+export { FlightSegment } from './FlightSegment';
+export type { FlightSegmentProps } from './FlightSegment';
+export { FlightTimeline as FlightDetailsTimeline } from './FlightTimeline';
+export type { FlightDetailsTimelineProps } from './FlightTimeline';

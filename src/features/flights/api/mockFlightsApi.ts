@@ -1,6 +1,6 @@
-import type { FlightSearchRequest, FlightSearchResponse } from '../types/flight';
+import type { FlightOffer, FlightSearchRequest, FlightSearchResponse } from '../types/flight';
 import type { FlightsApi } from './flightsApi.types';
-import { generateMockFlightOffers } from './flightsData';
+import { findMockFlightOfferById, generateMockFlightOffers } from './flightsData';
 
 const MOCK_DELAY_MS = 350;
 
@@ -29,6 +29,19 @@ export function createMockFlightsApi(options: { delayMs?: number } = {}): Flight
         currency: flights[0]?.price.currency ?? 'MYR',
         searchedAt: new Date().toISOString(),
       };
+    },
+
+    async getFlightById(
+      flightId: string,
+      context?: Partial<FlightSearchRequest> | null,
+    ): Promise<FlightOffer | null> {
+      await delay(Math.min(delayMs, 250));
+
+      if (flightId.trim().toUpperCase() === 'ERR') {
+        throw new Error('Unable to load flight details right now. Please try again.');
+      }
+
+      return findMockFlightOfferById(flightId, context);
     },
   };
 }

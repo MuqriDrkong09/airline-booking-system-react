@@ -11,6 +11,7 @@ export const APP_ROUTES = {
     root: '/app',
     home: '/app',
     flights: '/app/flights',
+    flightDetails: (flightId: string) => `/app/flights/${encodeURIComponent(flightId)}`,
     bookings: '/app/bookings',
     checkIn: '/app/check-in',
     notifications: '/app/notifications',

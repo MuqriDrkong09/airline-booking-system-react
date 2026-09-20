@@ -1,8 +1,9 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AppAlert, PageContainer, PageLoader } from '@/components/common';
+import { APP_ROUTES } from '@/constants/routes';
 import {
   criteriaFromFormValues,
   FlightSearchForm,
@@ -52,11 +53,11 @@ function toSearchRequest(
 }
 
 export function SearchFlightsPage() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { defaultValues, isHydrating, hydrationKey, parsedCriteria } =
     useFlightSearchHydration(searchParams);
   const [searchSummary, setSearchSummary] = useState<string | null>(null);
-  const [selectedFlight, setSelectedFlight] = useState<FlightOffer | null>(null);
 
   const searchRequest = useMemo(() => toSearchRequest(parsedCriteria), [parsedCriteria]);
   const canSearch = isCompleteFlightSearchRequest(searchRequest);
@@ -80,10 +81,17 @@ export function SearchFlightsPage() {
   }, [canSearch, defaultValues, isHydrating, parsedCriteria]);
 
   const handleSearch = (values: FlightSearchFormValues) => {
-    const criteria = criteriaFromFormValues(values);
-    setSelectedFlight(null);
-    setSearchParams(serializeFlightSearchCriteria(criteria), { replace: true });
+    setSearchParams(serializeFlightSearchCriteria(criteriaFromFormValues(values)), {
+      replace: true,
+    });
     setSearchSummary(formatSearchSummary(values));
+  };
+
+  const handleSelectFlight = (flight: FlightOffer) => {
+    navigate({
+      pathname: APP_ROUTES.customer.flightDetails(flight.id),
+      search: searchParams.toString(),
+    });
   };
 
   const summary = searchSummary ?? initialSummary;
@@ -124,16 +132,8 @@ export function SearchFlightsPage() {
           <FlightSearchResults
             request={searchRequest}
             enabled={!isHydrating}
-            onSelectFlight={setSelectedFlight}
+            onSelectFlight={handleSelectFlight}
           />
-        ) : null}
-
-        {selectedFlight ? (
-          <AppAlert severity="success" title="Flight selected">
-            {selectedFlight.airline.name} {selectedFlight.flightNumber} ·{' '}
-            {selectedFlight.origin.code} → {selectedFlight.destination.code}. Booking flow will be
-            added in a later update.
-          </AppAlert>
         ) : null}
       </Stack>
     </PageContainer>

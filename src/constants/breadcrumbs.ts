@@ -46,6 +46,12 @@ export function getBreadcrumbsForPath(pathname: string): BreadcrumbItem[] {
 
     if (label) {
       crumbs.push({ to: currentPath, label });
+      continue;
+    }
+
+    // Dynamic flight details: /app/flights/:flightId
+    if (/^\/app\/flights\/[^/]+$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Flight details' });
     }
   }
 

@@ -3,12 +3,16 @@ export type {
   AirportSearchParams,
   CabinClass,
   FlightAirline,
+  FlightAircraft,
+  FlightAmenities,
   FlightBaggage,
   FlightEndpoint,
+  FlightFarePolicies,
   FlightFilterBounds,
   FlightFilterState,
   FlightLegValues,
   FlightOffer,
+  FlightOfferSegment,
   FlightPriceAmount,
   FlightSearchCriteria,
   FlightSearchFormValues,
@@ -32,11 +36,13 @@ export {
   createHttpFlightsApi,
   createMockAirportsApi,
   createMockFlightsApi,
+  findMockFlightOfferById,
   flightKeys,
   flightsApi,
   generateMockFlightOffers,
   getAirportByCode,
   getAirports,
+  getFlightById,
   MOCK_AIRPORTS,
   mockAirportsApi,
   mockFlightsApi,
@@ -51,6 +57,7 @@ export {
 } from './hooks/useAirports';
 export {
   isCompleteFlightSearchRequest,
+  useFlightDetailsQuery,
   useSearchFlightsQuery,
 } from './hooks/useFlights';
 export { useFlightFilters } from './hooks/useFlightFilters';
@@ -75,6 +82,24 @@ export { FlightSort, FLIGHT_SORT_SELECT_OPTIONS } from './components/results/Fli
 export type { FlightSortProps } from './components/results/FlightSort';
 export { FlightSearchResults } from './components/results/FlightSearchResults';
 export type { FlightSearchResultsProps } from './components/results/FlightSearchResults';
+export {
+  BaggageInfo,
+  FareDetails,
+  FlightDetails,
+  FlightDetailsHeader,
+  FlightDetailsTimeline,
+  FlightPolicies,
+  FlightSegment,
+} from './components/details';
+export type {
+  BaggageInfoProps,
+  FareDetailsProps,
+  FlightDetailsHeaderProps,
+  FlightDetailsProps,
+  FlightDetailsTimelineProps,
+  FlightPoliciesProps,
+  FlightSegmentProps,
+} from './components/details';
 export {
   formatAirportInputValue,
   formatAirportOptionLabel,

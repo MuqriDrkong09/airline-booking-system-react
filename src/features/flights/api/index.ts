@@ -1,6 +1,6 @@
 import { env } from '@/config/env';
 import type { Airport, AirportSearchParams } from '../types';
-import type { FlightSearchRequest, FlightSearchResponse } from '../types/flight';
+import type { FlightOffer, FlightSearchRequest, FlightSearchResponse } from '../types/flight';
 import type { AirportsApi } from './airportsApi.types';
 import type { FlightsApi } from './flightsApi.types';
 import { createHttpAirportsApi } from './httpAirportsApi';
@@ -29,6 +29,9 @@ export const flightKeys = {
   all: ['flights'] as const,
   searches: () => [...flightKeys.all, 'search'] as const,
   search: (request: FlightSearchRequest) => [...flightKeys.searches(), request] as const,
+  details: () => [...flightKeys.all, 'detail'] as const,
+  detail: (flightId: string, context?: Partial<FlightSearchRequest> | null) =>
+    [...flightKeys.details(), flightId, context ?? null] as const,
 };
 
 export function getAirports(
@@ -49,6 +52,13 @@ export function searchFlights(request: FlightSearchRequest): Promise<FlightSearc
   return flightsApi.searchFlights(request);
 }
 
+export function getFlightById(
+  flightId: string,
+  context?: Partial<FlightSearchRequest> | null,
+): Promise<FlightOffer | null> {
+  return flightsApi.getFlightById(flightId, context);
+}
+
 export type { AirportsApi } from './airportsApi.types';
 export type { FlightsApi } from './flightsApi.types';
 export { createMockAirportsApi, mockAirportsApi } from './mockAirportsApi';
@@ -56,4 +66,4 @@ export { createHttpAirportsApi } from './httpAirportsApi';
 export { createMockFlightsApi, mockFlightsApi } from './mockFlightsApi';
 export { createHttpFlightsApi } from './httpFlightsApi';
 export { MOCK_AIRPORTS } from './airportsData';
-export { generateMockFlightOffers } from './flightsData';
+export { findMockFlightOfferById, generateMockFlightOffers } from './flightsData';

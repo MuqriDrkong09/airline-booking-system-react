@@ -9,11 +9,15 @@ export type {
 export { CABIN_CLASSES, TRIP_TYPES } from './search';
 export type {
   FlightAirline,
+  FlightAircraft,
+  FlightAmenities,
   FlightBaggage,
   FlightEndpoint,
+  FlightFarePolicies,
   FlightFilterBounds,
   FlightFilterState,
   FlightOffer,
+  FlightOfferSegment,
   FlightPriceAmount,
   FlightSearchRequest,
   FlightSearchResponse,

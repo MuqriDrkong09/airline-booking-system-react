@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { flightKeys, searchFlights } from '../api';
+import { flightKeys, getFlightById, searchFlights } from '../api';
 import type { FlightSearchRequest } from '../types/flight';
 
 export function isCompleteFlightSearchRequest(
@@ -44,6 +44,24 @@ export function useSearchFlightsQuery(
       ? flightKeys.search(normalized)
       : ([...flightKeys.searches(), 'idle'] as const),
     queryFn: () => searchFlights(normalized!),
+    enabled,
+    retry: false,
+  });
+}
+
+export function useFlightDetailsQuery(
+  flightId: string | null | undefined,
+  context?: Partial<FlightSearchRequest> | null,
+  options: { enabled?: boolean } = {},
+) {
+  const id = flightId?.trim() ?? '';
+  const enabled = (options.enabled ?? true) && Boolean(id);
+
+  return useQuery({
+    queryKey: enabled
+      ? flightKeys.detail(id, context ?? null)
+      : ([...flightKeys.details(), 'idle'] as const),
+    queryFn: () => getFlightById(id, context),
     enabled,
     retry: false,
   });
