@@ -15,6 +15,7 @@ import {
   useFlightDetailsQuery,
   type FlightSearchRequest,
 } from '@/features/flights';
+import { useBookingStore } from '@/features/booking';
 import { usePassengerDraftStore } from '@/features/passengers';
 import { useSeatSelectionStore } from '@/features/seats';
 
@@ -58,6 +59,7 @@ export function FlightDetailsPage() {
   const navigate = useNavigate();
   const clearPassengerDraft = usePassengerDraftStore((state) => state.clearDraft);
   const clearSeatSelection = useSeatSelectionStore((state) => state.clearSelection);
+  const clearBooking = useBookingStore((state) => state.clearBooking);
 
   const context = useMemo(() => {
     const parsed = parseFlightSearchParams(searchParams);
@@ -131,6 +133,7 @@ export function FlightDetailsPage() {
           onSelectFlight={(next) => {
             clearPassengerDraft();
             clearSeatSelection();
+            clearBooking();
             navigate({
               pathname: APP_ROUTES.customer.flightPassengers(next.id),
               search: searchParams.toString(),

@@ -1,0 +1,35 @@
+import { act } from '@testing-library/react';
+import { useBookingStore } from '@/features/booking';
+
+describe('booking store baggage', () => {
+  beforeEach(() => {
+    act(() => {
+      useBookingStore.getState().clearBooking();
+      void useBookingStore.persist.clearStorage();
+    });
+  });
+
+  it('updates booking state when baggage changes', () => {
+    act(() => {
+      useBookingStore.getState().setBaggage({
+        flightId: 'FL-100',
+        cabinClass: 'ECONOMY',
+        baggage: [
+          {
+            passengerId: 'adult-1',
+            cabinKg: 7,
+            checkedKg: 30,
+            additionalKg: 0,
+          },
+        ],
+        baggageTotal: 55,
+      });
+    });
+
+    const state = useBookingStore.getState();
+    expect(state.flightId).toBe('FL-100');
+    expect(state.baggageTotal).toBe(55);
+    expect(state.baggage[0]?.checkedKg).toBe(30);
+    expect(state.updatedAt).toEqual(expect.any(String));
+  });
+});

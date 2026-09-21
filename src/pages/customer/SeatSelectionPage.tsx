@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import { useEffect, useMemo } from 'react';
-import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { AppButton, EmptyState, PageContainer } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import {
@@ -13,6 +13,7 @@ import { usePassengerDraftStore } from '@/features/passengers';
 export function SeatSelectionPage() {
   const { flightId = '' } = useParams<{ flightId: string }>();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const trip = usePassengerDraftStore((state) => state.trip);
   const passengers = usePassengerDraftStore((state) => state.passengers);
   const initSelection = useSeatSelectionStore((state) => state.initSelection);
@@ -86,7 +87,14 @@ export function SeatSelectionPage() {
         </Stack>
       }
     >
-      <SeatSelectionPanel />
+      <SeatSelectionPanel
+        onSaved={() => {
+          navigate({
+            pathname: APP_ROUTES.customer.flightBaggage(flightId),
+            search: searchParams.toString(),
+          });
+        }}
+      />
     </PageContainer>
   );
 }

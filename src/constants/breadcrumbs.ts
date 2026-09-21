@@ -64,6 +64,12 @@ export function getBreadcrumbsForPath(pathname: string): BreadcrumbItem[] {
     // Seat selection: /app/flights/:flightId/seats
     if (/^\/app\/flights\/[^/]+\/seats$/.test(currentPath)) {
       crumbs.push({ to: currentPath, label: 'Seats' });
+      continue;
+    }
+
+    // Baggage: /app/flights/:flightId/baggage
+    if (/^\/app\/flights\/[^/]+\/baggage$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Baggage' });
     }
   }
 

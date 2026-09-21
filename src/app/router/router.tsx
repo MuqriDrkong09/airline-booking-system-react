@@ -11,6 +11,7 @@ import { VerifyEmailPage } from '@/pages/auth/VerifyEmailPage';
 import { ProfilePage } from '@/pages/customer/ProfilePage';
 import { FlightDetailsPage } from '@/pages/customer/FlightDetailsPage';
 import { PassengerDetailsPage } from '@/pages/customer/PassengerDetailsPage';
+import { BaggageSelectionPage } from '@/pages/customer/BaggageSelectionPage';
 import { SeatSelectionPage } from '@/pages/customer/SeatSelectionPage';
 import { SearchFlightsPage } from '@/pages/customer/SearchFlightsPage';
 import { HomePage } from '@/pages/HomePage';
@@ -49,6 +50,7 @@ export const router = createBrowserRouter([
               { path: 'flights/:flightId', element: <FlightDetailsPage /> },
               { path: 'flights/:flightId/passengers', element: <PassengerDetailsPage /> },
               { path: 'flights/:flightId/seats', element: <SeatSelectionPage /> },
+              { path: 'flights/:flightId/baggage', element: <BaggageSelectionPage /> },
               { path: 'bookings', element: <PlaceholderPage title="My Bookings" /> },
               { path: 'check-in', element: <PlaceholderPage title="Check-in" /> },
               { path: 'notifications', element: <PlaceholderPage title="Notifications" /> },

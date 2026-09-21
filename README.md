@@ -136,6 +136,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
   first class, seat states (available / selected / occupied / premium /
   emergency exit / unavailable), per-passenger assignment, keyboard access,
   price totals, and a mobile-friendly scrollable map
+- Baggage selection at `/app/flights/:flightId/baggage` with `BaggageSelector`,
+  `BaggageOption`, and `BaggageSummary` — cabin, checked, and additional bags
+  (7KG / 20KG / 30KG / 40KG), fare allowance, per-passenger choices, price
+  totals, validation, and booking-state updates
 - Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation
