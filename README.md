@@ -126,7 +126,11 @@ Registration, email verification, and password reset also work in mock mode. Ver
   Earliest Arrival — type-safe, non-mutating, synced via `sort` URL param
 - Flight details at `/app/flights/:flightId` with airline, aircraft, terminals,
   schedule, segments, baggage, meals, Wi-Fi, seats, refund/change policies, and
-  fare conditions — plus a **Select Flight** action
+  fare conditions — plus a **Select Flight** action that continues to passengers
+- Passenger details at `/app/flights/:flightId/passengers` with dynamic adult /
+  child / infant forms (RHF + Zod): title, name, DOB, gender, nationality,
+  passport, contact — passport rules for international flights, age bands,
+  infant–adult association, count match to search, draft save + error states
 - Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation

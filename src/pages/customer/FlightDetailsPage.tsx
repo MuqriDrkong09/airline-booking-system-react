@@ -1,8 +1,7 @@
 import Stack from '@mui/material/Stack';
-import { useMemo, useState } from 'react';
-import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom';
+import { useMemo } from 'react';
+import { Link as RouterLink, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {
-  AppAlert,
   AppButton,
   EmptyState,
   ErrorState,
@@ -14,9 +13,9 @@ import {
   FlightDetails,
   parseFlightSearchParams,
   useFlightDetailsQuery,
-  type FlightOffer,
   type FlightSearchRequest,
 } from '@/features/flights';
+import { usePassengerDraftStore } from '@/features/passengers';
 
 function toSearchContext(
   criteria: ReturnType<typeof parseFlightSearchParams>,
@@ -55,7 +54,8 @@ function toSearchContext(
 export function FlightDetailsPage() {
   const { flightId = '' } = useParams<{ flightId: string }>();
   const [searchParams] = useSearchParams();
-  const [selectedFlight, setSelectedFlight] = useState<FlightOffer | null>(null);
+  const navigate = useNavigate();
+  const clearPassengerDraft = usePassengerDraftStore((state) => state.clearDraft);
 
   const context = useMemo(() => {
     const parsed = parseFlightSearchParams(searchParams);
@@ -124,18 +124,14 @@ export function FlightDetailsPage() {
       }
     >
       <Stack spacing={2.5} sx={{ maxWidth: 1100 }}>
-        {selectedFlight ? (
-          <AppAlert severity="success" title="Flight selected">
-            {selectedFlight.airline.name} {selectedFlight.flightNumber} ·{' '}
-            {selectedFlight.origin.code} → {selectedFlight.destination.code}. Booking flow will be
-            added in a later update.
-          </AppAlert>
-        ) : null}
-
         <FlightDetails
           flight={flight}
           onSelectFlight={(next) => {
-            setSelectedFlight(next);
+            clearPassengerDraft();
+            navigate({
+              pathname: APP_ROUTES.customer.flightPassengers(next.id),
+              search: searchParams.toString(),
+            });
           }}
         />
       </Stack>

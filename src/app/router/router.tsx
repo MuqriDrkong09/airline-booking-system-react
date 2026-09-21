@@ -10,6 +10,7 @@ import { ResetPasswordPage } from '@/pages/auth/ResetPasswordPage';
 import { VerifyEmailPage } from '@/pages/auth/VerifyEmailPage';
 import { ProfilePage } from '@/pages/customer/ProfilePage';
 import { FlightDetailsPage } from '@/pages/customer/FlightDetailsPage';
+import { PassengerDetailsPage } from '@/pages/customer/PassengerDetailsPage';
 import { SearchFlightsPage } from '@/pages/customer/SearchFlightsPage';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -45,6 +46,7 @@ export const router = createBrowserRouter([
               { index: true, element: <PlaceholderPage title="Customer Home" /> },
               { path: 'flights', element: <SearchFlightsPage /> },
               { path: 'flights/:flightId', element: <FlightDetailsPage /> },
+              { path: 'flights/:flightId/passengers', element: <PassengerDetailsPage /> },
               { path: 'bookings', element: <PlaceholderPage title="My Bookings" /> },
               { path: 'check-in', element: <PlaceholderPage title="Check-in" /> },
               { path: 'notifications', element: <PlaceholderPage title="Notifications" /> },

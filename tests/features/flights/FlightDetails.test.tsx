@@ -84,6 +84,10 @@ describe('FlightDetailsPage', () => {
     renderWithProviders(
       <Routes>
         <Route path="/app/flights/:flightId" element={<FlightDetailsPage />} />
+        <Route
+          path="/app/flights/:flightId/passengers"
+          element={<div>Passenger details page</div>}
+        />
       </Routes>,
       {
         initialEntries: [
@@ -101,5 +105,29 @@ describe('FlightDetailsPage', () => {
       'href',
       expect.stringContaining('/app/flights?'),
     );
+  }, 15000);
+
+  it('navigates to passenger details when Select Flight is clicked', async () => {
+    const user = userEvent.setup();
+    const [offer] = generateMockFlightOffers(baseRequest);
+
+    renderWithProviders(
+      <Routes>
+        <Route path="/app/flights/:flightId" element={<FlightDetailsPage />} />
+        <Route
+          path="/app/flights/:flightId/passengers"
+          element={<div>Passenger details page</div>}
+        />
+      </Routes>,
+      {
+        initialEntries: [
+          `/app/flights/${offer!.id}?from=KUL&to=NRT&departure=2026-10-20&adults=1&cabin=ECONOMY`,
+        ],
+      },
+    );
+
+    await screen.findByRole('button', { name: /Select Flight/i });
+    await user.click(screen.getByRole('button', { name: /Select Flight/i }));
+    expect(await screen.findByText('Passenger details page')).toBeInTheDocument();
   }, 15000);
 });

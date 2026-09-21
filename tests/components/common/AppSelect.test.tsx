@@ -64,11 +64,12 @@ describe('AppSelect', () => {
       <AppSelect label="Cabin class" options={cabinOptions} value="ECONOMY" />,
     );
 
-    await user.click(screen.getByLabelText('Cabin class'));
+    await user.click(screen.getByRole('combobox', { name: 'Cabin class' }));
     await user.click(await screen.findByRole('option', { name: 'Business' }));
 
     // Controlled without onChange keeps the provided value; interaction should not throw.
-    expect(screen.getByLabelText('Cabin class')).toHaveTextContent('Economy');
+    // Prefer combobox over getByLabelText — the closing Menu listbox shares the same label.
+    expect(screen.getByRole('combobox', { name: 'Cabin class' })).toHaveTextContent('Economy');
   });
 
   it('hides the floating label and exposes aria-label when hideLabel is true', () => {
