@@ -16,6 +16,7 @@ import {
   type FlightSearchRequest,
 } from '@/features/flights';
 import { usePassengerDraftStore } from '@/features/passengers';
+import { useSeatSelectionStore } from '@/features/seats';
 
 function toSearchContext(
   criteria: ReturnType<typeof parseFlightSearchParams>,
@@ -56,6 +57,7 @@ export function FlightDetailsPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const clearPassengerDraft = usePassengerDraftStore((state) => state.clearDraft);
+  const clearSeatSelection = useSeatSelectionStore((state) => state.clearSelection);
 
   const context = useMemo(() => {
     const parsed = parseFlightSearchParams(searchParams);
@@ -128,6 +130,7 @@ export function FlightDetailsPage() {
           flight={flight}
           onSelectFlight={(next) => {
             clearPassengerDraft();
+            clearSeatSelection();
             navigate({
               pathname: APP_ROUTES.customer.flightPassengers(next.id),
               search: searchParams.toString(),

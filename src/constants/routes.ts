@@ -14,6 +14,8 @@ export const APP_ROUTES = {
     flightDetails: (flightId: string) => `/app/flights/${encodeURIComponent(flightId)}`,
     flightPassengers: (flightId: string) =>
       `/app/flights/${encodeURIComponent(flightId)}/passengers`,
+    flightSeats: (flightId: string) =>
+      `/app/flights/${encodeURIComponent(flightId)}/seats`,
     bookings: '/app/bookings',
     checkIn: '/app/check-in',
     notifications: '/app/notifications',

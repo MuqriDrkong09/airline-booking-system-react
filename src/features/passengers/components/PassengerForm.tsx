@@ -176,9 +176,14 @@ export function PassengerForm({
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
           spacing={1.5}
-          sx={{ justifyContent: 'space-between', alignItems: { sm: 'center' } }}
+          sx={{
+            justifyContent: { xs: 'center', sm: 'space-between' },
+            alignItems: { xs: 'center', sm: 'center' },
+            textAlign: { xs: 'center', sm: 'left' },
+          }}
         >
           <Typography variant="body2" color="text.secondary">
+            Total passengers:{' '}
             {counts.adults} adult{counts.adults === 1 ? '' : 's'}
             {counts.children > 0
               ? ` · ${counts.children} child${counts.children === 1 ? '' : 'ren'}`
@@ -188,7 +193,7 @@ export function PassengerForm({
               : ''}
           </Typography>
 
-          <Stack direction="row" spacing={1.5}>
+          <Stack direction="row" spacing={1.5} sx={{ justifyContent: 'center' }}>
             <AppButton
               type="button"
               variant="outlined"

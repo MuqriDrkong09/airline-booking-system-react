@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import { useEffect, useMemo } from 'react';
-import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { AppButton, EmptyState, PageContainer } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import { parseFlightSearchParams } from '@/features/flights';
@@ -13,6 +13,7 @@ import {
 export function PassengerDetailsPage() {
   const { flightId = '' } = useParams<{ flightId: string }>();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const initTrip = usePassengerDraftStore((state) => state.initTrip);
 
   const parsed = useMemo(() => parseFlightSearchParams(searchParams), [searchParams]);
@@ -39,15 +40,16 @@ export function PassengerDetailsPage() {
   const requiresPassport = Boolean(from && to && isInternationalFlight(from, to));
   const canShowForm = Boolean(flightId && from && to && departure);
 
+  const query = searchParams.toString();
   const detailsHref = flightId
-    ? `${APP_ROUTES.customer.flightDetails(flightId)}${
-        searchParams.toString() ? `?${searchParams.toString()}` : ''
-      }`
+    ? `${APP_ROUTES.customer.flightDetails(flightId)}${query ? `?${query}` : ''}`
     : APP_ROUTES.customer.flights;
 
-  const resultsHref = `${APP_ROUTES.customer.flights}${
-    searchParams.toString() ? `?${searchParams.toString()}` : ''
-  }`;
+  const seatsHref = flightId
+    ? `${APP_ROUTES.customer.flightSeats(flightId)}${query ? `?${query}` : ''}`
+    : APP_ROUTES.customer.flights;
+
+  const resultsHref = `${APP_ROUTES.customer.flights}${query ? `?${query}` : ''}`;
 
   useEffect(() => {
     if (!canShowForm || !from || !to || !departure) {
@@ -110,6 +112,9 @@ export function PassengerDetailsPage() {
           counts={counts}
           departureDate={departure!}
           requiresPassport={requiresPassport}
+          onSaved={() => {
+            navigate(seatsHref);
+          }}
         />
       </Stack>
     </PageContainer>

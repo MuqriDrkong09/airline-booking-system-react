@@ -131,6 +131,11 @@ Registration, email verification, and password reset also work in mock mode. Ver
   child / infant forms (RHF + Zod): title, name, DOB, gender, nationality,
   passport, contact — passport rules for international flights, age bands,
   infant–adult association, count match to search, draft save + error states
+- Seat selection at `/app/flights/:flightId/seats` with reusable `SeatMap`,
+  `Seat`, `SeatRow`, `SeatLegend`, and `SeatSelectionSummary` — economy through
+  first class, seat states (available / selected / occupied / premium /
+  emergency exit / unavailable), per-passenger assignment, keyboard access,
+  price totals, and a mobile-friendly scrollable map
 - Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation
