@@ -12,6 +12,7 @@ import { ProfilePage } from '@/pages/customer/ProfilePage';
 import { FlightDetailsPage } from '@/pages/customer/FlightDetailsPage';
 import { PassengerDetailsPage } from '@/pages/customer/PassengerDetailsPage';
 import { BaggageSelectionPage } from '@/pages/customer/BaggageSelectionPage';
+import { MealSelectionPage } from '@/pages/customer/MealSelectionPage';
 import { SeatSelectionPage } from '@/pages/customer/SeatSelectionPage';
 import { SearchFlightsPage } from '@/pages/customer/SearchFlightsPage';
 import { HomePage } from '@/pages/HomePage';
@@ -51,6 +52,7 @@ export const router = createBrowserRouter([
               { path: 'flights/:flightId/passengers', element: <PassengerDetailsPage /> },
               { path: 'flights/:flightId/seats', element: <SeatSelectionPage /> },
               { path: 'flights/:flightId/baggage', element: <BaggageSelectionPage /> },
+              { path: 'flights/:flightId/meals', element: <MealSelectionPage /> },
               { path: 'bookings', element: <PlaceholderPage title="My Bookings" /> },
               { path: 'check-in', element: <PlaceholderPage title="Check-in" /> },
               { path: 'notifications', element: <PlaceholderPage title="Notifications" /> },

@@ -1,28 +1,23 @@
 import { useMemo } from 'react';
-import { Link as RouterLink, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom';
 import { AppButton, EmptyState, PageContainer } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
-import { BaggageSelectionPanel } from '@/features/baggage';
-import { parseFlightSearchParams, type CabinClass } from '@/features/flights';
+import { MealSelectionPanel } from '@/features/meals';
 import { usePassengerDraftStore } from '@/features/passengers';
 import { passengerDisplayName } from '@/features/seats';
 
-export function BaggageSelectionPage() {
+export function MealSelectionPage() {
   const { flightId = '' } = useParams<{ flightId: string }>();
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const trip = usePassengerDraftStore((state) => state.trip);
   const passengers = usePassengerDraftStore((state) => state.passengers);
 
-  const parsed = useMemo(() => parseFlightSearchParams(searchParams), [searchParams]);
-  const cabinClass: CabinClass = parsed?.cabinClass ?? 'ECONOMY';
-
   const query = searchParams.toString();
-  const seatsHref = flightId
-    ? `${APP_ROUTES.customer.flightSeats(flightId)}${query ? `?${query}` : ''}`
+  const baggageHref = flightId
+    ? `${APP_ROUTES.customer.flightBaggage(flightId)}${query ? `?${query}` : ''}`
     : APP_ROUTES.customer.flights;
 
-  const baggagePassengers = useMemo(
+  const mealPassengers = useMemo(
     () =>
       passengers.map((passenger, index) => ({
         id: passenger.id,
@@ -37,14 +32,14 @@ export function BaggageSelectionPage() {
   );
 
   const tripMatches =
-    Boolean(flightId) && trip?.flightId === flightId && baggagePassengers.length > 0;
+    Boolean(flightId) && trip?.flightId === flightId && mealPassengers.length > 0;
 
   if (!tripMatches) {
     return (
-      <PageContainer title="Baggage">
+      <PageContainer title="Meals">
         <EmptyState
           title="Passenger details required"
-          message="Save passenger information for this flight before choosing baggage."
+          message="Save passenger information for this flight before choosing meals."
           action={
             <AppButton
               component={RouterLink}
@@ -65,25 +60,15 @@ export function BaggageSelectionPage() {
 
   return (
     <PageContainer
-      title="Baggage"
-      description={`${trip?.from} → ${trip?.to} · included allowance plus optional extra bags.`}
+      title="Meals"
+      description={`${trip?.from} → ${trip?.to} · choose special meals per passenger.`}
       action={
-        <AppButton component={RouterLink} to={seatsHref} variant="outlined">
-          Seats
+        <AppButton component={RouterLink} to={baggageHref} variant="outlined">
+          Baggage
         </AppButton>
       }
     >
-      <BaggageSelectionPanel
-        flightId={flightId}
-        cabinClass={cabinClass}
-        passengers={baggagePassengers}
-        onSaved={() => {
-          navigate({
-            pathname: APP_ROUTES.customer.flightMeals(flightId),
-            search: searchParams.toString(),
-          });
-        }}
-      />
+      <MealSelectionPanel flightId={flightId} passengers={mealPassengers} />
     </PageContainer>
   );
 }

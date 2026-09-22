@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react';
 import { useBookingStore } from '@/features/booking';
 
-describe('booking store baggage', () => {
+describe('booking store', () => {
   beforeEach(() => {
     act(() => {
       useBookingStore.getState().clearBooking();
@@ -31,5 +31,20 @@ describe('booking store baggage', () => {
     expect(state.baggageTotal).toBe(55);
     expect(state.baggage[0]?.checkedKg).toBe(30);
     expect(state.updatedAt).toEqual(expect.any(String));
+  });
+
+  it('updates booking state when meals change', () => {
+    act(() => {
+      useBookingStore.getState().setMeals({
+        flightId: 'FL-100',
+        meals: [{ passengerId: 'adult-1', mealType: 'VEGAN', quantity: 2 }],
+        mealTotal: 10,
+      });
+    });
+
+    const state = useBookingStore.getState();
+    expect(state.flightId).toBe('FL-100');
+    expect(state.mealTotal).toBe(10);
+    expect(state.meals[0]?.mealType).toBe('VEGAN');
   });
 });

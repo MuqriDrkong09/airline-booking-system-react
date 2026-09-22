@@ -140,6 +140,9 @@ Registration, email verification, and password reset also work in mock mode. Ver
   `BaggageOption`, and `BaggageSummary` — cabin, checked, and additional bags
   (7KG / 20KG / 30KG / 40KG), fare allowance, per-passenger choices, price
   totals, validation, and booking-state updates
+- Meal selection at `/app/flights/:flightId/meals` with reusable `MealOption`,
+  `MealSelector`, and `MealSummary` — standard through child meals, availability,
+  quantity, per-passenger assignment, remove, price totals, and booking sync
 - Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation
