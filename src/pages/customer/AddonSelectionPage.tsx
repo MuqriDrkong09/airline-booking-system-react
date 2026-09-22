@@ -1,24 +1,23 @@
 import { useMemo } from 'react';
-import { Link as RouterLink, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom';
 import { AppButton, EmptyState, PageContainer } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
-import { MealSelectionPanel } from '@/features/meals';
+import { AddonSelectionPanel } from '@/features/addons';
 import { usePassengerDraftStore } from '@/features/passengers';
 import { passengerDisplayName } from '@/features/seats';
 
-export function MealSelectionPage() {
+export function AddonSelectionPage() {
   const { flightId = '' } = useParams<{ flightId: string }>();
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const trip = usePassengerDraftStore((state) => state.trip);
   const passengers = usePassengerDraftStore((state) => state.passengers);
 
   const query = searchParams.toString();
-  const baggageHref = flightId
-    ? `${APP_ROUTES.customer.flightBaggage(flightId)}${query ? `?${query}` : ''}`
+  const mealsHref = flightId
+    ? `${APP_ROUTES.customer.flightMeals(flightId)}${query ? `?${query}` : ''}`
     : APP_ROUTES.customer.flights;
 
-  const mealPassengers = useMemo(
+  const addonPassengers = useMemo(
     () =>
       passengers.map((passenger, index) => ({
         id: passenger.id,
@@ -33,14 +32,14 @@ export function MealSelectionPage() {
   );
 
   const tripMatches =
-    Boolean(flightId) && trip?.flightId === flightId && mealPassengers.length > 0;
+    Boolean(flightId) && trip?.flightId === flightId && addonPassengers.length > 0;
 
   if (!tripMatches) {
     return (
-      <PageContainer title="Meals">
+      <PageContainer title="Add-ons">
         <EmptyState
           title="Passenger details required"
-          message="Save passenger information for this flight before choosing meals."
+          message="Save passenger information for this flight before choosing add-ons."
           action={
             <AppButton
               component={RouterLink}
@@ -61,24 +60,15 @@ export function MealSelectionPage() {
 
   return (
     <PageContainer
-      title="Meals"
-      description={`${trip?.from} → ${trip?.to} · choose special meals per passenger.`}
+      title="Add-ons"
+      description={`${trip?.from} → ${trip?.to} · optional extras for your trip.`}
       action={
-        <AppButton component={RouterLink} to={baggageHref} variant="outlined">
-          Baggage
+        <AppButton component={RouterLink} to={mealsHref} variant="outlined">
+          Meals
         </AppButton>
       }
     >
-      <MealSelectionPanel
-        flightId={flightId}
-        passengers={mealPassengers}
-        onSaved={() => {
-          navigate({
-            pathname: APP_ROUTES.customer.flightAddons(flightId),
-            search: searchParams.toString(),
-          });
-        }}
-      />
+      <AddonSelectionPanel flightId={flightId} passengers={addonPassengers} />
     </PageContainer>
   );
 }

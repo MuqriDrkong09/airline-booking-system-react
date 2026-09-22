@@ -76,6 +76,12 @@ export function getBreadcrumbsForPath(pathname: string): BreadcrumbItem[] {
     // Meals: /app/flights/:flightId/meals
     if (/^\/app\/flights\/[^/]+\/meals$/.test(currentPath)) {
       crumbs.push({ to: currentPath, label: 'Meals' });
+      continue;
+    }
+
+    // Add-ons: /app/flights/:flightId/addons
+    if (/^\/app\/flights\/[^/]+\/addons$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Add-ons' });
     }
   }
 

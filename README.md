@@ -143,6 +143,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Meal selection at `/app/flights/:flightId/meals` with reusable `MealOption`,
   `MealSelector`, and `MealSummary` — standard through child meals, availability,
   quantity, per-passenger assignment, remove, price totals, and booking sync
+- Booking add-ons at `/app/flights/:flightId/addons` with `AddonCard`,
+  `AddonSelector`, and `AddonSummary` — preferred seat, extra legroom, priority
+  boarding, lounge, insurance, extra baggage, and meals — with availability,
+  passenger applicability, select/remove, and booking total updates
 - Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation
