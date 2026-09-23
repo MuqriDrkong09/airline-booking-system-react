@@ -2,9 +2,11 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { useMemo } from 'react';
 import { AppAlert, AppButton, AppCard } from '@/components/common';
+import { useBookingStore } from '@/features/booking';
 import { useSeatSelectionStore } from '../store/seatSelectionStore';
 import {
   getAssignmentForSeat,
+  getSeatById,
   resolveDisplayStatus,
 } from '../utils/seatRules';
 import { groupSeatsIntoRows } from '../utils/seatMap';
@@ -30,6 +32,7 @@ export function SeatSelectionPanel({ onSaved }: SeatSelectionPanelProps) {
   const clearSeatForPassenger = useSeatSelectionStore((state) => state.clearSeatForPassenger);
   const saveSelection = useSeatSelectionStore((state) => state.saveSelection);
   const clearSaveStatus = useSeatSelectionStore((state) => state.clearSaveStatus);
+  const setBookingSeats = useBookingStore((state) => state.setSeats);
 
   const rows = useMemo(() => groupSeatsIntoRows(seats), [seats]);
 
@@ -109,6 +112,22 @@ export function SeatSelectionPanel({ onSaved }: SeatSelectionPanelProps) {
             onClick={() => {
               const result = saveSelection();
               if (result.ok) {
+                setBookingSeats(
+                  assignments
+                    .map((assignment) => {
+                      const seat = getSeatById(seats, assignment.seatId);
+                      if (!seat) {
+                        return null;
+                      }
+                      return {
+                        passengerId: assignment.passengerId,
+                        seatId: seat.id,
+                        label: seat.label,
+                        price: seat.price,
+                      };
+                    })
+                    .filter((item): item is NonNullable<typeof item> => item !== null),
+                );
                 onSaved?.();
               }
             }}

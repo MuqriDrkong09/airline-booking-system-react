@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { AppButton, EmptyState, PageContainer } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import { AddonSelectionPanel } from '@/features/addons';
@@ -9,6 +9,7 @@ import { passengerDisplayName } from '@/features/seats';
 export function AddonSelectionPage() {
   const { flightId = '' } = useParams<{ flightId: string }>();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const trip = usePassengerDraftStore((state) => state.trip);
   const passengers = usePassengerDraftStore((state) => state.passengers);
 
@@ -68,7 +69,16 @@ export function AddonSelectionPage() {
         </AppButton>
       }
     >
-      <AddonSelectionPanel flightId={flightId} passengers={addonPassengers} />
+      <AddonSelectionPanel
+        flightId={flightId}
+        passengers={addonPassengers}
+        onSaved={() => {
+          navigate({
+            pathname: APP_ROUTES.customer.flightSummary(flightId),
+            search: searchParams.toString(),
+          });
+        }}
+      />
     </PageContainer>
   );
 }

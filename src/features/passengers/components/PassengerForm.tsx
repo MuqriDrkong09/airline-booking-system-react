@@ -11,6 +11,7 @@ import {
   type Resolver,
 } from 'react-hook-form';
 import { AppAlert, AppButton, AppCard } from '@/components/common';
+import { useBookingStore } from '@/features/booking';
 import { createPassengersFormSchema } from '../schemas/passengerSchema';
 import { usePassengerDraftStore } from '../store/passengerDraftStore';
 import type { PassengerCounts, PassengersFormValues } from '../types/passenger';
@@ -48,6 +49,7 @@ export function PassengerForm({
   const saveDraft = usePassengerDraftStore((state) => state.saveDraft);
   const setPassengers = usePassengerDraftStore((state) => state.setPassengers);
   const clearSaveStatus = usePassengerDraftStore((state) => state.clearSaveStatus);
+  const setBookingPassengers = useBookingStore((state) => state.setPassengers);
 
   const schema = useMemo(
     () =>
@@ -112,6 +114,7 @@ export function PassengerForm({
       setError('root', { message: result.message });
       return;
     }
+    setBookingPassengers(values.passengers);
     onSaved?.();
   });
 

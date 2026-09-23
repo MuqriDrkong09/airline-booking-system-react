@@ -60,6 +60,8 @@ export function FlightDetailsPage() {
   const clearPassengerDraft = usePassengerDraftStore((state) => state.clearDraft);
   const clearSeatSelection = useSeatSelectionStore((state) => state.clearSelection);
   const clearBooking = useBookingStore((state) => state.clearBooking);
+  const setSelectedFlight = useBookingStore((state) => state.setSelectedFlight);
+  const setSearchCriteria = useBookingStore((state) => state.setSearchCriteria);
 
   const context = useMemo(() => {
     const parsed = parseFlightSearchParams(searchParams);
@@ -134,6 +136,22 @@ export function FlightDetailsPage() {
             clearPassengerDraft();
             clearSeatSelection();
             clearBooking();
+            setSelectedFlight(next);
+            const criteria = parseFlightSearchParams(searchParams);
+            if (criteria?.from && criteria.to && criteria.departure && criteria.cabinClass) {
+              setSearchCriteria({
+                tripType: criteria.tripType ?? 'ONE_WAY',
+                from: criteria.from,
+                to: criteria.to,
+                departure: criteria.departure,
+                returnDate: criteria.returnDate,
+                adults: criteria.adults ?? 1,
+                children: criteria.children ?? 0,
+                infants: criteria.infants ?? 0,
+                cabinClass: criteria.cabinClass,
+                legs: criteria.legs,
+              });
+            }
             navigate({
               pathname: APP_ROUTES.customer.flightPassengers(next.id),
               search: searchParams.toString(),

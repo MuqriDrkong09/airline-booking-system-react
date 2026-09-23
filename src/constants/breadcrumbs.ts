@@ -82,6 +82,18 @@ export function getBreadcrumbsForPath(pathname: string): BreadcrumbItem[] {
     // Add-ons: /app/flights/:flightId/addons
     if (/^\/app\/flights\/[^/]+\/addons$/.test(currentPath)) {
       crumbs.push({ to: currentPath, label: 'Add-ons' });
+      continue;
+    }
+
+    // Summary: /app/flights/:flightId/summary
+    if (/^\/app\/flights\/[^/]+\/summary$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Summary' });
+      continue;
+    }
+
+    // Payment: /app/flights/:flightId/payment
+    if (/^\/app\/flights\/[^/]+\/payment$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Payment' });
     }
   }
 

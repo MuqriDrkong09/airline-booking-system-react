@@ -147,6 +147,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
   `AddonSelector`, and `AddonSummary` — preferred seat, extra legroom, priority
   boarding, lounge, insurance, extra baggage, and meals — with availability,
   passenger applicability, select/remove, and booking total updates
+- Booking summary at `/app/flights/:flightId/summary` with `BookingSummary`,
+  `FlightSummary`, `PassengerSummary`, `SeatSummary`, `AddonSummary`, and
+  `PriceBreakdown` — flight through add-ons, fare / taxes / discount / total,
+  edit links back to each step, and a confirmation checkbox before payment
 - Centralized booking store (`src/features/booking/`) with search criteria,
   selected flight, passengers, seats, baggage, meals, add-ons, promo code,
   safe payment snapshot, price breakdown, booking reference, and status —
