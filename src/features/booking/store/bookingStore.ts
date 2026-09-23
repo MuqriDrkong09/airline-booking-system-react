@@ -1,22 +1,29 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { AddonSelection } from '@/features/addons/types/addon';
+import { calculateAddonTotal } from '@/features/addons/utils/addonRules';
 import type { PassengerBaggageSelection } from '@/features/baggage/types/baggage';
-import type { CabinClass } from '@/features/flights';
+import type { CabinClass, FlightOffer, FlightSearchCriteria } from '@/features/flights';
 import type { PassengerMealSelection } from '@/features/meals/types/meal';
-import { calculateBookingTotal } from '@/features/addons/utils/addonRules';
+import type { PassengerDraft } from '@/features/passengers';
+import type {
+  BookingData,
+  BookingPaymentInfo,
+  BookingPromoCode,
+  BookingSeatSelection,
+  BookingStatus,
+} from '../types/booking';
+import { EMPTY_PRICE_BREAKDOWN } from '../types/booking';
+import {
+  priceBreakdownFromBooking,
+  toSafePaymentInfo,
+} from '../utils/priceBreakdown';
 
-export interface BookingState {
-  flightId: string | null;
-  cabinClass: CabinClass | null;
-  baggage: PassengerBaggageSelection[];
-  baggageTotal: number;
-  meals: PassengerMealSelection[];
-  mealTotal: number;
-  addons: AddonSelection[];
-  addonTotal: number;
-  bookingTotal: number;
-  updatedAt: string | null;
+export interface BookingState extends BookingData {
+  setSearchCriteria: (criteria: FlightSearchCriteria | null) => void;
+  setSelectedFlight: (flight: FlightOffer | null, cabinClass?: CabinClass | null) => void;
+  setPassengers: (passengers: PassengerDraft[]) => void;
+  setSeats: (seats: BookingSeatSelection[]) => void;
   setBaggage: (options: {
     flightId: string;
     cabinClass: CabinClass;
@@ -32,83 +39,213 @@ export interface BookingState {
     flightId: string;
     addons: AddonSelection[];
     addonTotal: number;
-    bookingTotal: number;
+    bookingTotal?: number;
   }) => void;
+  setPromoCode: (promo: BookingPromoCode | null) => void;
+  /** Accepts only safe payment fields; sensitive card data is stripped. */
+  setPayment: (payment: Partial<BookingPaymentInfo> & Record<string, unknown>) => void;
+  setBookingReference: (reference: string | null) => void;
+  setBookingStatus: (status: BookingStatus) => void;
   clearBooking: () => void;
 }
 
-const empty = {
+const empty: BookingData = {
+  searchCriteria: null,
+  selectedFlight: null,
   flightId: null,
   cabinClass: null,
-  baggage: [] as PassengerBaggageSelection[],
+  passengers: [],
+  seats: [],
+  baggage: [],
+  meals: [],
+  addons: [],
+  seatTotal: 0,
   baggageTotal: 0,
-  meals: [] as PassengerMealSelection[],
   mealTotal: 0,
-  addons: [] as AddonSelection[],
   addonTotal: 0,
-  bookingTotal: 0,
+  promoCode: null,
+  payment: null,
+  priceBreakdown: { ...EMPTY_PRICE_BREAKDOWN },
+  bookingReference: null,
+  bookingStatus: 'DRAFT',
   updatedAt: null,
 };
 
-function withBookingTotal(partial: {
-  baggageTotal?: number;
-  mealTotal?: number;
-  addonTotal?: number;
-}): number {
-  return calculateBookingTotal(partial);
+function withTotals(state: BookingData): Pick<
+  BookingData,
+  'seatTotal' | 'addonTotal' | 'priceBreakdown' | 'updatedAt'
+> {
+  const priceBreakdown = priceBreakdownFromBooking(state);
+  return {
+    seatTotal: priceBreakdown.seatCost,
+    addonTotal: priceBreakdown.addonCost,
+    priceBreakdown,
+    updatedAt: new Date().toISOString(),
+  };
 }
 
 export const useBookingStore = create<BookingState>()(
   persist(
     (set, get) => ({
       ...empty,
+
+      setSearchCriteria: (searchCriteria) => {
+        const current = get();
+        set({
+          searchCriteria,
+          ...withTotals({ ...current, searchCriteria }),
+        });
+      },
+
+      setSelectedFlight: (selectedFlight, cabinClass) => {
+        const current = get();
+        const nextCabin =
+          cabinClass ?? selectedFlight?.cabinClass ?? current.cabinClass ?? null;
+        const next = {
+          ...current,
+          selectedFlight,
+          flightId: selectedFlight?.id ?? null,
+          cabinClass: nextCabin,
+        };
+        set({
+          selectedFlight,
+          flightId: next.flightId,
+          cabinClass: nextCabin,
+          ...withTotals(next),
+        });
+      },
+
+      setPassengers: (passengers) => {
+        const current = get();
+        const next = { ...current, passengers };
+        set({
+          passengers,
+          ...withTotals(next),
+        });
+      },
+
+      setSeats: (seats) => {
+        const current = get();
+        const next = { ...current, seats };
+        set({
+          seats,
+          ...withTotals(next),
+        });
+      },
+
       setBaggage: ({ flightId, cabinClass, baggage, baggageTotal }) => {
-        const { mealTotal, addonTotal } = get();
+        const current = get();
+        const next = {
+          ...current,
+          flightId,
+          cabinClass,
+          baggage,
+          baggageTotal,
+        };
         set({
           flightId,
           cabinClass,
           baggage,
           baggageTotal,
-          bookingTotal: withBookingTotal({ baggageTotal, mealTotal, addonTotal }),
-          updatedAt: new Date().toISOString(),
+          ...withTotals(next),
         });
       },
+
       setMeals: ({ flightId, meals, mealTotal }) => {
-        const { cabinClass, baggageTotal, addonTotal } = get();
-        set({
+        const current = get();
+        const next = {
+          ...current,
           flightId,
-          cabinClass,
           meals,
           mealTotal,
-          bookingTotal: withBookingTotal({ baggageTotal, mealTotal, addonTotal }),
+        };
+        set({
+          flightId,
+          cabinClass: current.cabinClass,
+          meals,
+          mealTotal,
+          ...withTotals(next),
+        });
+      },
+
+      setAddons: ({ flightId, addons, addonTotal }) => {
+        const current = get();
+        const resolvedAddonTotal = addonTotal ?? calculateAddonTotal(addons);
+        const next = {
+          ...current,
+          flightId,
+          addons,
+          addonTotal: resolvedAddonTotal,
+        };
+        set({
+          flightId,
+          cabinClass: current.cabinClass,
+          addons,
+          ...withTotals(next),
+        });
+      },
+
+      setPromoCode: (promoCode) => {
+        const current = get();
+        const next = { ...current, promoCode };
+        set({
+          promoCode,
+          ...withTotals(next),
+        });
+      },
+
+      setPayment: (payment) => {
+        set({
+          payment: toSafePaymentInfo(payment),
           updatedAt: new Date().toISOString(),
         });
       },
-      setAddons: ({ flightId, addons, addonTotal, bookingTotal }) =>
+
+      setBookingReference: (bookingReference) =>
         set({
-          flightId,
-          cabinClass: get().cabinClass,
-          addons,
-          addonTotal,
-          bookingTotal,
+          bookingReference,
           updatedAt: new Date().toISOString(),
         }),
-      clearBooking: () => set(empty),
+
+      setBookingStatus: (bookingStatus) =>
+        set({
+          bookingStatus,
+          updatedAt: new Date().toISOString(),
+        }),
+
+      clearBooking: () => set({ ...empty, priceBreakdown: { ...EMPTY_PRICE_BREAKDOWN } }),
     }),
     {
       name: 'aerobook-booking',
       partialize: (state) => ({
+        searchCriteria: state.searchCriteria,
+        selectedFlight: state.selectedFlight,
         flightId: state.flightId,
         cabinClass: state.cabinClass,
+        passengers: state.passengers,
+        seats: state.seats,
         baggage: state.baggage,
-        baggageTotal: state.baggageTotal,
         meals: state.meals,
-        mealTotal: state.mealTotal,
         addons: state.addons,
+        seatTotal: state.seatTotal,
+        baggageTotal: state.baggageTotal,
+        mealTotal: state.mealTotal,
         addonTotal: state.addonTotal,
-        bookingTotal: state.bookingTotal,
+        promoCode: state.promoCode,
+        // Safe payment snapshot only (method, last4, brand, billing contact).
+        payment: state.payment
+          ? toSafePaymentInfo(state.payment as BookingPaymentInfo & Record<string, unknown>)
+          : null,
+        priceBreakdown: state.priceBreakdown,
+        bookingReference: state.bookingReference,
+        bookingStatus: state.bookingStatus,
         updatedAt: state.updatedAt,
       }),
     },
   ),
 );
+
+/** @deprecated Prefer selectFinalTotal — kept for panels that read bookingTotal. */
+export function selectLegacyBookingTotal(state: BookingData): number {
+  return state.priceBreakdown.finalTotal;
+}

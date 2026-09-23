@@ -147,6 +147,11 @@ Registration, email verification, and password reset also work in mock mode. Ver
   `AddonSelector`, and `AddonSummary` — preferred seat, extra legroom, priority
   boarding, lounge, insurance, extra baggage, and meals — with availability,
   passenger applicability, select/remove, and booking total updates
+- Centralized booking store (`src/features/booking/`) with search criteria,
+  selected flight, passengers, seats, baggage, meals, add-ons, promo code,
+  safe payment snapshot, price breakdown, booking reference, and status —
+  plus selectors for passenger/seat/baggage/meal/addon totals, subtotal,
+  discount, taxes, and final total; only non-sensitive fields are persisted
 - Loading / error / empty / results states via TanStack Query
 
 ### Layouts & navigation
