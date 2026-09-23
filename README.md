@@ -151,6 +151,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
   `FlightSummary`, `PassengerSummary`, `SeatSummary`, `AddonSummary`, and
   `PriceBreakdown` — flight through add-ons, fare / taxes / discount / total,
   edit links back to each step, and a confirmation checkbox before payment
+- Promo codes (`src/features/promo/`) with `PromoCodeInput` and `PromoCodeResult`
+  — TanStack Query validation for valid / invalid / expired codes, minimum
+  booking amount, percentage and fixed discounts (with max cap); example
+  `FLIGHT100` applies an RM100 discount and updates the booking total
 - Centralized booking store (`src/features/booking/`) with search criteria,
   selected flight, passengers, seats, baggage, meals, add-ons, promo code,
   safe payment snapshot, price breakdown, booking reference, and status —

@@ -42,6 +42,10 @@ export interface BookingPromoCode {
   /** Percent off subtotal (0–100) or fixed currency amount. */
   discountType: 'PERCENT' | 'FIXED';
   discountValue: number;
+  /** Caps percentage (or oversized fixed) discounts when set. */
+  maxDiscount?: number | null;
+  currency?: string;
+  description?: string;
 }
 
 export interface BookingPriceBreakdown {

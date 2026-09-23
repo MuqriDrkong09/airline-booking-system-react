@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { useState, type ReactNode } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppAlert, AppButton, AppCard } from '@/components/common';
+import { PromoCodeInput } from '@/features/promo';
 import { useBookingStore } from '../store/bookingStore';
 import { AddonSummary } from './AddonSummary';
 import { BaggageSummary } from './BaggageSummary';
@@ -86,6 +87,8 @@ export function BookingSummary({ editHrefs }: BookingSummaryProps) {
             breakdown={priceBreakdown}
             promoCode={promoCode?.code ?? null}
           />
+
+          <PromoCodeInput />
 
           <AppCard title="Confirm booking" subtitle="Review everything before payment.">
             <Stack spacing={2}>

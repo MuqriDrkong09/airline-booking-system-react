@@ -27,12 +27,19 @@ export function calculateDiscount(
     return 0;
   }
 
+  let discount: number;
   if (promo.discountType === 'PERCENT') {
     const percent = Math.min(Math.max(promo.discountValue, 0), 100);
-    return roundMoney((subtotal * percent) / 100);
+    discount = (subtotal * percent) / 100;
+  } else {
+    discount = Math.max(promo.discountValue, 0);
   }
 
-  return roundMoney(Math.min(Math.max(promo.discountValue, 0), subtotal));
+  if (typeof promo.maxDiscount === 'number' && promo.maxDiscount >= 0) {
+    discount = Math.min(discount, promo.maxDiscount);
+  }
+
+  return roundMoney(Math.min(discount, subtotal));
 }
 
 export function roundMoney(value: number): number {
