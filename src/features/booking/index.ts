@@ -103,3 +103,18 @@ export { BaggageSummary as BookingBaggageSummary } from './components/BaggageSum
 export type { BaggageSummaryProps as BookingBaggageSummaryProps } from './components/BaggageSummary';
 export { MealSummary as BookingMealSummary } from './components/MealSummary';
 export type { MealSummaryProps as BookingMealSummaryProps } from './components/MealSummary';
+export { BookingConfirmationView } from './components/confirmation/BookingConfirmationView';
+export type { BookingConfirmationViewProps } from './components/confirmation/BookingConfirmationView';
+export { BookingConfirmationSuccess } from './components/confirmation/BookingConfirmationSuccess';
+export type { BookingConfirmationSuccessProps } from './components/confirmation/BookingConfirmationSuccess';
+export { BookingConfirmationDetails } from './components/confirmation/BookingConfirmationDetails';
+export type { BookingConfirmationDetailsProps } from './components/confirmation/BookingConfirmationDetails';
+export { BookingConfirmationActions } from './components/confirmation/BookingConfirmationActions';
+export type { BookingConfirmationActionsProps } from './components/confirmation/BookingConfirmationActions';
+export {
+  buildCalendarIcs,
+  buildETicketText,
+  buildInvoiceText,
+  downloadCalendarEvent,
+  downloadTextFile,
+} from './utils/bookingDocuments';

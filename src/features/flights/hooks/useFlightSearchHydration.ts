@@ -29,11 +29,11 @@ export function buildFormValuesFromCriteria(
 ): FlightSearchFormValues {
   const departureDate = criteria.departure ?? todayIsoDate();
   const defaults = createDefaultFlightSearchValues({
-    tripType: criteria.tripType ?? 'ROUND_TRIP',
+    tripType: criteria.tripType ?? 'ONE_WAY',
     departureDate,
     returnDate:
       criteria.returnDate ??
-      (criteria.tripType === 'ONE_WAY' ? '' : addDaysIso(departureDate, 7)),
+      (criteria.tripType === 'ROUND_TRIP' ? addDaysIso(departureDate, 7) : ''),
     adults: criteria.adults ?? 1,
     children: criteria.children ?? 0,
     infants: criteria.infants ?? 0,
@@ -94,9 +94,7 @@ export function useFlightSearchHydration(searchParams: URLSearchParams) {
 
   const defaultValues = useMemo(() => {
     if (!parsed) {
-      return createDefaultFlightSearchValues({
-        returnDate: addDaysIso(todayIsoDate(), 7),
-      });
+      return createDefaultFlightSearchValues();
     }
 
     const airportsByCode = new Map<string, Airport>();

@@ -28,6 +28,17 @@ describe('SearchFlightsPage', () => {
     );
 
     expect(screen.getByRole('heading', { name: 'Search flights' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'One-way' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Round-trip' }));
+    expect(screen.getByRole('button', { name: 'Round-trip' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    expect(screen.getByLabelText(/Return date/i)).toBeInTheDocument();
 
     await pickAirport(
       user,
@@ -86,7 +97,7 @@ describe('SearchFlightsPage', () => {
     });
   }, 15000);
 
-  it('supports switching to one-way and multi-city', async () => {
+  it('supports switching to round-trip and multi-city from the one-way default', async () => {
     const user = userEvent.setup();
 
     renderWithProviders(
@@ -96,8 +107,14 @@ describe('SearchFlightsPage', () => {
       { initialEntries: ['/app/flights'] },
     );
 
-    await user.click(screen.getByRole('button', { name: 'One-way' }));
+    expect(screen.getByRole('button', { name: 'One-way' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
     expect(screen.queryByLabelText(/Return date/i)).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Round-trip' }));
+    expect(screen.getByLabelText(/Return date/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Multi-city' }));
     expect(screen.getByText('Flight 1')).toBeInTheDocument();

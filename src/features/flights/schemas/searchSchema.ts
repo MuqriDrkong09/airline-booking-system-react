@@ -240,7 +240,7 @@ export function createDefaultFlightSearchValues(
   const departureDate = overrides.departureDate ?? todayIsoDate();
 
   return {
-    tripType: 'ROUND_TRIP',
+    tripType: 'ONE_WAY',
     origin: null,
     destination: null,
     departureDate,

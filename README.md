@@ -164,6 +164,9 @@ Registration, email verification, and password reset also work in mock mode. Ver
   `CANCELLED` / `CHECKED_IN` / `COMPLETED` / `REFUNDED`), generate reference,
   persist to the bookings store, clear temporary drafts, and redirect to
   `/app/bookings/:reference/confirmation`
+- Booking confirmation page with success state, reference/status, passengers,
+  flight, seats, baggage, meals, add-ons, and payment summary — plus e-ticket /
+  invoice download, print, view booking, and add-to-calendar actions
 - Centralized booking store (`src/features/booking/`) with search criteria,
   selected flight, passengers, seats, baggage, meals, add-ons, promo code,
   safe payment snapshot, price breakdown, booking reference, and status —
