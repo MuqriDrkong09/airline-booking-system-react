@@ -11,7 +11,7 @@ import type {
   BookingPaymentInfo,
   BookingPromoCode,
   BookingSeatSelection,
-  BookingStatus,
+  CheckoutStatus,
 } from '../types/booking';
 import { EMPTY_PRICE_BREAKDOWN } from '../types/booking';
 import {
@@ -45,7 +45,7 @@ export interface BookingState extends BookingData {
   /** Accepts only safe payment fields; sensitive card data is stripped. */
   setPayment: (payment: Partial<BookingPaymentInfo> & Record<string, unknown>) => void;
   setBookingReference: (reference: string | null) => void;
-  setBookingStatus: (status: BookingStatus) => void;
+  setBookingStatus: (status: CheckoutStatus) => void;
   clearBooking: () => void;
 }
 

@@ -26,6 +26,8 @@ export const APP_ROUTES = {
       `/app/flights/${encodeURIComponent(flightId)}/summary`,
     flightPayment: (flightId: string) =>
       `/app/flights/${encodeURIComponent(flightId)}/payment`,
+    bookingConfirmation: (bookingReference: string) =>
+      `/app/bookings/${encodeURIComponent(bookingReference)}/confirmation`,
     bookings: '/app/bookings',
     checkIn: '/app/check-in',
     notifications: '/app/notifications',

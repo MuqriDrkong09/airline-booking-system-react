@@ -4,7 +4,8 @@ import type { CabinClass, FlightOffer, FlightSearchCriteria } from '@/features/f
 import type { PassengerMealSelection } from '@/features/meals/types/meal';
 import type { PassengerDraft } from '@/features/passengers';
 
-export const BOOKING_STATUSES = [
+/** Workflow status for the in-progress checkout draft (not a saved booking). */
+export const CHECKOUT_STATUSES = [
   'DRAFT',
   'PENDING_PAYMENT',
   'CONFIRMED',
@@ -12,7 +13,12 @@ export const BOOKING_STATUSES = [
   'FAILED',
 ] as const;
 
-export type BookingStatus = (typeof BOOKING_STATUSES)[number];
+export type CheckoutStatus = (typeof CHECKOUT_STATUSES)[number];
+
+/** @deprecated Prefer CheckoutStatus — alias for checkout draft status. */
+export type BookingStatus = CheckoutStatus;
+/** @deprecated Prefer CHECKOUT_STATUSES */
+export const BOOKING_STATUSES = CHECKOUT_STATUSES;
 
 export const PAYMENT_METHODS = [
   'CREDIT_CARD',
@@ -66,6 +72,7 @@ export interface BookingPriceBreakdown {
   finalTotal: number;
 }
 
+/** Temporary checkout draft held in Zustand while the user builds a trip. */
 export interface BookingData {
   searchCriteria: FlightSearchCriteria | null;
   selectedFlight: FlightOffer | null;
@@ -86,7 +93,7 @@ export interface BookingData {
   payment: BookingPaymentInfo | null;
   priceBreakdown: BookingPriceBreakdown;
   bookingReference: string | null;
-  bookingStatus: BookingStatus;
+  bookingStatus: CheckoutStatus;
   updatedAt: string | null;
 }
 

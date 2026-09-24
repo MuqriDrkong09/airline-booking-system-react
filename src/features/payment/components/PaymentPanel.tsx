@@ -3,14 +3,16 @@ import Typography from '@mui/material/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppAlert, AppButton } from '@/components/common';
 import {
+  completeBookingAfterPayment,
   formatBookingMoney,
   selectFinalTotal,
   useBookingStore,
   type PaymentMethod,
 } from '@/features/booking';
+import { APP_ROUTES } from '@/constants/routes';
 import { useProcessPaymentMutation } from '../hooks/useProcessPayment';
 import {
   cardFormSchema,
@@ -18,10 +20,7 @@ import {
   type CardFormSchemaInput,
 } from '../schemas/cardSchema';
 import { isCardPaymentMethod, type PaymentUiStatus } from '../types/payment';
-import {
-  createBookingReference,
-  createPaymentIdempotencyKey,
-} from '../utils/paymentHelpers';
+import { createPaymentIdempotencyKey } from '../utils/paymentHelpers';
 import { CardForm } from './CardForm';
 import { PaymentMethodSelector } from './PaymentMethodSelector';
 import { PaymentStatus } from './PaymentStatus';
@@ -34,19 +33,18 @@ export interface PaymentPanelProps {
 }
 
 export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPanelProps) {
+  const navigate = useNavigate();
   const priceBreakdown = useBookingStore((state) => state.priceBreakdown);
   const selectedFlight = useBookingStore((state) => state.selectedFlight);
   const passengers = useBookingStore((state) => state.passengers);
-  const bookingReference = useBookingStore((state) => state.bookingReference);
-  const setPayment = useBookingStore((state) => state.setPayment);
   const setBookingStatus = useBookingStore((state) => state.setBookingStatus);
-  const setBookingReference = useBookingStore((state) => state.setBookingReference);
   const finalTotal = useBookingStore(selectFinalTotal);
 
   const [method, setMethod] = useState<PaymentMethod>('CREDIT_CARD');
   const [uiStatus, setUiStatus] = useState<PaymentUiStatus>('IDLE');
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [transactionId, setTransactionId] = useState<string | null>(null);
+  const [confirmedReference, setConfirmedReference] = useState<string | null>(null);
   const submittingRef = useRef(false);
   const idempotencyKeyRef = useRef(createPaymentIdempotencyKey());
 
@@ -71,8 +69,43 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
     setUiStatus('IDLE');
     setStatusMessage(null);
     setTransactionId(null);
+    setConfirmedReference(null);
     setBookingStatus('PENDING_PAYMENT');
     mutation.reset();
+  };
+
+  const finalizeAfterPayment = (options: {
+    transactionId: string;
+    payment: {
+      method: PaymentMethod;
+      billingName: string;
+      billingEmail: string;
+      cardBrand: string;
+      cardLast4: string;
+    };
+    successMessage: string;
+  }) => {
+    const created = completeBookingAfterPayment({
+      transactionId: options.transactionId,
+      payment: options.payment,
+    });
+
+    if (!created.ok) {
+      setUiStatus('FAILED');
+      setStatusMessage(created.message);
+      setBookingStatus('FAILED');
+      submittingRef.current = false;
+      return;
+    }
+
+    setTransactionId(options.transactionId);
+    setConfirmedReference(created.booking.reference);
+    setStatusMessage(options.successMessage);
+    setUiStatus('SUCCESS');
+
+    navigate(APP_ROUTES.customer.bookingConfirmation(created.booking.reference), {
+      replace: true,
+    });
   };
 
   const handlePay = cardForm.handleSubmit(async (cardValues) => {
@@ -102,7 +135,6 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
           : undefined,
       });
 
-      // Drop sensitive card fields from memory as soon as the mock call returns.
       cardForm.reset(emptyCardFormValues);
 
       if (!result.ok) {
@@ -113,21 +145,17 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
         return;
       }
 
-      setPayment({
-        method: result.method,
-        billingName: result.billingName,
-        billingEmail: passengers[0]?.email ?? '',
-        cardBrand: result.cardBrand,
-        cardLast4: result.cardLast4,
+      finalizeAfterPayment({
+        transactionId: result.transactionId,
+        successMessage: result.message,
+        payment: {
+          method: result.method,
+          billingName: result.billingName,
+          billingEmail: passengers[0]?.email ?? '',
+          cardBrand: result.cardBrand,
+          cardLast4: result.cardLast4,
+        },
       });
-
-      const reference = createBookingReference(result.transactionId);
-      setBookingReference(reference);
-      setBookingStatus('CONFIRMED');
-      setTransactionId(result.transactionId);
-      setStatusMessage(result.message);
-      setUiStatus('SUCCESS');
-      // Keep submittingRef true after success to block duplicate posts.
     } catch {
       cardForm.reset(emptyCardFormValues);
       setUiStatus('FAILED');
@@ -164,24 +192,21 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
         return;
       }
 
-      setPayment({
-        method: result.method,
-        billingName:
-          result.billingName ||
-          (passengers[0]
-            ? `${passengers[0].firstName} ${passengers[0].lastName}`.trim()
-            : ''),
-        billingEmail: passengers[0]?.email ?? '',
-        cardBrand: '',
-        cardLast4: '',
+      finalizeAfterPayment({
+        transactionId: result.transactionId,
+        successMessage: result.message,
+        payment: {
+          method: result.method,
+          billingName:
+            result.billingName ||
+            (passengers[0]
+              ? `${passengers[0].firstName} ${passengers[0].lastName}`.trim()
+              : ''),
+          billingEmail: passengers[0]?.email ?? '',
+          cardBrand: '',
+          cardLast4: '',
+        },
       });
-
-      const reference = createBookingReference(result.transactionId);
-      setBookingReference(reference);
-      setBookingStatus('CONFIRMED');
-      setTransactionId(result.transactionId);
-      setStatusMessage(result.message);
-      setUiStatus('SUCCESS');
     } catch {
       setUiStatus('FAILED');
       setStatusMessage('Unable to reach the payment service. Please try again.');
@@ -272,14 +297,22 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
           status={uiStatus}
           message={statusMessage}
           transactionId={transactionId}
-          bookingReference={bookingReference}
+          bookingReference={confirmedReference}
           onRetry={uiStatus === 'FAILED' ? resetForRetry : undefined}
         />
 
         {uiStatus === 'SUCCESS' ? (
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
-            <AppButton component={RouterLink} to={bookingsHref} variant="contained">
-              View bookings
+            <AppButton
+              component={RouterLink}
+              to={
+                confirmedReference
+                  ? APP_ROUTES.customer.bookingConfirmation(confirmedReference)
+                  : bookingsHref
+              }
+              variant="contained"
+            >
+              View confirmation
             </AppButton>
             <AppButton component={RouterLink} to={summaryHref} variant="outlined">
               Back to summary

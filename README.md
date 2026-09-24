@@ -159,6 +159,11 @@ Registration, email verification, and password reset also work in mock mode. Ver
   `CardForm`, `PaymentSummary`, and `PaymentStatus` — credit/debit card, FPX,
   and e-wallet; client-side card validation; loading / success / failure /
   retry; duplicate-submit protection; card PAN/CVV never persisted
+- Booking creation after payment success: validate checkout (state, passengers,
+  seats, baggage, add-ons), create a typed `Booking` (`PENDING` / `CONFIRMED` /
+  `CANCELLED` / `CHECKED_IN` / `COMPLETED` / `REFUNDED`), generate reference,
+  persist to the bookings store, clear temporary drafts, and redirect to
+  `/app/bookings/:reference/confirmation`
 - Centralized booking store (`src/features/booking/`) with search criteria,
   selected flight, passengers, seats, baggage, meals, add-ons, promo code,
   safe payment snapshot, price breakdown, booking reference, and status —

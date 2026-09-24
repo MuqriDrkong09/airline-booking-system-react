@@ -94,6 +94,21 @@ export function getBreadcrumbsForPath(pathname: string): BreadcrumbItem[] {
     // Payment: /app/flights/:flightId/payment
     if (/^\/app\/flights\/[^/]+\/payment$/.test(currentPath)) {
       crumbs.push({ to: currentPath, label: 'Payment' });
+      continue;
+    }
+
+    // Booking confirmation: /app/bookings/:reference/confirmation
+    if (/^\/app\/bookings\/[^/]+\/confirmation$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Confirmation' });
+      continue;
+    }
+
+    // Booking detail segment under /app/bookings/:reference
+    if (
+      /^\/app\/bookings\/[^/]+$/.test(currentPath) &&
+      currentPath !== APP_ROUTES.customer.bookings
+    ) {
+      crumbs.push({ to: currentPath, label: 'Booking' });
     }
   }
 
