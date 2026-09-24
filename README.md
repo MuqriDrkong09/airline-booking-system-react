@@ -155,6 +155,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
   — TanStack Query validation for valid / invalid / expired codes, minimum
   booking amount, percentage and fixed discounts (with max cap); example
   `FLIGHT100` applies an RM100 discount and updates the booking total
+- Mock payment at `/app/flights/:flightId/payment` with `PaymentMethodSelector`,
+  `CardForm`, `PaymentSummary`, and `PaymentStatus` — credit/debit card, FPX,
+  and e-wallet; client-side card validation; loading / success / failure /
+  retry; duplicate-submit protection; card PAN/CVV never persisted
 - Centralized booking store (`src/features/booking/`) with search criteria,
   selected flight, passengers, seats, baggage, meals, add-ons, promo code,
   safe payment snapshot, price breakdown, booking reference, and status —

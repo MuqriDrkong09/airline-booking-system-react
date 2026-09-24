@@ -14,7 +14,12 @@ export const BOOKING_STATUSES = [
 
 export type BookingStatus = (typeof BOOKING_STATUSES)[number];
 
-export const PAYMENT_METHODS = ['CARD', 'PAYPAL', 'BANK_TRANSFER'] as const;
+export const PAYMENT_METHODS = [
+  'CREDIT_CARD',
+  'DEBIT_CARD',
+  'FPX',
+  'E_WALLET',
+] as const;
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
 /** Seat assignment persisted on the booking with priced snapshot. */

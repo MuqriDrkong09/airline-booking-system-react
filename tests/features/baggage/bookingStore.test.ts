@@ -204,7 +204,7 @@ describe('booking store', () => {
   it('stores only safe payment fields and strips sensitive card data', () => {
     act(() => {
       useBookingStore.getState().setPayment({
-        method: 'CARD',
+        method: 'CREDIT_CARD',
         billingName: 'Ada Lovelace',
         billingEmail: 'ada@example.com',
         cardBrand: 'visa',
@@ -217,7 +217,7 @@ describe('booking store', () => {
 
     const payment = useBookingStore.getState().payment;
     expect(payment).toEqual({
-      method: 'CARD',
+      method: 'CREDIT_CARD',
       billingName: 'Ada Lovelace',
       billingEmail: 'ada@example.com',
       cardBrand: 'visa',
@@ -235,13 +235,13 @@ describe('booking store', () => {
   it('sanitizes payment payloads before persistence helpers run', () => {
     expect(
       toSafePaymentInfo({
-        method: 'CARD',
+        method: 'CREDIT_CARD',
         cardLast4: '00004242',
         cardNumber: '4111111111111111',
         cvv: '999',
       }),
     ).toEqual({
-      method: 'CARD',
+      method: 'CREDIT_CARD',
       billingName: '',
       billingEmail: '',
       cardBrand: '',

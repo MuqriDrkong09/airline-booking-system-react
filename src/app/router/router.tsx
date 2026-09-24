@@ -15,6 +15,7 @@ import { AddonSelectionPage } from '@/pages/customer/AddonSelectionPage';
 import { BaggageSelectionPage } from '@/pages/customer/BaggageSelectionPage';
 import { BookingSummaryPage } from '@/pages/customer/BookingSummaryPage';
 import { MealSelectionPage } from '@/pages/customer/MealSelectionPage';
+import { PaymentPage } from '@/pages/customer/PaymentPage';
 import { SeatSelectionPage } from '@/pages/customer/SeatSelectionPage';
 import { SearchFlightsPage } from '@/pages/customer/SearchFlightsPage';
 import { HomePage } from '@/pages/HomePage';
@@ -57,10 +58,7 @@ export const router = createBrowserRouter([
               { path: 'flights/:flightId/meals', element: <MealSelectionPage /> },
               { path: 'flights/:flightId/addons', element: <AddonSelectionPage /> },
               { path: 'flights/:flightId/summary', element: <BookingSummaryPage /> },
-              {
-                path: 'flights/:flightId/payment',
-                element: <PlaceholderPage title="Payment" />,
-              },
+              { path: 'flights/:flightId/payment', element: <PaymentPage /> },
               { path: 'bookings', element: <PlaceholderPage title="My Bookings" /> },
               { path: 'check-in', element: <PlaceholderPage title="Check-in" /> },
               { path: 'notifications', element: <PlaceholderPage title="Notifications" /> },
