@@ -14,7 +14,9 @@ import { PassengerDetailsPage } from '@/pages/customer/PassengerDetailsPage';
 import { AddonSelectionPage } from '@/pages/customer/AddonSelectionPage';
 import { BaggageSelectionPage } from '@/pages/customer/BaggageSelectionPage';
 import { BookingConfirmationPage } from '@/pages/customer/BookingConfirmationPage';
+import { BookingDetailPage } from '@/pages/customer/BookingDetailPage';
 import { BookingSummaryPage } from '@/pages/customer/BookingSummaryPage';
+import { MyBookingsPage } from '@/pages/customer/MyBookingsPage';
 import { MealSelectionPage } from '@/pages/customer/MealSelectionPage';
 import { PaymentPage } from '@/pages/customer/PaymentPage';
 import { SeatSelectionPage } from '@/pages/customer/SeatSelectionPage';
@@ -64,7 +66,11 @@ export const router = createBrowserRouter([
                 path: 'bookings/:bookingReference/confirmation',
                 element: <BookingConfirmationPage />,
               },
-              { path: 'bookings', element: <PlaceholderPage title="My Bookings" /> },
+              {
+                path: 'bookings/:bookingReference',
+                element: <BookingDetailPage />,
+              },
+              { path: 'bookings', element: <MyBookingsPage /> },
               { path: 'check-in', element: <PlaceholderPage title="Check-in" /> },
               { path: 'notifications', element: <PlaceholderPage title="Notifications" /> },
               { path: 'profile', element: <ProfilePage /> },

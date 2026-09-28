@@ -3,6 +3,12 @@ module.exports = {
   testEnvironment: 'jsdom',
   roots: ['<rootDir>/tests'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  // OneDrive Files On-Demand marks local files as reparse points; Jest treats
+  // those as symlinks and skips them unless enableSymlinks is on.
+  watchman: false,
+  haste: {
+    enableSymlinks: true,
+  },
   moduleNameMapper: {
     '^@/config/env$': '<rootDir>/tests/mocks/env.ts',
     '^@/(.*)$': '<rootDir>/src/$1',

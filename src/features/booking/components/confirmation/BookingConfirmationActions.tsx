@@ -73,7 +73,7 @@ export function BookingConfirmationActions({ booking }: BookingConfirmationActio
         </AppButton>
         <AppButton
           component={RouterLink}
-          to={APP_ROUTES.customer.bookings}
+          to={APP_ROUTES.customer.bookingDetail(booking.reference)}
           variant="outlined"
           startIcon={<Eye size={18} aria-hidden />}
         >

@@ -167,6 +167,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Booking confirmation page with success state, reference/status, passengers,
   flight, seats, baggage, meals, add-ons, and payment summary — plus e-ticket /
   invoice download, print, view booking, and add-to-calendar actions
+- My Bookings (`/app/bookings`) with Upcoming / Past / Cancelled tabs, search and
+  sort filters, pagination, and booking cards (reference, airline, flight number,
+  route, date, passengers, total, status). Actions: View, Manage, Cancel, Check-in,
+  Download ticket. Booking detail at `/app/bookings/:reference`
 - Centralized booking store (`src/features/booking/`) with search criteria,
   selected flight, passengers, seats, baggage, meals, add-ons, promo code,
   safe payment snapshot, price breakdown, booking reference, and status —

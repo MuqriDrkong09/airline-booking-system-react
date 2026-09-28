@@ -3,28 +3,11 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { CircleCheck } from 'lucide-react';
 import { AppBadge, AppCard } from '@/components/common';
-import type { Booking, BookingRecordStatus } from '../../types/bookingRecord';
-
-const STATUS_TONE: Record<
-  BookingRecordStatus,
-  'default' | 'info' | 'success' | 'warning' | 'error'
-> = {
-  PENDING: 'warning',
-  CONFIRMED: 'success',
-  CANCELLED: 'error',
-  CHECKED_IN: 'info',
-  COMPLETED: 'default',
-  REFUNDED: 'warning',
-};
-
-const STATUS_LABELS: Record<BookingRecordStatus, string> = {
-  PENDING: 'Pending',
-  CONFIRMED: 'Confirmed',
-  CANCELLED: 'Cancelled',
-  CHECKED_IN: 'Checked in',
-  COMPLETED: 'Completed',
-  REFUNDED: 'Refunded',
-};
+import type { Booking } from '../../types/bookingRecord';
+import {
+  BOOKING_STATUS_LABELS,
+  BOOKING_STATUS_TONE,
+} from '../../utils/bookingStatus';
 
 export interface BookingConfirmationSuccessProps {
   booking: Booking;
@@ -64,8 +47,8 @@ export function BookingConfirmationSuccess({ booking }: BookingConfirmationSucce
               Booking confirmed
             </Typography>
             <AppBadge
-              label={STATUS_LABELS[booking.status]}
-              tone={STATUS_TONE[booking.status]}
+              label={BOOKING_STATUS_LABELS[booking.status]}
+              tone={BOOKING_STATUS_TONE[booking.status]}
             />
           </Stack>
           <Typography variant="body1" color="text.secondary">

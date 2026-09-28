@@ -1,4 +1,4 @@
-import { createAuthStore } from '@/features/auth';
+﻿import { createAuthStore } from '@/features/auth';
 import { AuthApiError, createMemoryTokenStorage, type AuthApi } from '@/services/auth';
 import type { AuthSession, AuthUser } from '@/types/auth';
 import { UserRole } from '@/types/auth';
