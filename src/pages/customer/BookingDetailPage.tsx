@@ -1,26 +1,69 @@
 import Stack from '@mui/material/Stack';
+import { SearchX } from 'lucide-react';
 import { Link as RouterLink, useParams } from 'react-router-dom';
-import { AppButton, EmptyState, PageContainer } from '@/components/common';
+import {
+  AppButton,
+  EmptyState,
+  ErrorState,
+  PageContainer,
+  PageLoader,
+} from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import {
-  BookingConfirmationActions,
-  BookingConfirmationDetails,
-  BookingConfirmationSuccess,
-  useBookingsStore,
+  BOOKING_STATUS_LABELS,
+  BookingDetailView,
+  useBookingDetail,
 } from '@/features/booking';
 
 export function BookingDetailPage() {
   const { bookingReference = '' } = useParams<{ bookingReference: string }>();
-  const booking = useBookingsStore((state) =>
-    state.bookings.find((item) => item.reference === bookingReference),
-  );
+  const { status, booking, reference, retry } = useBookingDetail(bookingReference);
 
-  if (!booking) {
+  if (status === 'loading') {
     return (
-      <PageContainer title="Booking">
+      <PageContainer title="Booking details" description="Loading booking…">
+        <PageLoader label="Loading booking details…" />
+      </PageContainer>
+    );
+  }
+
+  if (status === 'error') {
+    return (
+      <PageContainer title="Booking details">
+        <ErrorState
+          title="Invalid booking reference"
+          message={
+            reference
+              ? `“${reference}” is not a valid booking reference.`
+              : 'A booking reference is required to view booking details.'
+          }
+          onRetry={retry}
+          action={
+            <AppButton
+              component={RouterLink}
+              to={APP_ROUTES.customer.bookings}
+              variant="outlined"
+              sx={{ mt: 1 }}
+            >
+              My bookings
+            </AppButton>
+          }
+        />
+      </PageContainer>
+    );
+  }
+
+  if (status === 'not_found' || !booking) {
+    return (
+      <PageContainer title="Booking details">
         <EmptyState
+          icon={<SearchX aria-hidden size={40} />}
           title="Booking not found"
-          message="We could not find this booking reference. It may have been cleared from this browser."
+          message={
+            reference
+              ? `We could not find booking ${reference}. It may have been cleared from this browser.`
+              : 'We could not find this booking.'
+          }
           action={
             <Stack direction="row" spacing={1.25} useFlexGap sx={{ flexWrap: 'wrap' }}>
               <AppButton
@@ -37,6 +80,9 @@ export function BookingDetailPage() {
               >
                 Search flights
               </AppButton>
+              <AppButton variant="text" onClick={retry}>
+                Try again
+              </AppButton>
             </Stack>
           }
         />
@@ -46,8 +92,8 @@ export function BookingDetailPage() {
 
   return (
     <PageContainer
-      title="Manage booking"
-      description={`Reference ${booking.reference} · ${booking.status}`}
+      title="Booking details"
+      description={`Reference ${booking.reference} · ${BOOKING_STATUS_LABELS[booking.status]}`}
       action={
         <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
           <AppButton
@@ -67,11 +113,7 @@ export function BookingDetailPage() {
         </Stack>
       }
     >
-      <Stack spacing={2.5} sx={{ maxWidth: 800 }}>
-        <BookingConfirmationSuccess booking={booking} />
-        <BookingConfirmationDetails booking={booking} />
-        <BookingConfirmationActions booking={booking} />
-      </Stack>
+      <BookingDetailView booking={booking} />
     </PageContainer>
   );
 }

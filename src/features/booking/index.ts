@@ -111,6 +111,39 @@ export { BookingConfirmationDetails } from './components/confirmation/BookingCon
 export type { BookingConfirmationDetailsProps } from './components/confirmation/BookingConfirmationDetails';
 export { BookingConfirmationActions } from './components/confirmation/BookingConfirmationActions';
 export type { BookingConfirmationActionsProps } from './components/confirmation/BookingConfirmationActions';
+export { BookingDetailSection } from './components/detail/BookingDetailSection';
+export type { BookingDetailSectionProps } from './components/detail/BookingDetailSection';
+export { BookingInfoDetail } from './components/detail/BookingInfoDetail';
+export type { BookingInfoDetailProps } from './components/detail/BookingInfoDetail';
+export { BookingFlightDetail } from './components/detail/BookingFlightDetail';
+export type { BookingFlightDetailProps } from './components/detail/BookingFlightDetail';
+export { BookingPassengersDetail } from './components/detail/BookingPassengersDetail';
+export type { BookingPassengersDetailProps } from './components/detail/BookingPassengersDetail';
+export { BookingSeatsDetail } from './components/detail/BookingSeatsDetail';
+export type { BookingSeatsDetailProps } from './components/detail/BookingSeatsDetail';
+export { BookingBaggageDetail } from './components/detail/BookingBaggageDetail';
+export type { BookingBaggageDetailProps } from './components/detail/BookingBaggageDetail';
+export { BookingMealsDetail } from './components/detail/BookingMealsDetail';
+export type { BookingMealsDetailProps } from './components/detail/BookingMealsDetail';
+export { BookingAddonsDetail } from './components/detail/BookingAddonsDetail';
+export type { BookingAddonsDetailProps } from './components/detail/BookingAddonsDetail';
+export { BookingPaymentDetail } from './components/detail/BookingPaymentDetail';
+export type { BookingPaymentDetailProps } from './components/detail/BookingPaymentDetail';
+export { BookingCancellationPolicyDetail } from './components/detail/BookingCancellationPolicyDetail';
+export type { BookingCancellationPolicyDetailProps } from './components/detail/BookingCancellationPolicyDetail';
+export { BookingDetailView } from './components/detail/BookingDetailView';
+export type { BookingDetailViewProps } from './components/detail/BookingDetailView';
+export { useBookingDetail } from './hooks/useBookingDetail';
+export type {
+  BookingDetailState,
+  BookingDetailStatus,
+} from './hooks/useBookingDetail';
+export {
+  formatBookingTimestamp,
+  formatPassengerLabel,
+  isValidBookingReference,
+  passengerNameById,
+} from './utils/bookingDetailHelpers';
 export {
   buildCalendarIcs,
   buildETicketText,
