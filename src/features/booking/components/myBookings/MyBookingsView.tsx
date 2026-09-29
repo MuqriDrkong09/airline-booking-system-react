@@ -13,10 +13,6 @@ import { APP_ROUTES } from '@/constants/routes';
 import { todayIsoDate } from '@/features/flights/utils/dates';
 import type { Booking } from '../../types/bookingRecord';
 import { useBookingsStore } from '../../store/bookingsStore';
-import {
-  buildETicketText,
-  downloadTextFile,
-} from '../../utils/bookingDocuments';
 import { BOOKING_STATUS_LABELS, type MyBookingsTab } from '../../utils/bookingStatus';
 import {
   MY_BOOKINGS_PAGE_SIZE,
@@ -67,14 +63,6 @@ export function MyBookingsView() {
     if (updated) {
       setFeedback(`Check-in complete for ${updated.reference}.`);
     }
-  };
-
-  const handleDownloadTicket = (booking: Booking) => {
-    downloadTextFile(
-      `aerobook-eticket-${booking.reference}.txt`,
-      buildETicketText(booking),
-    );
-    setFeedback(`E-ticket downloaded for ${booking.reference}.`);
   };
 
   const handleCancellationCompleted = (updated: Booking) => {
@@ -145,7 +133,6 @@ export function MyBookingsView() {
               todayIso={todayIso}
               onCancel={setCancelTarget}
               onCheckIn={handleCheckIn}
-              onDownloadTicket={handleDownloadTicket}
             />
           ))}
 

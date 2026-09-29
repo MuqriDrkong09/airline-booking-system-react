@@ -5,6 +5,7 @@ import {
   Eye,
   FileText,
   Printer,
+  Ticket,
 } from 'lucide-react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppButton, AppCard } from '@/components/common';
@@ -41,6 +42,14 @@ export function BookingConfirmationActions({ booking }: BookingConfirmationActio
       >
         <AppButton
           variant="contained"
+          startIcon={<Ticket size={18} aria-hidden />}
+          component={RouterLink}
+          to={APP_ROUTES.customer.bookingETicket(booking.reference)}
+        >
+          View e-ticket
+        </AppButton>
+        <AppButton
+          variant="outlined"
           startIcon={<Download size={18} aria-hidden />}
           onClick={() =>
             downloadTextFile(
@@ -50,6 +59,14 @@ export function BookingConfirmationActions({ booking }: BookingConfirmationActio
           }
         >
           Download e-ticket
+        </AppButton>
+        <AppButton
+          variant="outlined"
+          startIcon={<Printer size={18} aria-hidden />}
+          component={RouterLink}
+          to={`${APP_ROUTES.customer.bookingETicket(booking.reference)}?print=1`}
+        >
+          Print e-ticket
         </AppButton>
         <AppButton
           variant="outlined"

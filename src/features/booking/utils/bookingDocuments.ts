@@ -1,48 +1,12 @@
 import type { Booking } from '../types/bookingRecord';
+import {
+  buildBookingETickets,
+  formatETicketAsText,
+} from './buildBookingETicket';
 import { buildBookingInvoice, formatInvoiceAsText } from './buildBookingInvoice';
-import { formatBookingMoney } from './formatMoney';
-
-function passengerName(booking: Booking, passengerId: string): string {
-  const passenger = booking.passengers.find((item) => item.id === passengerId);
-  if (!passenger) {
-    return passengerId;
-  }
-  const name = `${passenger.firstName} ${passenger.lastName}`.trim();
-  return name || passengerId;
-}
 
 export function buildETicketText(booking: Booking): string {
-  const { flight, priceBreakdown } = booking;
-  const lines = [
-    'AeroBook E-Ticket',
-    '=================',
-    `Booking reference: ${booking.reference}`,
-    `Status: ${booking.status}`,
-    `Transaction: ${booking.transactionId}`,
-    '',
-    'Flight',
-    `  ${flight.airline.name} ${flight.flightNumber}`,
-    `  ${flight.origin.code} (${flight.origin.city}) → ${flight.destination.code} (${flight.destination.city})`,
-    `  Departs ${flight.departureTime} · Arrives ${flight.arrivalTime}`,
-    '',
-    'Passengers',
-    ...booking.passengers.map(
-      (passenger, index) =>
-        `  ${index + 1}. ${passenger.title} ${passenger.firstName} ${passenger.lastName} (${passenger.type})`,
-    ),
-    '',
-    'Seats',
-    ...(booking.seats.length
-      ? booking.seats.map(
-          (seat) => `  ${seat.label} — ${passengerName(booking, seat.passengerId)}`,
-        )
-      : ['  None assigned']),
-    '',
-    `Total paid: ${formatBookingMoney(priceBreakdown.finalTotal, priceBreakdown.currency)}`,
-    '',
-    'This is a mock e-ticket for demo purposes only.',
-  ];
-  return lines.join('\n');
+  return formatETicketAsText(buildBookingETickets(booking));
 }
 
 export function buildInvoiceText(booking: Booking): string {

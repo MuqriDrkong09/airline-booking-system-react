@@ -144,7 +144,7 @@ describe('MyBookingsPage', () => {
     expect(screen.getByRole('link', { name: 'Manage' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Check-in' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Download ticket' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'E-ticket' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('tab', { name: /Past \(1\)/i }));
     expect(screen.getByText('AB-OLD')).toBeInTheDocument();

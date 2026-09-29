@@ -2,11 +2,11 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import {
   CalendarDays,
-  Download,
   Eye,
   LogIn,
   Plane,
   Settings2,
+  Ticket,
   Users,
   XCircle,
 } from 'lucide-react';
@@ -30,7 +30,6 @@ export interface BookingListCardProps {
   todayIso: string;
   onCancel: (booking: Booking) => void;
   onCheckIn: (booking: Booking) => void;
-  onDownloadTicket: (booking: Booking) => void;
 }
 
 export function BookingListCard({
@@ -38,7 +37,6 @@ export function BookingListCard({
   todayIso,
   onCancel,
   onCheckIn,
-  onDownloadTicket,
 }: BookingListCardProps) {
   const { flight } = booking;
   const route = `${flight.origin.code} → ${flight.destination.code}`;
@@ -171,12 +169,13 @@ export function BookingListCard({
             ) : null}
             {showDownload ? (
               <AppButton
+                component={RouterLink}
+                to={APP_ROUTES.customer.bookingETicket(booking.reference)}
                 variant="outlined"
                 size="small"
-                startIcon={<Download size={16} aria-hidden />}
-                onClick={() => onDownloadTicket(booking)}
+                startIcon={<Ticket size={16} aria-hidden />}
               >
-                Download ticket
+                E-ticket
               </AppButton>
             ) : null}
           </Stack>

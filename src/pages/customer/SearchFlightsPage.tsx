@@ -157,7 +157,7 @@ export function SearchFlightsPage() {
           : 'Choose trip type, airports, dates, passengers, and cabin class. Your search is saved in the URL so you can share or bookmark it.'
       }
     >
-      <Stack spacing={3} sx={{ maxWidth: 1100 }}>
+      <Stack spacing={3} sx={{ width: '100%' }}>
         {changeBookingReference ? (
           <AppAlert severity="info" title="Flight change mode">
             You are changing booking <strong>{changeBookingReference}</strong>

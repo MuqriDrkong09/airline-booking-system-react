@@ -7,6 +7,10 @@ import { Menu, Plane } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { ThemeModeToggle } from '@/components/common/ThemeModeToggle';
 import type { DemoUser } from '@/constants/demoUser';
+import {
+  LAYOUT_CONTENT_MAX_WIDTH,
+  LAYOUT_PAGE_GUTTER_X,
+} from '@/constants/layout';
 import { UserMenu } from './UserMenu';
 
 export interface DashboardHeaderProps {
@@ -42,46 +46,63 @@ export function DashboardHeader({
         color: 'text.primary',
       }}
     >
-      <Toolbar sx={{ gap: 1, minHeight: { xs: 64, md: 72 } }}>
-        <IconButton
-          color="inherit"
-          aria-label="Open navigation menu"
-          aria-controls="mobile-navigation"
-          aria-expanded={isMobileNavOpen}
-          onClick={onOpenMobileNav}
-          sx={{ display: { xs: 'inline-flex', md: 'none' } }}
-        >
-          <Menu aria-hidden="true" />
-        </IconButton>
-
+      <Toolbar
+        disableGutters
+        sx={{
+          px: LAYOUT_PAGE_GUTTER_X,
+          minHeight: { xs: 64, md: 72 },
+        }}
+      >
         <Box
-          component={NavLink}
-          to={homeTo}
-          end
-          aria-label={`${appName} ${sectionLabel} home`}
           sx={{
+            width: '100%',
+            maxWidth: LAYOUT_CONTENT_MAX_WIDTH,
+            mx: 'auto',
             display: 'flex',
             alignItems: 'center',
             gap: 1,
-            color: 'inherit',
-            textDecoration: 'none',
           }}
         >
-          <Plane aria-hidden="true" size={20} />
-          <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
-            <Typography variant="subtitle1" component="span" sx={{ fontWeight: 700 }}>
-              {appName}
-            </Typography>
-            <Typography variant="caption" color="text.secondary" component="span">
-              {sectionLabel}
-            </Typography>
+          <IconButton
+            color="inherit"
+            aria-label="Open navigation menu"
+            aria-controls="mobile-navigation"
+            aria-expanded={isMobileNavOpen}
+            onClick={onOpenMobileNav}
+            sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+          >
+            <Menu aria-hidden="true" />
+          </IconButton>
+
+          <Box
+            component={NavLink}
+            to={homeTo}
+            end
+            aria-label={`${appName} ${sectionLabel} home`}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            <Plane aria-hidden="true" size={20} />
+            <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
+              <Typography variant="subtitle1" component="span" sx={{ fontWeight: 700 }}>
+                {appName}
+              </Typography>
+              <Typography variant="caption" color="text.secondary" component="span">
+                {sectionLabel}
+              </Typography>
+            </Box>
           </Box>
+
+          <Box sx={{ flexGrow: 1 }} />
+
+          <ThemeModeToggle />
+          <UserMenu user={user} profileTo={profileTo} onLogout={onLogout} />
         </Box>
-
-        <Box sx={{ flexGrow: 1 }} />
-
-        <ThemeModeToggle />
-        <UserMenu user={user} profileTo={profileTo} onLogout={onLogout} />
       </Toolbar>
     </AppBar>
   );

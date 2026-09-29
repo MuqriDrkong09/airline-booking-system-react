@@ -153,6 +153,23 @@ export {
   downloadTextFile,
 } from './utils/bookingDocuments';
 export {
+  buildBookingETickets,
+  buildETicketQrPayload,
+  ETICKET_QR_PREFIX,
+  formatETicketAsText,
+  parseETicketQrPayload,
+} from './utils/buildBookingETicket';
+export type {
+  BookingETicket,
+  BookingETicketBoardingInfo,
+} from './types/eticket';
+export { BookingETicketDocument } from './components/eticket/BookingETicketDocument';
+export type { BookingETicketDocumentProps } from './components/eticket/BookingETicketDocument';
+export { BookingETicketQr } from './components/eticket/BookingETicketQr';
+export type { BookingETicketQrProps } from './components/eticket/BookingETicketQr';
+export { BookingETicketView } from './components/eticket/BookingETicketView';
+export type { BookingETicketViewProps } from './components/eticket/BookingETicketView';
+export {
   buildBookingInvoice,
   deriveInvoicePaymentStatus,
   formatInvoiceAsText,

@@ -31,7 +31,7 @@ describe('PageContainer', () => {
     expect(screen.getByText('Details content')).toBeInTheDocument();
   });
 
-  it('applies default maxWidth and custom Container props', () => {
+  it('applies maxWidth and disableGutters Container props', () => {
     const { container } = renderWithProviders(
       <PageContainer title="Search" maxWidth="md" disableGutters data-testid="page-shell">
         <span>Results</span>
@@ -41,6 +41,17 @@ describe('PageContainer', () => {
     expect(screen.getByTestId('page-shell')).toBeInTheDocument();
     expect(container.querySelector('.MuiContainer-maxWidthMd')).toBeInTheDocument();
     expect(container.querySelector('.MuiContainer-disableGutters')).toBeInTheDocument();
+  });
+
+  it('defaults to full-width gutters-off so parent layouts control page margins', () => {
+    const { container } = renderWithProviders(
+      <PageContainer title="Bookings" data-testid="page-default">
+        <span>Body</span>
+      </PageContainer>,
+    );
+
+    expect(container.querySelector('.MuiContainer-disableGutters')).toBeInTheDocument();
+    expect(container.querySelector('.MuiContainer-maxWidthLg')).not.toBeInTheDocument();
   });
 
   it('forwards a custom spacing value onto the Stack', () => {

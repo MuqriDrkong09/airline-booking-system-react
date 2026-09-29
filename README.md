@@ -167,6 +167,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Booking confirmation page with success state, reference/status, passengers,
   flight, seats, baggage, meals, add-ons, and payment summary — plus e-ticket /
   invoice view & download, printable invoice, view booking, and add-to-calendar
+- Printable e-ticket at `/app/bookings/:reference/eticket` with passenger name,
+  booking reference, airline, flight number, origin / destination, departure
+  date & time, arrival time, seat, boarding information, and a QR code that
+  encodes only a safe booking identifier (`AEROBOOK:<reference>` — no PII)
 - Printable invoice at `/app/bookings/:reference/invoice` with invoice number,
   booking reference, passengers, flight, fare / baggage / meals / add-ons /
   taxes / discount / total, payment status and date. Built from a structured
@@ -175,7 +179,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - My Bookings (`/app/bookings`) with Upcoming / Past / Cancelled tabs, search and
   sort filters, pagination, and booking cards (reference, airline, flight number,
   route, date, passengers, total, status). Actions: View, Manage, Cancel, Check-in,
-  Download ticket. Booking detail at `/app/bookings/:reference`
+  E-ticket. Booking detail at `/app/bookings/:reference`
 - Booking details page with reusable sections (booking information, flight,
   passengers, seats, baggage, meals, add-ons, payment, cancellation policy) and
   loading / error / not-found states

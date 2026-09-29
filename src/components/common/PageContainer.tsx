@@ -12,14 +12,19 @@ export interface PageContainerProps extends Omit<ContainerProps, 'children' | 't
   spacing?: number;
 }
 
+/**
+ * Page shell used inside public/dashboard layouts.
+ * Parent layouts own horizontal gutters + max width; this component
+ * only structures title/description/action and body spacing.
+ */
 export function PageContainer({
   children,
   title,
   description,
   action,
   spacing = 3,
-  maxWidth = 'lg',
-  disableGutters = false,
+  maxWidth = false,
+  disableGutters = true,
   ...props
 }: PageContainerProps) {
   return (

@@ -1,4 +1,8 @@
-import { Box, Container, Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
+import {
+  LAYOUT_CONTENT_MAX_WIDTH,
+  LAYOUT_PAGE_GUTTER_X,
+} from '@/constants/layout';
 
 interface FooterProps {
   appName: string;
@@ -16,11 +20,14 @@ export function Footer({ appName }: FooterProps) {
         bgcolor: 'background.paper',
         py: 3,
         mt: 'auto',
+        px: LAYOUT_PAGE_GUTTER_X,
       }}
     >
-      <Container
-        maxWidth="lg"
+      <Box
         sx={{
+          width: '100%',
+          maxWidth: LAYOUT_CONTENT_MAX_WIDTH,
+          mx: 'auto',
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'row' },
           alignItems: { xs: 'flex-start', sm: 'center' },
@@ -37,7 +44,7 @@ export function Footer({ appName }: FooterProps) {
             Contact support
           </Link>
         </Typography>
-      </Container>
+      </Box>
     </Box>
   );
 }

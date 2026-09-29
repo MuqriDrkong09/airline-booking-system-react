@@ -15,10 +15,10 @@ export interface BookingInvoiceDocumentProps {
 function MetaCell({ label, value }: { label: string; value: string }) {
   return (
     <Box>
-      <Typography variant="caption" color="text.secondary" display="block">
+      <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
         {label}
       </Typography>
-      <Typography variant="body2" fontWeight={600}>
+      <Typography variant="body2" sx={{ fontWeight: 600 }}>
         {value}
       </Typography>
     </Box>
@@ -46,21 +46,19 @@ function ChargeRow({
   return (
     <Stack
       direction="row"
-      justifyContent="space-between"
       spacing={2}
-      sx={{ py: 0.5 }}
+      sx={{ py: 0.5, justifyContent: 'space-between' }}
     >
       <Typography
         variant="body2"
-        fontWeight={emphasize ? 700 : 400}
         color={emphasize ? 'text.primary' : 'text.secondary'}
+        sx={{ fontWeight: emphasize ? 700 : 400 }}
       >
         {label}
       </Typography>
       <Typography
         variant="body2"
-        fontWeight={emphasize ? 700 : 500}
-        sx={{ fontVariantNumeric: 'tabular-nums' }}
+        sx={{ fontWeight: emphasize ? 700 : 500, fontVariantNumeric: 'tabular-nums' }}
       >
         {display}
       </Typography>
@@ -179,12 +177,11 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
           <Typography
             variant="overline"
             color="text.secondary"
-            display="block"
-            sx={{ mb: 1 }}
+            sx={{ display: 'block', mb: 1 }}
           >
             Bill to
           </Typography>
-          <Typography variant="body1" fontWeight={600}>
+          <Typography variant="body1" sx={{ fontWeight: 600 }}>
             {invoice.billingName}
           </Typography>
           {invoice.billingEmail ? (
@@ -201,8 +198,7 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
           <Typography
             variant="overline"
             color="text.secondary"
-            display="block"
-            sx={{ mb: 1 }}
+            sx={{ display: 'block', mb: 1 }}
           >
             Passenger{invoice.passengers.length === 1 ? '' : 's'}
           </Typography>
@@ -223,12 +219,11 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
         <Typography
           variant="overline"
           color="text.secondary"
-          display="block"
-          sx={{ mb: 1 }}
+          sx={{ display: 'block', mb: 1 }}
         >
           Flight
         </Typography>
-        <Typography variant="body1" fontWeight={600}>
+        <Typography variant="body1" sx={{ fontWeight: 600 }}>
           {invoice.flight.airline} {invoice.flight.flightNumber}
         </Typography>
         <Typography variant="body2">
@@ -248,8 +243,7 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
       <Typography
         variant="overline"
         color="text.secondary"
-        display="block"
-        sx={{ mb: 1 }}
+        sx={{ display: 'block', mb: 1 }}
       >
         Charges
       </Typography>
@@ -287,8 +281,7 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
       <Typography
         variant="caption"
         color="text.secondary"
-        display="block"
-        sx={{ mt: 4 }}
+        sx={{ display: 'block', mt: 4 }}
       >
         This is a demo invoice generated client-side. A backend PDF service can
         replace this layout using the same invoice fields.

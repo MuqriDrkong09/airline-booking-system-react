@@ -4,6 +4,11 @@ import Typography from '@mui/material/Typography';
 import { Outlet } from 'react-router-dom';
 import { useUiStore } from '@/app/store/uiStore';
 import type { DemoUser } from '@/constants/demoUser';
+import {
+  LAYOUT_CONTENT_MAX_WIDTH,
+  LAYOUT_PAGE_GUTTER_X,
+  LAYOUT_PAGE_GUTTER_Y,
+} from '@/constants/layout';
 import type { NavItem } from '@/constants/nav';
 import { SIDEBAR_WIDTH } from '@/constants/routes';
 import { AppBreadcrumbs } from './AppBreadcrumbs';
@@ -105,15 +110,24 @@ export function DashboardShell({
           sx={{
             flex: 1,
             outline: 'none',
-            px: { xs: 2, md: 3 },
-            py: { xs: 2.5, md: 3 },
+            px: LAYOUT_PAGE_GUTTER_X,
+            py: LAYOUT_PAGE_GUTTER_Y,
             '@media print': { px: 0, py: 0 },
           }}
         >
-          <Box sx={{ '@media print': { display: 'none' } }}>
-            <AppBreadcrumbs />
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: LAYOUT_CONTENT_MAX_WIDTH,
+              mx: 'auto',
+              '@media print': { maxWidth: 'none' },
+            }}
+          >
+            <Box sx={{ '@media print': { display: 'none' } }}>
+              <AppBreadcrumbs />
+            </Box>
+            <Outlet />
           </Box>
-          <Outlet />
         </Box>
       </Box>
     </Box>
