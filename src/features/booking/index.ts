@@ -17,6 +17,7 @@ export {
 } from './types/booking';
 export type {
   Booking,
+  BookingCancellationInfo,
   BookingDomainStatus,
   BookingId,
   BookingPassenger,
@@ -155,7 +156,6 @@ export {
   BOOKING_STATUS_LABELS,
   BOOKING_STATUS_TONE,
   MY_BOOKINGS_TABS,
-  canCancelBooking,
   canChangeFlight,
   canCheckInBooking,
   canDownloadTicket,
@@ -165,6 +165,20 @@ export {
   isCancelledBooking,
 } from './utils/bookingStatus';
 export type { MyBookingsTab } from './utils/bookingStatus';
+export {
+  calculateCancellationQuote,
+  canCancelBooking,
+  getCancellationBlockedReason,
+  isCompletedFlight,
+} from './utils/cancellationQuote';
+export type { CancellationQuote } from './utils/cancellationQuote';
+export {
+  CANCELLATION_ANCILLARY_RETENTION_RATE,
+  CANCELLATION_FEE_REFUNDABLE_MINIMUM,
+  CANCELLATION_FEE_REFUNDABLE_PER_PASSENGER,
+} from './constants/cancellation';
+export { BookingCancellationDialog } from './components/cancellation/BookingCancellationDialog';
+export type { BookingCancellationDialogProps } from './components/cancellation/BookingCancellationDialog';
 export {
   CHANGE_BOOKING_QUERY,
   FLIGHT_CHANGE_FEE_PER_PASSENGER,

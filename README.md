@@ -178,6 +178,9 @@ Registration, email verification, and password reset also work in mock mode. Ver
   add-ons, contact details, and change flight when permitted. Flight changes show
   original fare, new fare, change fee, and amount due/refund with confirmation
   before applying
+- Booking cancellation flow (view → policy → fee → refund → confirm → result) with
+  statuses `CANCELLATION_REQUESTED`, `CANCELLED`, and `REFUNDED`; completed/departed
+  flights cannot be cancelled
 - Centralized booking store (`src/features/booking/`) with search criteria,
   selected flight, passengers, seats, baggage, meals, add-ons, promo code,
   safe payment snapshot, price breakdown, booking reference, and status —

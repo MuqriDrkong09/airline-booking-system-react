@@ -7,7 +7,6 @@ import { Ticket } from 'lucide-react';
 import {
   AppAlert,
   AppButton,
-  ConfirmDialog,
   EmptyState,
 } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
@@ -18,18 +17,18 @@ import {
   buildETicketText,
   downloadTextFile,
 } from '../../utils/bookingDocuments';
-import type { MyBookingsTab } from '../../utils/bookingStatus';
+import { BOOKING_STATUS_LABELS, type MyBookingsTab } from '../../utils/bookingStatus';
 import {
   MY_BOOKINGS_PAGE_SIZE,
   queryMyBookings,
   type MyBookingsSort,
 } from '../../utils/myBookingsQuery';
+import { BookingCancellationDialog } from '../cancellation/BookingCancellationDialog';
 import { BookingListCard } from './BookingListCard';
 import { MyBookingsToolbar } from './MyBookingsToolbar';
 
 export function MyBookingsView() {
   const bookings = useBookingsStore((state) => state.bookings);
-  const cancelBooking = useBookingsStore((state) => state.cancelBooking);
   const checkInBooking = useBookingsStore((state) => state.checkInBooking);
 
   const todayIso = todayIsoDate();
@@ -63,18 +62,6 @@ export function MyBookingsView() {
     }
   }, [page, result.page]);
 
-  const handleConfirmCancel = () => {
-    if (!cancelTarget) {
-      return;
-    }
-    const updated = cancelBooking(cancelTarget.reference);
-    setCancelTarget(null);
-    if (updated) {
-      setFeedback(`Booking ${updated.reference} was cancelled.`);
-      setTab('cancelled');
-    }
-  };
-
   const handleCheckIn = (booking: Booking) => {
     const updated = checkInBooking(booking.reference);
     if (updated) {
@@ -88,6 +75,13 @@ export function MyBookingsView() {
       buildETicketText(booking),
     );
     setFeedback(`E-ticket downloaded for ${booking.reference}.`);
+  };
+
+  const handleCancellationCompleted = (updated: Booking) => {
+    setFeedback(
+      `Booking ${updated.reference} is now ${BOOKING_STATUS_LABELS[updated.status].toLowerCase()}.`,
+    );
+    setTab('cancelled');
   };
 
   if (bookings.length === 0) {
@@ -168,19 +162,11 @@ export function MyBookingsView() {
         </Stack>
       )}
 
-      <ConfirmDialog
+      <BookingCancellationDialog
         open={Boolean(cancelTarget)}
-        title="Cancel booking"
-        description={
-          cancelTarget
-            ? `Cancel booking ${cancelTarget.reference} (${cancelTarget.flight.origin.code} → ${cancelTarget.flight.destination.code})? This cannot be undone.`
-            : ''
-        }
-        confirmLabel="Yes, cancel"
-        cancelLabel="Keep booking"
-        confirmColor="error"
-        onConfirm={handleConfirmCancel}
-        onCancel={() => setCancelTarget(null)}
+        booking={cancelTarget}
+        onClose={() => setCancelTarget(null)}
+        onCompleted={handleCancellationCompleted}
       />
     </Stack>
   );

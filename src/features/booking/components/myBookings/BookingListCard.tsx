@@ -19,11 +19,11 @@ import { formatBookingMoney } from '../../utils/formatMoney';
 import {
   BOOKING_STATUS_LABELS,
   BOOKING_STATUS_TONE,
-  canCancelBooking,
   canCheckInBooking,
   canDownloadTicket,
   canManageBooking,
 } from '../../utils/bookingStatus';
+import { canCancelBooking } from '../../utils/cancellationQuote';
 
 export interface BookingListCardProps {
   booking: Booking;
@@ -48,7 +48,7 @@ export function BookingListCard({
       : `${booking.passengers.length} passengers`;
 
   const showManage = canManageBooking(booking);
-  const showCancel = canCancelBooking(booking);
+  const showCancel = canCancelBooking(booking, todayIso);
   const showCheckIn = canCheckInBooking(booking, todayIso);
   const showDownload = canDownloadTicket(booking);
 

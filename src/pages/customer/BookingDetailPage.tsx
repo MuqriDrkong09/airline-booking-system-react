@@ -1,7 +1,9 @@
 import Stack from '@mui/material/Stack';
 import { SearchX } from 'lucide-react';
+import { useState } from 'react';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import {
+  AppAlert,
   AppButton,
   EmptyState,
   ErrorState,
@@ -11,13 +13,20 @@ import {
 import { APP_ROUTES } from '@/constants/routes';
 import {
   BOOKING_STATUS_LABELS,
+  BookingCancellationDialog,
   BookingDetailView,
+  canCancelBooking,
+  formatBookingMoney,
   useBookingDetail,
 } from '@/features/booking';
+import { todayIsoDate } from '@/features/flights/utils/dates';
 
 export function BookingDetailPage() {
   const { bookingReference = '' } = useParams<{ bookingReference: string }>();
   const { status, booking, reference, retry } = useBookingDetail(bookingReference);
+  const [cancelOpen, setCancelOpen] = useState(false);
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const todayIso = todayIsoDate();
 
   if (status === 'loading') {
     return (
@@ -90,6 +99,8 @@ export function BookingDetailPage() {
     );
   }
 
+  const showCancel = canCancelBooking(booking, todayIso);
+
   return (
     <PageContainer
       title="Booking details"
@@ -103,6 +114,11 @@ export function BookingDetailPage() {
           >
             My bookings
           </AppButton>
+          {showCancel ? (
+            <AppButton variant="outlined" color="error" onClick={() => setCancelOpen(true)}>
+              Cancel booking
+            </AppButton>
+          ) : null}
           <AppButton
             component={RouterLink}
             to={APP_ROUTES.customer.bookingManage(booking.reference)}
@@ -120,7 +136,42 @@ export function BookingDetailPage() {
         </Stack>
       }
     >
-      <BookingDetailView booking={booking} />
+      <Stack spacing={2.5}>
+        {feedback ? (
+          <AppAlert severity="success" onClose={() => setFeedback(null)}>
+            {feedback}
+          </AppAlert>
+        ) : null}
+
+        {booking.cancellation ? (
+          <AppAlert
+            severity={booking.status === 'REFUNDED' ? 'success' : 'info'}
+            title={BOOKING_STATUS_LABELS[booking.status]}
+          >
+            Cancellation fee{' '}
+            {formatBookingMoney(booking.cancellation.fee, booking.cancellation.currency)}
+            . Refund{' '}
+            {formatBookingMoney(
+              booking.cancellation.refundAmount,
+              booking.cancellation.currency,
+            )}
+            .
+          </AppAlert>
+        ) : null}
+
+        <BookingDetailView booking={booking} />
+      </Stack>
+
+      <BookingCancellationDialog
+        open={cancelOpen}
+        booking={booking}
+        onClose={() => setCancelOpen(false)}
+        onCompleted={(updated) => {
+          setFeedback(
+            `Booking ${updated.reference} is now ${BOOKING_STATUS_LABELS[updated.status].toLowerCase()}.`,
+          );
+        }}
+      />
     </PageContainer>
   );
 }

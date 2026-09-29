@@ -6,6 +6,7 @@ export const BOOKING_STATUS_TONE: Record<
 > = {
   PENDING: 'warning',
   CONFIRMED: 'success',
+  CANCELLATION_REQUESTED: 'warning',
   CANCELLED: 'error',
   CHECKED_IN: 'info',
   COMPLETED: 'default',
@@ -15,6 +16,7 @@ export const BOOKING_STATUS_TONE: Record<
 export const BOOKING_STATUS_LABELS: Record<BookingRecordStatus, string> = {
   PENDING: 'Pending',
   CONFIRMED: 'Confirmed',
+  CANCELLATION_REQUESTED: 'Cancellation requested',
   CANCELLED: 'Cancelled',
   CHECKED_IN: 'Checked in',
   COMPLETED: 'Completed',
@@ -38,7 +40,11 @@ export function getBookingDepartureDate(booking: Booking): string {
 }
 
 export function isCancelledBooking(booking: Booking): boolean {
-  return booking.status === 'CANCELLED' || booking.status === 'REFUNDED';
+  return (
+    booking.status === 'CANCELLATION_REQUESTED' ||
+    booking.status === 'CANCELLED' ||
+    booking.status === 'REFUNDED'
+  );
 }
 
 export function getBookingTab(booking: Booking, todayIso: string): MyBookingsTab {
@@ -50,16 +56,12 @@ export function getBookingTab(booking: Booking, todayIso: string): MyBookingsTab
   return departureDate >= todayIso ? 'upcoming' : 'past';
 }
 
-export function canCancelBooking(booking: Booking): boolean {
-  return booking.status === 'PENDING' || booking.status === 'CONFIRMED';
-}
-
 export function canCheckInBooking(booking: Booking, todayIso: string): boolean {
   return booking.status === 'CONFIRMED' && getBookingTab(booking, todayIso) === 'upcoming';
 }
 
 export function canManageBooking(booking: Booking): boolean {
-  return !isCancelledBooking(booking);
+  return !isCancelledBooking(booking) && booking.status !== 'COMPLETED';
 }
 
 export function canDownloadTicket(booking: Booking): boolean {

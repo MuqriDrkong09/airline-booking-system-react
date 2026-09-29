@@ -151,7 +151,7 @@ describe('MyBookingsPage', () => {
     expect(screen.queryByText('AB-LIST1')).not.toBeInTheDocument();
   });
 
-  it('cancels a booking through the confirm dialog', async () => {
+  it('cancels a booking through the cancellation dialog flow', async () => {
     const user = userEvent.setup();
 
     act(() => {
@@ -163,8 +163,11 @@ describe('MyBookingsPage', () => {
     renderWithProviders(<MyBookingsPage />, { initialEntries: ['/app/bookings'] });
 
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
-    const dialog = screen.getByRole('dialog');
-    await user.click(within(dialog).getByRole('button', { name: 'Yes, cancel' }));
+    const dialog = await screen.findByRole('dialog');
+    await user.click(within(dialog).getByRole('button', { name: 'Continue' }));
+    await user.click(within(dialog).getByRole('button', { name: 'Continue' }));
+    await user.click(within(dialog).getByRole('button', { name: 'Confirm cancellation' }));
+    await user.click(within(dialog).getByRole('button', { name: 'Done' }));
 
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -176,7 +179,7 @@ describe('MyBookingsPage', () => {
     );
     expect(screen.getByText('AB-CXL')).toBeInTheDocument();
     expect(useBookingsStore.getState().getBookingByReference('AB-CXL')?.status).toBe(
-      'CANCELLED',
+      'REFUNDED',
     );
   });
 });

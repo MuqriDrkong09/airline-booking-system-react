@@ -1,9 +1,6 @@
 import type { Booking } from '@/features/booking';
-import {
-  canCancelBooking,
-  canCheckInBooking,
-  getBookingTab,
-} from '@/features/booking/utils/bookingStatus';
+import { canCheckInBooking, getBookingTab } from '@/features/booking/utils/bookingStatus';
+import { canCancelBooking } from '@/features/booking/utils/cancellationQuote';
 import {
   MY_BOOKINGS_PAGE_SIZE,
   queryMyBookings,
@@ -160,7 +157,8 @@ describe('bookingStatus helpers', () => {
       flight: { departureTime: '2026-01-01T09:00' },
     });
 
-    expect(canCancelBooking(upcoming)).toBe(true);
+    expect(canCancelBooking(upcoming, '2026-09-29')).toBe(true);
+    expect(canCancelBooking(past, '2026-09-29')).toBe(false);
     expect(canCheckInBooking(upcoming, '2026-09-29')).toBe(true);
     expect(canCheckInBooking(past, '2026-09-29')).toBe(false);
   });

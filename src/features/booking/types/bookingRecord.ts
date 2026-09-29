@@ -16,6 +16,7 @@ import type {
 export const BOOKING_RECORD_STATUSES = [
   'PENDING',
   'CONFIRMED',
+  'CANCELLATION_REQUESTED',
   'CANCELLED',
   'CHECKED_IN',
   'COMPLETED',
@@ -27,6 +28,17 @@ export type BookingRecordStatus = (typeof BOOKING_RECORD_STATUSES)[number];
 /** Alias matching the product vocabulary for saved bookings. */
 export type BookingDomainStatus = BookingRecordStatus;
 export const BOOKING_DOMAIN_STATUSES = BOOKING_RECORD_STATUSES;
+
+/** Snapshot of a processed cancellation (fee + refund outcome). */
+export interface BookingCancellationInfo {
+  requestedAt: string;
+  processedAt: string;
+  fee: number;
+  refundAmount: number;
+  currency: string;
+  policySummary: string;
+  finalStatus: 'CANCELLED' | 'REFUNDED';
+}
 
 /** Immutable passenger snapshot stored on a confirmed booking. */
 export interface BookingPassenger {
@@ -72,6 +84,8 @@ export interface Booking {
   payment: BookingPaymentInfo;
   priceBreakdown: BookingPriceBreakdown;
   transactionId: string;
+  /** Present after a cancellation has been requested/processed. */
+  cancellation?: BookingCancellationInfo;
 }
 
 export type BookingId = Booking['id'];

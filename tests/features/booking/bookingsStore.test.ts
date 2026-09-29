@@ -97,7 +97,7 @@ describe('bookingsStore status updates', () => {
     });
   });
 
-  it('cancels an eligible booking', () => {
+  it('cancels an eligible booking and records refund outcome', () => {
     act(() => {
       useBookingsStore.getState().saveBooking(
         makeBooking({ reference: 'AB-CANCEL', status: 'CONFIRMED' }),
@@ -109,10 +109,30 @@ describe('bookingsStore status updates', () => {
       result = useBookingsStore.getState().cancelBooking('AB-CANCEL');
     });
 
-    expect(result?.status).toBe('CANCELLED');
+    expect(result?.status).toBe('REFUNDED');
+    expect(result?.cancellation?.refundAmount).toBeGreaterThan(0);
     expect(useBookingsStore.getState().getBookingByReference('AB-CANCEL')?.status).toBe(
-      'CANCELLED',
+      'REFUNDED',
     );
+  });
+
+  it('rejects cancel for completed flights', () => {
+    act(() => {
+      useBookingsStore.getState().saveBooking(
+        makeBooking({
+          reference: 'AB-DONE-FLIGHT',
+          status: 'CONFIRMED',
+          flight: { departureTime: '2020-01-01T09:00' } as FlightOffer,
+        }),
+      );
+    });
+
+    let result: Booking | undefined;
+    act(() => {
+      result = useBookingsStore.getState().cancelBooking('AB-DONE-FLIGHT');
+    });
+
+    expect(result).toBeUndefined();
   });
 
   it('checks in a confirmed upcoming booking', () => {

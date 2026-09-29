@@ -3,10 +3,15 @@ import { persist } from 'zustand/middleware';
 import { todayIsoDate } from '@/features/flights/utils/dates';
 import type {
   Booking,
+  BookingCancellationInfo,
   BookingRecordStatus,
   BookingReference,
 } from '../types/bookingRecord';
-import { canCancelBooking, canCheckInBooking } from '../utils/bookingStatus';
+import { canCheckInBooking } from '../utils/bookingStatus';
+import {
+  calculateCancellationQuote,
+  canCancelBooking,
+} from '../utils/cancellationQuote';
 
 interface BookingsState {
   bookings: Booking[];
@@ -19,6 +24,10 @@ interface BookingsState {
     reference: BookingReference,
     status: BookingRecordStatus,
   ) => Booking | undefined;
+  /**
+   * Runs the cancellation pipeline:
+   * CANCELLATION_REQUESTED → CANCELLED or REFUNDED (with fee/refund snapshot).
+   */
   cancelBooking: (reference: BookingReference) => Booking | undefined;
   checkInBooking: (reference: BookingReference) => Booking | undefined;
   getBookingByReference: (reference: BookingReference) => Booking | undefined;
@@ -67,11 +76,39 @@ export const useBookingsStore = create<BookingsState>()(
         get().updateBooking(reference, (booking) => patchBooking(booking, { status })),
 
       cancelBooking: (reference) => {
+        const todayIso = todayIsoDate();
         const current = get().getBookingByReference(reference);
-        if (!current || !canCancelBooking(current)) {
+        if (!current || !canCancelBooking(current, todayIso)) {
           return undefined;
         }
-        return get().updateBookingStatus(reference, 'CANCELLED');
+
+        const quote = calculateCancellationQuote(current);
+        const now = new Date().toISOString();
+        const cancellation: BookingCancellationInfo = {
+          requestedAt: now,
+          processedAt: now,
+          fee: quote.cancellationFee,
+          refundAmount: quote.refundAmount,
+          currency: quote.currency,
+          policySummary: quote.policySummary,
+          finalStatus: quote.finalStatus,
+        };
+
+        // Persist requested state first, then final outcome (mock synchronous processing).
+        get().updateBooking(reference, (booking) =>
+          patchBooking(booking, { status: 'CANCELLATION_REQUESTED', cancellation }, now),
+        );
+
+        return get().updateBooking(reference, (booking) =>
+          patchBooking(
+            booking,
+            {
+              status: quote.finalStatus,
+              cancellation,
+            },
+            now,
+          ),
+        );
       },
 
       checkInBooking: (reference) => {
