@@ -64,6 +64,7 @@ export function DashboardShell({
           display: { xs: 'none', md: 'block' },
           width: SIDEBAR_WIDTH,
           flexShrink: 0,
+          '@media print': { display: 'none' },
           [`& .MuiDrawer-paper`]: {
             width: SIDEBAR_WIDTH,
             boxSizing: 'border-box',
@@ -84,16 +85,18 @@ export function DashboardShell({
       />
 
       <Box sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
-        <DashboardHeader
-          appName={appName}
-          sectionLabel={sectionLabel}
-          homeTo={homeTo}
-          user={user}
-          profileTo={profileTo}
-          onOpenMobileNav={openMobileNav}
-          isMobileNavOpen={isMobileNavOpen}
-          onLogout={onLogout}
-        />
+        <Box sx={{ '@media print': { display: 'none' } }}>
+          <DashboardHeader
+            appName={appName}
+            sectionLabel={sectionLabel}
+            homeTo={homeTo}
+            user={user}
+            profileTo={profileTo}
+            onOpenMobileNav={openMobileNav}
+            isMobileNavOpen={isMobileNavOpen}
+            onLogout={onLogout}
+          />
+        </Box>
 
         <Box
           component="main"
@@ -104,9 +107,12 @@ export function DashboardShell({
             outline: 'none',
             px: { xs: 2, md: 3 },
             py: { xs: 2.5, md: 3 },
+            '@media print': { px: 0, py: 0 },
           }}
         >
-          <AppBreadcrumbs />
+          <Box sx={{ '@media print': { display: 'none' } }}>
+            <AppBreadcrumbs />
+          </Box>
           <Outlet />
         </Box>
       </Box>

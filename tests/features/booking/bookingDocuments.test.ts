@@ -93,9 +93,11 @@ describe('bookingDocuments', () => {
 
   it('builds an invoice with payment totals', () => {
     const text = buildInvoiceText(booking);
-    expect(text).toContain('Invoice for booking AB-TEST1234');
+    expect(text).toContain('Booking reference: AB-TEST1234');
+    expect(text).toContain('Invoice number:');
     expect(text).toContain('FPX');
     expect(text).toContain('Total:');
+    expect(text).toContain('Payment status:');
   });
 
   it('builds a calendar ICS event for the flight', () => {

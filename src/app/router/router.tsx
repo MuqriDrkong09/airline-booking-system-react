@@ -15,6 +15,7 @@ import { AddonSelectionPage } from '@/pages/customer/AddonSelectionPage';
 import { BaggageSelectionPage } from '@/pages/customer/BaggageSelectionPage';
 import { BookingConfirmationPage } from '@/pages/customer/BookingConfirmationPage';
 import { BookingDetailPage } from '@/pages/customer/BookingDetailPage';
+import { BookingInvoicePage } from '@/pages/customer/BookingInvoicePage';
 import { BookingSummaryPage } from '@/pages/customer/BookingSummaryPage';
 import { ManageBookingPage } from '@/pages/customer/ManageBookingPage';
 import { MyBookingsPage } from '@/pages/customer/MyBookingsPage';
@@ -70,6 +71,10 @@ export const router = createBrowserRouter([
               {
                 path: 'bookings/:bookingReference/manage',
                 element: <ManageBookingPage />,
+              },
+              {
+                path: 'bookings/:bookingReference/invoice',
+                element: <BookingInvoicePage />,
               },
               {
                 path: 'bookings/:bookingReference',

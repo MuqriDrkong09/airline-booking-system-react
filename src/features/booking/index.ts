@@ -153,6 +153,35 @@ export {
   downloadTextFile,
 } from './utils/bookingDocuments';
 export {
+  buildBookingInvoice,
+  deriveInvoicePaymentStatus,
+  formatInvoiceAsText,
+  generateInvoiceNumber,
+  INVOICE_PAYMENT_STATUS_LABELS,
+} from './utils/buildBookingInvoice';
+export type {
+  BookingInvoice,
+  InvoiceFlightLine,
+  InvoiceMoneyLine,
+  InvoicePassengerLine,
+  InvoicePaymentStatus,
+} from './types/invoice';
+export type {
+  InvoiceArtifact,
+  InvoiceDeliveryMode,
+  InvoiceProvider,
+} from './services/invoiceProvider';
+export {
+  ClientInvoiceProvider,
+  getInvoiceProvider,
+  resetInvoiceProvider,
+  setInvoiceProvider,
+} from './services/clientInvoiceProvider';
+export { BookingInvoiceDocument } from './components/invoice/BookingInvoiceDocument';
+export type { BookingInvoiceDocumentProps } from './components/invoice/BookingInvoiceDocument';
+export { BookingInvoiceView } from './components/invoice/BookingInvoiceView';
+export type { BookingInvoiceViewProps } from './components/invoice/BookingInvoiceView';
+export {
   BOOKING_STATUS_LABELS,
   BOOKING_STATUS_TONE,
   MY_BOOKINGS_TABS,

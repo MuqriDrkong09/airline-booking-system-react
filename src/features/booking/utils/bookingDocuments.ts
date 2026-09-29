@@ -1,4 +1,5 @@
 import type { Booking } from '../types/bookingRecord';
+import { buildBookingInvoice, formatInvoiceAsText } from './buildBookingInvoice';
 import { formatBookingMoney } from './formatMoney';
 
 function passengerName(booking: Booking, passengerId: string): string {
@@ -45,35 +46,7 @@ export function buildETicketText(booking: Booking): string {
 }
 
 export function buildInvoiceText(booking: Booking): string {
-  const { priceBreakdown, payment } = booking;
-  const lines = [
-    'AeroBook Invoice',
-    '================',
-    `Invoice for booking ${booking.reference}`,
-    `Issued: ${booking.createdAt}`,
-    `Status: ${booking.status}`,
-    '',
-    'Bill to',
-    `  ${payment.billingName || 'Passenger'}`,
-    `  ${payment.billingEmail || '—'}`,
-    '',
-    'Charges',
-    `  Fare: ${formatBookingMoney(priceBreakdown.baseFare, priceBreakdown.currency)}`,
-    `  Seats: ${formatBookingMoney(priceBreakdown.seatCost, priceBreakdown.currency)}`,
-    `  Baggage: ${formatBookingMoney(priceBreakdown.baggageCost, priceBreakdown.currency)}`,
-    `  Meals: ${formatBookingMoney(priceBreakdown.mealCost, priceBreakdown.currency)}`,
-    `  Add-ons: ${formatBookingMoney(priceBreakdown.addonCost, priceBreakdown.currency)}`,
-    `  Subtotal: ${formatBookingMoney(priceBreakdown.subtotal, priceBreakdown.currency)}`,
-    `  Discount: ${formatBookingMoney(priceBreakdown.discount, priceBreakdown.currency)}`,
-    `  Taxes: ${formatBookingMoney(priceBreakdown.taxes, priceBreakdown.currency)}`,
-    `  Total: ${formatBookingMoney(priceBreakdown.finalTotal, priceBreakdown.currency)}`,
-    '',
-    `Payment method: ${payment.method ?? '—'}`,
-    payment.cardLast4 ? `Card: ${payment.cardBrand} •••• ${payment.cardLast4}` : '',
-    '',
-    'This is a mock invoice for demo purposes only.',
-  ].filter(Boolean);
-  return lines.join('\n');
+  return formatInvoiceAsText(buildBookingInvoice(booking));
 }
 
 export function downloadTextFile(filename: string, contents: string, mime = 'text/plain'): void {

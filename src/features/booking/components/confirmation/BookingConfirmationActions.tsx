@@ -6,13 +6,13 @@ import {
   FileText,
   Printer,
 } from 'lucide-react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppButton, AppCard } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
+import { getInvoiceProvider } from '../../services/clientInvoiceProvider';
 import type { Booking } from '../../types/bookingRecord';
 import {
   buildETicketText,
-  buildInvoiceText,
   downloadCalendarEvent,
   downloadTextFile,
 } from '../../utils/bookingDocuments';
@@ -22,9 +22,8 @@ export interface BookingConfirmationActionsProps {
 }
 
 export function BookingConfirmationActions({ booking }: BookingConfirmationActionsProps) {
-  const handlePrint = () => {
-    window.print();
-  };
+  const navigate = useNavigate();
+  const invoiceProvider = getInvoiceProvider();
 
   return (
     <AppCard title="Actions" subtitle="Documents and next steps for this booking.">
@@ -55,21 +54,35 @@ export function BookingConfirmationActions({ booking }: BookingConfirmationActio
         <AppButton
           variant="outlined"
           startIcon={<FileText size={18} aria-hidden />}
-          onClick={() =>
-            downloadTextFile(
-              `aerobook-invoice-${booking.reference}.txt`,
-              buildInvoiceText(booking),
-            )
-          }
+          onClick={() => {
+            void invoiceProvider.deliver(booking, {
+              mode: 'view',
+              navigate,
+            });
+          }}
+        >
+          View invoice
+        </AppButton>
+        <AppButton
+          variant="outlined"
+          startIcon={<Download size={18} aria-hidden />}
+          onClick={() => {
+            void invoiceProvider.deliver(booking, { mode: 'download' });
+          }}
         >
           Download invoice
         </AppButton>
         <AppButton
           variant="outlined"
           startIcon={<Printer size={18} aria-hidden />}
-          onClick={handlePrint}
+          onClick={() => {
+            void invoiceProvider.deliver(booking, {
+              mode: 'print',
+              navigate,
+            });
+          }}
         >
-          Print booking
+          Print invoice
         </AppButton>
         <AppButton
           component={RouterLink}
