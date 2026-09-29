@@ -30,6 +30,8 @@ export const APP_ROUTES = {
       `/app/bookings/${encodeURIComponent(bookingReference)}/confirmation`,
     bookingDetail: (bookingReference: string) =>
       `/app/bookings/${encodeURIComponent(bookingReference)}`,
+    bookingManage: (bookingReference: string) =>
+      `/app/bookings/${encodeURIComponent(bookingReference)}/manage`,
     bookings: '/app/bookings',
     checkIn: '/app/check-in',
     notifications: '/app/notifications',

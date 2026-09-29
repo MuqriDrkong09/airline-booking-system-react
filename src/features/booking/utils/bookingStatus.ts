@@ -70,3 +70,16 @@ export function canDownloadTicket(booking: Booking): boolean {
     booking.status === 'PENDING'
   );
 }
+
+export function canChangeFlight(booking: Booking, todayIso: string): boolean {
+  if (isCancelledBooking(booking)) {
+    return false;
+  }
+  if (booking.status !== 'PENDING' && booking.status !== 'CONFIRMED') {
+    return false;
+  }
+  if (getBookingTab(booking, todayIso) !== 'upcoming') {
+    return false;
+  }
+  return Boolean(booking.flight.policies.changePolicy.trim()) || booking.flight.refundable;
+}

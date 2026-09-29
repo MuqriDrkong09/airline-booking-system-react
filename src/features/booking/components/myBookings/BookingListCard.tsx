@@ -138,15 +138,15 @@ export function BookingListCard({
               View
             </AppButton>
             {showManage ? (
-              <AppButton
-                component={RouterLink}
-                to={APP_ROUTES.customer.bookingDetail(booking.reference)}
-                variant="outlined"
-                size="small"
-                startIcon={<Settings2 size={16} aria-hidden />}
-              >
-                Manage
-              </AppButton>
+            <AppButton
+              component={RouterLink}
+              to={APP_ROUTES.customer.bookingManage(booking.reference)}
+              variant="outlined"
+              size="small"
+              startIcon={<Settings2 size={16} aria-hidden />}
+            >
+              Manage
+            </AppButton>
             ) : null}
             {showCancel ? (
               <AppButton

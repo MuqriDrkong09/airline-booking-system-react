@@ -103,6 +103,12 @@ export function getBreadcrumbsForPath(pathname: string): BreadcrumbItem[] {
       continue;
     }
 
+    // Manage booking: /app/bookings/:reference/manage
+    if (/^\/app\/bookings\/[^/]+\/manage$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Manage' });
+      continue;
+    }
+
     // Booking detail segment under /app/bookings/:reference
     if (
       /^\/app\/bookings\/[^/]+$/.test(currentPath) &&

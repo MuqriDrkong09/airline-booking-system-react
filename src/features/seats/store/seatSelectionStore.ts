@@ -32,6 +32,7 @@ interface SeatSelectionState {
   selectSeat: (seatId: string) => { ok: true } | { ok: false; reason: string };
   clearSeatForPassenger: (passengerId: string) => void;
   clearAssignments: () => void;
+  hydrateAssignments: (assignments: SeatAssignment[]) => void;
   saveSelection: () => { ok: true } | { ok: false; message: string };
   clearSaveStatus: () => void;
   clearSelection: () => void;
@@ -155,6 +156,20 @@ export const useSeatSelectionStore = create<SeatSelectionState>()(
           saveError: null,
           lastError: null,
         }),
+
+      hydrateAssignments: (assignments) => {
+        const validSeatIds = new Set(get().seats.map((seat) => seat.id));
+        const passengerIds = new Set(get().passengers.map((passenger) => passenger.id));
+        set({
+          assignments: assignments.filter(
+            (assignment) =>
+              validSeatIds.has(assignment.seatId) && passengerIds.has(assignment.passengerId),
+          ),
+          saveStatus: 'idle',
+          saveError: null,
+          lastError: null,
+        });
+      },
 
       saveSelection: () => {
         const { passengers, assignments } = get();

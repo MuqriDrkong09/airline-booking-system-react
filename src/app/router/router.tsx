@@ -16,6 +16,7 @@ import { BaggageSelectionPage } from '@/pages/customer/BaggageSelectionPage';
 import { BookingConfirmationPage } from '@/pages/customer/BookingConfirmationPage';
 import { BookingDetailPage } from '@/pages/customer/BookingDetailPage';
 import { BookingSummaryPage } from '@/pages/customer/BookingSummaryPage';
+import { ManageBookingPage } from '@/pages/customer/ManageBookingPage';
 import { MyBookingsPage } from '@/pages/customer/MyBookingsPage';
 import { MealSelectionPage } from '@/pages/customer/MealSelectionPage';
 import { PaymentPage } from '@/pages/customer/PaymentPage';
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
               {
                 path: 'bookings/:bookingReference/confirmation',
                 element: <BookingConfirmationPage />,
+              },
+              {
+                path: 'bookings/:bookingReference/manage',
+                element: <ManageBookingPage />,
               },
               {
                 path: 'bookings/:bookingReference',

@@ -174,6 +174,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Booking details page with reusable sections (booking information, flight,
   passengers, seats, baggage, meals, add-ons, payment, cancellation policy) and
   loading / error / not-found states
+- Manage booking (`/app/bookings/:reference/manage`): change seats, baggage, meals,
+  add-ons, contact details, and change flight when permitted. Flight changes show
+  original fare, new fare, change fee, and amount due/refund with confirmation
+  before applying
 - Centralized booking store (`src/features/booking/`) with search criteria,
   selected flight, passengers, seats, baggage, meals, add-ons, promo code,
   safe payment snapshot, price breakdown, booking reference, and status —

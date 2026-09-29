@@ -105,6 +105,13 @@ export function BookingDetailPage() {
           </AppButton>
           <AppButton
             component={RouterLink}
+            to={APP_ROUTES.customer.bookingManage(booking.reference)}
+            variant="contained"
+          >
+            Manage
+          </AppButton>
+          <AppButton
+            component={RouterLink}
             to={APP_ROUTES.customer.bookingConfirmation(booking.reference)}
             variant="outlined"
           >

@@ -156,6 +156,7 @@ export {
   BOOKING_STATUS_TONE,
   MY_BOOKINGS_TABS,
   canCancelBooking,
+  canChangeFlight,
   canCheckInBooking,
   canDownloadTicket,
   canManageBooking,
@@ -164,6 +165,31 @@ export {
   isCancelledBooking,
 } from './utils/bookingStatus';
 export type { MyBookingsTab } from './utils/bookingStatus';
+export {
+  CHANGE_BOOKING_QUERY,
+  FLIGHT_CHANGE_FEE_PER_PASSENGER,
+  MANAGE_BOOKING_SECTIONS,
+} from './constants/manageBooking';
+export type { ManageBookingSection } from './constants/manageBooking';
+export { recomputeBookingPriceBreakdown } from './utils/recomputeBookingPriceBreakdown';
+export {
+  buildBookingAfterFlightChange,
+  calculateFlightChangeQuote,
+} from './utils/flightChangeQuote';
+export type { FlightChangeQuote } from './utils/flightChangeQuote';
+export {
+  clearManageSession,
+  commitManageSession,
+  seedManageSession,
+} from './utils/manageBookingSession';
+export { ManageBookingView } from './components/manage/ManageBookingView';
+export type { ManageBookingViewProps } from './components/manage/ManageBookingView';
+export { ManageBookingOverview } from './components/manage/ManageBookingOverview';
+export type { ManageBookingOverviewProps } from './components/manage/ManageBookingOverview';
+export { ManageContactForm } from './components/manage/ManageContactForm';
+export type { ManageContactFormProps } from './components/manage/ManageContactForm';
+export { FlightChangeConfirmDialog } from './components/manage/FlightChangeConfirmDialog';
+export type { FlightChangeConfirmDialogProps } from './components/manage/FlightChangeConfirmDialog';
 export {
   MY_BOOKINGS_PAGE_SIZE,
   countBookingsByTab,
