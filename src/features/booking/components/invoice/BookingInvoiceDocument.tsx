@@ -89,13 +89,12 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
         borderColor: 'divider',
         borderRadius: 1,
         p: { xs: 2.5, sm: 4 },
-        maxWidth: 800,
-        mx: 'auto',
+        width: '100%',
+        boxSizing: 'border-box',
         '@media print': {
           border: 'none',
           borderRadius: 0,
           boxShadow: 'none',
-          maxWidth: 'none',
           p: 0,
           m: 0,
         },
@@ -103,11 +102,11 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
     >
       <Box
         sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', sm: 'minmax(0, 1fr) auto' },
-          alignItems: 'start',
-          columnGap: 3,
-          rowGap: 1.5,
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          justifyContent: 'space-between',
+          alignItems: { xs: 'flex-start', sm: 'flex-start' },
+          gap: 2,
           mb: 3,
           width: '100%',
         }}
@@ -127,8 +126,8 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
         <Box
           sx={{
             textAlign: { xs: 'left', sm: 'right' },
-            justifySelf: { xs: 'start', sm: 'end' },
-            minWidth: 0,
+            ml: { sm: 'auto' },
+            flexShrink: 0,
           }}
         >
           <Typography
@@ -148,8 +147,9 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
         sx={{
           display: 'grid',
           gap: 2,
-          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' },
           mb: 3,
+          width: '100%',
         }}
       >
         <MetaCell label="Booking reference" value={invoice.bookingReference} />
@@ -170,8 +170,9 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
         sx={{
           display: 'grid',
           gap: 3,
-          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' },
           mb: 3,
+          width: '100%',
         }}
       >
         <Box>
