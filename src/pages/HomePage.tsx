@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { CalendarCheck, Gauge, Search, Ticket } from 'lucide-react';
+import { CalendarCheck, Gauge, RadioTower, Search, Ticket } from 'lucide-react';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppButton, AppCard, PageContainer, SectionHeader } from '@/components/common';
 import { env } from '@/config/env';
@@ -13,6 +13,12 @@ const highlights = [
     description: 'Compare routes and schedules in the customer workspace.',
     icon: Search,
     to: APP_ROUTES.customer.flights,
+  },
+  {
+    title: 'Flight status',
+    description: 'Look up a flight by number and date for gate, terminal, and status.',
+    icon: RadioTower,
+    to: APP_ROUTES.customer.flightStatus,
   },
   {
     title: 'Manage bookings',

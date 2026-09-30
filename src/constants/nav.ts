@@ -6,6 +6,7 @@ import {
   Gauge,
   Home,
   Plane,
+  RadioTower,
   Search,
   Shield,
   Ticket,
@@ -31,6 +32,7 @@ export const PUBLIC_NAV_ITEMS: readonly NavItem[] = [
 export const CUSTOMER_NAV_ITEMS: readonly NavItem[] = [
   { label: 'Home', to: APP_ROUTES.customer.home, icon: Home, end: true },
   { label: 'Search Flights', to: APP_ROUTES.customer.flights, icon: Search },
+  { label: 'Flight status', to: APP_ROUTES.customer.flightStatus, icon: RadioTower },
   { label: 'My Bookings', to: APP_ROUTES.customer.bookings, icon: Ticket },
   { label: 'Check-in', to: APP_ROUTES.customer.checkIn, icon: ClipboardList },
   { label: 'Notifications', to: APP_ROUTES.customer.notifications, icon: Bell },

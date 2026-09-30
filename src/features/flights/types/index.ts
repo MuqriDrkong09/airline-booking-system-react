@@ -23,9 +23,19 @@ export type {
   FlightSearchResponse,
   FlightSortOption,
 } from './flight';
+export type {
+  FlightOperationalStatus,
+  FlightStatusLookupRequest,
+  FlightStatusRecord,
+} from './flightStatus';
 export {
   DEFAULT_FLIGHT_SORT,
   FLIGHT_SORT_OPTION_LABELS,
   FLIGHT_SORT_OPTIONS,
   isFlightSortOption,
 } from './flight';
+export {
+  FLIGHT_OPERATIONAL_STATUSES,
+  FLIGHT_OPERATIONAL_STATUS_LABELS,
+  isFlightOperationalStatus,
+} from './flightStatus';

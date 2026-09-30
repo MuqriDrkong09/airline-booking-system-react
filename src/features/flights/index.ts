@@ -13,19 +13,25 @@ export type {
   FlightLegValues,
   FlightOffer,
   FlightOfferSegment,
+  FlightOperationalStatus,
   FlightPriceAmount,
   FlightSearchCriteria,
   FlightSearchFormValues,
   FlightSearchRequest,
   FlightSearchResponse,
   FlightSortOption,
+  FlightStatusLookupRequest,
+  FlightStatusRecord,
   TripType,
 } from './types';
 export {
   CABIN_CLASSES,
   DEFAULT_FLIGHT_SORT,
+  FLIGHT_OPERATIONAL_STATUSES,
+  FLIGHT_OPERATIONAL_STATUS_LABELS,
   FLIGHT_SORT_OPTION_LABELS,
   FLIGHT_SORT_OPTIONS,
+  isFlightOperationalStatus,
   isFlightSortOption,
   TRIP_TYPES,
 } from './types';
@@ -34,22 +40,32 @@ export {
   airportsApi,
   createHttpAirportsApi,
   createHttpFlightsApi,
+  createHttpFlightStatusApi,
   createMockAirportsApi,
   createMockFlightsApi,
+  createMockFlightStatusApi,
   findMockFlightOfferById,
   flightKeys,
   flightsApi,
+  flightStatusApi,
+  flightStatusKeys,
   generateMockFlightOffers,
+  generateMockFlightStatus,
   getAirportByCode,
   getAirports,
   getFlightById,
+  isValidFlightNumber,
+  lookupFlightStatus,
   MOCK_AIRPORTS,
   mockAirportsApi,
   mockFlightsApi,
+  mockFlightStatusApi,
+  normalizeFlightNumber,
+  resolveOperationalStatus,
   searchAirports,
   searchFlights,
 } from './api';
-export type { AirportsApi, FlightsApi } from './api';
+export type { AirportsApi, FlightsApi, FlightStatusApi } from './api';
 export {
   useAirportByCodeQuery,
   useAirportsQuery,
@@ -60,12 +76,21 @@ export {
   useFlightDetailsQuery,
   useSearchFlightsQuery,
 } from './hooks/useFlights';
+export {
+  isCompleteFlightStatusRequest,
+  useFlightStatusQuery,
+} from './hooks/useFlightStatus';
 export { useFlightFilters } from './hooks/useFlightFilters';
 export { useFlightSearchHydration } from './hooks/useFlightSearchHydration';
 export { AirportAutocomplete } from './components/AirportAutocomplete';
 export type { AirportAutocompleteProps } from './components/AirportAutocomplete';
 export { FlightSearchForm } from './components/FlightSearchForm';
 export type { FlightSearchFormProps } from './components/FlightSearchForm';
+export { FlightStatusLookupForm } from './components/status/FlightStatusLookupForm';
+export type { FlightStatusLookupFormProps } from './components/status/FlightStatusLookupForm';
+export { FlightStatusResult } from './components/status/FlightStatusResult';
+export type { FlightStatusResultProps } from './components/status/FlightStatusResult';
+export { FlightStatusView } from './components/status/FlightStatusView';
 export { PassengerCountControl } from './components/PassengerSelector';
 export { TripTypeSelector } from './components/TripTypeSelector';
 export { FlightCard } from './components/results/FlightCard';

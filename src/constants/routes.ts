@@ -40,6 +40,7 @@ export const APP_ROUTES = {
       `/app/bookings/${encodeURIComponent(bookingReference)}/boarding-pass`,
     bookings: '/app/bookings',
     checkIn: '/app/check-in',
+    flightStatus: '/app/flight-status',
     notifications: '/app/notifications',
     profile: '/app/profile',
   },

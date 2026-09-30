@@ -127,6 +127,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Flight details at `/app/flights/:flightId` with airline, aircraft, terminals,
   schedule, segments, baggage, meals, Wi-Fi, seats, refund/change policies, and
   fare conditions — plus a **Select Flight** action that continues to passengers
+- Flight status lookup at `/app/flight-status` (TanStack Query): search by flight
+  number and date; show airline, route, scheduled/estimated departure and arrival,
+  terminal, gate, and status (`SCHEDULED`, `BOARDING`, `DELAYED`, `DEPARTED`,
+  `ARRIVED`, `CANCELLED`)
 - Passenger details at `/app/flights/:flightId/passengers` with dynamic adult /
   child / infant forms (RHF + Zod): title, name, DOB, gender, nationality,
   passport, contact — passport rules for international flights, age bands,
@@ -210,7 +214,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
 ### Layouts & navigation
 
 - **Public** — marketing shell, sign-in / create-account CTAs
-- **Customer** (`/app`) — sidebar navigation for flights, bookings, check-in, notifications, profile
+- **Customer** (`/app`) — sidebar navigation for flights, flight status, bookings, check-in, notifications, profile
 - **Admin** (`/admin`) — admin dashboard navigation (placeholder pages for upcoming modules)
 
 Many booking/admin domains are scaffolded as placeholder pages and will be implemented in later iterations.
