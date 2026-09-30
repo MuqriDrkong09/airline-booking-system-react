@@ -109,6 +109,9 @@ describe('MyBookingsPage', () => {
 
   it('lists upcoming bookings with card details and actions', async () => {
     const user = userEvent.setup();
+    const departure = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const pad = (value: number) => String(value).padStart(2, '0');
+    const checkInWindowDeparture = `${departure.getFullYear()}-${pad(departure.getMonth() + 1)}-${pad(departure.getDate())}T${pad(departure.getHours())}:${pad(departure.getMinutes())}`;
 
     act(() => {
       useBookingsStore.getState().saveBooking(
@@ -120,7 +123,7 @@ describe('MyBookingsPage', () => {
             flightNumber: 'AK674',
             origin: { code: 'KUL', city: 'Kuala Lumpur', airportName: 'KLIA' },
             destination: { code: 'PEN', city: 'George Town', airportName: 'PEN' },
-            departureTime: '2099-10-20T09:00',
+            departureTime: checkInWindowDeparture,
           },
         }),
       );
@@ -143,7 +146,10 @@ describe('MyBookingsPage', () => {
     expect(screen.getByRole('link', { name: 'View' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Manage' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Check-in' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Check-in' })).toHaveAttribute(
+      'href',
+      '/app/check-in?reference=AB-LIST1',
+    );
     expect(screen.getByRole('link', { name: 'E-ticket' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('tab', { name: /Past \(1\)/i }));

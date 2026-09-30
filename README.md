@@ -180,6 +180,11 @@ Registration, email verification, and password reset also work in mock mode. Ver
   sort filters, pagination, and booking cards (reference, airline, flight number,
   route, date, passengers, total, status). Actions: View, Manage, Cancel, Check-in,
   E-ticket. Booking detail at `/app/bookings/:reference`
+- Online check-in at `/app/check-in`: look up by booking reference + last name,
+  select eligible passengers, confirm seats and baggage, then complete check-in.
+  Sets status `CHECKED_IN` and tracks checked-in passenger ids. Blocked when the
+  flight has departed, the booking is cancelled, passengers are already checked in,
+  or the check-in window is closed (opens 48h before departure, closes 1h before)
 - Booking details page with reusable sections (booking information, flight,
   passengers, seats, baggage, meals, add-ons, payment, cancellation policy) and
   loading / error / not-found states

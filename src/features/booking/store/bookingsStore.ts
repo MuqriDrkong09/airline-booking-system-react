@@ -7,11 +7,16 @@ import type {
   BookingRecordStatus,
   BookingReference,
 } from '../types/bookingRecord';
-import { canCheckInBooking } from '../utils/bookingStatus';
 import {
   calculateCancellationQuote,
   canCancelBooking,
 } from '../utils/cancellationQuote';
+import {
+  canCheckInBooking,
+  getCheckedInPassengerIds,
+  getEligibleCheckInPassengers,
+  isPassengerCheckedIn,
+} from '../utils/checkInRules';
 
 interface BookingsState {
   bookings: Booking[];
@@ -29,7 +34,14 @@ interface BookingsState {
    * CANCELLATION_REQUESTED → CANCELLED or REFUNDED (with fee/refund snapshot).
    */
   cancelBooking: (reference: BookingReference) => Booking | undefined;
-  checkInBooking: (reference: BookingReference) => Booking | undefined;
+  /**
+   * Checks in the given passengers (or all remaining eligible passengers).
+   * Sets booking status to CHECKED_IN.
+   */
+  checkInBooking: (
+    reference: BookingReference,
+    passengerIds?: string[],
+  ) => Booking | undefined;
   getBookingByReference: (reference: BookingReference) => Booking | undefined;
   getBookingById: (id: string) => Booking | undefined;
   clearBookings: () => void;
@@ -57,7 +69,15 @@ export const useBookingsStore = create<BookingsState>()(
           const without = state.bookings.filter(
             (item) => item.id !== booking.id && item.reference !== booking.reference,
           );
-          return { bookings: [booking, ...without] };
+          return {
+            bookings: [
+              {
+                ...booking,
+                checkedInPassengerIds: booking.checkedInPassengerIds ?? [],
+              },
+              ...without,
+            ],
+          };
         });
       },
 
@@ -94,7 +114,6 @@ export const useBookingsStore = create<BookingsState>()(
           finalStatus: quote.finalStatus,
         };
 
-        // Persist requested state first, then final outcome (mock synchronous processing).
         get().updateBooking(reference, (booking) =>
           patchBooking(booking, { status: 'CANCELLATION_REQUESTED', cancellation }, now),
         );
@@ -111,12 +130,38 @@ export const useBookingsStore = create<BookingsState>()(
         );
       },
 
-      checkInBooking: (reference) => {
+      checkInBooking: (reference, passengerIds) => {
         const current = get().getBookingByReference(reference);
-        if (!current || !canCheckInBooking(current, todayIsoDate())) {
+        if (!current || !canCheckInBooking(current)) {
           return undefined;
         }
-        return get().updateBookingStatus(reference, 'CHECKED_IN');
+
+        const eligible = getEligibleCheckInPassengers(current);
+        const requested =
+          passengerIds && passengerIds.length > 0
+            ? passengerIds.filter((id) =>
+                eligible.some((passenger) => passenger.id === id),
+              )
+            : eligible.map((passenger) => passenger.id);
+
+        if (requested.length === 0) {
+          return undefined;
+        }
+
+        if (requested.some((id) => isPassengerCheckedIn(current, id))) {
+          return undefined;
+        }
+
+        const merged = Array.from(
+          new Set([...getCheckedInPassengerIds(current), ...requested]),
+        );
+
+        return get().updateBooking(reference, (booking) =>
+          patchBooking(booking, {
+            status: 'CHECKED_IN',
+            checkedInPassengerIds: merged,
+          }),
+        );
       },
 
       getBookingByReference: (reference) =>
@@ -131,6 +176,18 @@ export const useBookingsStore = create<BookingsState>()(
       partialize: (state) => ({
         bookings: state.bookings,
       }),
+      merge: (persisted, current) => {
+        const persistedState = persisted as Partial<BookingsState> | undefined;
+        const bookings = (persistedState?.bookings ?? current.bookings).map((booking) => ({
+          ...booking,
+          checkedInPassengerIds: booking.checkedInPassengerIds ?? [],
+        }));
+        return {
+          ...current,
+          ...persistedState,
+          bookings,
+        };
+      },
     },
   ),
 );

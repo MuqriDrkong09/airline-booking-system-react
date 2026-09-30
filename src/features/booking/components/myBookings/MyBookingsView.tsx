@@ -25,7 +25,6 @@ import { MyBookingsToolbar } from './MyBookingsToolbar';
 
 export function MyBookingsView() {
   const bookings = useBookingsStore((state) => state.bookings);
-  const checkInBooking = useBookingsStore((state) => state.checkInBooking);
 
   const todayIso = todayIsoDate();
   const [tab, setTab] = useState<MyBookingsTab>('upcoming');
@@ -57,13 +56,6 @@ export function MyBookingsView() {
       setPage(result.page);
     }
   }, [page, result.page]);
-
-  const handleCheckIn = (booking: Booking) => {
-    const updated = checkInBooking(booking.reference);
-    if (updated) {
-      setFeedback(`Check-in complete for ${updated.reference}.`);
-    }
-  };
 
   const handleCancellationCompleted = (updated: Booking) => {
     setFeedback(
@@ -132,7 +124,6 @@ export function MyBookingsView() {
               booking={booking}
               todayIso={todayIso}
               onCancel={setCancelTarget}
-              onCheckIn={handleCheckIn}
             />
           ))}
 

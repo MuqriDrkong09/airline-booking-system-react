@@ -198,6 +198,30 @@ export { BookingInvoiceDocument } from './components/invoice/BookingInvoiceDocum
 export type { BookingInvoiceDocumentProps } from './components/invoice/BookingInvoiceDocument';
 export { BookingInvoiceView } from './components/invoice/BookingInvoiceView';
 export type { BookingInvoiceViewProps } from './components/invoice/BookingInvoiceView';
+export { CheckInView } from './components/checkIn/CheckInView';
+export type { CheckInStep } from './components/checkIn/CheckInView';
+export { CheckInLookupForm } from './components/checkIn/CheckInLookupForm';
+export type { CheckInLookupFormProps } from './components/checkIn/CheckInLookupForm';
+export {
+  CHECK_IN_CLOSES_HOURS_BEFORE,
+  CHECK_IN_OPENS_HOURS_BEFORE,
+} from './constants/checkIn';
+export {
+  baggageSummaryForPassenger,
+  bookingMatchesLastName,
+  CHECK_IN_BLOCKED_MESSAGES,
+  findBookingForCheckIn,
+  getCheckInBlockedReason,
+  getCheckInWindow,
+  getCheckedInPassengerIds,
+  getEligibleCheckInPassengers,
+  isCheckInWindowOpen,
+  isFlightDeparted,
+  isPassengerCheckedIn,
+  parseFlightDepartureLocal,
+  seatLabelForPassenger,
+} from './utils/checkInRules';
+export type { CheckInBlockedReason } from './utils/checkInRules';
 export {
   BOOKING_STATUS_LABELS,
   BOOKING_STATUS_TONE,

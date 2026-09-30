@@ -84,6 +84,12 @@ export interface Booking {
   payment: BookingPaymentInfo;
   priceBreakdown: BookingPriceBreakdown;
   transactionId: string;
+  /**
+   * Passenger ids that have completed online check-in.
+   * Booking status becomes CHECKED_IN once any passenger checks in;
+   * remaining passengers can still check in until the window closes.
+   */
+  checkedInPassengerIds?: string[];
   /** Present after a cancellation has been requested/processed. */
   cancellation?: BookingCancellationInfo;
 }

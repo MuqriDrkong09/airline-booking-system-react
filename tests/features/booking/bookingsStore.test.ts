@@ -85,6 +85,7 @@ function makeBooking(
       finalTotal: 220,
     },
     transactionId: 'TXN-1',
+    checkedInPassengerIds: [],
     ...rest,
     flight,
   };
@@ -135,19 +136,29 @@ describe('bookingsStore status updates', () => {
     expect(result).toBeUndefined();
   });
 
-  it('checks in a confirmed upcoming booking', () => {
+  it('checks in selected passengers on a confirmed booking in the check-in window', () => {
+    const departure = new Date();
+    departure.setHours(departure.getHours() + 24);
+    const pad = (value: number) => String(value).padStart(2, '0');
+    const departureTime = `${departure.getFullYear()}-${pad(departure.getMonth() + 1)}-${pad(departure.getDate())}T${pad(departure.getHours())}:${pad(departure.getMinutes())}`;
+
     act(() => {
       useBookingsStore.getState().saveBooking(
-        makeBooking({ reference: 'AB-CI', status: 'CONFIRMED' }),
+        makeBooking({
+          reference: 'AB-CI',
+          status: 'CONFIRMED',
+          flight: { departureTime } as FlightOffer,
+        }),
       );
     });
 
     let result: Booking | undefined;
     act(() => {
-      result = useBookingsStore.getState().checkInBooking('AB-CI');
+      result = useBookingsStore.getState().checkInBooking('AB-CI', ['p1']);
     });
 
     expect(result?.status).toBe('CHECKED_IN');
+    expect(result?.checkedInPassengerIds).toEqual(['p1']);
   });
 
   it('rejects cancel for already cancelled bookings', () => {

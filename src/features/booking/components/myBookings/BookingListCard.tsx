@@ -29,14 +29,12 @@ export interface BookingListCardProps {
   booking: Booking;
   todayIso: string;
   onCancel: (booking: Booking) => void;
-  onCheckIn: (booking: Booking) => void;
 }
 
 export function BookingListCard({
   booking,
   todayIso,
   onCancel,
-  onCheckIn,
 }: BookingListCardProps) {
   const { flight } = booking;
   const route = `${flight.origin.code} → ${flight.destination.code}`;
@@ -159,10 +157,11 @@ export function BookingListCard({
             ) : null}
             {showCheckIn ? (
               <AppButton
+                component={RouterLink}
+                to={`${APP_ROUTES.customer.checkIn}?reference=${encodeURIComponent(booking.reference)}`}
                 variant="contained"
                 size="small"
                 startIcon={<LogIn size={16} aria-hidden />}
-                onClick={() => onCheckIn(booking)}
               >
                 Check-in
               </AppButton>

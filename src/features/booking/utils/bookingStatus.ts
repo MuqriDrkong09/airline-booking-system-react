@@ -1,4 +1,5 @@
 import type { Booking, BookingRecordStatus } from '../types/bookingRecord';
+import { canCheckInBooking as canCheckInBookingRules } from './checkInRules';
 
 export const BOOKING_STATUS_TONE: Record<
   BookingRecordStatus,
@@ -56,8 +57,10 @@ export function getBookingTab(booking: Booking, todayIso: string): MyBookingsTab
   return departureDate >= todayIso ? 'upcoming' : 'past';
 }
 
-export function canCheckInBooking(booking: Booking, todayIso: string): boolean {
-  return booking.status === 'CONFIRMED' && getBookingTab(booking, todayIso) === 'upcoming';
+/** Delegates to check-in window rules (departure datetime, not calendar day). */
+export function canCheckInBooking(booking: Booking, todayIso?: string): boolean {
+  void todayIso;
+  return canCheckInBookingRules(booking);
 }
 
 export function canManageBooking(booking: Booking): boolean {

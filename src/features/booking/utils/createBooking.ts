@@ -84,6 +84,7 @@ export function createBooking(input: CreateBookingInput): Booking {
     },
     priceBreakdown: { ...draft.priceBreakdown },
     transactionId,
+    checkedInPassengerIds: [],
   };
 }
 
