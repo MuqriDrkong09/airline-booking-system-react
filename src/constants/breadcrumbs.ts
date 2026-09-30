@@ -109,6 +109,24 @@ export function getBreadcrumbsForPath(pathname: string): BreadcrumbItem[] {
       continue;
     }
 
+    // E-ticket: /app/bookings/:reference/eticket
+    if (/^\/app\/bookings\/[^/]+\/eticket$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'E-ticket' });
+      continue;
+    }
+
+    // Invoice: /app/bookings/:reference/invoice
+    if (/^\/app\/bookings\/[^/]+\/invoice$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Invoice' });
+      continue;
+    }
+
+    // Boarding pass: /app/bookings/:reference/boarding-pass
+    if (/^\/app\/bookings\/[^/]+\/boarding-pass$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Boarding pass' });
+      continue;
+    }
+
     // Booking detail segment under /app/bookings/:reference
     if (
       /^\/app\/bookings\/[^/]+$/.test(currentPath) &&

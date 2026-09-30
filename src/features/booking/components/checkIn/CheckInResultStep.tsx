@@ -27,14 +27,21 @@ export function CheckInResultStep({
         </AppAlert>
 
         <Typography variant="body2" color="text.secondary">
-          Download or print your e-ticket, or open the booking for full details.
+          Open your digital boarding pass, or view the e-ticket and booking details.
         </Typography>
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.25} useFlexGap>
           <AppButton
             component={RouterLink}
-            to={APP_ROUTES.customer.bookingETicket(booking.reference)}
+            to={APP_ROUTES.customer.bookingBoardingPass(booking.reference)}
             variant="contained"
+          >
+            View boarding pass
+          </AppButton>
+          <AppButton
+            component={RouterLink}
+            to={APP_ROUTES.customer.bookingETicket(booking.reference)}
+            variant="outlined"
           >
             View e-ticket
           </AppButton>

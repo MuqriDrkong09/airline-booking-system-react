@@ -15,6 +15,7 @@ import { AddonSelectionPage } from '@/pages/customer/AddonSelectionPage';
 import { BaggageSelectionPage } from '@/pages/customer/BaggageSelectionPage';
 import { BookingConfirmationPage } from '@/pages/customer/BookingConfirmationPage';
 import { BookingDetailPage } from '@/pages/customer/BookingDetailPage';
+import { BoardingPassPage } from '@/pages/customer/BoardingPassPage';
 import { BookingETicketPage } from '@/pages/customer/BookingETicketPage';
 import { BookingInvoicePage } from '@/pages/customer/BookingInvoicePage';
 import { BookingSummaryPage } from '@/pages/customer/BookingSummaryPage';
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
               {
                 path: 'bookings/:bookingReference/eticket',
                 element: <BookingETicketPage />,
+              },
+              {
+                path: 'bookings/:bookingReference/boarding-pass',
+                element: <BoardingPassPage />,
               },
               {
                 path: 'bookings/:bookingReference',

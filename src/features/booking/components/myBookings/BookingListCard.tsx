@@ -5,6 +5,7 @@ import {
   Eye,
   LogIn,
   Plane,
+  QrCode,
   Settings2,
   Ticket,
   Users,
@@ -16,6 +17,7 @@ import { APP_ROUTES } from '@/constants/routes';
 import { formatFlightDate } from '@/features/flights/utils/flightResults';
 import type { Booking } from '../../types/bookingRecord';
 import { formatBookingMoney } from '../../utils/formatMoney';
+import { canViewBoardingPass } from '../../utils/buildBoardingPass';
 import {
   BOOKING_STATUS_LABELS,
   BOOKING_STATUS_TONE,
@@ -47,6 +49,7 @@ export function BookingListCard({
   const showCancel = canCancelBooking(booking, todayIso);
   const showCheckIn = canCheckInBooking(booking, todayIso);
   const showDownload = canDownloadTicket(booking);
+  const showBoardingPass = canViewBoardingPass(booking);
 
   return (
     <AppCard
@@ -164,6 +167,17 @@ export function BookingListCard({
                 startIcon={<LogIn size={16} aria-hidden />}
               >
                 Check-in
+              </AppButton>
+            ) : null}
+            {showBoardingPass ? (
+              <AppButton
+                component={RouterLink}
+                to={APP_ROUTES.customer.bookingBoardingPass(booking.reference)}
+                variant="contained"
+                size="small"
+                startIcon={<QrCode size={16} aria-hidden />}
+              >
+                Boarding pass
               </AppButton>
             ) : null}
             {showDownload ? (

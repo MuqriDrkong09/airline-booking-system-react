@@ -171,6 +171,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
   booking reference, airline, flight number, origin / destination, departure
   date & time, arrival time, seat, boarding information, and a QR code that
   encodes only a safe booking identifier (`AEROBOOK:<reference>` — no PII)
+- Digital boarding pass at `/app/bookings/:reference/boarding-pass` (after
+  check-in): passenger, flight, origin / destination, date, departure and
+  boarding times, gate, terminal, seat, boarding group, plus QR and barcode.
+  Mobile wallet-style layout with print support (`?print=1`)
 - Printable invoice at `/app/bookings/:reference/invoice` with invoice number,
   booking reference, passengers, flight, fare / baggage / meals / add-ons /
   taxes / discount / total, payment status and date. Built from a structured
@@ -179,12 +183,13 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - My Bookings (`/app/bookings`) with Upcoming / Past / Cancelled tabs, search and
   sort filters, pagination, and booking cards (reference, airline, flight number,
   route, date, passengers, total, status). Actions: View, Manage, Cancel, Check-in,
-  E-ticket. Booking detail at `/app/bookings/:reference`
+  Boarding pass (when checked in), E-ticket. Booking detail at `/app/bookings/:reference`
 - Online check-in at `/app/check-in`: look up by booking reference + last name,
   select eligible passengers, confirm seats and baggage, then complete check-in.
   Sets status `CHECKED_IN` and tracks checked-in passenger ids. Blocked when the
   flight has departed, the booking is cancelled, passengers are already checked in,
-  or the check-in window is closed (opens 48h before departure, closes 1h before)
+  or the check-in window is closed (opens 48h before departure, closes 1h before).
+  After check-in, open the digital boarding pass from the result step.
 - Booking details page with reusable sections (booking information, flight,
   passengers, seats, baggage, meals, add-ons, payment, cancellation policy) and
   loading / error / not-found states

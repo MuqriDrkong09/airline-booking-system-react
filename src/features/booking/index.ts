@@ -163,12 +163,30 @@ export type {
   BookingETicket,
   BookingETicketBoardingInfo,
 } from './types/eticket';
+export type { BoardingPass } from './types/boardingPass';
+export {
+  assignBoardingGate,
+  assignBoardingGroup,
+  BOARDING_OPENS_MINUTES_BEFORE,
+  BOARDING_PASS_QR_PREFIX,
+  buildBoardingPasses,
+  buildBoardingPassScanPayload,
+  canViewBoardingPass,
+  formatBoardingPassAsText,
+  parseBoardingPassScanPayload,
+} from './utils/buildBoardingPass';
 export { BookingETicketDocument } from './components/eticket/BookingETicketDocument';
 export type { BookingETicketDocumentProps } from './components/eticket/BookingETicketDocument';
 export { BookingETicketQr } from './components/eticket/BookingETicketQr';
 export type { BookingETicketQrProps } from './components/eticket/BookingETicketQr';
 export { BookingETicketView } from './components/eticket/BookingETicketView';
 export type { BookingETicketViewProps } from './components/eticket/BookingETicketView';
+export { BoardingPassBarcode } from './components/boardingPass/BoardingPassBarcode';
+export type { BoardingPassBarcodeProps } from './components/boardingPass/BoardingPassBarcode';
+export { BoardingPassCard } from './components/boardingPass/BoardingPassCard';
+export type { BoardingPassCardProps } from './components/boardingPass/BoardingPassCard';
+export { BoardingPassView } from './components/boardingPass/BoardingPassView';
+export type { BoardingPassViewProps } from './components/boardingPass/BoardingPassView';
 export {
   buildBookingInvoice,
   deriveInvoicePaymentStatus,
