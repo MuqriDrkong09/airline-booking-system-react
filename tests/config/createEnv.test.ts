@@ -34,4 +34,63 @@ describe('createEnv', () => {
     expect(env.isDev).toBe(true);
     expect(env.isProd).toBe(false);
   });
+
+  it('applies custom app name and api base url when provided', () => {
+    const env = createEnv({
+      ...baseSource,
+      VITE_API_BASE_URL: 'https://prod.example.com/api',
+      VITE_APP_NAME: 'AeroBook Cloud',
+    });
+
+    expect(env.apiBaseUrl).toBe('https://prod.example.com/api');
+    expect(env.appName).toBe('AeroBook Cloud');
+  });
+
+  it('treats true and 1 as enabled mock-auth flags', () => {
+    expect(
+      createEnv({
+        ...baseSource,
+        VITE_USE_MOCK_AUTH: 'true',
+      }).useMockAuth,
+    ).toBe(true);
+
+    expect(
+      createEnv({
+        ...baseSource,
+        VITE_USE_MOCK_AUTH: ' 1 ',
+      }).useMockAuth,
+    ).toBe(true);
+  });
+
+  it('treats false and 0 as disabled mock-auth flags', () => {
+    expect(
+      createEnv({
+        ...baseSource,
+        VITE_USE_MOCK_AUTH: 'FALSE',
+      }).useMockAuth,
+    ).toBe(false);
+
+    expect(
+      createEnv({
+        ...baseSource,
+        VITE_USE_MOCK_AUTH: '0',
+      }).useMockAuth,
+    ).toBe(false);
+  });
+
+  it('falls back for blank or unrecognized mock-auth flags', () => {
+    expect(
+      createEnv({
+        ...baseSource,
+        VITE_USE_MOCK_AUTH: '   ',
+      }).useMockAuth,
+    ).toBe(true);
+
+    expect(
+      createEnv({
+        ...baseSource,
+        VITE_USE_MOCK_AUTH: 'maybe',
+      }).useMockAuth,
+    ).toBe(true);
+  });
 });
