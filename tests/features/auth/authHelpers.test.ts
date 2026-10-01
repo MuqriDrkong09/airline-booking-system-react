@@ -28,8 +28,23 @@ describe('authHelpers', () => {
     expect(getPostLoginRedirect(UserRole.USER)).toBe(APP_ROUTES.customer.home);
     expect(getPostLoginRedirect(UserRole.ADMIN)).toBe(APP_ROUTES.admin.dashboard);
     expect(getPostLoginRedirect(UserRole.USER, '/app/bookings')).toBe('/app/bookings');
+    expect(getPostLoginRedirect(UserRole.ADMIN, '/admin/flights')).toBe('/admin/flights');
     expect(getPostLoginRedirect(UserRole.USER, '/admin')).toBe(APP_ROUTES.customer.home);
     expect(getPostLoginRedirect(UserRole.ADMIN, '/app/flights')).toBe(APP_ROUTES.admin.dashboard);
+    expect(getPostLoginRedirect(UserRole.USER, APP_ROUTES.public.login)).toBe(
+      APP_ROUTES.customer.home,
+    );
+    expect(getPostLoginRedirect(UserRole.ADMIN, null)).toBe(APP_ROUTES.admin.dashboard);
+  });
+
+  it('trims display names when name parts are blank', () => {
+    expect(
+      getDisplayName({
+        ...mockCustomerUser,
+        firstName: '  Alex  ',
+        lastName: '',
+      }),
+    ).toBe('Alex');
   });
 
   it('extracts quoted demo tokens from mock messages', () => {

@@ -1,4 +1,8 @@
-﻿import { createAuthStore } from '@/features/auth';
+﻿import {
+  createAuthStore,
+  selectIsAuthenticated,
+  useAuthStore,
+} from '@/features/auth';
 import { AuthApiError, createMemoryTokenStorage, type AuthApi } from '@/services/auth';
 import type { AuthSession, AuthUser } from '@/types/auth';
 import { UserRole } from '@/types/auth';
@@ -19,6 +23,19 @@ const mockSession: AuthSession = {
     refreshToken: 'refresh-token',
     expiresIn: 3600,
   },
+};
+
+const registerPayload = {
+  title: 'MR' as const,
+  firstName: 'Alex',
+  lastName: 'Traveler',
+  email: 'alex@example.com',
+  phone: '+1 555 0100',
+  password: 'Password123!',
+  confirmPassword: 'Password123!',
+  dateOfBirth: '1990-01-01',
+  nationality: 'US',
+  termsAccepted: true,
 };
 
 function createMockApi(overrides: Partial<AuthApi> = {}): AuthApi {
@@ -108,6 +125,38 @@ describe('createAuthStore', () => {
     expect(store.getState().status).toBe('unauthenticated');
   });
 
+  it('defaults rememberMe to false when omitted from login', async () => {
+    const storage = createMemoryTokenStorage();
+    const setRememberSession = jest.fn();
+    storage.setRememberSession = setRememberSession;
+    const api = createMockApi();
+    const store = createAuthStore({ api, storage });
+
+    await store.getState().login({
+      email: 'user@example.com',
+      password: 'Password123!',
+    });
+
+    expect(setRememberSession).toHaveBeenCalledWith(false);
+    expect(store.getState().status).toBe('authenticated');
+  });
+
+  it('logs in without calling setRememberSession when the storage helper is missing', async () => {
+    const storage = createMemoryTokenStorage();
+    delete storage.setRememberSession;
+    const api = createMockApi();
+    const store = createAuthStore({ api, storage });
+
+    await store.getState().login({
+      email: 'user@example.com',
+      password: 'Password123!',
+      rememberMe: true,
+    });
+
+    expect(store.getState().status).toBe('authenticated');
+    expect(storage.getAccessToken()).toBe('access-token');
+  });
+
   it('stores API errors from failed login attempts', async () => {
     const storage = createMemoryTokenStorage();
     const api = createMockApi({
@@ -126,25 +175,46 @@ describe('createAuthStore', () => {
     expect(store.getState().status).not.toBe('authenticated');
   });
 
+  it('clears local session even when logout API fails', async () => {
+    const storage = createMemoryTokenStorage();
+    storage.setAccessToken('access-token');
+    storage.setRefreshToken('refresh-token');
+    const api = createMockApi({
+      logout: jest.fn().mockRejectedValue(new AuthApiError('Network error.', { status: 500 })),
+    });
+    const store = createAuthStore({ api, storage });
+    store.setState({
+      user: mockUser,
+      accessToken: 'access-token',
+      status: 'authenticated',
+    });
+
+    await store.getState().logout();
+
+    expect(storage.getAccessToken()).toBeNull();
+    expect(store.getState().user).toBeNull();
+    expect(store.getState().status).toBe('unauthenticated');
+    expect(store.getState().isSubmitting).toBe(false);
+  });
+
+  it('clears stored errors', () => {
+    const store = createAuthStore({
+      api: createMockApi(),
+      storage: createMemoryTokenStorage(),
+    });
+    store.setState({ error: 'Something went wrong.' });
+
+    store.getState().clearError();
+
+    expect(store.getState().error).toBeNull();
+  });
+
   it('exposes register, forgot, reset, and verify helpers', async () => {
     const storage = createMemoryTokenStorage();
     const api = createMockApi();
     const store = createAuthStore({ api, storage });
 
-    await expect(
-      store.getState().register({
-        title: 'MR',
-        firstName: 'Alex',
-        lastName: 'Traveler',
-        email: 'alex@example.com',
-        phone: '+1 555 0100',
-        password: 'Password123!',
-        confirmPassword: 'Password123!',
-        dateOfBirth: '1990-01-01',
-        nationality: 'US',
-        termsAccepted: true,
-      }),
-    ).resolves.toBe('Registered');
+    await expect(store.getState().register(registerPayload)).resolves.toBe('Registered');
 
     await expect(
       store.getState().forgotPassword({ email: 'alex@example.com' }),
@@ -159,5 +229,99 @@ describe('createAuthStore', () => {
     ).resolves.toBe('Password reset');
 
     await expect(store.getState().verifyEmail({ token: 'verify' })).resolves.toBe('Verified');
+  });
+
+  it('stores API errors from failed register attempts', async () => {
+    const api = createMockApi({
+      register: jest
+        .fn()
+        .mockRejectedValue(new AuthApiError('Email already registered.', { status: 409 })),
+    });
+    const store = createAuthStore({ api, storage: createMemoryTokenStorage() });
+
+    await expect(store.getState().register(registerPayload)).rejects.toBeInstanceOf(AuthApiError);
+
+    expect(store.getState().error).toBe('Email already registered.');
+    expect(store.getState().isSubmitting).toBe(false);
+  });
+
+  it('stores API errors from failed forgot-password attempts', async () => {
+    const api = createMockApi({
+      forgotPassword: jest
+        .fn()
+        .mockRejectedValue(new AuthApiError('Unable to start password reset.', { status: 500 })),
+    });
+    const store = createAuthStore({ api, storage: createMemoryTokenStorage() });
+
+    await expect(
+      store.getState().forgotPassword({ email: 'alex@example.com' }),
+    ).rejects.toBeInstanceOf(AuthApiError);
+
+    expect(store.getState().error).toBe('Unable to start password reset.');
+    expect(store.getState().isSubmitting).toBe(false);
+  });
+
+  it('stores API errors from failed reset-password attempts', async () => {
+    const api = createMockApi({
+      resetPassword: jest
+        .fn()
+        .mockRejectedValue(new AuthApiError('Unable to reset password.', { status: 400 })),
+    });
+    const store = createAuthStore({ api, storage: createMemoryTokenStorage() });
+
+    await expect(
+      store.getState().resetPassword({
+        token: 'bad',
+        password: 'Password123!',
+        confirmPassword: 'Password123!',
+      }),
+    ).rejects.toBeInstanceOf(AuthApiError);
+
+    expect(store.getState().error).toBe('Unable to reset password.');
+    expect(store.getState().isSubmitting).toBe(false);
+  });
+
+  it('stores API errors from failed verify-email attempts', async () => {
+    const api = createMockApi({
+      verifyEmail: jest
+        .fn()
+        .mockRejectedValue(new AuthApiError('Unable to verify email.', { status: 400 })),
+    });
+    const store = createAuthStore({ api, storage: createMemoryTokenStorage() });
+
+    await expect(store.getState().verifyEmail({ token: 'bad' })).rejects.toBeInstanceOf(
+      AuthApiError,
+    );
+
+    expect(store.getState().error).toBe('Unable to verify email.');
+    expect(store.getState().isSubmitting).toBe(false);
+  });
+});
+
+describe('selectIsAuthenticated', () => {
+  it('is true only when status is authenticated and a user is present', () => {
+    expect(
+      selectIsAuthenticated({
+        ...useAuthStore.getState(),
+        status: 'authenticated',
+        user: mockUser,
+      }),
+    ).toBe(true);
+
+    expect(
+      selectIsAuthenticated({
+        ...useAuthStore.getState(),
+        status: 'authenticated',
+        user: null,
+      }),
+    ).toBe(false);
+
+    expect(
+      selectIsAuthenticated({
+        ...useAuthStore.getState(),
+        status: 'unauthenticated',
+        user: mockUser,
+      }),
+    ).toBe(false);
   });
 });
