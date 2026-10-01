@@ -4,6 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Menu, Plane } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ThemeModeToggle } from '@/components/common/ThemeModeToggle';
 import type { DemoUser } from '@/constants/demoUser';
@@ -22,6 +23,7 @@ export interface DashboardHeaderProps {
   onOpenMobileNav: () => void;
   isMobileNavOpen: boolean;
   onLogout?: () => void;
+  headerActions?: ReactNode;
 }
 
 export function DashboardHeader({
@@ -33,6 +35,7 @@ export function DashboardHeader({
   onOpenMobileNav,
   isMobileNavOpen,
   onLogout,
+  headerActions,
 }: DashboardHeaderProps) {
   return (
     <AppBar
@@ -101,6 +104,7 @@ export function DashboardHeader({
           <Box sx={{ flexGrow: 1 }} />
 
           <ThemeModeToggle />
+          {headerActions}
           <UserMenu user={user} profileTo={profileTo} onLogout={onLogout} />
         </Box>
       </Toolbar>

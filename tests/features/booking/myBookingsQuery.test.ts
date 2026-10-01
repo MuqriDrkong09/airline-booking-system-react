@@ -146,10 +146,12 @@ describe('bookingStatus helpers', () => {
   });
 
   it('gates cancel and check-in by status and departure date', () => {
-    const upcoming = makeBooking({
+    const now = new Date(2026, 8, 29, 12, 0, 0); // 2026-09-29 12:00 local
+    const withinCheckInWindow = makeBooking({
       reference: 'AB-UP',
       status: 'CONFIRMED',
-      flight: { departureTime: '2026-10-01T09:00' },
+      // 24h ahead → inside the 48h open / 1h close check-in window
+      flight: { departureTime: '2026-09-30T12:00' },
     });
     const past = makeBooking({
       reference: 'AB-PAST',
@@ -157,10 +159,10 @@ describe('bookingStatus helpers', () => {
       flight: { departureTime: '2026-01-01T09:00' },
     });
 
-    expect(canCancelBooking(upcoming, '2026-09-29')).toBe(true);
+    expect(canCancelBooking(withinCheckInWindow, '2026-09-29')).toBe(true);
     expect(canCancelBooking(past, '2026-09-29')).toBe(false);
-    expect(canCheckInBooking(upcoming, '2026-09-29')).toBe(true);
-    expect(canCheckInBooking(past, '2026-09-29')).toBe(false);
+    expect(canCheckInBooking(withinCheckInWindow, '2026-09-29', now)).toBe(true);
+    expect(canCheckInBooking(past, '2026-09-29', now)).toBe(false);
   });
 });
 

@@ -131,6 +131,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
   number and date; show airline, route, scheduled/estimated departure and arrival,
   terminal, gate, and status (`SCHEDULED`, `BOARDING`, `DELAYED`, `DEPARTED`,
   `ARRIVED`, `CANCELLED`)
+- Notifications at `/app/notifications` (TanStack Query) with header bell +
+  dropdown: types `BOOKING_CONFIRMED`, `PAYMENT_SUCCESS`, `PAYMENT_FAILED`,
+  `FLIGHT_DELAYED`, `FLIGHT_CANCELLED`, `CHECK_IN_AVAILABLE`, `BOARDING`,
+  `BOOKING_CANCELLED` — unread count, mark as read, mark all as read, and delete
 - Passenger details at `/app/flights/:flightId/passengers` with dynamic adult /
   child / infant forms (RHF + Zod): title, name, DOB, gender, nationality,
   passport, contact — passport rules for international flights, age bands,
@@ -214,7 +218,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
 ### Layouts & navigation
 
 - **Public** — marketing shell, sign-in / create-account CTAs
-- **Customer** (`/app`) — sidebar navigation for flights, flight status, bookings, check-in, notifications, profile
+- **Customer** (`/app`) — sidebar navigation for flights, flight status, bookings, check-in, notifications, profile; header notification bell with unread badge
 - **Admin** (`/admin`) — admin dashboard navigation (placeholder pages for upcoming modules)
 
 Many booking/admin domains are scaffolded as placeholder pages and will be implemented in later iterations.

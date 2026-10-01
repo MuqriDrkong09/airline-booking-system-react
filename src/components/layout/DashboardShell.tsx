@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
+import type { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useUiStore } from '@/app/store/uiStore';
 import type { DemoUser } from '@/constants/demoUser';
@@ -26,6 +27,7 @@ export interface DashboardShellProps {
   navAriaLabel: string;
   user: DemoUser;
   onLogout?: () => void;
+  headerActions?: ReactNode;
 }
 
 export function DashboardShell({
@@ -37,6 +39,7 @@ export function DashboardShell({
   navAriaLabel,
   user,
   onLogout,
+  headerActions,
 }: DashboardShellProps) {
   const isMobileNavOpen = useUiStore((state) => state.isMobileNavOpen);
   const openMobileNav = useUiStore((state) => state.openMobileNav);
@@ -100,6 +103,7 @@ export function DashboardShell({
             onOpenMobileNav={openMobileNav}
             isMobileNavOpen={isMobileNavOpen}
             onLogout={onLogout}
+            headerActions={headerActions}
           />
         </Box>
 

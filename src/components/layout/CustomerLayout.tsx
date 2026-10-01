@@ -1,6 +1,7 @@
 import { CUSTOMER_NAV_ITEMS } from '@/constants/nav';
 import { APP_ROUTES } from '@/constants/routes';
 import { useAuth, toUserMenuModel } from '@/features/auth';
+import { NotificationBell } from '@/features/notifications';
 import { DashboardShell } from './DashboardShell';
 
 export interface CustomerLayoutProps {
@@ -23,6 +24,7 @@ export function CustomerLayout({ appName }: CustomerLayoutProps) {
       navItems={CUSTOMER_NAV_ITEMS}
       navAriaLabel="Customer"
       user={toUserMenuModel(user)}
+      headerActions={<NotificationBell />}
       onLogout={() => {
         void logout();
       }}

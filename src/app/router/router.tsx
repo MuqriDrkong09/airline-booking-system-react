@@ -24,6 +24,7 @@ import { FlightStatusPage } from '@/pages/customer/FlightStatusPage';
 import { ManageBookingPage } from '@/pages/customer/ManageBookingPage';
 import { MyBookingsPage } from '@/pages/customer/MyBookingsPage';
 import { MealSelectionPage } from '@/pages/customer/MealSelectionPage';
+import { NotificationPage } from '@/pages/customer/NotificationPage';
 import { PaymentPage } from '@/pages/customer/PaymentPage';
 import { SeatSelectionPage } from '@/pages/customer/SeatSelectionPage';
 import { SearchFlightsPage } from '@/pages/customer/SearchFlightsPage';
@@ -95,7 +96,7 @@ export const router = createBrowserRouter([
               { path: 'bookings', element: <MyBookingsPage /> },
               { path: 'check-in', element: <CheckInPage /> },
               { path: 'flight-status', element: <FlightStatusPage /> },
-              { path: 'notifications', element: <PlaceholderPage title="Notifications" /> },
+              { path: 'notifications', element: <NotificationPage /> },
               { path: 'profile', element: <ProfilePage /> },
               { path: '*', element: <NotFoundPage /> },
             ],
