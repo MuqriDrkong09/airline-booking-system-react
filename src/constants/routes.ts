@@ -42,6 +42,7 @@ export const APP_ROUTES = {
     checkIn: '/app/check-in',
     flightStatus: '/app/flight-status',
     notifications: '/app/notifications',
+    favourites: '/app/favourites',
     profile: '/app/profile',
   },
   admin: {

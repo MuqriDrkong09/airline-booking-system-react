@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Briefcase, Luggage, Users } from 'lucide-react';
 import type { SyntheticEvent } from 'react';
 import { AppBadge, AppButton, AppCard } from '@/components/common';
+import { FavouriteButton } from '@/features/favourites/components/FavouriteButton';
 import type { FlightOffer } from '../../types/flight';
 import { formatCabinLabel } from '../../utils/searchParams';
 import { FlightPrice } from './FlightPrice';
@@ -37,39 +38,42 @@ export function FlightCard({ flight, onSelect }: FlightCardProps) {
         },
       }}
     >
-      <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
-        <Avatar
-          variant="rounded"
-          src={flight.airline.logoUrl}
-          alt={`${flight.airline.name} logo`}
-          sx={{
-            width: 44,
-            height: 44,
-            bgcolor: 'primary.main',
-            color: 'primary.contrastText',
-            fontWeight: 700,
-            fontSize: '0.8rem',
-            flexShrink: 0,
-          }}
-          slotProps={{
-            img: {
-              loading: 'lazy',
-              onError: (event: SyntheticEvent<HTMLImageElement>) => {
-                event.currentTarget.style.display = 'none';
+      <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+        <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', minWidth: 0 }}>
+          <Avatar
+            variant="rounded"
+            src={flight.airline.logoUrl}
+            alt={`${flight.airline.name} logo`}
+            sx={{
+              width: 44,
+              height: 44,
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
+              fontWeight: 700,
+              fontSize: '0.8rem',
+              flexShrink: 0,
+            }}
+            slotProps={{
+              img: {
+                loading: 'lazy',
+                onError: (event: SyntheticEvent<HTMLImageElement>) => {
+                  event.currentTarget.style.display = 'none';
+                },
               },
-            },
-          }}
-        >
-          {flight.airline.code}
-        </Avatar>
-        <Box sx={{ minWidth: 0 }}>
-          <Typography variant="subtitle2" noWrap sx={{ fontWeight: 700 }}>
-            {flight.airline.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {flight.flightNumber}
-          </Typography>
-        </Box>
+            }}
+          >
+            {flight.airline.code}
+          </Avatar>
+          <Box sx={{ minWidth: 0 }}>
+            <Typography variant="subtitle2" noWrap sx={{ fontWeight: 700 }}>
+              {flight.airline.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {flight.flightNumber}
+            </Typography>
+          </Box>
+        </Stack>
+        <FavouriteButton flight={flight} size="small" />
       </Stack>
 
       <FlightTimeline

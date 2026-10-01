@@ -21,6 +21,7 @@ import { BookingInvoicePage } from '@/pages/customer/BookingInvoicePage';
 import { BookingSummaryPage } from '@/pages/customer/BookingSummaryPage';
 import { CheckInPage } from '@/pages/customer/CheckInPage';
 import { FlightStatusPage } from '@/pages/customer/FlightStatusPage';
+import { FavouriteFlightsPage } from '@/pages/customer/FavouriteFlightsPage';
 import { ManageBookingPage } from '@/pages/customer/ManageBookingPage';
 import { MyBookingsPage } from '@/pages/customer/MyBookingsPage';
 import { MealSelectionPage } from '@/pages/customer/MealSelectionPage';
@@ -96,6 +97,7 @@ export const router = createBrowserRouter([
               { path: 'bookings', element: <MyBookingsPage /> },
               { path: 'check-in', element: <CheckInPage /> },
               { path: 'flight-status', element: <FlightStatusPage /> },
+              { path: 'favourites', element: <FavouriteFlightsPage /> },
               { path: 'notifications', element: <NotificationPage /> },
               { path: 'profile', element: <ProfilePage /> },
               { path: '*', element: <NotFoundPage /> },

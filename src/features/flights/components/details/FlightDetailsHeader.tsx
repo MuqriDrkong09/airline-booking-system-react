@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import type { SyntheticEvent } from 'react';
 import { AppBadge } from '@/components/common';
+import { FavouriteButton } from '@/features/favourites/components/FavouriteButton';
 import type { FlightOffer } from '../../types/flight';
 import { formatCabinLabel } from '../../utils/searchParams';
 import {
@@ -62,7 +63,8 @@ export function FlightDetailsHeader({ flight }: FlightDetailsHeaderProps) {
         </Box>
       </Stack>
 
-      <Stack direction="row" spacing={0.75} useFlexGap sx={{ flexWrap: 'wrap' }}>
+      <Stack direction="row" spacing={0.75} useFlexGap sx={{ flexWrap: 'wrap', alignItems: 'center' }}>
+        <FavouriteButton flight={flight} size="small" />
         <AppBadge label={formatCabinLabel(flight.cabinClass)} tone="info" variant="outlined" />
         {flight.refundable ? (
           <AppBadge label="Refundable" tone="success" variant="outlined" />

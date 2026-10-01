@@ -18,6 +18,7 @@ const BREADCRUMB_LABELS: Readonly<Record<string, string>> = {
   [APP_ROUTES.customer.checkIn]: 'Check-in',
   [APP_ROUTES.customer.flightStatus]: 'Flight status',
   [APP_ROUTES.customer.notifications]: 'Notifications',
+  [APP_ROUTES.customer.favourites]: 'Favourites',
   [APP_ROUTES.customer.profile]: 'Profile',
   [APP_ROUTES.admin.root]: 'Admin',
   [APP_ROUTES.admin.flights]: 'Flights',

@@ -19,6 +19,7 @@ describe('APP_ROUTES', () => {
     expect(APP_ROUTES.customer.bookings).toBe('/app/bookings');
     expect(APP_ROUTES.customer.checkIn).toBe('/app/check-in');
     expect(APP_ROUTES.customer.flightStatus).toBe('/app/flight-status');
+    expect(APP_ROUTES.customer.favourites).toBe('/app/favourites');
     expect(APP_ROUTES.customer.notifications).toBe('/app/notifications');
     expect(APP_ROUTES.customer.profile).toBe('/app/profile');
   });

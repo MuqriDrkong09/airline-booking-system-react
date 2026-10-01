@@ -45,6 +45,10 @@ describe('getBreadcrumbsForPath', () => {
       { to: '/app', label: 'Customer' },
       { to: '/app/flight-status', label: 'Flight status' },
     ]);
+    expect(getBreadcrumbsForPath(APP_ROUTES.customer.favourites)).toEqual([
+      { to: '/app', label: 'Customer' },
+      { to: '/app/favourites', label: 'Favourites' },
+    ]);
     expect(getBreadcrumbsForPath(APP_ROUTES.customer.notifications)).toEqual([
       { to: '/app', label: 'Customer' },
       { to: '/app/notifications', label: 'Notifications' },
