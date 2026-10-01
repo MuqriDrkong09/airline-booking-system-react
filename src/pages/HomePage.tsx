@@ -6,6 +6,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { AppButton, AppCard, PageContainer, SectionHeader } from '@/components/common';
 import { env } from '@/config/env';
 import { APP_ROUTES } from '@/constants/routes';
+import { RecentSearchesSection } from '@/features/flights';
 
 const highlights = [
   {
@@ -68,6 +69,8 @@ export function HomePage() {
           </AppButton>
         </Stack>
       </Stack>
+
+      <RecentSearchesSection />
 
       <Box
         sx={{

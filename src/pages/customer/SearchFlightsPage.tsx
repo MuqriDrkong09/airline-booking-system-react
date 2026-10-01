@@ -20,6 +20,7 @@ import {
   parseFlightSearchParams,
   serializeFlightSearchCriteria,
   useFlightSearchHydration,
+  useRecentSearchesStore,
   type FlightOffer,
   type FlightSearchFormValues,
   type FlightSearchRequest,
@@ -70,6 +71,7 @@ export function SearchFlightsPage() {
   const [applyingChange, setApplyingChange] = useState(false);
 
   const changeBookingReference = searchParams.get(CHANGE_BOOKING_QUERY)?.trim() || '';
+  const addRecentSearch = useRecentSearchesStore((state) => state.addSearch);
   const existingBooking = useBookingsStore((state) =>
     changeBookingReference
       ? state.bookings.find((item) => item.reference === changeBookingReference)
@@ -107,6 +109,8 @@ export function SearchFlightsPage() {
     const next = serializeFlightSearchCriteria(criteriaFromFormValues(values));
     if (changeBookingReference) {
       next.set(CHANGE_BOOKING_QUERY, changeBookingReference);
+    } else {
+      addRecentSearch(values);
     }
     setSearchParams(next, { replace: true });
     setSearchSummary(formatSearchSummary(values));

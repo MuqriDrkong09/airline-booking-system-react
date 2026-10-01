@@ -7,6 +7,8 @@ export type {
   TripType,
 } from './search';
 export { CABIN_CLASSES, TRIP_TYPES } from './search';
+export type { RecentFlightSearch } from './recentSearch';
+export { RECENT_SEARCH_HISTORY_LIMIT } from './recentSearch';
 export type {
   FlightAirline,
   FlightAircraft,

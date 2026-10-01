@@ -22,6 +22,7 @@ export type {
   FlightSortOption,
   FlightStatusLookupRequest,
   FlightStatusRecord,
+  RecentFlightSearch,
   TripType,
 } from './types';
 export {
@@ -31,6 +32,7 @@ export {
   FLIGHT_OPERATIONAL_STATUS_LABELS,
   FLIGHT_SORT_OPTION_LABELS,
   FLIGHT_SORT_OPTIONS,
+  RECENT_SEARCH_HISTORY_LIMIT,
   isFlightOperationalStatus,
   isFlightSortOption,
   TRIP_TYPES,
@@ -138,6 +140,20 @@ export {
   parseFlightSearchParams,
   serializeFlightSearchCriteria,
 } from './utils/searchParams';
+export {
+  criteriaFromRecentSearch,
+  createRecentSearchId,
+  formatRecentSearchDates,
+  formatRecentSearchMeta,
+  formatRecentSearchRoute,
+  prependRecentSearch,
+  recentSearchFingerprint,
+  recentSearchFromFormValues,
+} from './utils/recentSearch';
+export { useRecentSearchesStore } from './store/recentSearchesStore';
+export { RecentSearchCard } from './components/recent/RecentSearchCard';
+export type { RecentSearchCardProps } from './components/recent/RecentSearchCard';
+export { RecentSearchesSection } from './components/recent/RecentSearchesSection';
 export {
   countActiveFlightFilters,
   clearFlightFilterParams,

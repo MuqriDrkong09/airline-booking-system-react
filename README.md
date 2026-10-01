@@ -108,6 +108,9 @@ Registration, email verification, and password reset also work in mock mode. Ver
 ### Flight search (`src/features/flights/`)
 
 - Trip types: one-way, round-trip, multi-city
+- Recent flight searches on the public home page (Zustand persist, latest 10):
+  origin, destination, departure / return dates, passenger count, cabin class,
+  and timestamp — with search again, remove, and clear-all actions
 - Airport autocomplete with origin/destination swap
 - Departure / return date validation (and per-leg dates for multi-city)
 - Passenger selector (adults, children, infants) and cabin class
