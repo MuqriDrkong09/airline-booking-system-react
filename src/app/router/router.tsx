@@ -29,6 +29,7 @@ import { NotificationPage } from '@/pages/customer/NotificationPage';
 import { PaymentPage } from '@/pages/customer/PaymentPage';
 import { SeatSelectionPage } from '@/pages/customer/SeatSelectionPage';
 import { SearchFlightsPage } from '@/pages/customer/SearchFlightsPage';
+import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { PlaceholderPage } from '@/pages/PlaceholderPage';
@@ -112,7 +113,7 @@ export const router = createBrowserRouter([
             path: '/admin',
             element: <AdminLayout appName={env.appName} />,
             children: [
-              { index: true, element: <PlaceholderPage title="Dashboard" /> },
+              { index: true, element: <AdminDashboardPage /> },
               { path: 'flights', element: <PlaceholderPage title="Flights" /> },
               { path: 'airports', element: <PlaceholderPage title="Airports" /> },
               { path: 'aircraft', element: <PlaceholderPage title="Aircraft" /> },

@@ -226,7 +226,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
 
 - **Public** — marketing shell, sign-in / create-account CTAs
 - **Customer** (`/app`) — sidebar navigation for flights, favourites, flight status, bookings, check-in, notifications, profile; header notification bell with unread badge
-- **Admin** (`/admin`) — admin dashboard navigation (placeholder pages for upcoming modules)
+- **Admin** (`/admin`) — operations dashboard with KPI cards and Recharts (bookings/revenue over time, popular destinations, booking status, airline performance); mock API when `VITE_USE_MOCK_AUTH=true`. Other admin modules remain placeholders.
 
 Many booking/admin domains are scaffolded as placeholder pages and will be implemented in later iterations.
 
