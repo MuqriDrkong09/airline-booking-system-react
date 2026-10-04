@@ -61,7 +61,6 @@ export function AdminDashboardView() {
           gap: 2,
           gridTemplateColumns: {
             xs: '1fr',
-            sm: 'repeat(2, minmax(0, 1fr))',
             lg: 'repeat(3, minmax(0, 1fr))',
           },
         }}
