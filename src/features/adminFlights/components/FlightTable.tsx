@@ -87,7 +87,13 @@ function FlightMobileCard({
         </Stack>
       }
     >
-      <Stack spacing={1.5}>
+      <Box
+        sx={{
+          display: 'grid',
+          gap: 1.5,
+          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+        }}
+      >
         <InfoRow label="Route" value={`${flight.origin} → ${flight.destination}`} />
         <InfoRow label="Aircraft" value={flight.aircraft} />
         <InfoRow label="Departure" value={formatFlightDateTime(flight.departure)} />
@@ -99,30 +105,28 @@ function FlightMobileCard({
         <InfoRow
           label="Status"
           value={
-            <Stack spacing={1}>
-              <Box>
-                <AppBadge
-                  label={
-                    STATUS_OPTIONS.find((option) => option.value === flight.status)?.label
-                  }
-                  tone={getStatusTone(flight.status)}
-                />
-              </Box>
-              <AppSelect
-                label="Update status"
-                hideLabel
-                size="small"
-                options={STATUS_OPTIONS}
-                value={flight.status}
-                disabled={statusUpdatingId === flight.id}
-                onChange={(status) =>
-                  onStatusChange(flight, status as FlightOperationalStatus)
-                }
-              />
-            </Stack>
+            <AppBadge
+              label={
+                STATUS_OPTIONS.find((option) => option.value === flight.status)?.label
+              }
+              tone={getStatusTone(flight.status)}
+            />
           }
         />
-      </Stack>
+        <Box sx={{ gridColumn: '1 / -1' }}>
+          <AppSelect
+            label="Update status"
+            hideLabel
+            size="small"
+            options={STATUS_OPTIONS}
+            value={flight.status}
+            disabled={statusUpdatingId === flight.id}
+            onChange={(status) =>
+              onStatusChange(flight, status as FlightOperationalStatus)
+            }
+          />
+        </Box>
+      </Box>
     </AppCard>
   );
 }

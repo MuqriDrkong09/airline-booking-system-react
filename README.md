@@ -134,6 +134,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
   list / search / filter, create & edit via `FlightDialog` + `FlightForm`
   (React Hook Form + Zod), delete with confirmation, and inline status updates;
   mock API when `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/flights`
+- Admin airport management at `/admin/airports` (`src/features/adminAirports/`):
+  list / search / filter, create & edit via `AirportDialog` + `AirportForm`
+  (React Hook Form + Zod), activate/deactivate, and delete with confirmation;
+  mock API when `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/airports`
 - Favourite flights at `/app/favourites` (TanStack Query): save offers from
   `FlightCard` and `FlightDetailsHeader` via `FavouriteButton`, browse saved
   flights with `FavouriteFlightCard`, and remove them. Mock mode persists to
@@ -230,7 +234,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
 
 - **Public** — marketing shell, sign-in / create-account CTAs
 - **Customer** (`/app`) — sidebar navigation for flights, favourites, flight status, bookings, check-in, notifications, profile; header notification bell with unread badge
-- **Admin** (`/admin`) — operations dashboard with KPI cards and Recharts (bookings/revenue over time, popular destinations, booking status, airline performance); flight management at `/admin/flights` (list, search, filter, create, edit, delete, status updates) with React Hook Form + Zod; mock API when `VITE_USE_MOCK_AUTH=true`. Other admin modules remain placeholders.
+- **Admin** (`/admin`) — operations dashboard with KPI cards and Recharts; flight management at `/admin/flights`; airport management at `/admin/airports` (list, search, filter, create, edit, delete, activate/deactivate) with React Hook Form + Zod; mock API when `VITE_USE_MOCK_AUTH=true`. Other admin modules remain placeholders.
 
 Many booking/admin domains are scaffolded as placeholder pages and will be implemented in later iterations.
 
