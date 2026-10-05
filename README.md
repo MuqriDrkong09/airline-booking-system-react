@@ -147,6 +147,11 @@ Registration, email verification, and password reset also work in mock mode. Ver
   (`STANDARD` / `PREMIUM` / `EXTRA_LEGROOM` / `EMERGENCY_EXIT` / `UNAVAILABLE`),
   price, emergency-exit and disabled flags; Zod-validated persistence on the
   aircraft record; mock API when `VITE_USE_MOCK_AUTH=true`
+- Admin booking management at `/admin/bookings` (`src/features/adminBookings/`):
+  search, filter by status / departure date / flight, view details, cancel,
+  refund, and modify primary contact; responsive table with server-side
+  pagination and sorting via query parameters; mock API when
+  `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/bookings`
 - Favourite flights at `/app/favourites` (TanStack Query): save offers from
   `FlightCard` and `FlightDetailsHeader` via `FavouriteButton`, browse saved
   flights with `FavouriteFlightCard`, and remove them. Mock mode persists to

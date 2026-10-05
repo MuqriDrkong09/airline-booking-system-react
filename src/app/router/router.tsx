@@ -32,6 +32,7 @@ import { SearchFlightsPage } from '@/pages/customer/SearchFlightsPage';
 import { AdminAircraftPage } from '@/pages/admin/AdminAircraftPage';
 import { AdminAircraftSeatConfigPage } from '@/pages/admin/AdminAircraftSeatConfigPage';
 import { AdminAirportsPage } from '@/pages/admin/AdminAirportsPage';
+import { AdminBookingsPage } from '@/pages/admin/AdminBookingsPage';
 import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage';
 import { AdminFlightsPage } from '@/pages/admin/AdminFlightsPage';
 import { HomePage } from '@/pages/HomePage';
@@ -125,7 +126,7 @@ export const router = createBrowserRouter([
                 path: 'aircraft/:aircraftId/seats',
                 element: <AdminAircraftSeatConfigPage />,
               },
-              { path: 'bookings', element: <PlaceholderPage title="Bookings" /> },
+              { path: 'bookings', element: <AdminBookingsPage /> },
               { path: 'users', element: <PlaceholderPage title="Users" /> },
               { path: 'promo-codes', element: <PlaceholderPage title="Promo Codes" /> },
               { path: 'reports', element: <PlaceholderPage title="Reports" /> },

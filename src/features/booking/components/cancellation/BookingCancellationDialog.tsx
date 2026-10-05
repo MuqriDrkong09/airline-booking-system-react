@@ -22,6 +22,11 @@ export interface BookingCancellationDialogProps {
   booking: Booking | null;
   onClose: () => void;
   onCompleted?: (booking: Booking) => void;
+  /**
+   * Optional cancel implementation (e.g. admin API).
+   * Defaults to the customer bookings store pipeline.
+   */
+  cancelFn?: (reference: string) => Booking | null | undefined | Promise<Booking | null | undefined>;
 }
 
 export function BookingCancellationDialog({
@@ -29,6 +34,7 @@ export function BookingCancellationDialog({
   booking,
   onClose,
   onCompleted,
+  cancelFn,
 }: BookingCancellationDialogProps) {
   const cancelBooking = useBookingsStore((state) => state.cancelBooking);
   const [step, setStep] = useState<CancellationStep>('policy');
@@ -66,18 +72,28 @@ export function BookingCancellationDialog({
 
     setLoading(true);
     setError(null);
-    try {
-      const updated = cancelBooking(booking.reference);
-      if (!updated) {
-        setError(blockedReason ?? 'Cancellation could not be completed.');
-        return;
+    void (async () => {
+      try {
+        const updated = cancelFn
+          ? await cancelFn(booking.reference)
+          : cancelBooking(booking.reference);
+        if (!updated) {
+          setError(blockedReason ?? 'Cancellation could not be completed.');
+          return;
+        }
+        setResultBooking(updated);
+        setStep('result');
+        onCompleted?.(updated);
+      } catch (cancelError) {
+        setError(
+          cancelError instanceof Error
+            ? cancelError.message
+            : 'Cancellation could not be completed.',
+        );
+      } finally {
+        setLoading(false);
       }
-      setResultBooking(updated);
-      setStep('result');
-      onCompleted?.(updated);
-    } finally {
-      setLoading(false);
-    }
+    })();
   };
 
   const titleByStep: Record<CancellationStep, string> = {
