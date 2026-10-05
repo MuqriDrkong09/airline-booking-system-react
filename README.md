@@ -138,6 +138,12 @@ Registration, email verification, and password reset also work in mock mode. Ver
   list / search / filter, create & edit via `AirportDialog` + `AirportForm`
   (React Hook Form + Zod), activate/deactivate, and delete with confirmation;
   mock API when `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/airports`
+- Admin aircraft management at `/admin/aircraft` (`src/features/adminAircraft/`):
+  list / search / filter, view details, create & edit via `AircraftDialog` +
+  `AircraftForm` (React Hook Form + Zod), activate/deactivate, and delete with
+  confirmation; cabin seat counts hydrate a prepared `seatMapConfig` for a
+  future seat-map editor; mock API when `VITE_USE_MOCK_AUTH=true`, otherwise
+  `/admin/aircraft`
 - Favourite flights at `/app/favourites` (TanStack Query): save offers from
   `FlightCard` and `FlightDetailsHeader` via `FavouriteButton`, browse saved
   flights with `FavouriteFlightCard`, and remove them. Mock mode persists to
@@ -234,7 +240,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
 
 - **Public** — marketing shell, sign-in / create-account CTAs
 - **Customer** (`/app`) — sidebar navigation for flights, favourites, flight status, bookings, check-in, notifications, profile; header notification bell with unread badge
-- **Admin** (`/admin`) — operations dashboard with KPI cards and Recharts; flight management at `/admin/flights`; airport management at `/admin/airports` (list, search, filter, create, edit, delete, activate/deactivate) with React Hook Form + Zod; mock API when `VITE_USE_MOCK_AUTH=true`. Other admin modules remain placeholders.
+- **Admin** (`/admin`) — operations dashboard with KPI cards and Recharts; flight management at `/admin/flights`; airport management at `/admin/airports`; aircraft management at `/admin/aircraft` (list, search, filter, view, create, edit, delete, activate/deactivate, seat-map config prep) with React Hook Form + Zod; mock API when `VITE_USE_MOCK_AUTH=true`. Other admin modules remain placeholders.
 
 Many booking/admin domains are scaffolded as placeholder pages and will be implemented in later iterations.
 
