@@ -3,6 +3,7 @@ import {
   adminAircraftKeys,
   createAdminAircraft,
   deleteAdminAircraft,
+  getAdminAircraft,
   listAdminAircraft,
   setAdminAircraftActive,
   updateAdminAircraft,
@@ -14,6 +15,14 @@ export function useAdminAircraftQuery(filters: AdminAircraftFilters, enabled = t
     queryKey: adminAircraftKeys.list(filters),
     queryFn: () => listAdminAircraft(filters),
     enabled,
+  });
+}
+
+export function useAdminAircraftDetailQuery(aircraftId: string, enabled = true) {
+  return useQuery({
+    queryKey: adminAircraftKeys.detail(aircraftId),
+    queryFn: () => getAdminAircraft(aircraftId),
+    enabled: enabled && Boolean(aircraftId),
   });
 }
 

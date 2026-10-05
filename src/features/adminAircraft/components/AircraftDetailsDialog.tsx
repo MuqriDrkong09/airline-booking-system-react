@@ -15,6 +15,7 @@ export interface AircraftDetailsDialogProps {
   aircraft: AdminAircraft | null;
   onClose: () => void;
   onEdit?: (aircraft: AdminAircraft) => void;
+  onConfigureSeats?: (aircraft: AdminAircraft) => void;
 }
 
 function DetailItem({ label, value }: { label: string; value: ReactNode }) {
@@ -35,6 +36,7 @@ export function AircraftDetailsDialog({
   aircraft,
   onClose,
   onEdit,
+  onConfigureSeats,
 }: AircraftDetailsDialogProps) {
   const title = aircraft
     ? `${aircraft.registration} · ${formatAircraftLabel(aircraft)}`
@@ -51,6 +53,16 @@ export function AircraftDetailsDialog({
           <AppButton onClick={onClose} color="inherit">
             Close
           </AppButton>
+          {aircraft && onConfigureSeats ? (
+            <AppButton
+              variant="outlined"
+              onClick={() => {
+                onConfigureSeats(aircraft);
+              }}
+            >
+              Configure seats
+            </AppButton>
+          ) : null}
           {aircraft && onEdit ? (
             <AppButton
               variant="contained"
@@ -99,6 +111,10 @@ export function AircraftDetailsDialog({
               <Stack spacing={1.5}>
                 <DetailItem label="Layout key" value={aircraft.seatMapConfig.layoutKey} />
                 <DetailItem label="Version" value={aircraft.seatMapConfig.version} />
+                <DetailItem
+                  label="Map size"
+                  value={`${aircraft.seatMapConfig.rows} rows · ${aircraft.seatMapConfig.seats.length} seats`}
+                />
                 {aircraft.seatMapConfig.notes ? (
                   <DetailItem label="Notes" value={aircraft.seatMapConfig.notes} />
                 ) : null}

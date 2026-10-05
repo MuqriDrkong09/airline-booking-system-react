@@ -1,8 +1,24 @@
 import type { AircraftFormParsedValues } from '../schemas/aircraftFormSchema';
-import type { AdminAircraft, AdminAircraftInput } from '../types/adminAircraft';
-import { buildDefaultSeatMapConfig } from './seatMapConfig';
+import type { AdminAircraft, AdminAircraftInput, AircraftSeatMapConfig } from '../types/adminAircraft';
+import { buildDefaultSeatMapConfig, ensureSeatMapConfig } from './seatMapConfig';
 
-export function toAdminAircraftInput(values: AircraftFormParsedValues): AdminAircraftInput {
+function cabinCountsMatch(
+  existing: AdminAircraft,
+  values: AircraftFormParsedValues,
+): boolean {
+  return (
+    existing.economySeats === values.economySeats &&
+    existing.premiumEconomySeats === values.premiumEconomySeats &&
+    existing.businessSeats === values.businessSeats &&
+    existing.firstClassSeats === values.firstClassSeats &&
+    existing.totalSeats === values.totalSeats
+  );
+}
+
+export function toAdminAircraftInput(
+  values: AircraftFormParsedValues,
+  existing?: AdminAircraft | null,
+): AdminAircraftInput {
   const seatFields = {
     manufacturer: values.manufacturer,
     model: values.model,
@@ -12,12 +28,22 @@ export function toAdminAircraftInput(values: AircraftFormParsedValues): AdminAir
     firstClassSeats: values.firstClassSeats,
   };
 
+  let seatMapConfig: AircraftSeatMapConfig;
+  if (existing?.seatMapConfig && cabinCountsMatch(existing, values)) {
+    seatMapConfig = {
+      ...ensureSeatMapConfig(existing.seatMapConfig, seatFields),
+      layoutKey: `${values.manufacturer} ${values.model}`.trim(),
+    };
+  } else {
+    seatMapConfig = buildDefaultSeatMapConfig(seatFields);
+  }
+
   return {
     ...seatFields,
     registration: values.registration,
     totalSeats: values.totalSeats,
     active: values.active,
-    seatMapConfig: buildDefaultSeatMapConfig(seatFields),
+    seatMapConfig,
   };
 }
 
@@ -49,10 +75,12 @@ export function cloneAdminAircraft(aircraft: AdminAircraft): AdminAircraft {
     seatMapConfig: aircraft.seatMapConfig
       ? {
           ...aircraft.seatMapConfig,
+          columns: [...aircraft.seatMapConfig.columns],
           cabins: aircraft.seatMapConfig.cabins.map((cabin) => ({
             ...cabin,
             columns: [...cabin.columns],
           })),
+          seats: aircraft.seatMapConfig.seats.map((seat) => ({ ...seat })),
         }
       : null,
   };

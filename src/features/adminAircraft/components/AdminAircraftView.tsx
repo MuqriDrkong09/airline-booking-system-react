@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   AppAlert,
   AppButton,
@@ -9,6 +10,7 @@ import {
   ErrorState,
   PageLoader,
 } from '@/components/common';
+import { APP_ROUTES } from '@/constants/routes';
 import {
   useAdminAircraftQuery,
   useCreateAdminAircraftMutation,
@@ -35,6 +37,7 @@ type DialogState =
   | { mode: 'view'; aircraft: AdminAircraft };
 
 export function AdminAircraftView() {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<AdminAircraftFilters>(EMPTY_ADMIN_AIRCRAFT_FILTERS);
   const [dialog, setDialog] = useState<DialogState>({ mode: 'closed' });
   const [deleteTarget, setDeleteTarget] = useState<AdminAircraft | null>(null);
@@ -68,7 +71,10 @@ export function AdminAircraftView() {
 
   const handleSubmit = async (values: AircraftFormParsedValues) => {
     setActionError(null);
-    const input = toAdminAircraftInput(values);
+    const input = toAdminAircraftInput(
+      values,
+      dialog.mode === 'edit' ? dialog.aircraft : null,
+    );
     try {
       if (dialog.mode === 'create') {
         await createMutation.mutateAsync(input);
@@ -170,6 +176,9 @@ export function AdminAircraftView() {
             setActionError(null);
             setDialog({ mode: 'edit', aircraft });
           }}
+          onConfigureSeats={(aircraft) => {
+            void navigate(APP_ROUTES.admin.aircraftSeats(aircraft.id));
+          }}
           onDelete={setDeleteTarget}
           onToggleActive={(aircraft) => {
             void handleToggleActive(aircraft);
@@ -193,6 +202,10 @@ export function AdminAircraftView() {
         onEdit={(aircraft) => {
           setActionError(null);
           setDialog({ mode: 'edit', aircraft });
+        }}
+        onConfigureSeats={(aircraft) => {
+          setDialog({ mode: 'closed' });
+          void navigate(APP_ROUTES.admin.aircraftSeats(aircraft.id));
         }}
       />
 

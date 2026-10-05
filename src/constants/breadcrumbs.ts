@@ -135,6 +135,12 @@ export function getBreadcrumbsForPath(pathname: string): BreadcrumbItem[] {
       currentPath !== APP_ROUTES.customer.bookings
     ) {
       crumbs.push({ to: currentPath, label: 'Booking' });
+      continue;
+    }
+
+    // Admin aircraft seat configuration: /admin/aircraft/:aircraftId/seats
+    if (/^\/admin\/aircraft\/[^/]+\/seats$/.test(currentPath)) {
+      crumbs.push({ to: currentPath, label: 'Seat configuration' });
     }
   }
 

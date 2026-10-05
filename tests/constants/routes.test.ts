@@ -69,17 +69,24 @@ describe('APP_ROUTES', () => {
   });
 
   it('exposes admin workspace paths', () => {
-    expect(APP_ROUTES.admin).toEqual({
-      root: '/admin',
-      dashboard: '/admin',
-      flights: '/admin/flights',
-      airports: '/admin/airports',
-      aircraft: '/admin/aircraft',
-      bookings: '/admin/bookings',
-      users: '/admin/users',
-      promoCodes: '/admin/promo-codes',
-      reports: '/admin/reports',
-    });
+    expect(APP_ROUTES.admin.root).toBe('/admin');
+    expect(APP_ROUTES.admin.dashboard).toBe('/admin');
+    expect(APP_ROUTES.admin.flights).toBe('/admin/flights');
+    expect(APP_ROUTES.admin.airports).toBe('/admin/airports');
+    expect(APP_ROUTES.admin.aircraft).toBe('/admin/aircraft');
+    expect(APP_ROUTES.admin.bookings).toBe('/admin/bookings');
+    expect(APP_ROUTES.admin.users).toBe('/admin/users');
+    expect(APP_ROUTES.admin.promoCodes).toBe('/admin/promo-codes');
+    expect(APP_ROUTES.admin.reports).toBe('/admin/reports');
+  });
+
+  it('builds admin aircraft seat configuration paths', () => {
+    expect(APP_ROUTES.admin.aircraftSeats('aircraft-admin-1')).toBe(
+      '/admin/aircraft/aircraft-admin-1/seats',
+    );
+    expect(APP_ROUTES.admin.aircraftSeats('id/with spaces')).toBe(
+      `/admin/aircraft/${encodeURIComponent('id/with spaces')}/seats`,
+    );
   });
 });
 

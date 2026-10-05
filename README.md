@@ -141,9 +141,12 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Admin aircraft management at `/admin/aircraft` (`src/features/adminAircraft/`):
   list / search / filter, view details, create & edit via `AircraftDialog` +
   `AircraftForm` (React Hook Form + Zod), activate/deactivate, and delete with
-  confirmation; cabin seat counts hydrate a prepared `seatMapConfig` for a
-  future seat-map editor; mock API when `VITE_USE_MOCK_AUTH=true`, otherwise
-  `/admin/aircraft`
+  confirmation; cabin seat counts hydrate a typed `seatMapConfig`
+- Admin aircraft seat configuration at `/admin/aircraft/:aircraftId/seats`:
+  interactive seat-map editor for rows, columns, labels, cabin class, seat type
+  (`STANDARD` / `PREMIUM` / `EXTRA_LEGROOM` / `EMERGENCY_EXIT` / `UNAVAILABLE`),
+  price, emergency-exit and disabled flags; Zod-validated persistence on the
+  aircraft record; mock API when `VITE_USE_MOCK_AUTH=true`
 - Favourite flights at `/app/favourites` (TanStack Query): save offers from
   `FlightCard` and `FlightDetailsHeader` via `FavouriteButton`, browse saved
   flights with `FavouriteFlightCard`, and remove them. Mock mode persists to
@@ -240,7 +243,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
 
 - **Public** — marketing shell, sign-in / create-account CTAs
 - **Customer** (`/app`) — sidebar navigation for flights, favourites, flight status, bookings, check-in, notifications, profile; header notification bell with unread badge
-- **Admin** (`/admin`) — operations dashboard with KPI cards and Recharts; flight management at `/admin/flights`; airport management at `/admin/airports`; aircraft management at `/admin/aircraft` (list, search, filter, view, create, edit, delete, activate/deactivate, seat-map config prep) with React Hook Form + Zod; mock API when `VITE_USE_MOCK_AUTH=true`. Other admin modules remain placeholders.
+- **Admin** (`/admin`) — operations dashboard with KPI cards and Recharts; flight management at `/admin/flights`; airport management at `/admin/airports`; aircraft management at `/admin/aircraft` (CRUD, activate/deactivate) plus interactive seat-map configuration at `/admin/aircraft/:id/seats` with Zod validation; mock API when `VITE_USE_MOCK_AUTH=true`. Other admin modules remain placeholders.
 
 Many booking/admin domains are scaffolded as placeholder pages and will be implemented in later iterations.
 

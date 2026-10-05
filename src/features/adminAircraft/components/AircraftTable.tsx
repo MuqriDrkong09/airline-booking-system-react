@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { Eye, Pencil, Trash2 } from 'lucide-react';
+import { Armchair, Eye, Pencil, Trash2 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import {
   AppBadge,
@@ -25,6 +25,7 @@ export interface AircraftTableProps {
   activeUpdatingId?: string | null;
   onView: (aircraft: AdminAircraft) => void;
   onEdit: (aircraft: AdminAircraft) => void;
+  onConfigureSeats: (aircraft: AdminAircraft) => void;
   onDelete: (aircraft: AdminAircraft) => void;
   onToggleActive: (aircraft: AdminAircraft) => void;
 }
@@ -47,6 +48,7 @@ function AircraftMobileCard({
   activeUpdatingId,
   onView,
   onEdit,
+  onConfigureSeats,
   onDelete,
   onToggleActive,
 }: {
@@ -54,6 +56,7 @@ function AircraftMobileCard({
   activeUpdatingId?: string | null;
   onView: (aircraft: AdminAircraft) => void;
   onEdit: (aircraft: AdminAircraft) => void;
+  onConfigureSeats: (aircraft: AdminAircraft) => void;
   onDelete: (aircraft: AdminAircraft) => void;
   onToggleActive: (aircraft: AdminAircraft) => void;
 }) {
@@ -69,6 +72,13 @@ function AircraftMobileCard({
             onClick={() => onView(aircraft)}
           >
             <Eye aria-hidden="true" size={16} />
+          </IconButton>
+          <IconButton
+            aria-label={`Configure seats ${aircraft.registration}`}
+            size="small"
+            onClick={() => onConfigureSeats(aircraft)}
+          >
+            <Armchair aria-hidden="true" size={16} />
           </IconButton>
           <IconButton
             aria-label={`Edit ${aircraft.registration}`}
@@ -129,6 +139,7 @@ export function AircraftTable({
   activeUpdatingId = null,
   onView,
   onEdit,
+  onConfigureSeats,
   onDelete,
   onToggleActive,
 }: AircraftTableProps) {
@@ -196,6 +207,13 @@ export function AircraftTable({
             <Eye aria-hidden="true" size={16} />
           </IconButton>
           <IconButton
+            aria-label={`Configure seats ${aircraft.registration}`}
+            size="small"
+            onClick={() => onConfigureSeats(aircraft)}
+          >
+            <Armchair aria-hidden="true" size={16} />
+          </IconButton>
+          <IconButton
             aria-label={`Edit ${aircraft.registration}`}
             size="small"
             onClick={() => onEdit(aircraft)}
@@ -233,6 +251,7 @@ export function AircraftTable({
             activeUpdatingId={activeUpdatingId}
             onView={onView}
             onEdit={onEdit}
+            onConfigureSeats={onConfigureSeats}
             onDelete={onDelete}
             onToggleActive={onToggleActive}
           />

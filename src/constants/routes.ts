@@ -51,6 +51,8 @@ export const APP_ROUTES = {
     flights: '/admin/flights',
     airports: '/admin/airports',
     aircraft: '/admin/aircraft',
+    aircraftSeats: (aircraftId: string) =>
+      `/admin/aircraft/${encodeURIComponent(aircraftId)}/seats`,
     bookings: '/admin/bookings',
     users: '/admin/users',
     promoCodes: '/admin/promo-codes',

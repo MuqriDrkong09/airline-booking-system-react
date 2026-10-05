@@ -5,7 +5,11 @@ import type {
 } from '../types/adminAircraft';
 import { filterAdminAircraft, sortAdminAircraft } from '../utils/filterAdminAircraft';
 import { cloneAdminAircraft } from '../utils/formatAdminAircraft';
-import { buildDefaultSeatMapConfig, sumCabinSeats } from '../utils/seatMapConfig';
+import {
+  ensureSeatMapConfig,
+  sumCabinSeats,
+  validateSeatMapConfig,
+} from '../utils/seatMapConfig';
 import type { AdminAircraftApi } from './adminAircraftApi.types';
 import { createSeedAdminAircraft } from './adminAircraftData';
 
@@ -23,10 +27,12 @@ function normalizeInput(input: AdminAircraftInput): AdminAircraftInput {
     throw new Error(`Total seats must equal cabin seats (${cabinTotal})`);
   }
 
+  const seatMapConfig = validateSeatMapConfig(ensureSeatMapConfig(input.seatMapConfig, input));
+
   return {
     ...input,
     registration: input.registration.toUpperCase(),
-    seatMapConfig: input.seatMapConfig ?? buildDefaultSeatMapConfig(input),
+    seatMapConfig,
   };
 }
 
