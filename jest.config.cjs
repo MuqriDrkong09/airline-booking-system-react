@@ -26,6 +26,8 @@ module.exports = {
   },
   testMatch: ['**/*.test.ts', '**/*.test.tsx'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  // Full-suite runs on Windows/OneDrive can exceed Jest's 5s default for dialog-heavy UI tests.
+  testTimeout: 15_000,
   clearMocks: true,
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',

@@ -157,7 +157,13 @@ Registration, email verification, and password reset also work in mock mode. Ver
   activate / deactivate with confirmation, and change role with safeguards that
   prevent admins from removing their own administrator access; mock API when
   `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/users`
+- Admin promo code management at `/admin/promo-codes` (`src/features/adminPromoCodes/`):
+  list / search / filter by discount type and status, create & edit via
+  `PromoCodeDialog` + Zod-validated form (date range and discount rules),
+  activate / deactivate, and delete with confirmation; mock API when
+  `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/promo-codes`
 - Favourite flights at `/app/favourites` (TanStack Query): save offers from
+
   `FlightCard` and `FlightDetailsHeader` via `FavouriteButton`, browse saved
   flights with `FavouriteFlightCard`, and remove them. Mock mode persists to
   `localStorage`; live mode uses the backend favourites API

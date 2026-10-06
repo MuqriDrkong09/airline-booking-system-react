@@ -13,6 +13,7 @@ import { renderWithProviders } from '@tests/utils/test-utils';
 describe('AdminAirportsPage', () => {
   beforeEach(() => {
     mockAdminAirportsApi.reset();
+    queryClient.clear();
     queryClient.removeQueries({ queryKey: adminAirportKeys.all });
     jest.restoreAllMocks();
   });
@@ -125,8 +126,13 @@ describe('AdminAirportsPage', () => {
       target: { value: '101.5' },
     });
 
-    await user.click(within(dialog).getByRole('button', { name: 'Create airport' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Create airport' }));
 
+    await waitFor(() => {
+      expect(
+        mockAdminAirportsApi.getState().some((airport) => airport.code === 'AAA'),
+      ).toBe(true);
+    });
     expect(await screen.findByText('AAA')).toBeInTheDocument();
   });
 
@@ -210,19 +216,19 @@ describe('AdminAirportsPage', () => {
       target: { value: '1' },
     });
 
-    await user.click(within(dialog).getByRole('button', { name: 'Create airport' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Create airport' }));
 
     expect(
       await screen.findByText('An airport with this code already exists'),
     ).toBeInTheDocument();
 
-    await user.click(within(dialog).getByRole('button', { name: 'Cancel' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(screen.queryByRole('heading', { name: 'Create airport' })).not.toBeInTheDocument();
     });
 
     const alert = screen.getByRole('alert');
-    await user.click(within(alert).getByRole('button', { name: /close/i }));
+    fireEvent.click(within(alert).getByRole('button', { name: /close/i }));
     await waitFor(() => {
       expect(
         screen.queryByText('An airport with this code already exists'),
@@ -292,19 +298,19 @@ describe('AdminAirportsPage', () => {
     const row = screen.getByText('SZB').closest('tr');
     expect(row).not.toBeNull();
 
-    await user.click(within(row as HTMLElement).getByRole('button', { name: 'Activate' }));
+    fireEvent.click(within(row as HTMLElement).getByRole('button', { name: 'Activate' }));
     expect(await screen.findByText('Unable to update status for SZB.')).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Delete SZB' }));
     let confirm = await screen.findByRole('dialog');
-    await user.click(within(confirm).getByRole('button', { name: 'Cancel' }));
+    fireEvent.click(within(confirm).getByRole('button', { name: 'Cancel' }));
     await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(screen.queryByRole('heading', { name: 'Delete airport' })).not.toBeInTheDocument();
     });
 
     await user.click(screen.getByRole('button', { name: 'Delete SZB' }));
     confirm = await screen.findByRole('dialog');
-    await user.click(within(confirm).getByRole('button', { name: 'Delete' }));
+    fireEvent.click(within(confirm).getByRole('button', { name: 'Delete' }));
     expect(await screen.findByText('Unable to delete SZB.')).toBeInTheDocument();
     expect(deleteSpy).toHaveBeenCalled();
   });

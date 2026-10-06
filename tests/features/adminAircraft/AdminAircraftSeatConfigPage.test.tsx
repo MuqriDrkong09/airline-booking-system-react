@@ -95,27 +95,30 @@ describe('AdminAircraftSeatConfigPage', () => {
     15_000,
   );
 
-  it('applies a new row/column layout from the controls', async () => {
-    const user = userEvent.setup({ delay: null });
-    renderSeatConfigPage(aircraft.id);
+  it(
+    'applies a new row/column layout from the controls',
+    async () => {
+      renderSeatConfigPage(aircraft.id);
 
-    await screen.findByRole('grid', { name: /seat map editor/i });
+      await screen.findByRole('grid', { name: /seat map editor/i });
 
-    fireEvent.change(screen.getByLabelText('Rows'), {
-      target: { value: '4' },
-    });
-    fireEvent.change(screen.getByLabelText('Columns'), {
-      target: { value: 'A | F' },
-    });
-    await user.click(screen.getByRole('button', { name: 'Apply layout' }));
+      fireEvent.change(screen.getByLabelText('Rows'), {
+        target: { value: '4' },
+      });
+      fireEvent.change(screen.getByLabelText('Columns'), {
+        target: { value: 'A | F' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: 'Apply layout' }));
 
-    await waitFor(() => {
-      expect(screen.getByText(/8 seats · 4 rows/i)).toBeInTheDocument();
-    });
+      await waitFor(() => {
+        expect(screen.getByText(/8 seats · 4 rows/i)).toBeInTheDocument();
+      });
 
-    expect(screen.getByRole('button', { name: 'Configure seat 4A' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Configure seat 4F' })).toBeInTheDocument();
-  });
+      expect(screen.getByRole('button', { name: 'Configure seat 4A' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Configure seat 4F' })).toBeInTheDocument();
+    },
+    15_000,
+  );
 
   it('shows an error when the aircraft cannot be loaded', async () => {
     renderSeatConfigPage('missing-aircraft');
