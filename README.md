@@ -162,7 +162,13 @@ Registration, email verification, and password reset also work in mock mode. Ver
   `PromoCodeDialog` + Zod-validated form (date range and discount rules),
   activate / deactivate, and delete with confirmation; mock API when
   `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/promo-codes`
+- Admin reports at `/admin/reports` (`src/features/adminReports/`): period filters
+  (today / 7d / 30d / 3m / 12m / custom), KPI cards, and Recharts for revenue,
+  bookings, passengers, cancellations, refunds, popular routes/destinations, and
+  airline performance via reusable report chart components; mock API when
+  `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/reports`
 - Favourite flights at `/app/favourites` (TanStack Query): save offers from
+
 
   `FlightCard` and `FlightDetailsHeader` via `FavouriteButton`, browse saved
   flights with `FavouriteFlightCard`, and remove them. Mock mode persists to

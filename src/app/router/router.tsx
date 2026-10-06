@@ -36,6 +36,7 @@ import { AdminBookingsPage } from '@/pages/admin/AdminBookingsPage';
 import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage';
 import { AdminFlightsPage } from '@/pages/admin/AdminFlightsPage';
 import { AdminPromoCodesPage } from '@/pages/admin/AdminPromoCodesPage';
+import { AdminReportsPage } from '@/pages/admin/AdminReportsPage';
 import { AdminUsersPage } from '@/pages/admin/AdminUsersPage';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -131,7 +132,7 @@ export const router = createBrowserRouter([
               { path: 'bookings', element: <AdminBookingsPage /> },
               { path: 'users', element: <AdminUsersPage /> },
               { path: 'promo-codes', element: <AdminPromoCodesPage /> },
-              { path: 'reports', element: <PlaceholderPage title="Reports" /> },
+              { path: 'reports', element: <AdminReportsPage /> },
               { path: '*', element: <NotFoundPage /> },
             ],
           },
