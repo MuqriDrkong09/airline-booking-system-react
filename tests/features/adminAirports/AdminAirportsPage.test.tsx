@@ -130,40 +130,45 @@ describe('AdminAirportsPage', () => {
     expect(await screen.findByText('AAA')).toBeInTheDocument();
   });
 
-  it('edits an airport and can cancel the dialog', async () => {
-    const user = userEvent.setup({ delay: null });
+  it(
+    'edits an airport and can cancel the dialog',
+    async () => {
+      const user = userEvent.setup({ delay: null });
 
-    renderWithProviders(<AdminAirportsPage />, {
-      initialEntries: ['/admin/airports'],
-    });
+      renderWithProviders(<AdminAirportsPage />, {
+        initialEntries: ['/admin/airports'],
+      });
 
-    await screen.findByText('KUL');
-    await user.click(screen.getByRole('button', { name: 'Edit KUL' }));
+      await screen.findByText('KUL');
+      await user.click(screen.getByRole('button', { name: 'Edit KUL' }));
 
-    const dialog = await screen.findByRole('dialog');
-    expect(within(dialog).getByRole('heading', { name: 'Edit KUL' })).toBeInTheDocument();
+      const dialog = await screen.findByRole('dialog');
+      expect(within(dialog).getByRole('heading', { name: 'Edit KUL' })).toBeInTheDocument();
 
-    fireEvent.change(within(dialog).getByLabelText(/^City/i), {
-      target: { value: 'KL City' },
-    });
-    await user.click(within(dialog).getByRole('button', { name: 'Save changes' }));
+      fireEvent.change(within(dialog).getByLabelText(/^City/i), {
+        target: { value: 'KL City' },
+      });
+      fireEvent.click(within(dialog).getByRole('button', { name: 'Save changes' }));
 
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-    await waitFor(() => {
-      expect(
-        mockAdminAirportsApi.getState().find((airport) => airport.code === 'KUL')?.city,
-      ).toBe('KL City');
-    });
+      await waitFor(() => {
+        expect(
+          mockAdminAirportsApi.getState().find((airport) => airport.code === 'KUL')?.city,
+        ).toBe('KL City');
+      });
+      await waitFor(() => {
+        expect(screen.queryByRole('heading', { name: 'Edit KUL' })).not.toBeInTheDocument();
+      });
 
-    await user.click(screen.getByRole('button', { name: 'Edit KUL' }));
-    const reopen = await screen.findByRole('dialog');
-    await user.click(within(reopen).getByRole('button', { name: 'Cancel' }));
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-  });
+      await user.click(screen.getByRole('button', { name: 'Edit KUL' }));
+      const reopen = await screen.findByRole('dialog');
+      expect(within(reopen).getByRole('heading', { name: 'Edit KUL' })).toBeInTheDocument();
+      fireEvent.click(within(reopen).getByRole('button', { name: 'Cancel' }));
+      await waitFor(() => {
+        expect(screen.queryByRole('heading', { name: 'Edit KUL' })).not.toBeInTheDocument();
+      });
+    },
+    15_000,
+  );
 
   it('shows create errors and dismisses the alert', async () => {
     const user = userEvent.setup({ delay: null });

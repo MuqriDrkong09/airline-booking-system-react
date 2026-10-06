@@ -35,6 +35,7 @@ import { AdminAirportsPage } from '@/pages/admin/AdminAirportsPage';
 import { AdminBookingsPage } from '@/pages/admin/AdminBookingsPage';
 import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage';
 import { AdminFlightsPage } from '@/pages/admin/AdminFlightsPage';
+import { AdminUsersPage } from '@/pages/admin/AdminUsersPage';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { PlaceholderPage } from '@/pages/PlaceholderPage';
@@ -127,7 +128,7 @@ export const router = createBrowserRouter([
                 element: <AdminAircraftSeatConfigPage />,
               },
               { path: 'bookings', element: <AdminBookingsPage /> },
-              { path: 'users', element: <PlaceholderPage title="Users" /> },
+              { path: 'users', element: <AdminUsersPage /> },
               { path: 'promo-codes', element: <PlaceholderPage title="Promo Codes" /> },
               { path: 'reports', element: <PlaceholderPage title="Reports" /> },
               { path: '*', element: <NotFoundPage /> },

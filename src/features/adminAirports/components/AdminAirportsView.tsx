@@ -27,14 +27,11 @@ import { AirportDialog } from './AirportDialog';
 import { AirportFilters } from './AirportFilters';
 import { AirportTable } from './AirportTable';
 
-type DialogState =
-  | { mode: 'closed' }
-  | { mode: 'create' }
-  | { mode: 'edit'; airport: AdminAirport };
-
 export function AdminAirportsView() {
   const [filters, setFilters] = useState<AdminAirportFilters>(EMPTY_ADMIN_AIRPORT_FILTERS);
-  const [dialog, setDialog] = useState<DialogState>({ mode: 'closed' });
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMode, setDialogMode] = useState<'create' | 'edit'>('create');
+  const [editingAirport, setEditingAirport] = useState<AdminAirport | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<AdminAirport | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
 
@@ -64,19 +61,41 @@ export function AdminAirportsView() {
 
   const airports = listQuery.data ?? [];
 
+  const openCreateDialog = () => {
+    setActionError(null);
+    setDialogMode('create');
+    setEditingAirport(null);
+    setDialogOpen(true);
+  };
+
+  const openEditDialog = (airport: AdminAirport) => {
+    setActionError(null);
+    setDialogMode('edit');
+    setEditingAirport(airport);
+    setDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setDialogOpen(false);
+  };
+
   const handleSubmit = async (values: AirportFormParsedValues) => {
+    if (!dialogOpen) {
+      return;
+    }
+
     setActionError(null);
     const input = toAdminAirportInput(values);
     try {
-      if (dialog.mode === 'create') {
+      if (dialogMode === 'create') {
         await createMutation.mutateAsync(input);
-      } else if (dialog.mode === 'edit') {
+      } else if (editingAirport) {
         await updateMutation.mutateAsync({
-          airportId: dialog.airport.id,
+          airportId: editingAirport.id,
           input,
         });
       }
-      setDialog({ mode: 'closed' });
+      closeDialog();
     } catch (error) {
       const message =
         error instanceof Error ? error.message : 'Unable to save the airport. Please try again.';
@@ -119,13 +138,7 @@ export function AdminAirportsView() {
         <Typography variant="body2" color="text.secondary">
           {airports.length} airport{airports.length === 1 ? '' : 's'}
         </Typography>
-        <AppButton
-          variant="contained"
-          onClick={() => {
-            setActionError(null);
-            setDialog({ mode: 'create' });
-          }}
-        >
+        <AppButton variant="contained" onClick={openCreateDialog}>
           Create airport
         </AppButton>
       </Stack>
@@ -143,13 +156,7 @@ export function AdminAirportsView() {
           title="No airports found"
           message="Try clearing filters or create a new airport."
           action={
-            <AppButton
-              variant="contained"
-              onClick={() => {
-                setActionError(null);
-                setDialog({ mode: 'create' });
-              }}
-            >
+            <AppButton variant="contained" onClick={openCreateDialog}>
               Create airport
             </AppButton>
           }
@@ -160,10 +167,7 @@ export function AdminAirportsView() {
           activeUpdatingId={
             activeMutation.isPending ? activeMutation.variables?.airportId : null
           }
-          onEdit={(airport) => {
-            setActionError(null);
-            setDialog({ mode: 'edit', airport });
-          }}
+          onEdit={openEditDialog}
           onDelete={setDeleteTarget}
           onToggleActive={(airport) => {
             void handleToggleActive(airport);
@@ -172,11 +176,11 @@ export function AdminAirportsView() {
       )}
 
       <AirportDialog
-        open={dialog.mode === 'create' || dialog.mode === 'edit'}
-        mode={dialog.mode === 'edit' ? 'edit' : 'create'}
-        airport={dialog.mode === 'edit' ? dialog.airport : null}
+        open={dialogOpen}
+        mode={dialogMode}
+        airport={editingAirport}
         submitting={submitting}
-        onClose={() => setDialog({ mode: 'closed' })}
+        onClose={closeDialog}
         onSubmit={handleSubmit}
       />
 

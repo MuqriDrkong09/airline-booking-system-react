@@ -152,6 +152,11 @@ Registration, email verification, and password reset also work in mock mode. Ver
   refund, and modify primary contact; responsive table with server-side
   pagination and sorting via query parameters; mock API when
   `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/bookings`
+- Admin user management at `/admin/users` (`src/features/adminUsers/`):
+  list / search / filter by role (`USER` / `ADMIN`) and status, view details,
+  activate / deactivate with confirmation, and change role with safeguards that
+  prevent admins from removing their own administrator access; mock API when
+  `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/users`
 - Favourite flights at `/app/favourites` (TanStack Query): save offers from
   `FlightCard` and `FlightDetailsHeader` via `FavouriteButton`, browse saved
   flights with `FavouriteFlightCard`, and remove them. Mock mode persists to
