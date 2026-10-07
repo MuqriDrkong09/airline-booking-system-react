@@ -1,24 +1,41 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { PageLoader } from '@/components/common/PageLoader';
 import { APP_ROUTES } from '@/constants/routes';
 import type { UserRole } from '@/types/auth';
-import { UserRole as Roles } from '@/types/auth';
 import { useAuth } from '../hooks/useAuth';
+import { hasRole } from '../utils/rbac';
 
-interface RoleRouteProps {
+export interface RoleRouteProps {
+  /** Roles permitted to render nested routes. */
   allowedRoles: readonly UserRole[];
 }
 
+/**
+ * Reusable role guard. Nest under {@link ProtectedRoute} (or use alone).
+ * Unauthenticated → login. Authenticated without an allowed role → 403.
+ */
 export function RoleRoute({ allowedRoles }: RoleRouteProps) {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isBootstrapping } = useAuth();
+  const location = useLocation();
 
-  if (!isAuthenticated || !user) {
-    return <Navigate to={APP_ROUTES.public.login} replace />;
+  if (isBootstrapping) {
+    return <PageLoader fullPage label="Checking authorization" />;
   }
 
-  if (!allowedRoles.includes(user.role)) {
-    const fallback =
-      user.role === Roles.ADMIN ? APP_ROUTES.admin.dashboard : APP_ROUTES.customer.home;
-    return <Navigate to={fallback} replace />;
+  if (!isAuthenticated || !user) {
+    return (
+      <Navigate to={APP_ROUTES.public.login} replace state={{ from: location.pathname }} />
+    );
+  }
+
+  if (!hasRole(user, allowedRoles)) {
+    return (
+      <Navigate
+        to={APP_ROUTES.public.forbidden}
+        replace
+        state={{ from: location.pathname }}
+      />
+    );
   }
 
   return <Outlet />;

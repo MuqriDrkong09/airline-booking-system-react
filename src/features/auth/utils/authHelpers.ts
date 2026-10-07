@@ -11,11 +11,16 @@ export function getRoleLabel(role: AuthUser['role']): string {
 }
 
 export function getPostLoginRedirect(role: AuthUser['role'], from?: string | null): string {
-  if (from && from !== APP_ROUTES.public.login) {
-    if (role === UserRole.ADMIN && from.startsWith(APP_ROUTES.admin.root)) {
-      return from;
-    }
-    if (role === UserRole.USER && from.startsWith(APP_ROUTES.customer.root)) {
+  if (from && from !== APP_ROUTES.public.login && from !== APP_ROUTES.public.forbidden) {
+    // ADMIN may use customer and admin areas; USER may only return to customer paths.
+    if (role === UserRole.ADMIN) {
+      if (
+        from.startsWith(APP_ROUTES.admin.root) ||
+        from.startsWith(APP_ROUTES.customer.root)
+      ) {
+        return from;
+      }
+    } else if (from.startsWith(APP_ROUTES.customer.root)) {
       return from;
     }
   }

@@ -1,6 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 import { screen } from '@testing-library/react';
-import { RoleRoute, useAuthStore } from '@/features/auth';
+import {
+  AdminRoute,
+  CustomerRoute,
+  RoleRoute,
+  useAuthStore,
+} from '@/features/auth';
 import { UserRole } from '@/types/auth';
 import { renderWithProviders } from '@tests/utils/test-utils';
 import {
@@ -67,7 +72,7 @@ describe('RoleRoute', () => {
     expect(screen.getByText('Admin area')).toBeInTheDocument();
   });
 
-  it('redirects mismatched customer roles to the customer home', () => {
+  it('shows the 403 page when the role is not allowed', () => {
     seedAuthenticatedUser(mockCustomerUser);
 
     renderWithProviders(
@@ -75,29 +80,97 @@ describe('RoleRoute', () => {
         <Route element={<RoleRoute allowedRoles={[UserRole.ADMIN]} />}>
           <Route path="/admin" element={<p>Admin area</p>} />
         </Route>
-        <Route path="/app" element={<p>Customer home</p>} />
+        <Route path="/forbidden" element={<p>403 page</p>} />
       </Routes>,
       { initialEntries: ['/admin'] },
     );
 
-    expect(screen.getByText('Customer home')).toBeInTheDocument();
+    expect(screen.getByText('403 page')).toBeInTheDocument();
     expect(screen.queryByText('Admin area')).not.toBeInTheDocument();
   });
 
-  it('redirects mismatched admin roles to the admin dashboard', () => {
-    seedAuthenticatedUser(mockAdminUser);
+  it('shows a loader while restoring the session', () => {
+    useAuthStore.setState({ isBootstrapping: true, status: 'idle' });
 
     renderWithProviders(
       <Routes>
-        <Route element={<RoleRoute allowedRoles={[UserRole.USER]} />}>
+        <Route element={<RoleRoute allowedRoles={[UserRole.ADMIN]} />}>
+          <Route path="/admin" element={<p>Admin area</p>} />
+        </Route>
+      </Routes>,
+      { initialEntries: ['/admin'] },
+    );
+
+    expect(screen.getByText(/Checking authorization/i)).toBeInTheDocument();
+  });
+});
+
+describe('CustomerRoute', () => {
+  beforeEach(() => {
+    resetAuthStore();
+  });
+
+  it('allows USER and ADMIN into the customer area', () => {
+    seedAuthenticatedUser(mockCustomerUser);
+
+    const { unmount } = renderWithProviders(
+      <Routes>
+        <Route element={<CustomerRoute />}>
           <Route path="/app" element={<p>Customer area</p>} />
         </Route>
-        <Route path="/admin" element={<p>Admin dashboard</p>} />
       </Routes>,
       { initialEntries: ['/app'] },
     );
 
-    expect(screen.getByText('Admin dashboard')).toBeInTheDocument();
-    expect(screen.queryByText('Customer area')).not.toBeInTheDocument();
+    expect(screen.getByText('Customer area')).toBeInTheDocument();
+    unmount();
+
+    seedAuthenticatedUser(mockAdminUser);
+    renderWithProviders(
+      <Routes>
+        <Route element={<CustomerRoute />}>
+          <Route path="/app" element={<p>Customer area</p>} />
+        </Route>
+      </Routes>,
+      { initialEntries: ['/app'] },
+    );
+
+    expect(screen.getByText('Customer area')).toBeInTheDocument();
+  });
+});
+
+describe('AdminRoute', () => {
+  beforeEach(() => {
+    resetAuthStore();
+  });
+
+  it('allows ADMIN and blocks USER with 403', () => {
+    seedAuthenticatedUser(mockAdminUser);
+
+    const { unmount } = renderWithProviders(
+      <Routes>
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<p>Admin area</p>} />
+        </Route>
+      </Routes>,
+      { initialEntries: ['/admin'] },
+    );
+
+    expect(screen.getByText('Admin area')).toBeInTheDocument();
+    unmount();
+
+    seedAuthenticatedUser(mockCustomerUser);
+    renderWithProviders(
+      <Routes>
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<p>Admin area</p>} />
+        </Route>
+        <Route path="/forbidden" element={<p>403 page</p>} />
+      </Routes>,
+      { initialEntries: ['/admin'] },
+    );
+
+    expect(screen.getByText('403 page')).toBeInTheDocument();
+    expect(screen.queryByText('Admin area')).not.toBeInTheDocument();
   });
 });

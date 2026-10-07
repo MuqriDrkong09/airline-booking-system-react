@@ -93,6 +93,12 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - JWT-ready token storage (localStorage vs sessionStorage via “Remember me”)
 - Session restore on app load with loading state
 - Roles: `USER` and `ADMIN`
+- Route guards (`ProtectedRoute`, `RoleRoute`, `CustomerRoute`, `AdminRoute`):
+  - unauthenticated → `/login`
+  - authenticated without permission → `/forbidden` (403)
+  - `USER`: customer pages (`/app`) only
+  - `ADMIN`: customer pages and admin pages (`/admin`)
+- Frontend RBAC is for UX/routing only; APIs must enforce authorization server-side
 - Mock auth API (default) or HTTP auth when `VITE_USE_MOCK_AUTH=false`
 - Forms validated with Zod + React Hook Form
 

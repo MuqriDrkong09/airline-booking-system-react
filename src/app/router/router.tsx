@@ -1,8 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { AdminLayout, CustomerLayout, PublicLayout } from '@/components/layout';
 import { env } from '@/config/env';
-import { ProtectedRoute, RoleRoute } from '@/features/auth';
-import { UserRole } from '@/types/auth';
+import { AdminRoute, CustomerRoute, ProtectedRoute } from '@/features/auth';
 import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage';
 import { LoginPage } from '@/pages/auth/LoginPage';
 import { RegisterPage } from '@/pages/auth/RegisterPage';
@@ -38,6 +37,7 @@ import { AdminFlightsPage } from '@/pages/admin/AdminFlightsPage';
 import { AdminPromoCodesPage } from '@/pages/admin/AdminPromoCodesPage';
 import { AdminReportsPage } from '@/pages/admin/AdminReportsPage';
 import { AdminUsersPage } from '@/pages/admin/AdminUsersPage';
+import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { PlaceholderPage } from '@/pages/PlaceholderPage';
@@ -55,6 +55,7 @@ export const router = createBrowserRouter([
       { path: 'forgot-password', element: <ForgotPasswordPage /> },
       { path: 'reset-password', element: <ResetPasswordPage /> },
       { path: 'verify-email', element: <VerifyEmailPage /> },
+      { path: 'forbidden', element: <ForbiddenPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
@@ -63,7 +64,8 @@ export const router = createBrowserRouter([
     errorElement: <RouteErrorFallback />,
     children: [
       {
-        element: <RoleRoute allowedRoles={[UserRole.USER]} />,
+        // USER + ADMIN — customer booking flows
+        element: <CustomerRoute />,
         children: [
           {
             path: '/app',
@@ -115,7 +117,8 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        element: <RoleRoute allowedRoles={[UserRole.ADMIN]} />,
+        // ADMIN only — management console (backend must also enforce)
+        element: <AdminRoute />,
         children: [
           {
             path: '/admin',
