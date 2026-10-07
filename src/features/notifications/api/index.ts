@@ -1,12 +1,7 @@
-import { env } from '@/config/env';
 import type { AppNotification } from '../types/notification';
-import { createHttpNotificationsApi } from './httpNotificationsApi';
-import { mockNotificationsApi } from './mockNotificationsApi';
-import type { NotificationsApi } from './notificationsApi.types';
+import { notificationApi } from '@/services/notificationApi';
 
-export const notificationsApi: NotificationsApi = env.useMockAuth
-  ? mockNotificationsApi
-  : createHttpNotificationsApi();
+export const notificationsApi = notificationApi;
 
 export const notificationKeys = {
   all: ['notifications'] as const,

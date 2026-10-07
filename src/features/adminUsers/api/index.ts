@@ -1,13 +1,9 @@
-import { env } from '@/config/env';
+import { adminApi } from '@/services/adminApi';
 import type { UserRole } from '@/types/auth';
 import type { AdminUser, AdminUserFilters } from '../types/adminUser';
 import type { AdminUsersApi } from './adminUsersApi.types';
-import { createHttpAdminUsersApi } from './httpAdminUsersApi';
-import { mockAdminUsersApi } from './mockAdminUsersApi';
 
-export const adminUsersApi: AdminUsersApi = env.useMockAuth
-  ? mockAdminUsersApi
-  : createHttpAdminUsersApi();
+export const adminUsersApi: AdminUsersApi = adminApi.users;
 
 export const adminUserKeys = {
   all: ['admin-users'] as const,

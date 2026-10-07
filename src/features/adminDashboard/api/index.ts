@@ -1,12 +1,8 @@
-import { env } from '@/config/env';
+import { adminApi } from '@/services/adminApi';
 import type { AdminDashboardData } from '../types/dashboard';
-import { createHttpAdminDashboardApi } from './httpAdminDashboardApi';
-import { mockAdminDashboardApi } from './mockAdminDashboardApi';
 import type { AdminDashboardApi } from './adminDashboardApi.types';
 
-export const adminDashboardApi: AdminDashboardApi = env.useMockAuth
-  ? mockAdminDashboardApi
-  : createHttpAdminDashboardApi();
+export const adminDashboardApi: AdminDashboardApi = adminApi.dashboard;
 
 export const adminDashboardKeys = {
   all: ['admin-dashboard'] as const,

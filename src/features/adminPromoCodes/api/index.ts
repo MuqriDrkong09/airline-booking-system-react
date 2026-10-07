@@ -1,16 +1,12 @@
-import { env } from '@/config/env';
+import { adminApi } from '@/services/adminApi';
 import type {
   AdminPromoCode,
   AdminPromoCodeFilters,
   AdminPromoCodeInput,
 } from '../types/adminPromoCode';
 import type { AdminPromoCodesApi } from './adminPromoCodesApi.types';
-import { createHttpAdminPromoCodesApi } from './httpAdminPromoCodesApi';
-import { mockAdminPromoCodesApi } from './mockAdminPromoCodesApi';
 
-export const adminPromoCodesApi: AdminPromoCodesApi = env.useMockAuth
-  ? mockAdminPromoCodesApi
-  : createHttpAdminPromoCodesApi();
+export const adminPromoCodesApi: AdminPromoCodesApi = adminApi.promoCodes;
 
 export const adminPromoCodeKeys = {
   all: ['admin-promo-codes'] as const,

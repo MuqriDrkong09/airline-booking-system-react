@@ -1,4 +1,5 @@
 import type { AxiosInstance } from 'axios';
+import { API_ENDPOINTS, toAuthApiError } from '@/services/api';
 import type {
   AuthSession,
   AuthUser,
@@ -11,14 +12,16 @@ import type {
 } from '@/types/auth';
 import type { ChangePasswordRequest, UpdateProfileRequest } from '@/types/profile';
 import type { AuthApi } from './authApi.types';
-import { toAuthApiError } from './errors';
 
 export function createHttpAuthApi(client: AxiosInstance): AuthApi {
   return {
     async login(payload: LoginRequest): Promise<AuthSession> {
       try {
         const { email, password } = payload;
-        const { data } = await client.post<AuthSession>('/auth/login', { email, password });
+        const { data } = await client.post<AuthSession>(API_ENDPOINTS.auth.login, {
+          email,
+          password,
+        });
         return data;
       } catch (error) {
         throw toAuthApiError(error);
@@ -27,7 +30,10 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
 
     async register(payload: RegisterRequest): Promise<MessageResponse> {
       try {
-        const { data } = await client.post<MessageResponse>('/auth/register', payload);
+        const { data } = await client.post<MessageResponse>(
+          API_ENDPOINTS.auth.register,
+          payload,
+        );
         return data;
       } catch (error) {
         throw toAuthApiError(error);
@@ -36,7 +42,7 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
 
     async logout(): Promise<void> {
       try {
-        await client.post('/auth/logout');
+        await client.post(API_ENDPOINTS.auth.logout);
       } catch (error) {
         throw toAuthApiError(error);
       }
@@ -44,7 +50,7 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
 
     async getCurrentUser(): Promise<AuthUser> {
       try {
-        const { data } = await client.get<AuthUser>('/auth/me');
+        const { data } = await client.get<AuthUser>(API_ENDPOINTS.auth.me);
         return data;
       } catch (error) {
         throw toAuthApiError(error);
@@ -53,7 +59,7 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
 
     async updateProfile(payload: UpdateProfileRequest): Promise<AuthUser> {
       try {
-        const { data } = await client.patch<AuthUser>('/auth/me', payload);
+        const { data } = await client.patch<AuthUser>(API_ENDPOINTS.auth.me, payload);
         return data;
       } catch (error) {
         throw toAuthApiError(error);
@@ -62,7 +68,10 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
 
     async changePassword(payload: ChangePasswordRequest): Promise<MessageResponse> {
       try {
-        const { data } = await client.post<MessageResponse>('/auth/change-password', payload);
+        const { data } = await client.post<MessageResponse>(
+          API_ENDPOINTS.auth.changePassword,
+          payload,
+        );
         return data;
       } catch (error) {
         throw toAuthApiError(error);
@@ -71,7 +80,10 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
 
     async forgotPassword(payload: ForgotPasswordRequest): Promise<MessageResponse> {
       try {
-        const { data } = await client.post<MessageResponse>('/auth/forgot-password', payload);
+        const { data } = await client.post<MessageResponse>(
+          API_ENDPOINTS.auth.forgotPassword,
+          payload,
+        );
         return data;
       } catch (error) {
         throw toAuthApiError(error);
@@ -80,7 +92,10 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
 
     async resetPassword(payload: ResetPasswordRequest): Promise<MessageResponse> {
       try {
-        const { data } = await client.post<MessageResponse>('/auth/reset-password', payload);
+        const { data } = await client.post<MessageResponse>(
+          API_ENDPOINTS.auth.resetPassword,
+          payload,
+        );
         return data;
       } catch (error) {
         throw toAuthApiError(error);
@@ -89,7 +104,10 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
 
     async verifyEmail(payload: VerifyEmailRequest): Promise<MessageResponse> {
       try {
-        const { data } = await client.post<MessageResponse>('/auth/verify-email', payload);
+        const { data } = await client.post<MessageResponse>(
+          API_ENDPOINTS.auth.verifyEmail,
+          payload,
+        );
         return data;
       } catch (error) {
         throw toAuthApiError(error);

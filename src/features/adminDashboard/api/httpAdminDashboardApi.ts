@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import { apiClient } from '@/services/api/client';
+import { API_ENDPOINTS, apiClient } from '@/services/api';
 import type { AdminDashboardData } from '../types/dashboard';
 import type { AdminDashboardApi } from './adminDashboardApi.types';
 
@@ -8,7 +8,7 @@ export function createHttpAdminDashboardApi(
 ): AdminDashboardApi {
   return {
     async getDashboard(): Promise<AdminDashboardData> {
-      const { data } = await client.get<AdminDashboardData>('/admin/dashboard');
+      const { data } = await client.get<AdminDashboardData>(API_ENDPOINTS.admin.dashboard);
       return data;
     },
   };

@@ -1,12 +1,7 @@
-import { env } from '@/config/env';
 import type { ProcessPaymentRequest, ProcessPaymentResult } from '../types/payment';
-import { createHttpPaymentApi } from './httpPaymentApi';
-import { mockPaymentApi } from './mockPaymentApi';
-import type { PaymentApi } from './paymentApi.types';
+import { paymentApi } from '@/services/paymentApi';
 
-export const paymentApi: PaymentApi = env.useMockAuth
-  ? mockPaymentApi
-  : createHttpPaymentApi();
+export { paymentApi };
 
 export const paymentKeys = {
   all: ['payment'] as const,

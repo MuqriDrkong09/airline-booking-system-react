@@ -1,30 +1,15 @@
-import { env } from '@/config/env';
 import type { Airport, AirportSearchParams } from '../types';
 import type { FlightOffer, FlightSearchRequest, FlightSearchResponse } from '../types/flight';
 import type {
   FlightStatusLookupRequest,
   FlightStatusRecord,
 } from '../types/flightStatus';
-import type { AirportsApi } from './airportsApi.types';
-import type { FlightsApi } from './flightsApi.types';
-import type { FlightStatusApi } from './flightStatusApi.types';
-import { createHttpAirportsApi } from './httpAirportsApi';
-import { createHttpFlightsApi } from './httpFlightsApi';
-import { createHttpFlightStatusApi } from './httpFlightStatusApi';
-import { mockAirportsApi } from './mockAirportsApi';
-import { mockFlightsApi } from './mockFlightsApi';
-import { mockFlightStatusApi } from './mockFlightStatusApi';
+import { airportApi } from '@/services/airportApi';
+import { flightApi, flightStatusApi as flightStatusDomainApi } from '@/services/flightApi';
 
-export const airportsApi: AirportsApi = env.useMockAuth
-  ? mockAirportsApi
-  : createHttpAirportsApi();
-
-export const flightsApi: FlightsApi = env.useMockAuth ? mockFlightsApi : createHttpFlightsApi();
-
-export const flightStatusApi: FlightStatusApi = env.useMockAuth
-  ? mockFlightStatusApi
-  : createHttpFlightStatusApi();
-
+export const airportsApi = airportApi;
+export const flightsApi = flightApi;
+export const flightStatusApi = flightStatusDomainApi;
 export const airportKeys = {
   all: ['airports'] as const,
   lists: () => [...airportKeys.all, 'list'] as const,

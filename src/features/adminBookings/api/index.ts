@@ -1,4 +1,4 @@
-import { env } from '@/config/env';
+import { adminApi } from '@/services/adminApi';
 import type {
   AdminBooking,
   AdminBookingListQuery,
@@ -6,12 +6,8 @@ import type {
   AdminBookingModifyInput,
 } from '../types/adminBooking';
 import type { AdminBookingsApi } from './adminBookingsApi.types';
-import { createHttpAdminBookingsApi } from './httpAdminBookingsApi';
-import { mockAdminBookingsApi } from './mockAdminBookingsApi';
 
-export const adminBookingsApi: AdminBookingsApi = env.useMockAuth
-  ? mockAdminBookingsApi
-  : createHttpAdminBookingsApi();
+export const adminBookingsApi: AdminBookingsApi = adminApi.bookings;
 
 export const adminBookingKeys = {
   all: ['admin-bookings'] as const,

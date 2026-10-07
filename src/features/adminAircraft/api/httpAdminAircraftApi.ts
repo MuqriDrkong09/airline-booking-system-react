@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import { apiClient } from '@/services/api/client';
+import { API_ENDPOINTS, apiClient } from '@/services/api';
 import type {
   AdminAircraft,
   AdminAircraftFilters,
@@ -19,45 +19,40 @@ function toQuery(filters?: AdminAircraftFilters): Record<string, string> | undef
   return Object.keys(params).length > 0 ? params : undefined;
 }
 
-export function createHttpAdminAircraftApi(
-  client: AxiosInstance = apiClient,
-): AdminAircraftApi {
+export function createHttpAdminAircraftApi(client: AxiosInstance = apiClient): AdminAircraftApi {
   return {
     async listAircraft(filters?: AdminAircraftFilters): Promise<AdminAircraft[]> {
-      const { data } = await client.get<AdminAircraft[]>('/admin/aircraft', {
+      const { data } = await client.get<AdminAircraft[]>(API_ENDPOINTS.admin.aircraft, {
         params: toQuery(filters),
       });
       return data;
     },
     async getAircraft(aircraftId: string): Promise<AdminAircraft> {
       const { data } = await client.get<AdminAircraft>(
-        `/admin/aircraft/${encodeURIComponent(aircraftId)}`,
+        API_ENDPOINTS.admin.aircraftById(aircraftId),
       );
       return data;
     },
     async createAircraft(input: AdminAircraftInput): Promise<AdminAircraft> {
-      const { data } = await client.post<AdminAircraft>('/admin/aircraft', input);
+      const { data } = await client.post<AdminAircraft>(API_ENDPOINTS.admin.aircraft, input);
       return data;
     },
-    async updateAircraft(
-      aircraftId: string,
-      input: AdminAircraftInput,
-    ): Promise<AdminAircraft> {
+    async updateAircraft(aircraftId: string, input: AdminAircraftInput): Promise<AdminAircraft> {
       const { data } = await client.put<AdminAircraft>(
-        `/admin/aircraft/${encodeURIComponent(aircraftId)}`,
+        API_ENDPOINTS.admin.aircraftById(aircraftId),
         input,
       );
       return data;
     },
     async setAircraftActive(aircraftId: string, active: boolean): Promise<AdminAircraft> {
       const { data } = await client.patch<AdminAircraft>(
-        `/admin/aircraft/${encodeURIComponent(aircraftId)}/active`,
+        API_ENDPOINTS.admin.aircraftActive(aircraftId),
         { active },
       );
       return data;
     },
     async deleteAircraft(aircraftId: string): Promise<void> {
-      await client.delete(`/admin/aircraft/${encodeURIComponent(aircraftId)}`);
+      await client.delete(API_ENDPOINTS.admin.aircraftById(aircraftId));
     },
   };
 }

@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+// Bootstrap shared Axios client + interceptors before feature modules run.
+import '@/services/api';
 import './index.css';
 
 const rootElement = document.getElementById('root');

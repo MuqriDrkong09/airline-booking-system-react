@@ -1,17 +1,13 @@
-import { env } from '@/config/env';
 import type { FlightOperationalStatus } from '@/features/flights';
+import { adminApi } from '@/services/adminApi';
 import type {
   AdminFlight,
   AdminFlightFilters,
   AdminFlightInput,
 } from '../types/adminFlight';
 import type { AdminFlightsApi } from './adminFlightsApi.types';
-import { createHttpAdminFlightsApi } from './httpAdminFlightsApi';
-import { mockAdminFlightsApi } from './mockAdminFlightsApi';
 
-export const adminFlightsApi: AdminFlightsApi = env.useMockAuth
-  ? mockAdminFlightsApi
-  : createHttpAdminFlightsApi();
+export const adminFlightsApi: AdminFlightsApi = adminApi.flights;
 
 export const adminFlightKeys = {
   all: ['admin-flights'] as const,

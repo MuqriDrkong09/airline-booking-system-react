@@ -1,16 +1,12 @@
-import { env } from '@/config/env';
+import { adminApi } from '@/services/adminApi';
 import type {
   AdminAirport,
   AdminAirportFilters,
   AdminAirportInput,
 } from '../types/adminAirport';
 import type { AdminAirportsApi } from './adminAirportsApi.types';
-import { createHttpAdminAirportsApi } from './httpAdminAirportsApi';
-import { mockAdminAirportsApi } from './mockAdminAirportsApi';
 
-export const adminAirportsApi: AdminAirportsApi = env.useMockAuth
-  ? mockAdminAirportsApi
-  : createHttpAdminAirportsApi();
+export const adminAirportsApi: AdminAirportsApi = adminApi.airports;
 
 export const adminAirportKeys = {
   all: ['admin-airports'] as const,

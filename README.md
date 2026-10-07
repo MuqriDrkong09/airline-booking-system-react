@@ -290,12 +290,24 @@ src/
   app/           # Providers, router, theme, global store
   components/    # Shared UI (layout, forms, common)
   constants/     # Routes, nav, registration options
-  features/      # Domain modules (auth, profile, …)
+  features/      # Domain modules (auth, profile, …) — UI + React Query
   pages/         # Route-level page shells
-  services/      # API clients (auth, etc.)
+  services/      # HTTP API layer (no Axios in components)
+    api/         # client, endpoints, interceptors, errors
+    authApi/ flightApi/ airportApi/ bookingApi/
+    passengerApi/ paymentApi/ userApi/ adminApi/ notificationApi/
   types/         # Shared TypeScript types
 tests/           # Jest unit tests mirroring src/
 ```
+
+### API architecture (`src/services/`)
+
+- Shared Axios client (`services/api/client.ts`) with `VITE_API_BASE_URL` and 15s timeout
+- Request interceptor attaches bearer tokens; response interceptor retries idempotent GETs on network/5xx/429
+- Standardized `ApiError` / `toApiError` (auth keeps `AuthApiError` alias)
+- Central `API_ENDPOINTS` path map
+- Domain services own HTTP calls; features/hooks consume services — never Axios in components
+- Mock vs HTTP still selected with `VITE_USE_MOCK_AUTH`
 
 ## Testing
 
@@ -315,7 +327,8 @@ Coverage output is written to `coverage/` (`text`, `lcov`, and `html`).
 
 1. Set `VITE_USE_MOCK_AUTH=false` in `.env`.
 2. Point `VITE_API_BASE_URL` at your API.
-3. Ensure the backend exposes the auth/profile endpoints used by `src/services/auth/` (login, register, me, password flows, etc.).
+3. Implement the paths in `src/services/api/endpoints.ts` (auth, flights, airports, bookings, payments, notifications, admin, …).
+4. Domain services under `src/services/*Api/` call those endpoints through the shared client.
 
 ## License
 

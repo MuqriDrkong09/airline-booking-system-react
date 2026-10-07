@@ -1,11 +1,7 @@
 import type { AxiosInstance } from 'axios';
 import type { FlightOperationalStatus } from '@/features/flights';
-import { apiClient } from '@/services/api/client';
-import type {
-  AdminFlight,
-  AdminFlightFilters,
-  AdminFlightInput,
-} from '../types/adminFlight';
+import { API_ENDPOINTS, apiClient } from '@/services/api';
+import type { AdminFlight, AdminFlightFilters, AdminFlightInput } from '../types/adminFlight';
 import type { AdminFlightsApi } from './adminFlightsApi.types';
 
 function toQuery(filters?: AdminFlightFilters): Record<string, string> | undefined {
@@ -22,29 +18,25 @@ function toQuery(filters?: AdminFlightFilters): Record<string, string> | undefin
   return Object.keys(params).length > 0 ? params : undefined;
 }
 
-export function createHttpAdminFlightsApi(
-  client: AxiosInstance = apiClient,
-): AdminFlightsApi {
+export function createHttpAdminFlightsApi(client: AxiosInstance = apiClient): AdminFlightsApi {
   return {
     async listFlights(filters?: AdminFlightFilters): Promise<AdminFlight[]> {
-      const { data } = await client.get<AdminFlight[]>('/admin/flights', {
+      const { data } = await client.get<AdminFlight[]>(API_ENDPOINTS.admin.flights, {
         params: toQuery(filters),
       });
       return data;
     },
     async getFlight(flightId: string): Promise<AdminFlight> {
-      const { data } = await client.get<AdminFlight>(
-        `/admin/flights/${encodeURIComponent(flightId)}`,
-      );
+      const { data } = await client.get<AdminFlight>(API_ENDPOINTS.admin.flightById(flightId));
       return data;
     },
     async createFlight(input: AdminFlightInput): Promise<AdminFlight> {
-      const { data } = await client.post<AdminFlight>('/admin/flights', input);
+      const { data } = await client.post<AdminFlight>(API_ENDPOINTS.admin.flights, input);
       return data;
     },
     async updateFlight(flightId: string, input: AdminFlightInput): Promise<AdminFlight> {
       const { data } = await client.put<AdminFlight>(
-        `/admin/flights/${encodeURIComponent(flightId)}`,
+        API_ENDPOINTS.admin.flightById(flightId),
         input,
       );
       return data;
@@ -54,13 +46,13 @@ export function createHttpAdminFlightsApi(
       status: FlightOperationalStatus,
     ): Promise<AdminFlight> {
       const { data } = await client.patch<AdminFlight>(
-        `/admin/flights/${encodeURIComponent(flightId)}/status`,
+        API_ENDPOINTS.admin.flightStatus(flightId),
         { status },
       );
       return data;
     },
     async deleteFlight(flightId: string): Promise<void> {
-      await client.delete(`/admin/flights/${encodeURIComponent(flightId)}`);
+      await client.delete(API_ENDPOINTS.admin.flightById(flightId));
     },
   };
 }

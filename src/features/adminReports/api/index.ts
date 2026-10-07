@@ -1,12 +1,8 @@
-import { env } from '@/config/env';
+import { adminApi } from '@/services/adminApi';
 import type { AdminReportsData, ReportFilters } from '../types/adminReport';
 import type { AdminReportsApi } from './adminReportsApi.types';
-import { createHttpAdminReportsApi } from './httpAdminReportsApi';
-import { mockAdminReportsApi } from './mockAdminReportsApi';
 
-export const adminReportsApi: AdminReportsApi = env.useMockAuth
-  ? mockAdminReportsApi
-  : createHttpAdminReportsApi();
+export const adminReportsApi: AdminReportsApi = adminApi.reports;
 
 export const adminReportKeys = {
   all: ['admin-reports'] as const,

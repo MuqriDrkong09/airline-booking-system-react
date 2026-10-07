@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import { apiClient } from '@/services/api/client';
+import { API_ENDPOINTS, apiClient } from '@/services/api';
 import type { UserRole } from '@/types/auth';
 import type { AdminUser, AdminUserFilters } from '../types/adminUser';
 import type { AdminUsersApi } from './adminUsersApi.types';
@@ -19,37 +19,25 @@ function toQuery(filters?: AdminUserFilters): Record<string, string> | undefined
 export function createHttpAdminUsersApi(client: AxiosInstance = apiClient): AdminUsersApi {
   return {
     async listUsers(filters?: AdminUserFilters): Promise<AdminUser[]> {
-      const { data } = await client.get<AdminUser[]>('/admin/users', {
+      const { data } = await client.get<AdminUser[]>(API_ENDPOINTS.admin.users, {
         params: toQuery(filters),
       });
       return data;
     },
     async getUser(userId: string): Promise<AdminUser> {
-      const { data } = await client.get<AdminUser>(
-        `/admin/users/${encodeURIComponent(userId)}`,
-      );
+      const { data } = await client.get<AdminUser>(API_ENDPOINTS.admin.userById(userId));
       return data;
     },
-    async setUserActive(
-      userId: string,
-      active: boolean,
-      _actorUserId: string,
-    ): Promise<AdminUser> {
-      const { data } = await client.patch<AdminUser>(
-        `/admin/users/${encodeURIComponent(userId)}/active`,
-        { active },
-      );
+    async setUserActive(userId: string, active: boolean, _actorUserId: string): Promise<AdminUser> {
+      const { data } = await client.patch<AdminUser>(API_ENDPOINTS.admin.userActive(userId), {
+        active,
+      });
       return data;
     },
-    async changeUserRole(
-      userId: string,
-      role: UserRole,
-      _actorUserId: string,
-    ): Promise<AdminUser> {
-      const { data } = await client.patch<AdminUser>(
-        `/admin/users/${encodeURIComponent(userId)}/role`,
-        { role },
-      );
+    async changeUserRole(userId: string, role: UserRole, _actorUserId: string): Promise<AdminUser> {
+      const { data } = await client.patch<AdminUser>(API_ENDPOINTS.admin.userRole(userId), {
+        role,
+      });
       return data;
     },
   };

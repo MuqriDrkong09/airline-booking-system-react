@@ -1,4 +1,4 @@
-import { authApi } from '@/services/auth';
+import { userApi } from '@/services/userApi';
 import type { AuthUser } from '@/types/auth';
 import type { ChangePasswordRequest, UpdateProfileRequest } from '@/types/profile';
 
@@ -8,13 +8,13 @@ export const profileKeys = {
 };
 
 export function fetchCurrentProfile(): Promise<AuthUser> {
-  return authApi.getCurrentUser();
+  return userApi.getCurrentUser();
 }
 
 export function updateCurrentProfile(payload: UpdateProfileRequest): Promise<AuthUser> {
-  return authApi.updateProfile(payload);
+  return userApi.updateProfile(payload);
 }
 
 export function changeCurrentPassword(payload: ChangePasswordRequest): Promise<{ message: string }> {
-  return authApi.changePassword(payload);
+  return userApi.changePassword(payload);
 }

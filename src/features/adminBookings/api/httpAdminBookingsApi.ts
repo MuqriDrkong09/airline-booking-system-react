@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import { apiClient } from '@/services/api/client';
+import { API_ENDPOINTS, apiClient } from '@/services/api';
 import type {
   AdminBooking,
   AdminBookingListQuery,
@@ -26,46 +26,41 @@ function toQuery(query: AdminBookingListQuery): Record<string, string> {
   return params;
 }
 
-export function createHttpAdminBookingsApi(
-  client: AxiosInstance = apiClient,
-): AdminBookingsApi {
+export function createHttpAdminBookingsApi(client: AxiosInstance = apiClient): AdminBookingsApi {
   return {
     async listBookings(query?: AdminBookingListQuery): Promise<AdminBookingListResult> {
-      const { data } = await client.get<AdminBookingListResult>('/admin/bookings', {
+      const { data } = await client.get<AdminBookingListResult>(API_ENDPOINTS.admin.bookings, {
         params: toQuery(query ?? EMPTY_ADMIN_BOOKING_QUERY),
       });
       return data;
     },
     async getBooking(reference: string): Promise<AdminBooking> {
       const { data } = await client.get<AdminBooking>(
-        `/admin/bookings/${encodeURIComponent(reference)}`,
+        API_ENDPOINTS.admin.bookingByReference(reference),
       );
       return data;
     },
     async cancelBooking(reference: string): Promise<AdminBooking> {
       const { data } = await client.post<AdminBooking>(
-        `/admin/bookings/${encodeURIComponent(reference)}/cancel`,
+        API_ENDPOINTS.admin.bookingCancel(reference),
       );
       return data;
     },
     async refundBooking(reference: string): Promise<AdminBooking> {
       const { data } = await client.post<AdminBooking>(
-        `/admin/bookings/${encodeURIComponent(reference)}/refund`,
+        API_ENDPOINTS.admin.bookingRefund(reference),
       );
       return data;
     },
-    async modifyBooking(
-      reference: string,
-      input: AdminBookingModifyInput,
-    ): Promise<AdminBooking> {
+    async modifyBooking(reference: string, input: AdminBookingModifyInput): Promise<AdminBooking> {
       const { data } = await client.patch<AdminBooking>(
-        `/admin/bookings/${encodeURIComponent(reference)}`,
+        API_ENDPOINTS.admin.bookingByReference(reference),
         input,
       );
       return data;
     },
     async listFlightOptions(): Promise<string[]> {
-      const { data } = await client.get<string[]>('/admin/bookings/flight-options');
+      const { data } = await client.get<string[]>(API_ENDPOINTS.admin.bookingFlightOptions);
       return data;
     },
   };
