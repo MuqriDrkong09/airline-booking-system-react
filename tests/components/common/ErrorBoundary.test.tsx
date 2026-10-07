@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+import { UNEXPECTED_ERROR_MESSAGE } from '@/services/api';
 import { renderWithProviders } from '@tests/utils/test-utils';
 
 function ProblemChild({ message = 'Boom' }: { message?: string }): never {
@@ -37,7 +38,7 @@ describe('ErrorBoundary', () => {
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 
-  it('renders the default ErrorState when a child throws', () => {
+  it('renders a user-friendly ErrorState when a child throws', () => {
     renderWithProviders(
       <ErrorBoundary>
         <ProblemChild />
@@ -45,11 +46,12 @@ describe('ErrorBoundary', () => {
     );
 
     expect(screen.getByRole('alert')).toHaveTextContent('Something went wrong');
-    expect(screen.getByText('Boom')).toBeInTheDocument();
+    expect(screen.getByText(UNEXPECTED_ERROR_MESSAGE)).toBeInTheDocument();
+    expect(screen.queryByText('Boom')).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Try again' })).toBeInTheDocument();
   });
 
-  it('logs the error in componentDidCatch', () => {
+  it('logs the error in development via logApiError', () => {
     renderWithProviders(
       <ErrorBoundary>
         <ProblemChild message="Logged failure" />
@@ -57,9 +59,11 @@ describe('ErrorBoundary', () => {
     );
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      'ErrorBoundary caught an error',
-      expect.objectContaining({ message: 'Logged failure' }),
-      expect.objectContaining({ componentStack: expect.any(String) }),
+      '[ApiError]',
+      expect.objectContaining({
+        source: 'ErrorBoundary',
+        message: 'Logged failure',
+      }),
     );
   });
 
@@ -75,30 +79,15 @@ describe('ErrorBoundary', () => {
     expect(screen.queryByRole('button', { name: 'Try again' })).not.toBeInTheDocument();
   });
 
-  it('shows the thrown message on the default fallback', () => {
+  it('does not expose thrown technical messages in the default fallback', () => {
     renderWithProviders(
       <ErrorBoundary>
-        <ProblemChild message="Seat map crashed" />
+        <ProblemChild message="Seat map crashed at Object.render" />
       </ErrorBoundary>,
     );
 
-    expect(screen.getByRole('alert')).toHaveTextContent('Seat map crashed');
-  });
-
-  it('shows a default message when the thrown value has no message', () => {
-    function WeirdChild(): never {
-      // React can deliver non-Error throws into the boundary.
-      // eslint-disable-next-line no-throw-literal -- intentional coverage case
-      throw { name: 'WeirdFailure' };
-    }
-
-    renderWithProviders(
-      <ErrorBoundary>
-        <WeirdChild />
-      </ErrorBoundary>,
-    );
-
-    expect(screen.getByRole('alert')).toHaveTextContent('An unexpected error occurred.');
+    expect(screen.getByText(UNEXPECTED_ERROR_MESSAGE)).toBeInTheDocument();
+    expect(screen.queryByText(/Seat map crashed/i)).not.toBeInTheDocument();
   });
 
   it('resets after the user retries', async () => {

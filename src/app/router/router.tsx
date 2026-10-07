@@ -41,6 +41,7 @@ import { AdminUsersPage } from '@/pages/admin/AdminUsersPage';
 import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { UnauthorizedPage } from '@/pages/UnauthorizedPage';
 import { RouteErrorFallback } from './RouteErrorFallback';
 
 export const router = createBrowserRouter([
@@ -56,6 +57,7 @@ export const router = createBrowserRouter([
       { path: 'reset-password', element: <ResetPasswordPage /> },
       { path: 'verify-email', element: <VerifyEmailPage /> },
       { path: 'forbidden', element: <ForbiddenPage /> },
+      { path: 'unauthorized', element: <UnauthorizedPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

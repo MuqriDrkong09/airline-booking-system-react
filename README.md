@@ -305,6 +305,9 @@ tests/           # Jest unit tests mirroring src/
 - Shared Axios client (`services/api/client.ts`) with `VITE_API_BASE_URL` and 15s timeout
 - Request interceptor attaches bearer tokens; response interceptor retries idempotent GETs on network/5xx/429
 - Standardized `ApiError` / `toApiError` (auth keeps `AuthApiError` alias)
+- Global + feature error handling for network, 401, 403, 404, 409, 422, 429, 500+
+  with user-friendly copy (no stack traces in UI); `logApiError` in development only
+- Pages: `NotFoundPage`, `UnauthorizedPage`, `ForbiddenPage`; shared `ErrorBoundary` + `ErrorState`
 - Central `API_ENDPOINTS` path map
 - Domain services own HTTP calls; features/hooks consume services — never Axios in components
 - Mock vs HTTP still selected with `VITE_USE_MOCK_AUTH`

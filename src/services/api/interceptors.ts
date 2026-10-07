@@ -7,6 +7,8 @@ import type {
 import type { TokenStorage } from '@/services/auth/tokenStorage';
 import { tokenStorage } from '@/services/auth/tokenStorage';
 import { API_ENDPOINTS } from './endpoints';
+import { logApiError } from './logApiError';
+import { handleUnauthorizedSession } from './unauthorizedHandler';
 
 export const DEFAULT_RETRY_COUNT = 2;
 export const RETRYABLE_STATUS_CODES = new Set([408, 429, 500, 502, 503, 504]);
@@ -79,6 +81,8 @@ export interface SetupApiInterceptorsOptions {
   getAccessToken?: AccessTokenReader;
   /** Max retries for idempotent requests (default {@link DEFAULT_RETRY_COUNT}). */
   maxRetries?: number;
+  /** Disable 401 session clear + redirect (useful in unit tests). */
+  disableUnauthorizedRedirect?: boolean;
 }
 
 /**
@@ -96,6 +100,7 @@ export function setupApiInterceptors(
   const storage = options.storage ?? tokenStorage;
   const getAccessToken = options.getAccessToken ?? (() => storage.getAccessToken());
   const maxRetries = options.maxRetries ?? DEFAULT_RETRY_COUNT;
+  const disableUnauthorizedRedirect = options.disableUnauthorizedRedirect ?? false;
 
   client.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const apiConfig = config as ApiRequestConfig;
@@ -113,6 +118,7 @@ export function setupApiInterceptors(
     async (error: AxiosError) => {
       const config = asApiConfig(error.config);
       if (!config) {
+        logApiError(error, { source: 'api.interceptor' });
         return Promise.reject(error);
       }
 
@@ -123,9 +129,20 @@ export function setupApiInterceptors(
         return client.request(config);
       }
 
-      // Leave credential failures untouched; callers map via toApiError / toAuthApiError.
+      logApiError(error, {
+        source: 'api.interceptor',
+        url: config.url,
+        method: config.method,
+        status: error.response?.status,
+      });
+
+      // Login/register credential failures stay on the form — do not bounce the page.
       if (error.response?.status === 401 && isAuthCredentialRequest(config.url)) {
         return Promise.reject(error);
+      }
+
+      if (error.response?.status === 401 && !disableUnauthorizedRedirect) {
+        handleUnauthorizedSession({ storage });
       }
 
       return Promise.reject(error);

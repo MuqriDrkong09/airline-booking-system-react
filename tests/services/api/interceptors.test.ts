@@ -24,7 +24,7 @@ describe('api interceptors', () => {
   it('attaches the bearer token from storage', async () => {
     const storage = createMemoryTokenStorage();
     storage.setAccessToken('access-token');
-    setupApiInterceptors(client, { storage });
+    setupApiInterceptors(client, { storage, disableUnauthorizedRedirect: true });
 
     const adapter = jest.fn(async (config) => ({
       data: { ok: true },
@@ -46,6 +46,7 @@ describe('api interceptors', () => {
     setupApiInterceptors(client, {
       getAccessToken: () => null,
       maxRetries: 2,
+      disableUnauthorizedRedirect: true,
     });
 
     let attempts = 0;
@@ -84,6 +85,7 @@ describe('api interceptors', () => {
     setupApiInterceptors(client, {
       getAccessToken: () => null,
       maxRetries: 2,
+      disableUnauthorizedRedirect: true,
     });
 
     let attempts = 0;

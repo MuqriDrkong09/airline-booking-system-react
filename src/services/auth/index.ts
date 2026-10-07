@@ -16,6 +16,8 @@ export {
   ApiError,
   AuthApiError,
   getErrorMessage,
+  getErrorStatus,
+  getErrorTitle,
   toApiError,
   toAuthApiError,
 } from './errors';

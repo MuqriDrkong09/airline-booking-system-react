@@ -8,9 +8,18 @@ export { API_ENDPOINTS, endpoints } from './endpoints';
 export {
   ApiError,
   AuthApiError,
+  DEFAULT_ERROR_MESSAGE,
   getErrorMessage,
+  getErrorStatus,
+  getErrorTitle,
+  HTTP_STATUS_MESSAGES,
+  HTTP_STATUS_TITLES,
+  isNetworkError,
+  NETWORK_ERROR_MESSAGE,
+  TIMEOUT_ERROR_MESSAGE,
   toApiError,
   toAuthApiError,
+  UNEXPECTED_ERROR_MESSAGE,
 } from './errors';
 export type { ApiErrorBody } from './errors';
 export {
@@ -21,3 +30,7 @@ export {
   setupApiInterceptors,
 } from './interceptors';
 export type { ApiRequestConfig, SetupApiInterceptorsOptions } from './interceptors';
+export { logApiError } from './logApiError';
+export type { LogApiErrorContext } from './logApiError';
+export { handleUnauthorizedSession } from './unauthorizedHandler';
+export type { HandleUnauthorizedOptions } from './unauthorizedHandler';

@@ -14,16 +14,16 @@ describe('ForbiddenPage', () => {
     resetAuthStore();
   });
 
-  it('redirects unauthenticated visitors to login', () => {
+  it('redirects unauthenticated visitors to the unauthorized page', () => {
     renderWithProviders(
       <Routes>
         <Route path="/forbidden" element={<ForbiddenPage />} />
-        <Route path="/login" element={<p>Login page</p>} />
+        <Route path="/unauthorized" element={<p>Unauthorized page</p>} />
       </Routes>,
       { initialEntries: ['/forbidden'] },
     );
 
-    expect(screen.getByText('Login page')).toBeInTheDocument();
+    expect(screen.getByText('Unauthorized page')).toBeInTheDocument();
   });
 
   it('shows access denied for authenticated users with a role home link', () => {

@@ -2,11 +2,18 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { CircleAlert } from 'lucide-react';
 import type { ReactNode } from 'react';
+import {
+  DEFAULT_ERROR_MESSAGE,
+  getErrorMessage,
+  getErrorTitle,
+} from '@/services/api';
 import { AppButton } from './AppButton';
 
 export interface ErrorStateProps {
   title?: string;
-  message: string;
+  /** Prefer passing `error` so messages stay consistent and sanitized. */
+  message?: string;
+  error?: unknown;
   onRetry?: () => void;
   retryLabel?: string;
   action?: ReactNode;
@@ -14,13 +21,19 @@ export interface ErrorStateProps {
 }
 
 export function ErrorState({
-  title = 'Something went wrong',
+  title,
   message,
+  error,
   onRetry,
   retryLabel = 'Try again',
   action,
   icon,
 }: ErrorStateProps) {
+  const resolvedTitle = title ?? (error !== undefined ? getErrorTitle(error) : 'Something went wrong');
+  const resolvedMessage =
+    message ??
+    (error !== undefined ? getErrorMessage(error) : DEFAULT_ERROR_MESSAGE);
+
   return (
     <Box
       role="alert"
@@ -36,10 +49,10 @@ export function ErrorState({
     >
       {icon ?? <CircleAlert aria-hidden="true" size={40} />}
       <Typography variant="h5" component="h1">
-        {title}
+        {resolvedTitle}
       </Typography>
       <Typography color="text.secondary" sx={{ maxWidth: 480 }}>
-        {message}
+        {resolvedMessage}
       </Typography>
       {onRetry ? (
         <AppButton variant="contained" onClick={onRetry} sx={{ mt: 1 }}>

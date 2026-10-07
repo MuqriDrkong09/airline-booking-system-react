@@ -10,6 +10,7 @@ describe('APP_ROUTES', () => {
       resetPassword: '/reset-password',
       verifyEmail: '/verify-email',
       forbidden: '/forbidden',
+      unauthorized: '/unauthorized',
     });
   });
 

@@ -15,6 +15,7 @@ import {
   useState,
 } from 'react';
 import { AppBadge, AppButton, EmptyState, ErrorState, LoadingSpinner } from '@/components/common';
+import { getFeatureErrorPresentation } from '@/features/errors';
 import { useFlightFilters } from '../../hooks/useFlightFilters';
 import { useSearchFlightsQuery } from '../../hooks/useFlights';
 import type { FlightOffer, FlightSearchRequest } from '../../types/flight';
@@ -104,15 +105,15 @@ function FlightSearchResultsComponent({
   }
 
   if (query.isError) {
-    const message =
-      query.error instanceof Error
-        ? query.error.message
-        : 'Unable to load flight results. Please try again.';
+    const presentation = getFeatureErrorPresentation(
+      query.error,
+      'Unable to load flight results. Please try again.',
+    );
 
     return (
       <ErrorState
         title="Flight search failed"
-        message={message}
+        message={presentation.message}
         onRetry={() => {
           void query.refetch();
         }}

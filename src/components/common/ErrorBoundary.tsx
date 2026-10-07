@@ -1,5 +1,9 @@
 import type { ErrorInfo, ReactNode } from 'react';
 import { Component } from 'react';
+import {
+  UNEXPECTED_ERROR_MESSAGE,
+  logApiError,
+} from '@/services/api';
 import { ErrorState } from './ErrorState';
 
 interface ErrorBoundaryProps {
@@ -23,7 +27,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   public override componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error('ErrorBoundary caught an error', error, errorInfo);
+    logApiError(error, {
+      source: 'ErrorBoundary',
+      componentStack: errorInfo.componentStack,
+    });
   }
 
   private readonly handleReset = (): void => {
@@ -39,7 +46,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return (
         <ErrorState
           title="Something went wrong"
-          message={this.state.error?.message ?? 'An unexpected error occurred.'}
+          message={UNEXPECTED_ERROR_MESSAGE}
           onRetry={this.handleReset}
         />
       );

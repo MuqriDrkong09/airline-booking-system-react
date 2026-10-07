@@ -6,6 +6,8 @@ export {
   ApiError,
   AuthApiError,
   getErrorMessage,
+  getErrorStatus,
+  getErrorTitle,
   toApiError,
   toAuthApiError,
 } from '@/services/api/errors';

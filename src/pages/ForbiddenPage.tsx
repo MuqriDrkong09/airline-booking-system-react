@@ -3,6 +3,7 @@ import { ShieldBan } from 'lucide-react';
 import { AppButton, ErrorState, PageContainer, PageLoader } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import { getHomePathForRole, useAuth } from '@/features/auth';
+import { HTTP_STATUS_MESSAGES } from '@/services/api';
 
 export function ForbiddenPage() {
   const { user, isAuthenticated, isBootstrapping } = useAuth();
@@ -12,7 +13,7 @@ export function ForbiddenPage() {
   }
 
   if (!isAuthenticated || !user) {
-    return <Navigate to={APP_ROUTES.public.login} replace />;
+    return <Navigate to={APP_ROUTES.public.unauthorized} replace />;
   }
 
   const homePath = getHomePathForRole(user.role);
@@ -21,7 +22,7 @@ export function ForbiddenPage() {
     <PageContainer>
       <ErrorState
         title="403 — Access denied"
-        message="You are signed in, but your account does not have permission to view this page. Authorization is also enforced by the API."
+        message={`${HTTP_STATUS_MESSAGES[403]} Authorization is also enforced by the API.`}
         icon={<ShieldBan aria-hidden="true" size={40} />}
         action={
           <AppButton

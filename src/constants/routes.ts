@@ -7,6 +7,7 @@ export const APP_ROUTES = {
     resetPassword: '/reset-password',
     verifyEmail: '/verify-email',
     forbidden: '/forbidden',
+    unauthorized: '/unauthorized',
   },
   customer: {
     root: '/app',
