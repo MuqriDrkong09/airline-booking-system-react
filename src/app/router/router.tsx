@@ -8,6 +8,7 @@ import { RegisterPage } from '@/pages/auth/RegisterPage';
 import { ResetPasswordPage } from '@/pages/auth/ResetPasswordPage';
 import { VerifyEmailPage } from '@/pages/auth/VerifyEmailPage';
 import { ProfilePage } from '@/pages/customer/ProfilePage';
+import { CustomerHomePage } from '@/pages/customer/CustomerHomePage';
 import { FlightDetailsPage } from '@/pages/customer/FlightDetailsPage';
 import { PassengerDetailsPage } from '@/pages/customer/PassengerDetailsPage';
 import { AddonSelectionPage } from '@/pages/customer/AddonSelectionPage';
@@ -40,7 +41,6 @@ import { AdminUsersPage } from '@/pages/admin/AdminUsersPage';
 import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { HomePage } from '@/pages/HomePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
-import { PlaceholderPage } from '@/pages/PlaceholderPage';
 import { RouteErrorFallback } from './RouteErrorFallback';
 
 export const router = createBrowserRouter([
@@ -71,7 +71,7 @@ export const router = createBrowserRouter([
             path: '/app',
             element: <CustomerLayout appName={env.appName} />,
             children: [
-              { index: true, element: <PlaceholderPage title="Customer Home" /> },
+              { index: true, element: <CustomerHomePage /> },
               { path: 'flights', element: <SearchFlightsPage /> },
               { path: 'flights/:flightId', element: <FlightDetailsPage /> },
               { path: 'flights/:flightId/passengers', element: <PassengerDetailsPage /> },

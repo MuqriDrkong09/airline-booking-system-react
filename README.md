@@ -102,6 +102,14 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Mock auth API (default) or HTTP auth when `VITE_USE_MOCK_AUTH=false`
 - Forms validated with Zod + React Hook Form
 
+### Customer home (`src/features/customerHome/`)
+
+- Customer workspace home at `/app` with personalized welcome
+- Summary stats for upcoming trips, check-in ready bookings, favourites, and unread notifications
+- Quick-action cards into search, flight status, bookings, check-in, favourites, and notifications
+- Upcoming trips preview (reuse My Bookings cards + cancel dialog)
+- Recent flight searches section
+
 ### Customer profile (`src/features/profile/`)
 
 - View profile
@@ -270,7 +278,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
 ### Layouts & navigation
 
 - **Public** — marketing shell, sign-in / create-account CTAs
-- **Customer** (`/app`) — sidebar navigation for flights, favourites, flight status, bookings, check-in, notifications, profile; header notification bell with unread badge
+- **Customer** (`/app`) — home dashboard plus sidebar navigation for flights, favourites, flight status, bookings, check-in, notifications, profile; header notification bell with unread badge
 - **Admin** (`/admin`) — operations dashboard with KPI cards and Recharts; flight management at `/admin/flights`; airport management at `/admin/airports`; aircraft management at `/admin/aircraft` (CRUD, activate/deactivate) plus interactive seat-map configuration at `/admin/aircraft/:id/seats` with Zod validation; mock API when `VITE_USE_MOCK_AUTH=true`. Other admin modules remain placeholders.
 
 Many booking/admin domains are scaffolded as placeholder pages and will be implemented in later iterations.
