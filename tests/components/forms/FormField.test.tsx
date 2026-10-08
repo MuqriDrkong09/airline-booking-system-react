@@ -12,9 +12,13 @@ describe('FormField', () => {
     );
 
     expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
-    expect(screen.getByText('Email is required')).toHaveAttribute('id', 'email-helper');
+    const error = screen.getByRole('alert');
+    expect(error).toHaveTextContent('Email is required');
+    expect(error).toHaveAttribute('id', 'email-helper');
     expect(document.querySelector('#email')).toBeInTheDocument();
-    expect(screen.getByText('Email is required')).toHaveClass('Mui-error');
+    expect(error).toHaveClass('Mui-error');
+    expect(screen.getByLabelText(/Email/i)).toHaveAttribute('aria-invalid', 'true');
+    expect(screen.getByLabelText(/Email/i)).toHaveAttribute('aria-describedby', 'email-helper');
   });
 
   it('shows helper text when there is no error', () => {

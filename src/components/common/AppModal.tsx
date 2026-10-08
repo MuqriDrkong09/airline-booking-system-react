@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { X } from 'lucide-react';
 import type { ModalProps } from '@mui/material/Modal';
-import type { ReactNode } from 'react';
+import { useId, type ReactNode } from 'react';
 
 export interface AppModalProps extends Omit<ModalProps, 'children' | 'title'> {
   title: string;
@@ -25,7 +25,8 @@ export function AppModal({
   showCloseButton = true,
   ...props
 }: AppModalProps) {
-  const titleId = 'app-modal-title';
+  const titleId = useId();
+  const contentId = useId();
 
   return (
     <Modal
@@ -33,11 +34,17 @@ export function AppModal({
       open={open}
       onClose={onClose}
       aria-labelledby={titleId}
+      aria-describedby={contentId}
       closeAfterTransition
     >
       <Fade in={open}>
         <Paper
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          aria-describedby={contentId}
           elevation={8}
+          tabIndex={-1}
           sx={{
             position: 'absolute',
             top: '50%',
@@ -69,7 +76,7 @@ export function AppModal({
               </IconButton>
             ) : null}
           </Box>
-          {children}
+          <Box id={contentId}>{children}</Box>
         </Paper>
       </Fade>
     </Modal>

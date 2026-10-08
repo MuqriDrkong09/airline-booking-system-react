@@ -3,6 +3,7 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { X } from 'lucide-react';
+import { useId } from 'react';
 import type { NavItem } from '@/constants/nav';
 import { SIDEBAR_WIDTH } from '@/constants/routes';
 import { SidebarNav } from './SidebarNav';
@@ -22,6 +23,8 @@ export function MobileNavDrawer({
   items,
   ariaLabel,
 }: MobileNavDrawerProps) {
+  const titleId = useId();
+
   return (
     <Drawer
       anchor="left"
@@ -29,7 +32,10 @@ export function MobileNavDrawer({
       onClose={onClose}
       ModalProps={{ keepMounted: true }}
       slotProps={{
-        paper: { sx: { width: SIDEBAR_WIDTH } },
+        paper: {
+          'aria-labelledby': titleId,
+          sx: { width: SIDEBAR_WIDTH },
+        },
       }}
     >
       <Box id="mobile-navigation" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -44,7 +50,7 @@ export function MobileNavDrawer({
             borderColor: 'divider',
           }}
         >
-          <Typography variant="subtitle1" component="p" sx={{ fontWeight: 700 }}>
+          <Typography id={titleId} variant="subtitle1" component="h2" sx={{ fontWeight: 700 }}>
             {title}
           </Typography>
           <IconButton aria-label="Close navigation menu" onClick={onClose}>

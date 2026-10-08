@@ -44,10 +44,11 @@ export const SEAT_STATUS_COLORS: Readonly<
 > = {
   AVAILABLE: { bg: '#FFFFFF', border: '#0B3D91', color: '#0B3D91' },
   SELECTED: { bg: '#0B3D91', border: '#0B3D91', color: '#FFFFFF' },
-  OCCUPIED: { bg: '#D8E0EA', border: '#9AA6B2', color: '#5C6B7A' },
-  PREMIUM: { bg: '#FFF8E6', border: '#C9A227', color: '#8F580F' },
-  EMERGENCY_EXIT: { bg: '#E8F5EE', border: '#1B7F4E', color: '#125C38' },
-  UNAVAILABLE: { bg: '#F4F7FB', border: '#D8E0EA', color: '#9AA6B2' },
+  // Text colors tuned for ≥4.5:1 contrast on their seat backgrounds (WCAG AA).
+  OCCUPIED: { bg: '#D8E0EA', border: '#6B7785', color: '#3D4A57' },
+  PREMIUM: { bg: '#FFF8E6', border: '#C9A227', color: '#6B4209' },
+  EMERGENCY_EXIT: { bg: '#E8F5EE', border: '#1B7F4E', color: '#0F4A2C' },
+  UNAVAILABLE: { bg: '#E8EEF5', border: '#8A96A3', color: '#4A5560' },
 };
 
 export const SEAT_CLASS_BASE_PRICE: Readonly<Record<SeatClass, number>> = {

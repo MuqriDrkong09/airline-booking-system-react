@@ -69,7 +69,7 @@ describe('AdminAircraftSeatConfigPage', () => {
 
       expect(await screen.findByRole('grid', { name: /seat map editor/i })).toBeInTheDocument();
 
-      await user.click(screen.getByRole('button', { name: 'Configure seat 1A' }));
+      await user.click(screen.getByRole('button', { name: /^Configure seat 1A\b/i }));
       await chooseSelectOption(user, /^Seat type$/i, 'Premium');
 
       fireEvent.change(screen.getByLabelText(/^Price$/i), {
@@ -114,8 +114,8 @@ describe('AdminAircraftSeatConfigPage', () => {
         expect(screen.getByText(/8 seats · 4 rows/i)).toBeInTheDocument();
       });
 
-      expect(screen.getByRole('button', { name: 'Configure seat 4A' })).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Configure seat 4F' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^Configure seat 4A\b/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^Configure seat 4F\b/i })).toBeInTheDocument();
     },
     15_000,
   );

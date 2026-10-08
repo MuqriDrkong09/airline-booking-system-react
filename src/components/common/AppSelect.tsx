@@ -44,6 +44,7 @@ export function AppSelect<T extends string | number = string>({
   const selectId = id ?? `app-select-${label.replace(/\s+/g, '-').toLowerCase()}`;
   const labelId = `${selectId}-label`;
   const helperId = helperText ? `${selectId}-helper` : undefined;
+  const describedBy = [props['aria-describedby'], helperId].filter(Boolean).join(' ') || undefined;
 
   return (
     <FormControl
@@ -64,7 +65,8 @@ export function AppSelect<T extends string | number = string>({
         required={required}
         disabled={disabled}
         aria-label={hideLabel ? label : undefined}
-        aria-describedby={helperId}
+        aria-invalid={error || undefined}
+        aria-describedby={describedBy}
         onChange={(event) => {
           onChange?.(event.target.value as T, event);
         }}

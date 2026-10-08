@@ -68,6 +68,11 @@ export function DashboardShell({
       <Drawer
         variant="permanent"
         open
+        slotProps={{
+          paper: {
+            'aria-label': `${sectionLabel} sidebar`,
+          },
+        }}
         sx={{
           display: { xs: 'none', md: 'block' },
           width: SIDEBAR_WIDTH,

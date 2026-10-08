@@ -17,8 +17,9 @@ describe('AppDialog', () => {
     const dialog = screen.getByRole('dialog', { name: 'Passenger details' });
     expect(dialog).toBeInTheDocument();
     expect(within(dialog).getByText('Review traveler information before continuing.')).toBeInTheDocument();
-    expect(document.getElementById('app-dialog-title')).toHaveTextContent('Passenger details');
-    expect(dialog).toHaveAttribute('aria-labelledby', 'app-dialog-title');
+    expect(within(dialog).getByRole('heading', { name: 'Passenger details' })).toBeInTheDocument();
+    expect(dialog).toHaveAttribute('aria-labelledby');
+    expect(dialog).toHaveAttribute('aria-describedby');
   });
 
   it('does not show dialog content when closed', () => {

@@ -13,10 +13,11 @@ describe('AppModal', () => {
       </AppModal>,
     );
 
-    const title = screen.getByRole('heading', { name: 'Seat selection' });
-    expect(title).toHaveAttribute('id', 'app-modal-title');
-    expect(screen.getByText('Choose your preferred seat.')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Close dialog' })).toBeInTheDocument();
+    const dialog = screen.getByRole('dialog', { name: 'Seat selection' });
+    expect(within(dialog).getByRole('heading', { name: 'Seat selection' })).toBeInTheDocument();
+    expect(within(dialog).getByText('Choose your preferred seat.')).toBeInTheDocument();
+    expect(within(dialog).getByRole('button', { name: 'Close dialog' })).toBeInTheDocument();
+    expect(dialog).toHaveAttribute('aria-modal', 'true');
   });
 
   it('does not show modal content when closed', () => {

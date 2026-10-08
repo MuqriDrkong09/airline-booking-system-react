@@ -25,12 +25,13 @@ export function SeatRow({
       direction="row"
       spacing={{ xs: 0.5, sm: 0.75 }}
       sx={{ alignItems: 'center', py: 0.35 }}
-      role="row"
+      role="group"
       aria-label={`Row ${row.row}`}
     >
       <Typography
         variant="caption"
         color="text.secondary"
+        aria-hidden
         sx={{ width: 28, textAlign: 'right', fontWeight: 600, flexShrink: 0 }}
       >
         {row.row}
@@ -71,6 +72,7 @@ export function SeatRow({
       <Typography
         variant="caption"
         color="text.secondary"
+        aria-hidden
         sx={{ width: 28, fontWeight: 600, flexShrink: 0 }}
       >
         {row.row}

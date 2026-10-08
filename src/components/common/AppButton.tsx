@@ -23,7 +23,13 @@ export const AppButton = forwardRef(function AppButton(props, ref) {
   };
 
   return (
-    <Button {...other} ref={ref} loading={loading} aria-busy={loading || undefined}>
+    <Button
+      {...other}
+      ref={ref}
+      loading={loading}
+      aria-busy={loading || undefined}
+      aria-live={loading ? 'polite' : undefined}
+    >
       {loading ? loadingLabel : children}
     </Button>
   );

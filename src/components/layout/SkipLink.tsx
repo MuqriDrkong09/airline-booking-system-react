@@ -8,17 +8,24 @@ export function SkipLink() {
       sx={{
         position: 'absolute',
         left: 16,
-        top: -80,
-        zIndex: (theme) => theme.zIndex.tooltip,
+        top: -100,
+        zIndex: (theme) => theme.zIndex.tooltip + 1,
         bgcolor: 'secondary.main',
         color: 'secondary.contrastText',
         px: 2,
         py: 1,
         borderRadius: 1,
         textDecoration: 'none',
-        fontWeight: 600,
+        fontWeight: 700,
+        outline: 'none',
         '&:focus': {
           top: 16,
+        },
+        '&:focus-visible': {
+          top: 16,
+          outline: '2px solid',
+          outlineColor: 'primary.main',
+          outlineOffset: 2,
         },
       }}
     >

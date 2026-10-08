@@ -24,7 +24,8 @@ export function SeatMap({
 
   return (
     <Box
-      role="grid"
+      role="group"
+      data-seat-map
       aria-label={`${aircraftModel} seat map`}
       sx={{
         width: '100%',
@@ -53,7 +54,7 @@ export function SeatMap({
           FRONT OF AIRCRAFT · {aircraftModel}
         </Typography>
 
-        <Stack spacing={0.25} role="rowgroup" sx={{ alignItems: 'center' }}>
+        <Stack spacing={0.25} sx={{ alignItems: 'center' }}>
           {rows.map((row) => {
             const showCabinHeader = row.class !== lastClass;
             lastClass = row.class;
@@ -63,6 +64,7 @@ export function SeatMap({
                   <Typography
                     variant="overline"
                     color="primary"
+                    component="h3"
                     sx={{ display: 'block', mt: 1, mb: 0.5, textAlign: 'center' }}
                   >
                     {SEAT_CLASS_LABELS[row.class]}

@@ -87,6 +87,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
   flight details, and seat maps — used instead of spinners on content-heavy
   pages so layout does not jump while data loads. `PageLoader` remains for
   auth bootstrap, route guards, and Suspense
+- Accessibility (WCAG 2.2 AA–oriented): skip links, main landmarks, visible
+  `:focus-visible` rings, labelled forms with `aria-describedby` / alert errors,
+  accessible dialogs/modals (`aria-labelledby` / `aria-describedby`), keyboard
+  seat map (native buttons, arrow-key focus), and improved text contrast tokens
 
 ### Authentication (`src/features/auth/`)
 

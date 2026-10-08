@@ -20,8 +20,9 @@ export const colorTokens = {
     },
     text: {
       primary: '#1C2430',
-      secondary: '#5C6B7A',
-      disabled: '#9AA6B2',
+      // Darkened for ≥4.5:1 on default background (#F4F7FB).
+      secondary: '#4A5A6A',
+      disabled: '#7A8794',
     },
     divider: '#D8E0EA',
     action: {

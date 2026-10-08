@@ -14,6 +14,16 @@ export interface FormFieldProps extends Omit<FormControlProps, 'error'> {
   hideLabel?: boolean;
 }
 
+function mergeDescribedBy(
+  existing: unknown,
+  helperId: string | undefined,
+): string | undefined {
+  const parts = [typeof existing === 'string' ? existing : undefined, helperId].filter(
+    Boolean,
+  );
+  return parts.length > 0 ? parts.join(' ') : undefined;
+}
+
 export function FormField({
   id,
   label,
@@ -28,18 +38,48 @@ export function FormField({
 }: FormFieldProps) {
   const helperId = `${id}-helper`;
   const hasError = Boolean(errorMessage);
-  const describedBy = helperText || errorMessage ? helperId : undefined;
+  const describedByTarget = helperText || errorMessage ? helperId : undefined;
 
   const control = isValidElement(children)
-    ? cloneElement(children, {
-        id,
-        required,
-        disabled,
-        error: hasError || Boolean((children.props as { error?: boolean }).error),
-        'aria-describedby': describedBy,
-        'aria-invalid': hasError || undefined,
-        fullWidth,
-      } as Record<string, unknown>)
+    ? (() => {
+        const childProps = children.props as {
+          error?: boolean;
+          'aria-describedby'?: string;
+          slotProps?: {
+            htmlInput?: Record<string, unknown>;
+            [key: string]: unknown;
+          };
+          inputProps?: Record<string, unknown>;
+        };
+        const describedBy = mergeDescribedBy(
+          childProps['aria-describedby'] ?? childProps.slotProps?.htmlInput?.['aria-describedby'],
+          describedByTarget,
+        );
+
+        return cloneElement(children, {
+          id,
+          required,
+          disabled,
+          error: hasError || Boolean(childProps.error),
+          'aria-describedby': describedBy,
+          'aria-invalid': hasError ? true : undefined,
+          fullWidth,
+          // Ensure the native input receives describedby/invalid for screen readers.
+          slotProps: {
+            ...childProps.slotProps,
+            htmlInput: {
+              ...childProps.slotProps?.htmlInput,
+              'aria-describedby': describedBy,
+              'aria-invalid': hasError ? true : undefined,
+            },
+          },
+          inputProps: {
+            ...childProps.inputProps,
+            'aria-describedby': describedBy,
+            'aria-invalid': hasError ? true : undefined,
+          },
+        } as Record<string, unknown>);
+      })()
     : children;
 
   return (
@@ -53,11 +93,18 @@ export function FormField({
       {!hideLabel ? (
         <FormLabel htmlFor={id} sx={{ mb: 1, fontWeight: 600 }}>
           {label}
+          {required ? <span aria-hidden="true"> *</span> : null}
         </FormLabel>
       ) : null}
       {control}
       {errorMessage || helperText ? (
-        <FormHelperText id={helperId}>{errorMessage ?? helperText}</FormHelperText>
+        <FormHelperText
+          id={helperId}
+          role={hasError ? 'alert' : undefined}
+          aria-live={hasError ? 'assertive' : undefined}
+        >
+          {errorMessage ?? helperText}
+        </FormHelperText>
       ) : null}
     </FormControl>
   );

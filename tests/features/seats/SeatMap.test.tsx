@@ -26,7 +26,7 @@ describe('SeatMap', () => {
     );
 
     expect(screen.getByLabelText('Seat legend')).toBeInTheDocument();
-    expect(screen.getByRole('grid', { name: /Airbus A320 seat map/i })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: /Airbus A320 seat map/i })).toBeInTheDocument();
     expect(screen.getByText('Economy')).toBeInTheDocument();
     expect(screen.getByText('First class')).toBeInTheDocument();
     expect(screen.getByText('Business')).toBeInTheDocument();
@@ -61,9 +61,35 @@ describe('SeatMap', () => {
       />,
     );
 
-    await user.click(
-      screen.getByRole('button', { name: new RegExp(`Seat ${occupied!.label}`, 'i') }),
-    );
+    const occupiedButton = screen.getByRole('button', {
+      name: new RegExp(`Seat ${occupied!.label}`, 'i'),
+    });
+    expect(occupiedButton).toBeDisabled();
+    await user.click(occupiedButton);
     expect(onSelect).not.toHaveBeenCalled();
+  });
+
+  it('moves focus between seats with arrow keys', async () => {
+    const user = userEvent.setup();
+    const map = createAircraftSeatMap('Airbus A320');
+    const rows = groupSeatsIntoRows(map.seats);
+    const available = map.seats.filter((seat) => seat.status === 'AVAILABLE');
+
+    renderWithProviders(
+      <SeatMap
+        aircraftModel={map.aircraftModel}
+        rows={rows}
+        getDisplayStatus={(seat) => seat.status}
+        onSelect={jest.fn()}
+      />,
+    );
+
+    const first = screen.getByRole('button', {
+      name: new RegExp(`Seat ${available[0]!.label}`, 'i'),
+    });
+    first.focus();
+    await user.keyboard('{ArrowRight}');
+    expect(document.activeElement).toHaveAttribute('data-seat-id');
+    expect(document.activeElement).not.toBe(first);
   });
 });

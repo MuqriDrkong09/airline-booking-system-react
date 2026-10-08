@@ -32,6 +32,7 @@ export function ConfirmDialog({
       title={title}
       onClose={onCancel}
       maxWidth="xs"
+      showCloseButton={false}
       actions={
         <>
           <AppButton onClick={onCancel} disabled={loading} color="inherit">

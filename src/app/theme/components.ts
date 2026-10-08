@@ -1,5 +1,10 @@
 import type { ThemeOptions } from '@mui/material/styles';
-import { radiusTokens } from './tokens';
+import { colorTokens, radiusTokens } from './tokens';
+
+const focusRing = {
+  outline: `2px solid ${colorTokens.brand.primary.main}`,
+  outlineOffset: 2,
+};
 
 export const componentOverrides: ThemeOptions['components'] = {
   MuiCssBaseline: {
@@ -7,10 +12,29 @@ export const componentOverrides: ThemeOptions['components'] = {
       body: {
         scrollBehavior: 'smooth',
       },
+      '*:focus': {
+        outline: 'none',
+      },
       '*:focus-visible': {
-        outline: '2px solid',
-        outlineColor: 'inherit',
-        outlineOffset: 2,
+        ...focusRing,
+      },
+      '@media (prefers-reduced-motion: reduce)': {
+        '*, *::before, *::after': {
+          animationDuration: '0.01ms !important',
+          animationIterationCount: '1 !important',
+          transitionDuration: '0.01ms !important',
+          scrollBehavior: 'auto !important',
+        },
+      },
+    },
+  },
+  MuiButtonBase: {
+    defaultProps: {
+      disableRipple: false,
+    },
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': focusRing,
       },
     },
   },
@@ -22,6 +46,7 @@ export const componentOverrides: ThemeOptions['components'] = {
       root: {
         borderRadius: radiusTokens.md,
         minHeight: 40,
+        '&.Mui-focusVisible': focusRing,
       },
       sizeLarge: {
         minHeight: 48,
@@ -30,6 +55,37 @@ export const componentOverrides: ThemeOptions['components'] = {
       sizeSmall: {
         minHeight: 32,
         paddingInline: 12,
+      },
+    },
+  },
+  MuiIconButton: {
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': focusRing,
+      },
+    },
+  },
+  MuiLink: {
+    defaultProps: {
+      underline: 'hover',
+    },
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': focusRing,
+      },
+    },
+  },
+  MuiListItemButton: {
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': focusRing,
+      },
+    },
+  },
+  MuiTab: {
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': focusRing,
       },
     },
   },
@@ -44,6 +100,9 @@ export const componentOverrides: ThemeOptions['components'] = {
     styleOverrides: {
       root: {
         borderRadius: radiusTokens.md,
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+          borderWidth: 2,
+        },
       },
     },
   },
@@ -72,6 +131,9 @@ export const componentOverrides: ThemeOptions['components'] = {
     },
   },
   MuiAlert: {
+    defaultProps: {
+      variant: 'standard',
+    },
     styleOverrides: {
       root: {
         borderRadius: radiusTokens.md,
@@ -101,6 +163,14 @@ export const componentOverrides: ThemeOptions['components'] = {
   MuiContainer: {
     defaultProps: {
       maxWidth: 'lg',
+    },
+  },
+  MuiFormHelperText: {
+    styleOverrides: {
+      root: {
+        marginLeft: 0,
+        marginRight: 0,
+      },
     },
   },
 };
