@@ -207,5 +207,51 @@ describe('getBreadcrumbsForPath', () => {
       { to: '/app/flights', label: 'Search Flights' },
       { to: '/app/flights/FL-1', label: 'Flight details' },
     ]);
+    expect(getBreadcrumbsForPath('/admin/unknown-page')).toEqual([
+      { to: '/admin', label: 'Admin' },
+      { to: '/admin', label: 'Dashboard' },
+    ]);
+  });
+
+  it('labels admin aircraft seat configuration and skips the aircraft id segment', () => {
+    const aircraftId = 'AC-42';
+
+    expect(getBreadcrumbsForPath(APP_ROUTES.admin.aircraftSeats(aircraftId))).toEqual([
+      { to: '/admin', label: 'Admin' },
+      { to: '/admin/aircraft', label: 'Aircraft' },
+      { to: `/admin/aircraft/${aircraftId}/seats`, label: 'Seat configuration' },
+    ]);
+    expect(getBreadcrumbsForPath(`/admin/aircraft/${aircraftId}`)).toEqual([
+      { to: '/admin', label: 'Admin' },
+      { to: '/admin/aircraft', label: 'Aircraft' },
+    ]);
+  });
+
+  it('normalizes trailing slashes on nested paths', () => {
+    expect(getBreadcrumbsForPath('/app/flights/')).toEqual([
+      { to: '/app', label: 'Customer' },
+      { to: '/app/flights', label: 'Search Flights' },
+    ]);
+    expect(getBreadcrumbsForPath('/admin/reports/')).toEqual([
+      { to: '/admin', label: 'Admin' },
+      { to: '/admin/reports', label: 'Reports' },
+    ]);
+  });
+
+  it('returns no crumbs for unlabeled public utility paths', () => {
+    expect(getBreadcrumbsForPath(APP_ROUTES.public.home)).toEqual([]);
+    expect(getBreadcrumbsForPath(APP_ROUTES.public.forbidden)).toEqual([]);
+    expect(getBreadcrumbsForPath(APP_ROUTES.public.unauthorized)).toEqual([]);
+  });
+
+  it('supports encoded dynamic ids from route helpers', () => {
+    const flightId = 'FL/100';
+    const path = APP_ROUTES.customer.flightDetails(flightId);
+
+    expect(getBreadcrumbsForPath(path)).toEqual([
+      { to: '/app', label: 'Customer' },
+      { to: '/app/flights', label: 'Search Flights' },
+      { to: path, label: 'Flight details' },
+    ]);
   });
 });
