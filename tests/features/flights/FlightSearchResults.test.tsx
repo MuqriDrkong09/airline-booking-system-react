@@ -19,7 +19,7 @@ describe('FlightSearchResults', () => {
       />,
     );
 
-    expect(screen.getByText(/Searching flights/i)).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Loading flights' })).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText(/Available flights/i)).toBeInTheDocument();

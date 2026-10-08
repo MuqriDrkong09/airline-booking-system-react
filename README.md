@@ -82,6 +82,11 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Light / dark / system theme modes
 - Public, customer, and admin layouts with responsive navigation
 - Route-based breadcrumbs and protected / role-based routing
+- Content-shaped loading skeletons (`src/components/common/skeletons/`) for
+  flight cards, booking cards, profile, tables, dashboard metrics, charts,
+  flight details, and seat maps — used instead of spinners on content-heavy
+  pages so layout does not jump while data loads. `PageLoader` remains for
+  auth bootstrap, route guards, and Suspense
 
 ### Authentication (`src/features/auth/`)
 
@@ -116,7 +121,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
 - Edit profile (title, name, phone, date of birth, nationality)
 - Travel preferences (cabin, seat, meal, newsletter)
 - Change password
-- Loading skeleton, save-button state, success and error alerts
+- Shared `ProfileSkeleton` while loading, save-button state, success and error alerts
 - Data fetching/mutations with TanStack Query
 
 ### Flight search (`src/features/flights/`)
@@ -260,7 +265,7 @@ Registration, email verification, and password reset also work in mock mode. Ver
   After check-in, open the digital boarding pass from the result step.
 - Booking details page with reusable sections (booking information, flight,
   passengers, seats, baggage, meals, add-ons, payment, cancellation policy) and
-  loading / error / not-found states
+  skeleton / error / not-found states
 - Manage booking (`/app/bookings/:reference/manage`): change seats, baggage, meals,
   add-ons, contact details, and change flight when permitted. Flight changes show
   original fare, new fare, change fee, and amount due/refund with confirmation
@@ -273,7 +278,8 @@ Registration, email verification, and password reset also work in mock mode. Ver
   safe payment snapshot, price breakdown, booking reference, and status —
   plus selectors for passenger/seat/baggage/meal/addon totals, subtotal,
   discount, taxes, and final total; only non-sensitive fields are persisted
-- Loading / error / empty / results states via TanStack Query
+- Skeleton / error / empty / results states via TanStack Query (flight results
+  and details use card/detail skeletons rather than full-page spinners)
 
 ### Layouts & navigation
 

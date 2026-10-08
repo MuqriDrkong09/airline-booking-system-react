@@ -9,7 +9,12 @@ import {
   Wallet,
 } from 'lucide-react';
 import { useState } from 'react';
-import { AppAlert, ErrorState, PageLoader } from '@/components/common';
+import {
+  AppAlert,
+  ChartSkeleton,
+  DashboardCardSkeleton,
+  ErrorState,
+} from '@/components/common';
 import { REPORT_CHART_COLORS } from '../constants/options';
 import { useAdminReportsQuery } from '../hooks/useAdminReports';
 import {
@@ -47,7 +52,12 @@ export function AdminReportsView() {
     return (
       <Stack spacing={3}>
         <ReportPeriodFilter value={filters} onChange={setFilters} />
-        <PageLoader label="Loading reports" />
+        <DashboardCardSkeleton
+          count={5}
+          columns={{ xs: 1, sm: 2, md: 3, lg: 5 }}
+        />
+        <ChartSkeleton count={4} columns={{ xs: 1, lg: 2 }} />
+        <ChartSkeleton count={1} columns={{ xs: 1, lg: 1 }} />
       </Stack>
     );
   }

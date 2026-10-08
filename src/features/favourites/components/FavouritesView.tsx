@@ -1,6 +1,11 @@
 import Box from '@mui/material/Box';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { AppButton, EmptyState, ErrorState, PageLoader } from '@/components/common';
+import {
+  AppButton,
+  EmptyState,
+  ErrorState,
+  FlightCardSkeleton,
+} from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import type { FlightOffer } from '@/features/flights';
 import { useFavouritesQuery } from '../hooks/useFavourites';
@@ -11,7 +16,7 @@ export function FavouritesView() {
   const query = useFavouritesQuery();
 
   if (query.isLoading) {
-    return <PageLoader label="Loading favourite flights" />;
+    return <FlightCardSkeleton count={3} columns={{ xs: 1, sm: 2, lg: 3 }} />;
   }
 
   if (query.isError) {

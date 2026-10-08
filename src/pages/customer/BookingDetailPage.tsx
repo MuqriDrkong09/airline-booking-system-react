@@ -5,10 +5,10 @@ import { Link as RouterLink, useParams } from 'react-router-dom';
 import {
   AppAlert,
   AppButton,
+  BookingCardSkeleton,
   EmptyState,
   ErrorState,
   PageContainer,
-  PageLoader,
 } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import {
@@ -31,7 +31,7 @@ export function BookingDetailPage() {
   if (status === 'loading') {
     return (
       <PageContainer title="Booking details" description="Loading booking…">
-        <PageLoader label="Loading booking details…" />
+        <BookingCardSkeleton count={1} />
       </PageContainer>
     );
   }

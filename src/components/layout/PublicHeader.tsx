@@ -131,6 +131,13 @@ export function PublicHeader({ appName }: PublicHeaderProps) {
                 to={accountTo}
                 color="secondary"
                 variant="contained"
+                sx={{
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
+                  minWidth: 'auto',
+                  px: { xs: 1.25, sm: 2 },
+                  fontSize: { xs: '0.8125rem', sm: '0.875rem' },
+                }}
               >
                 {isAdmin ? 'Admin dashboard' : 'My account'}
               </Button>
@@ -141,7 +148,7 @@ export function PublicHeader({ appName }: PublicHeaderProps) {
                   to={APP_ROUTES.public.login}
                   color="inherit"
                   variant="outlined"
-                  sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
+                  sx={{ display: { xs: 'none', sm: 'inline-flex' }, whiteSpace: 'nowrap' }}
                 >
                   Sign in
                 </Button>
@@ -150,6 +157,13 @@ export function PublicHeader({ appName }: PublicHeaderProps) {
                   to={APP_ROUTES.public.register}
                   color="secondary"
                   variant="contained"
+                  sx={{
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap',
+                    minWidth: 'auto',
+                    px: { xs: 1.25, sm: 2 },
+                    fontSize: { xs: '0.8125rem', sm: '0.875rem' },
+                  }}
                 >
                   Create account
                 </Button>

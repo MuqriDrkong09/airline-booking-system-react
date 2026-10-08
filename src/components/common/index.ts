@@ -17,6 +17,19 @@ export { PageContainer } from './PageContainer';
 export { PageLoader } from './PageLoader';
 export { SectionHeader } from './SectionHeader';
 export { ThemeModeToggle } from './ThemeModeToggle';
+export {
+  BookingCardSkeleton,
+  ChartSkeleton,
+  DashboardCardSkeleton,
+  DashboardPageSkeleton,
+  FlightCardSkeleton,
+  FlightDetailsSkeleton,
+  FlightResultsSkeleton,
+  ProfileSkeleton,
+  SeatMapSkeleton,
+  SkeletonBlock,
+  TableSkeleton,
+} from './skeletons';
 
 export type { AppAlertProps } from './AppAlert';
 export type { AppBadgeProps, AppBadgeTone } from './AppBadge';
@@ -35,3 +48,12 @@ export type { LoadingSpinnerProps } from './LoadingSpinner';
 export type { PageContainerProps } from './PageContainer';
 export type { PageLoaderProps } from './PageLoader';
 export type { SectionHeaderProps } from './SectionHeader';
+export type {
+  BookingCardSkeletonProps,
+  ChartSkeletonProps,
+  DashboardCardSkeletonProps,
+  FlightCardSkeletonProps,
+  SeatMapSkeletonProps,
+  SkeletonBlockProps,
+  TableSkeletonProps,
+} from './skeletons';

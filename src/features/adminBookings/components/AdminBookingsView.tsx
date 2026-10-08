@@ -1,3 +1,4 @@
+import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useMemo, useState } from 'react';
@@ -6,7 +7,7 @@ import {
   ConfirmDialog,
   EmptyState,
   ErrorState,
-  PageLoader,
+  TableSkeleton,
 } from '@/components/common';
 import {
   BookingCancellationDialog,
@@ -61,7 +62,17 @@ export function AdminBookingsView() {
   );
 
   if (listQuery.isPending && !listQuery.data) {
-    return <PageLoader label="Loading bookings" />;
+    return (
+      <Stack spacing={3}>
+        <Skeleton width={140} />
+        <BookingFilters
+          value={query}
+          flightOptions={flightOptionsQuery.data ?? []}
+          onChange={setQuery}
+        />
+        <TableSkeleton columnCount={7} rowCount={6} showToolbar={false} />
+      </Stack>
+    );
   }
 
   if (listQuery.isError || !listQuery.data) {

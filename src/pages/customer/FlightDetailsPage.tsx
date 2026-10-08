@@ -5,8 +5,8 @@ import {
   AppButton,
   EmptyState,
   ErrorState,
+  FlightDetailsSkeleton,
   PageContainer,
-  PageLoader,
 } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import {
@@ -79,7 +79,7 @@ export function FlightDetailsPage() {
         title="Flight details"
         description="Review aircraft, schedule, baggage, amenities, and fare rules before you continue."
       >
-        <PageLoader label="Loading flight details…" />
+        <FlightDetailsSkeleton />
       </PageContainer>
     );
   }

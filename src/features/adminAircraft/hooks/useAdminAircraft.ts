@@ -31,8 +31,8 @@ export function useCreateAdminAircraftMutation() {
 
   return useMutation({
     mutationFn: (input: AdminAircraftInput) => createAdminAircraft(input),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: adminAircraftKeys.lists() });
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: adminAircraftKeys.lists() });
     },
   });
 }
@@ -48,9 +48,9 @@ export function useUpdateAdminAircraftMutation() {
       aircraftId: string;
       input: AdminAircraftInput;
     }) => updateAdminAircraft(aircraftId, input),
-    onSuccess: async (aircraft) => {
-      await queryClient.invalidateQueries({ queryKey: adminAircraftKeys.lists() });
+    onSuccess: (aircraft) => {
       queryClient.setQueryData(adminAircraftKeys.detail(aircraft.id), aircraft);
+      void queryClient.invalidateQueries({ queryKey: adminAircraftKeys.lists() });
     },
   });
 }
@@ -61,9 +61,9 @@ export function useSetAdminAircraftActiveMutation() {
   return useMutation({
     mutationFn: ({ aircraftId, active }: { aircraftId: string; active: boolean }) =>
       setAdminAircraftActive(aircraftId, active),
-    onSuccess: async (aircraft) => {
-      await queryClient.invalidateQueries({ queryKey: adminAircraftKeys.lists() });
+    onSuccess: (aircraft) => {
       queryClient.setQueryData(adminAircraftKeys.detail(aircraft.id), aircraft);
+      void queryClient.invalidateQueries({ queryKey: adminAircraftKeys.lists() });
     },
   });
 }
@@ -73,9 +73,9 @@ export function useDeleteAdminAircraftMutation() {
 
   return useMutation({
     mutationFn: (aircraftId: string) => deleteAdminAircraft(aircraftId),
-    onSuccess: async (_void, aircraftId) => {
-      await queryClient.invalidateQueries({ queryKey: adminAircraftKeys.lists() });
+    onSuccess: (_void, aircraftId) => {
       queryClient.removeQueries({ queryKey: adminAircraftKeys.detail(aircraftId) });
+      void queryClient.invalidateQueries({ queryKey: adminAircraftKeys.lists() });
     },
   });
 }

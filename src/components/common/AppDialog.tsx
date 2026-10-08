@@ -19,9 +19,13 @@ export function AppDialog({
   onClose,
   fullWidth = true,
   maxWidth = 'sm',
+  transitionDuration,
   ...props
 }: AppDialogProps) {
   const titleId = 'app-dialog-title';
+  // Avoid flaky close assertions under load; production keeps MUI defaults.
+  const resolvedTransitionDuration =
+    transitionDuration ?? (process.env.NODE_ENV === 'test' ? 0 : undefined);
 
   return (
     <Dialog
@@ -29,6 +33,7 @@ export function AppDialog({
       onClose={onClose}
       fullWidth={fullWidth}
       maxWidth={maxWidth}
+      transitionDuration={resolvedTransitionDuration}
       aria-labelledby={titleId}
     >
       <DialogTitle id={titleId}>{title}</DialogTitle>

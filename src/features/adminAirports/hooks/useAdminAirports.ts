@@ -22,8 +22,9 @@ export function useCreateAdminAirportMutation() {
 
   return useMutation({
     mutationFn: (input: AdminAirportInput) => createAdminAirport(input),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: adminAirportKeys.lists() });
+    onSuccess: () => {
+      // Do not await — dialog close / UI should not block on list refetch.
+      void queryClient.invalidateQueries({ queryKey: adminAirportKeys.lists() });
     },
   });
 }
@@ -39,9 +40,9 @@ export function useUpdateAdminAirportMutation() {
       airportId: string;
       input: AdminAirportInput;
     }) => updateAdminAirport(airportId, input),
-    onSuccess: async (airport) => {
-      await queryClient.invalidateQueries({ queryKey: adminAirportKeys.lists() });
+    onSuccess: (airport) => {
       queryClient.setQueryData(adminAirportKeys.detail(airport.id), airport);
+      void queryClient.invalidateQueries({ queryKey: adminAirportKeys.lists() });
     },
   });
 }
@@ -52,9 +53,9 @@ export function useSetAdminAirportActiveMutation() {
   return useMutation({
     mutationFn: ({ airportId, active }: { airportId: string; active: boolean }) =>
       setAdminAirportActive(airportId, active),
-    onSuccess: async (airport) => {
-      await queryClient.invalidateQueries({ queryKey: adminAirportKeys.lists() });
+    onSuccess: (airport) => {
       queryClient.setQueryData(adminAirportKeys.detail(airport.id), airport);
+      void queryClient.invalidateQueries({ queryKey: adminAirportKeys.lists() });
     },
   });
 }
@@ -64,9 +65,9 @@ export function useDeleteAdminAirportMutation() {
 
   return useMutation({
     mutationFn: (airportId: string) => deleteAdminAirport(airportId),
-    onSuccess: async (_void, airportId) => {
-      await queryClient.invalidateQueries({ queryKey: adminAirportKeys.lists() });
+    onSuccess: (_void, airportId) => {
       queryClient.removeQueries({ queryKey: adminAirportKeys.detail(airportId) });
+      void queryClient.invalidateQueries({ queryKey: adminAirportKeys.lists() });
     },
   });
 }

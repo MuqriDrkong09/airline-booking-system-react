@@ -1,7 +1,7 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import { AppAlert, ErrorState, PageLoader } from '@/components/common';
+import { AppAlert, ErrorState, SeatMapSkeleton } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import {
   useAdminAircraftDetailQuery,
@@ -21,7 +21,7 @@ export function AdminAircraftSeatConfigView({ aircraftId }: AdminAircraftSeatCon
   const updateMutation = useUpdateAdminAircraftMutation();
 
   if (detailQuery.isPending && !detailQuery.data) {
-    return <PageLoader label="Loading aircraft seat map" />;
+    return <SeatMapSkeleton showInspector />;
   }
 
   if (detailQuery.isError || !detailQuery.data) {

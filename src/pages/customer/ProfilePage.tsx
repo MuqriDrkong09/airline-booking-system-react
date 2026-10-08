@@ -1,10 +1,16 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
-import { AppAlert, AppButton, AppCard, ErrorState, PageContainer } from '@/components/common';
+import {
+  AppAlert,
+  AppButton,
+  AppCard,
+  ErrorState,
+  PageContainer,
+  ProfileSkeleton,
+} from '@/components/common';
 import { ChangePasswordForm } from '@/features/profile/components/ChangePasswordForm';
 import { ProfileEditForm } from '@/features/profile/components/ProfileEditForm';
-import { ProfilePageSkeleton } from '@/features/profile/components/ProfilePageSkeleton';
 import { ProfileView } from '@/features/profile/components/ProfileView';
 import { useProfileQuery } from '@/features/profile/hooks/useProfile';
 
@@ -16,7 +22,7 @@ export function ProfilePage() {
   if (profileQuery.isLoading) {
     return (
       <PageContainer title="Profile" description="Manage your personal details and travel preferences.">
-        <ProfilePageSkeleton />
+        <ProfileSkeleton />
       </PageContainer>
     );
   }

@@ -3,8 +3,8 @@ import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom
 import {
   AppButton,
   EmptyState,
+  FlightDetailsSkeleton,
   PageContainer,
-  PageLoader,
 } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import {
@@ -138,7 +138,7 @@ export function BookingSummaryPage() {
   if (detailsQuery.isLoading && !selectedFlight) {
     return (
       <PageContainer title="Booking summary">
-        <PageLoader label="Loading booking summary…" />
+        <FlightDetailsSkeleton />
       </PageContainer>
     );
   }

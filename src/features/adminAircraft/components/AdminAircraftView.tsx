@@ -1,6 +1,7 @@
+import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   AppAlert,
@@ -8,7 +9,7 @@ import {
   ConfirmDialog,
   EmptyState,
   ErrorState,
-  PageLoader,
+  TableSkeleton,
 } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import {
@@ -36,12 +37,18 @@ type DialogState =
   | { mode: 'edit'; aircraft: AdminAircraft }
   | { mode: 'view'; aircraft: AdminAircraft };
 
+type FormDialogSnapshot = {
+  mode: 'create' | 'edit';
+  aircraft: AdminAircraft | null;
+};
+
 export function AdminAircraftView() {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<AdminAircraftFilters>(EMPTY_ADMIN_AIRCRAFT_FILTERS);
   const [dialog, setDialog] = useState<DialogState>({ mode: 'closed' });
   const [deleteTarget, setDeleteTarget] = useState<AdminAircraft | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const formDialogRef = useRef<FormDialogSnapshot>({ mode: 'create', aircraft: null });
 
   const listQuery = useAdminAircraftQuery(filters);
   const createMutation = useCreateAdminAircraftMutation();
@@ -50,9 +57,24 @@ export function AdminAircraftView() {
   const deleteMutation = useDeleteAdminAircraftMutation();
 
   const submitting = createMutation.isPending || updateMutation.isPending;
+  const formDialogOpen = dialog.mode === 'create' || dialog.mode === 'edit';
 
-  if (listQuery.isLoading) {
-    return <PageLoader label="Loading aircraft" />;
+  // Keep last create/edit props while the dialog exits so the title does not
+  // flash to "Create aircraft" during MUI's close transition.
+  if (dialog.mode === 'create') {
+    formDialogRef.current = { mode: 'create', aircraft: null };
+  } else if (dialog.mode === 'edit') {
+    formDialogRef.current = { mode: 'edit', aircraft: dialog.aircraft };
+  }
+
+  if (listQuery.isPending && !listQuery.data) {
+    return (
+      <Stack spacing={3}>
+        <Skeleton width={140} />
+        <AircraftFilters value={filters} onChange={setFilters} />
+        <TableSkeleton columnCount={6} rowCount={6} showToolbar={false} />
+      </Stack>
+    );
   }
 
   if (listQuery.isError) {
@@ -187,9 +209,9 @@ export function AdminAircraftView() {
       )}
 
       <AircraftDialog
-        open={dialog.mode === 'create' || dialog.mode === 'edit'}
-        mode={dialog.mode === 'edit' ? 'edit' : 'create'}
-        aircraft={dialog.mode === 'edit' ? dialog.aircraft : null}
+        open={formDialogOpen}
+        mode={formDialogRef.current.mode}
+        aircraft={formDialogRef.current.aircraft}
         submitting={submitting}
         onClose={() => setDialog({ mode: 'closed' })}
         onSubmit={handleSubmit}

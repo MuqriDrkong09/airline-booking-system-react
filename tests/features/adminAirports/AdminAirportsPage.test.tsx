@@ -154,21 +154,19 @@ describe('AdminAirportsPage', () => {
       fireEvent.change(within(dialog).getByLabelText(/^City/i), {
         target: { value: 'KL City' },
       });
-      fireEvent.click(within(dialog).getByRole('button', { name: 'Save changes' }));
+      await user.click(within(dialog).getByRole('button', { name: 'Save changes' }));
 
       await waitFor(() => {
         expect(
           mockAdminAirportsApi.getState().find((airport) => airport.code === 'KUL')?.city,
         ).toBe('KL City');
-      });
-      await waitFor(() => {
         expect(screen.queryByRole('heading', { name: 'Edit KUL' })).not.toBeInTheDocument();
       });
 
       await user.click(screen.getByRole('button', { name: 'Edit KUL' }));
       const reopen = await screen.findByRole('dialog');
       expect(within(reopen).getByRole('heading', { name: 'Edit KUL' })).toBeInTheDocument();
-      fireEvent.click(within(reopen).getByRole('button', { name: 'Cancel' }));
+      await user.click(within(reopen).getByRole('button', { name: 'Cancel' }));
       await waitFor(() => {
         expect(screen.queryByRole('heading', { name: 'Edit KUL' })).not.toBeInTheDocument();
       });

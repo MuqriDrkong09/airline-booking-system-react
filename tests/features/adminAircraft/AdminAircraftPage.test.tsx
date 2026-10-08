@@ -137,8 +137,6 @@ describe('AdminAircraftPage', () => {
 
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-    await waitFor(() => {
       expect(
         mockAdminAircraftApi.getState().find((aircraft) => aircraft.registration === '9M-AAA')
           ?.model,
@@ -147,6 +145,7 @@ describe('AdminAircraftPage', () => {
 
     await user.click(screen.getByRole('button', { name: 'Edit 9M-AAA' }));
     const editDialog = await screen.findByRole('dialog');
+    expect(within(editDialog).getByRole('heading', { name: 'Edit 9M-AAA' })).toBeInTheDocument();
     await user.click(within(editDialog).getByRole('button', { name: 'Cancel' }));
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

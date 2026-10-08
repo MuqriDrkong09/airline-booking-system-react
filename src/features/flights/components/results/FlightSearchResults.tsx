@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -14,7 +13,13 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { AppBadge, AppButton, EmptyState, ErrorState, LoadingSpinner } from '@/components/common';
+import {
+  AppBadge,
+  AppButton,
+  EmptyState,
+  ErrorState,
+  FlightResultsSkeleton,
+} from '@/components/common';
 import { getFeatureErrorPresentation } from '@/features/errors';
 import { useFlightFilters } from '../../hooks/useFlightFilters';
 import { useSearchFlightsQuery } from '../../hooks/useFlights';
@@ -34,16 +39,6 @@ export interface FlightSearchResultsProps {
   request: Partial<FlightSearchRequest> | null;
   enabled?: boolean;
   onSelectFlight?: (flight: FlightOffer) => void;
-}
-
-function ResultsSkeleton() {
-  return (
-    <Stack spacing={1.75} aria-hidden="true" sx={{ width: '100%' }}>
-      {[0, 1, 2].map((item) => (
-        <Skeleton key={item} variant="rounded" height={280} />
-      ))}
-    </Stack>
-  );
 }
 
 const MemoFlightList = memo(FlightList);
@@ -98,8 +93,7 @@ function FlightSearchResultsComponent({
   if (query.isLoading) {
     return (
       <Stack spacing={2} component="section" aria-label="Flight search results">
-        <LoadingSpinner centered label="Searching flights…" />
-        <ResultsSkeleton />
+        <FlightResultsSkeleton count={3} />
       </Stack>
     );
   }

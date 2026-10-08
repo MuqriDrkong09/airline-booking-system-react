@@ -4,10 +4,10 @@ import { useMemo } from 'react';
 import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom';
 import {
   AppButton,
+  BookingCardSkeleton,
   EmptyState,
   ErrorState,
   PageContainer,
-  PageLoader,
 } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import {
@@ -53,7 +53,7 @@ export function ManageBookingPage() {
   if (status === 'loading') {
     return (
       <PageContainer title="Manage booking" description="Loading booking…">
-        <PageLoader label="Loading booking…" />
+        <BookingCardSkeleton count={2} />
       </PageContainer>
     );
   }

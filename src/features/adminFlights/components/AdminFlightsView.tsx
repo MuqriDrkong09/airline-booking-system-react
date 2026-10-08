@@ -1,3 +1,4 @@
+import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
@@ -8,7 +9,7 @@ import {
   ConfirmDialog,
   EmptyState,
   ErrorState,
-  PageLoader,
+  TableSkeleton,
 } from '@/components/common';
 import {
   useAdminFlightsQuery,
@@ -46,8 +47,14 @@ export function AdminFlightsView() {
 
   const submitting = createMutation.isPending || updateMutation.isPending;
 
-  if (listQuery.isLoading) {
-    return <PageLoader label="Loading flights" />;
+  if (listQuery.isPending && !listQuery.data) {
+    return (
+      <Stack spacing={3}>
+        <Skeleton width={140} />
+        <FlightFilters value={filters} onChange={setFilters} />
+        <TableSkeleton columnCount={7} rowCount={6} showToolbar={false} />
+      </Stack>
+    );
   }
 
   if (listQuery.isError) {

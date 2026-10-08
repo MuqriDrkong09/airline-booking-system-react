@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { useMemo } from 'react';
-import { AppAlert, AppButton, AppCard } from '@/components/common';
+import { AppAlert, AppButton, AppCard, SeatMapSkeleton } from '@/components/common';
 import { useBookingStore } from '@/features/booking';
 import { useSeatSelectionStore } from '../store/seatSelectionStore';
 import {
@@ -45,11 +45,7 @@ export function SeatSelectionPanel({ onSaved }: SeatSelectionPanelProps) {
   }, [passengers]);
 
   if (!context || seats.length === 0) {
-    return (
-      <AppAlert severity="info" title="Seat map unavailable">
-        Open this step from passenger details after choosing a flight.
-      </AppAlert>
-    );
+    return <SeatMapSkeleton showInspector />;
   }
 
   return (

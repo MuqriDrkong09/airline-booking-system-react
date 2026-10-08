@@ -9,7 +9,7 @@ import {
   Users,
   Wallet,
 } from 'lucide-react';
-import { ErrorState, PageLoader } from '@/components/common';
+import { DashboardPageSkeleton, ErrorState } from '@/components/common';
 import { useAdminDashboardQuery } from '../hooks/useAdminDashboard';
 import {
   formatDashboardCurrency,
@@ -28,7 +28,7 @@ export function AdminDashboardView() {
   const query = useAdminDashboardQuery();
 
   if (query.isLoading) {
-    return <PageLoader label="Loading dashboard" />;
+    return <DashboardPageSkeleton />;
   }
 
   if (query.isError || !query.data) {
