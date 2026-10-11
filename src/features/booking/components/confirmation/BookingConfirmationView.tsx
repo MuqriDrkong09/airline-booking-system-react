@@ -13,10 +13,11 @@ export interface BookingConfirmationViewProps {
 
 export function BookingConfirmationView({ booking }: BookingConfirmationViewProps) {
   return (
-    <Stack spacing={2.5} sx={{ maxWidth: 880 }}>
+    <Stack spacing={2.5} sx={{ width: '100%' }}>
       <BookingConfirmationSuccess booking={booking} />
       <BookingConfirmationActions booking={booking} />
       <BookingConfirmationDetails booking={booking} />
+
 
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
