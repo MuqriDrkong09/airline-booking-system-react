@@ -20,10 +20,12 @@ function createTransactionId(): string {
  * In-memory mock processor. Card PAN/CVV are used only for the decision and
  * never returned or stored beyond this call stack.
  */
+const DEFAULT_LATENCY_MS = process.env.NODE_ENV === 'test' ? 0 : 900;
+
 export function createMockPaymentApi(options?: {
   latencyMs?: number;
 }): PaymentApi {
-  const latencyMs = options?.latencyMs ?? 900;
+  const latencyMs = options?.latencyMs ?? DEFAULT_LATENCY_MS;
   const processedKeys = new Set<string>();
 
   return {

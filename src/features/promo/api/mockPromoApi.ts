@@ -9,10 +9,12 @@ function delay(ms: number): Promise<void> {
   });
 }
 
+const DEFAULT_LATENCY_MS = process.env.NODE_ENV === 'test' ? 0 : 280;
+
 export function createMockPromoApi(options?: {
   latencyMs?: number;
 }): PromoApi {
-  const latencyMs = options?.latencyMs ?? 280;
+  const latencyMs = options?.latencyMs ?? DEFAULT_LATENCY_MS;
 
   return {
     async validatePromoCode(request: PromoValidateRequest): Promise<PromoValidationResult> {

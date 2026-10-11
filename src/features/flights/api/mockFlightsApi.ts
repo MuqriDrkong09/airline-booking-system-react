@@ -2,7 +2,7 @@ import type { FlightOffer, FlightSearchRequest, FlightSearchResponse } from '../
 import type { FlightsApi } from './flightsApi.types';
 import { findMockFlightOfferById, generateMockFlightOffers } from './flightsData';
 
-const MOCK_DELAY_MS = 350;
+const MOCK_DELAY_MS = process.env.NODE_ENV === 'test' ? 0 : 350;
 
 function delay(ms = MOCK_DELAY_MS): Promise<void> {
   return new Promise((resolve) => {

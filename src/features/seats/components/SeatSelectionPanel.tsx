@@ -108,10 +108,12 @@ export function SeatSelectionPanel({ onSaved }: SeatSelectionPanelProps) {
             onClick={() => {
               const result = saveSelection();
               if (result.ok) {
+                const { seats: currentSeats, assignments: currentAssignments } =
+                  useSeatSelectionStore.getState();
                 setBookingSeats(
-                  assignments
+                  currentAssignments
                     .map((assignment) => {
-                      const seat = getSeatById(seats, assignment.seatId);
+                      const seat = getSeatById(currentSeats, assignment.seatId);
                       if (!seat) {
                         return null;
                       }
