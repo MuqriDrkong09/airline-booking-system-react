@@ -1,4 +1,4 @@
-import { getFeatureErrorPresentation } from '@/features/errors';
+import { getFeatureErrorPresentation, isApiError } from '@/features/errors';
 import { ApiError, HTTP_STATUS_MESSAGES } from '@/services/api';
 import { APP_ROUTES } from '@/constants/routes';
 
@@ -23,5 +23,10 @@ describe('getFeatureErrorPresentation', () => {
     );
     expect(presentation.message).toBe('Promo code expired.');
     expect(presentation.navigateTo).toBeUndefined();
+  });
+
+  it('identifies ApiError instances', () => {
+    expect(isApiError(new ApiError('Denied', { status: 403 }))).toBe(true);
+    expect(isApiError(new Error('Denied'))).toBe(false);
   });
 });

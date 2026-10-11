@@ -2,7 +2,9 @@ import {
   computePromoDiscountAmount,
   formatPromoAmount,
   isPromoExpired,
+  toBookingPromoCode,
   validatePromoCode,
+  type AppliedPromoCode,
   type PromoCodeDefinition,
 } from '@/features/promo';
 
@@ -96,5 +98,68 @@ describe('promoRules', () => {
     expect(isPromoExpired({ ...basePromo, expiresAt: '2099-12-31' }, '2026-01-01')).toBe(
       false,
     );
+    expect(isPromoExpired({ ...basePromo, expiresAt: null }, '2026-01-01')).toBe(false);
+  });
+
+  it('rejects empty promo codes and clamps negative subtotals', () => {
+    expect(
+      validatePromoCode({
+        code: '   ',
+        subtotal: 500,
+        currency: 'USD',
+      }),
+    ).toMatchObject({
+      ok: false,
+      status: 'INVALID',
+      message: expect.stringMatching(/enter a promo code/i),
+    });
+
+    const result = validatePromoCode({
+      code: 'FLIGHT100',
+      subtotal: -50,
+      currency: 'MYR',
+    });
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.status).toBe('BELOW_MINIMUM');
+    }
+  });
+
+  it('caps fixed discounts at the booking subtotal', () => {
+    expect(
+      computePromoDiscountAmount(40, {
+        discountType: 'FIXED',
+        discountValue: 100,
+        maxDiscount: null,
+      }),
+    ).toBe(40);
+    expect(
+      computePromoDiscountAmount(0, {
+        discountType: 'PERCENT',
+        discountValue: 10,
+        maxDiscount: null,
+      }),
+    ).toBe(0);
+  });
+
+  it('maps an applied promo into booking promo code fields', () => {
+    const applied: AppliedPromoCode = {
+      code: 'FLIGHT100',
+      discountType: 'FIXED',
+      discountValue: 100,
+      maxDiscount: null,
+      currency: 'MYR',
+      description: 'RM100 discount',
+      discountAmount: 100,
+    };
+
+    expect(toBookingPromoCode(applied)).toEqual({
+      code: 'FLIGHT100',
+      discountType: 'FIXED',
+      discountValue: 100,
+      maxDiscount: null,
+      currency: 'MYR',
+      description: 'RM100 discount',
+    });
   });
 });

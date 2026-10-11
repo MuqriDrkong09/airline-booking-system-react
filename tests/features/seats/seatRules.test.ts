@@ -2,6 +2,10 @@ import {
   applySeatSelection,
   calculateSeatPriceTotal,
   canPassengerSelectSeats,
+  countAssignedPassengers,
+  getAssignmentForPassenger,
+  getAssignmentForSeat,
+  getSeatById,
   isSeatSelectable,
   passengersNeedingSeats,
   resolveDisplayStatus,
@@ -230,5 +234,35 @@ describe('seat selection rules', () => {
     const assignments: SeatAssignment[] = [{ passengerId: adult.id, seatId: 'economy-10A' }];
     expect(resolveDisplayStatus(seats[0]!, assignments, adult.id)).toBe('SELECTED');
     expect(resolveDisplayStatus(seats[2]!, assignments, adult.id)).toBe('EMERGENCY_EXIT');
+  });
+
+  it('looks up seats and assignments by id', () => {
+    const assignments: SeatAssignment[] = [{ passengerId: adult.id, seatId: 'economy-10A' }];
+    expect(getSeatById(seats, 'economy-10D')?.label).toBe('10D');
+    expect(getAssignmentForPassenger(assignments, adult.id)?.seatId).toBe('economy-10A');
+    expect(getAssignmentForSeat(assignments, 'economy-10A')?.passengerId).toBe(adult.id);
+    expect(countAssignedPassengers(assignments)).toBe(1);
+  });
+
+  it('rejects unknown passengers and unknown seats', () => {
+    expect(
+      applySeatSelection({
+        seats,
+        assignments: [],
+        passengerId: 'missing',
+        seatId: 'economy-10A',
+        passengers: [adult],
+      }),
+    ).toMatchObject({ ok: false, reason: expect.stringMatching(/select a passenger/i) });
+
+    expect(
+      applySeatSelection({
+        seats,
+        assignments: [],
+        passengerId: adult.id,
+        seatId: 'missing-seat',
+        passengers: [adult],
+      }),
+    ).toMatchObject({ ok: false, reason: expect.stringMatching(/not found/i) });
   });
 });

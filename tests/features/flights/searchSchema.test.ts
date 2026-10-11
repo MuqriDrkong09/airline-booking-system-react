@@ -110,4 +110,108 @@ describe('flightSearchSchema', () => {
 
     expect(flightSearchSchema.safeParse(values).success).toBe(true);
   });
+
+  it('rejects departure dates in the past', () => {
+    const values = createDefaultFlightSearchValues({
+      tripType: 'ONE_WAY',
+      origin: kul,
+      destination: nrt,
+      departureDate: addDaysIso(todayIsoDate(), -1),
+    });
+
+    const result = flightSearchSchema.safeParse(values);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(
+        result.error.issues.some((issue) =>
+          issue.message.toLowerCase().includes('past'),
+        ),
+      ).toBe(true);
+    }
+  });
+
+  it('rejects more than the maximum combined adults and children', () => {
+    const values = createDefaultFlightSearchValues({
+      tripType: 'ONE_WAY',
+      origin: kul,
+      destination: nrt,
+      departureDate: addDaysIso(todayIsoDate(), 3),
+      adults: 8,
+      children: 2,
+    });
+
+    const result = flightSearchSchema.safeParse(values);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(
+        result.error.issues.some((issue) =>
+          /adults and children cannot exceed/i.test(issue.message),
+        ),
+      ).toBe(true);
+    }
+  });
+
+  it('rejects round-trip returns before the departure date', () => {
+    const departure = addDaysIso(todayIsoDate(), 10);
+    const values = createDefaultFlightSearchValues({
+      tripType: 'ROUND_TRIP',
+      origin: kul,
+      destination: nrt,
+      departureDate: departure,
+      returnDate: addDaysIso(departure, -2),
+    });
+
+    const result = flightSearchSchema.safeParse(values);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues.some((issue) => issue.path.includes('returnDate'))).toBe(true);
+    }
+  });
+
+  it('requires origin and destination for one-way searches', () => {
+    const values = createDefaultFlightSearchValues({
+      tripType: 'ONE_WAY',
+      origin: null,
+      destination: null,
+      departureDate: addDaysIso(todayIsoDate(), 3),
+    });
+
+    const result = flightSearchSchema.safeParse(values);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues.some((issue) => issue.path.includes('origin'))).toBe(true);
+      expect(result.error.issues.some((issue) => issue.path.includes('destination'))).toBe(true);
+    }
+  });
+
+  it('enforces multi-city leg count bounds', () => {
+    const day = addDaysIso(todayIsoDate(), 5);
+    const tooFew = createDefaultFlightSearchValues({
+      tripType: 'MULTI_CITY',
+      legs: [{ origin: kul, destination: nrt, departureDate: day }],
+    });
+    const tooFewResult = flightSearchSchema.safeParse(tooFew);
+    expect(tooFewResult.success).toBe(false);
+    if (!tooFewResult.success) {
+      expect(
+        tooFewResult.error.issues.some((issue) => /at least 2 flights/i.test(issue.message)),
+      ).toBe(true);
+    }
+
+    const tooMany = createDefaultFlightSearchValues({
+      tripType: 'MULTI_CITY',
+      legs: Array.from({ length: 6 }, (_, index) => ({
+        origin: index % 2 === 0 ? kul : nrt,
+        destination: index % 2 === 0 ? nrt : sin,
+        departureDate: addDaysIso(todayIsoDate(), 5 + index),
+      })),
+    });
+    const tooManyResult = flightSearchSchema.safeParse(tooMany);
+    expect(tooManyResult.success).toBe(false);
+    if (!tooManyResult.success) {
+      expect(
+        tooManyResult.error.issues.some((issue) => /up to 5 flights/i.test(issue.message)),
+      ).toBe(true);
+    }
+  });
 });

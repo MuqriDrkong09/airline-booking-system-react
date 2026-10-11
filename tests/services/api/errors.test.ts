@@ -5,7 +5,9 @@ import {
   HTTP_STATUS_MESSAGES,
   NETWORK_ERROR_MESSAGE,
   getErrorMessage,
+  getErrorStatus,
   getErrorTitle,
+  isNetworkError,
   toApiError,
   toAuthApiError,
 } from '@/services/api';
@@ -74,5 +76,31 @@ describe('api errors', () => {
 
   it('falls back for unknown errors', () => {
     expect(getErrorMessage({}, 'Fallback')).toBe('Fallback');
+  });
+
+  it('reads status from ApiError and Axios errors', () => {
+    expect(getErrorStatus(new ApiError('Denied', { status: 403 }))).toBe(403);
+    expect(getErrorStatus(axiosError(404))).toBe(404);
+    expect(getErrorStatus(new Error('boom'))).toBeUndefined();
+  });
+
+  it('detects network failures without a response', () => {
+    const network = new axios.AxiosError('Network Error', 'ERR_NETWORK');
+    expect(isNetworkError(network)).toBe(true);
+    expect(isNetworkError(axiosError(500))).toBe(false);
+    expect(
+      isNetworkError(new ApiError('Unable to connect to the internet')),
+    ).toBe(true);
+    expect(isNetworkError(new ApiError('Denied', { status: 403 }))).toBe(false);
+  });
+
+  it('uses string response bodies when they are safe user messages', () => {
+    const error = axiosError(400, 'Promo code is no longer valid.');
+    expect(getErrorMessage(error)).toBe('Promo code is no longer valid.');
+  });
+
+  it('titles ApiErrors from HTTP status and falls back for unknown values', () => {
+    expect(getErrorTitle(new ApiError('Denied', { status: 403 }))).toBe('Access denied');
+    expect(getErrorTitle(new Error('boom'))).toBe('Something went wrong');
   });
 });

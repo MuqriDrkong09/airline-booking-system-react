@@ -1,6 +1,8 @@
 import {
   calculateBaggageTotal,
+  defaultSelection,
   getAllowanceForCabin,
+  isBaggageWeight,
   pricePassengerBaggage,
   validateBaggageSelection,
 } from '@/features/baggage';
@@ -103,5 +105,47 @@ describe('baggage rules', () => {
       ],
     });
     expect(result.ok).toBe(true);
+  });
+
+  it('returns richer checked allowances for business and first cabins', () => {
+    expect(getAllowanceForCabin('BUSINESS')).toEqual({ cabinKg: 7, checkedKg: 40 });
+    expect(getAllowanceForCabin('FIRST')).toEqual({ cabinKg: 7, checkedKg: 40 });
+    expect(getAllowanceForCabin('PREMIUM_ECONOMY')).toEqual({ cabinKg: 7, checkedKg: 30 });
+  });
+
+  it('creates a default selection with cabin only', () => {
+    expect(defaultSelection('adult-1')).toEqual({
+      passengerId: 'adult-1',
+      cabinKg: 7,
+      checkedKg: 0,
+      additionalKg: 0,
+    });
+  });
+
+  it('recognizes catalog baggage weights only', () => {
+    expect(isBaggageWeight(20)).toBe(true);
+    expect(isBaggageWeight(15)).toBe(false);
+  });
+
+  it('does not charge overage for business cabin when checked bag is within allowance', () => {
+    const business = getAllowanceForCabin('BUSINESS');
+    const selection: PassengerBaggageSelection = {
+      passengerId: adult.id,
+      cabinKg: 7,
+      checkedKg: 40,
+      additionalKg: 0,
+    };
+    expect(pricePassengerBaggage(selection, business, 'ADULT').total).toBe(0);
+  });
+
+  it('rejects missing passenger selections', () => {
+    const result = validateBaggageSelection({
+      passengers: [adult],
+      selections: [],
+    });
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.message).toMatch(/Ada Lovelace|baggage/i);
+    }
   });
 });

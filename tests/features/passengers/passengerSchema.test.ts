@@ -191,4 +191,65 @@ describe('createPassengersFormSchema', () => {
       }).success,
     ).toBe(true);
   });
+
+  it('requires valid adult email and phone contact details', () => {
+    const missingEmail = internationalSchema.safeParse({
+      passengers: [adult({ email: '' })],
+    });
+    expect(missingEmail.success).toBe(false);
+    if (!missingEmail.success) {
+      expect(missingEmail.error.issues.some((issue) => issue.path.includes('email'))).toBe(true);
+    }
+
+    const badEmail = internationalSchema.safeParse({
+      passengers: [adult({ email: 'not-an-email' })],
+    });
+    expect(badEmail.success).toBe(false);
+
+    const badPhone = internationalSchema.safeParse({
+      passengers: [adult({ phone: '123' })],
+    });
+    expect(badPhone.success).toBe(false);
+    if (!badPhone.success) {
+      expect(badPhone.error.issues.some((issue) => issue.path.includes('phone'))).toBe(true);
+    }
+  });
+
+  it('validates optional child contact fields when provided', () => {
+    const schema = createPassengersFormSchema({
+      requiresPassport: true,
+      departureDate: departure,
+      expectedCounts: { adults: 1, children: 1, infants: 0 },
+    });
+
+    expect(
+      schema.safeParse({
+        passengers: [adult(), child({ email: 'not-an-email' })],
+      }).success,
+    ).toBe(false);
+
+    expect(
+      schema.safeParse({
+        passengers: [adult(), child({ phone: '12' })],
+      }).success,
+    ).toBe(false);
+  });
+
+  it('rejects invalid domestic passport numbers when a value is entered', () => {
+    const domesticSchema = createPassengersFormSchema({
+      requiresPassport: false,
+      departureDate: departure,
+      expectedCounts: { adults: 1, children: 0, infants: 0 },
+    });
+
+    const result = domesticSchema.safeParse({
+      passengers: [adult({ passportNumber: '!!', passportExpiry: '' })],
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(
+        result.error.issues.some((issue) => issue.path.includes('passportNumber')),
+      ).toBe(true);
+    }
+  });
 });
