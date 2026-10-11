@@ -6,6 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppAlert, AppButton } from '@/components/common';
 import {
+  clearCheckoutDrafts,
   completeBookingAfterPayment,
   formatBookingMoney,
   selectFinalTotal,
@@ -88,6 +89,8 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
     const created = completeBookingAfterPayment({
       transactionId: options.transactionId,
       payment: options.payment,
+      // Keep draft until after navigation so PaymentPage does not flash empty state.
+      clearDrafts: false,
     });
 
     if (!created.ok) {
@@ -106,6 +109,7 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
     navigate(APP_ROUTES.customer.bookingConfirmation(created.booking.reference), {
       replace: true,
     });
+    clearCheckoutDrafts();
   };
 
   const handlePay = cardForm.handleSubmit(async (cardValues) => {

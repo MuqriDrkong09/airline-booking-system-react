@@ -17,16 +17,30 @@ export type CompleteBookingResult =
 export interface CompleteBookingAfterPaymentInput {
   transactionId: string;
   payment: BookingPaymentInfo;
+  /**
+   * When false, leaves the draft checkout stores intact so the caller can
+   * navigate away before clearing (avoids a payment-page empty-state flash).
+   * Defaults to true.
+   */
+  clearDrafts?: boolean;
+}
+
+/** Clears temporary checkout stores after a successful booking confirmation. */
+export function clearCheckoutDrafts(): void {
+  useBookingStore.getState().clearBooking();
+  usePassengerDraftStore.getState().clearDraft();
+  useSeatSelectionStore.getState().clearSelection();
 }
 
 /**
  * Payment-success pipeline:
- * validate → create → generate reference → save → clear temporary checkout state.
+ * validate → create → generate reference → save → (optional) clear temporary checkout state.
  */
 export function completeBookingAfterPayment(
   input: CompleteBookingAfterPaymentInput,
 ): CompleteBookingResult {
   const draft = useBookingStore.getState();
+  const clearDrafts = input.clearDrafts ?? true;
 
   const withPayment = {
     ...draft,
@@ -54,9 +68,9 @@ export function completeBookingAfterPayment(
 
     useBookingsStore.getState().saveBooking(booking);
 
-    useBookingStore.getState().clearBooking();
-    usePassengerDraftStore.getState().clearDraft();
-    useSeatSelectionStore.getState().clearSelection();
+    if (clearDrafts) {
+      clearCheckoutDrafts();
+    }
 
     return { ok: true, booking };
   } catch (error) {

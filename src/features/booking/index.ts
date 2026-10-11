@@ -78,6 +78,7 @@ export { useBookingStore } from './store/bookingStore';
 export type { BookingState } from './store/bookingStore';
 export { useBookingsStore } from './store/bookingsStore';
 export {
+  clearCheckoutDrafts,
   completeBookingAfterPayment,
 } from './services/completeBookingAfterPayment';
 export type {
