@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import QRCode from 'qrcode';
 import { useEffect, useState } from 'react';
 
 export interface BookingETicketQrProps {
@@ -12,6 +11,7 @@ export interface BookingETicketQrProps {
 
 /**
  * Renders a QR code from a safe booking identifier (SVG, print-friendly).
+ * Loads `qrcode` on demand so it stays out of the initial bundle.
  */
 export function BookingETicketQr({
   payload,
@@ -24,13 +24,16 @@ export function BookingETicketQr({
   useEffect(() => {
     let cancelled = false;
 
-    void QRCode.toString(payload, {
-      type: 'svg',
-      margin: 1,
-      width: size,
-      errorCorrectionLevel: 'M',
-      color: { dark: '#0f172a', light: '#ffffff' },
-    })
+    void import('qrcode')
+      .then(({ default: QRCode }) =>
+        QRCode.toString(payload, {
+          type: 'svg',
+          margin: 1,
+          width: size,
+          errorCorrectionLevel: 'M',
+          color: { dark: '#0f172a', light: '#ffffff' },
+        }),
+      )
       .then((value) => {
         if (!cancelled) {
           setSvg(value);

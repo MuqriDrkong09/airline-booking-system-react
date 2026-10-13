@@ -56,6 +56,7 @@ export function FlightCard({ flight, onSelect }: FlightCardProps) {
             slotProps={{
               img: {
                 loading: 'lazy',
+                decoding: 'async',
                 onError: (event: SyntheticEvent<HTMLImageElement>) => {
                   event.currentTarget.style.display = 'none';
                 },

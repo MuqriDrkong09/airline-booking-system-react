@@ -1,24 +1,28 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useMemo } from 'react';
 import type { SeatStatus } from '../constants/seat';
-import type { Seat as SeatModel, SeatRowModel } from '../types/seat';
+import type { SeatRowModel } from '../types/seat';
 import { Seat } from './Seat';
 
 export interface SeatRowProps {
   row: SeatRowModel;
-  getDisplayStatus: (seat: SeatModel) => SeatStatus;
-  getSelectedByLabel?: (seat: SeatModel) => string | undefined;
+  displayStatusBySeatId: ReadonlyMap<string, SeatStatus>;
+  selectedLabelBySeatId?: ReadonlyMap<string, string>;
   onSelect: (seatId: string) => void;
 }
 
 export function SeatRow({
   row,
-  getDisplayStatus,
-  getSelectedByLabel,
+  displayStatusBySeatId,
+  selectedLabelBySeatId,
   onSelect,
 }: SeatRowProps) {
-  const seatsByColumn = new Map(row.seats.map((seat) => [seat.column, seat]));
+  const seatsByColumn = useMemo(
+    () => new Map(row.seats.map((seat) => [seat.column, seat])),
+    [row.seats],
+  );
 
   return (
     <Stack
@@ -62,8 +66,8 @@ export function SeatRow({
           <Seat
             key={seat.id}
             seat={seat}
-            displayStatus={getDisplayStatus(seat)}
-            selectedByLabel={getSelectedByLabel?.(seat)}
+            displayStatus={displayStatusBySeatId.get(seat.id) ?? seat.status}
+            selectedByLabel={selectedLabelBySeatId?.get(seat.id)}
             onSelect={onSelect}
           />
         );

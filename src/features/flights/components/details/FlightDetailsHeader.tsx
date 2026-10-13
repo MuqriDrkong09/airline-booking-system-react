@@ -40,6 +40,7 @@ export function FlightDetailsHeader({ flight }: FlightDetailsHeaderProps) {
           slotProps={{
             img: {
               loading: 'lazy',
+              decoding: 'async',
               onError: (event: SyntheticEvent<HTMLImageElement>) => {
                 event.currentTarget.style.display = 'none';
               },

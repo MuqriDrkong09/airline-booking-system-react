@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import type { KeyboardEvent } from 'react';
+import { memo, type KeyboardEvent } from 'react';
 import { ADMIN_SEAT_TYPE_COLORS, ADMIN_SEAT_TYPE_LABELS } from '../../constants/seatTypes';
 import type { AircraftConfiguredSeat } from '../../types/adminAircraft';
 
@@ -11,7 +11,11 @@ export interface AircraftSeatCellProps {
   onSelect: (seatId: string) => void;
 }
 
-export function AircraftSeatCell({ seat, selected = false, onSelect }: AircraftSeatCellProps) {
+function AircraftSeatCellComponent({
+  seat,
+  selected = false,
+  onSelect,
+}: AircraftSeatCellProps) {
   const colors = ADMIN_SEAT_TYPE_COLORS[seat.seatType];
   const title = [
     seat.label,
@@ -100,3 +104,6 @@ export function AircraftSeatCell({ seat, selected = false, onSelect }: AircraftS
     </Tooltip>
   );
 }
+
+/** Memoized: admin maps can be hundreds of seats; skip cells whose props are unchanged. */
+export const AircraftSeatCell = memo(AircraftSeatCellComponent);

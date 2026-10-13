@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import type { KeyboardEvent } from 'react';
+import { memo, type KeyboardEvent } from 'react';
 import {
   SEAT_CLASS_LABELS,
   SEAT_STATUS_COLORS,
@@ -65,7 +65,7 @@ function focusAdjacentSeat(current: HTMLElement, key: string) {
   next?.focus();
 }
 
-export function Seat({ seat, displayStatus, selectedByLabel, onSelect }: SeatProps) {
+function SeatComponent({ seat, displayStatus, selectedByLabel, onSelect }: SeatProps) {
   const colors = SEAT_STATUS_COLORS[displayStatus];
   const disabled = !isInteractiveStatus(displayStatus);
 
@@ -167,3 +167,6 @@ export function Seat({ seat, displayStatus, selectedByLabel, onSelect }: SeatPro
     </Tooltip>
   );
 }
+
+/** Memoized: seat maps are dense; only seats whose status/label change should re-render. */
+export const Seat = memo(SeatComponent);

@@ -7,7 +7,7 @@ import { renderWithProviders } from '@tests/utils/test-utils';
 function renderControls(overrides: Partial<AircraftSeatLayoutControlsProps> = {}) {
   const props: AircraftSeatLayoutControlsProps = {
     rows: 30,
-    columns: ['A', 'B', 'C', '|', 'D', 'E', 'F'],
+    columnsInput: 'A B C | D E F',
     paintType: '',
     defaultCabinClass: 'ECONOMY',
     onRowsChange: jest.fn(),

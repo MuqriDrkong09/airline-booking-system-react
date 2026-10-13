@@ -22,7 +22,10 @@ export function useUnreadNotificationCountQuery(enabled = true) {
     queryKey: notificationKeys.unreadCount(),
     queryFn: getUnreadNotificationCount,
     enabled,
+    /** Badge can lag slightly; avoid refetch storms while the tab is hidden. */
+    staleTime: 30_000,
     refetchInterval: 60_000,
+    refetchIntervalInBackground: false,
   });
 }
 

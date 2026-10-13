@@ -6,11 +6,11 @@ import {
   CABIN_CLASS_OPTIONS,
 } from '../../constants/seatTypes';
 import type { AdminSeatType, AircraftCabinClass } from '../../types/adminAircraft';
-import { formatColumnLayout } from '../../utils/seatMapConfig';
 
 export interface AircraftSeatLayoutControlsProps {
   rows: number;
-  columns: readonly string[];
+  /** Raw draft string — avoids re-parsing the layout on every editor keystroke/render. */
+  columnsInput: string;
   paintType: AdminSeatType | '';
   defaultCabinClass: AircraftCabinClass;
   onRowsChange: (rows: number) => void;
@@ -23,7 +23,7 @@ export interface AircraftSeatLayoutControlsProps {
 
 export function AircraftSeatLayoutControls({
   rows,
-  columns,
+  columnsInput,
   paintType,
   defaultCabinClass,
   onRowsChange,
@@ -46,7 +46,7 @@ export function AircraftSeatLayoutControls({
         />
         <AppInput
           label="Columns"
-          value={formatColumnLayout(columns)}
+          value={columnsInput}
           onChange={(event) => onColumnsChange(event.target.value)}
           helperText="Letters with optional aisle markers, e.g. A B C | D E F"
         />

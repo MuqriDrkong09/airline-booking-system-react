@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ZodError } from 'zod';
 import { AppAlert, AppButton } from '@/components/common';
 import type {
@@ -89,20 +89,23 @@ export function AircraftSeatMapEditor({
     setValidationError(null);
   };
 
-  const handleSelectSeat = (seatId: string) => {
-    if (paintType) {
-      setConfig((current) =>
-        syncSeatMapConfig({
-          ...current,
-          seats: current.seats.map((seat) =>
-            seat.id === seatId ? applySeatType(seat, paintType) : seat,
-          ),
-        }),
-      );
-    }
-    setSelectedSeatId(seatId);
-    setValidationError(null);
-  };
+  const handleSelectSeat = useCallback(
+    (seatId: string) => {
+      if (paintType) {
+        setConfig((current) =>
+          syncSeatMapConfig({
+            ...current,
+            seats: current.seats.map((seat) =>
+              seat.id === seatId ? applySeatType(seat, paintType) : seat,
+            ),
+          }),
+        );
+      }
+      setSelectedSeatId(seatId);
+      setValidationError(null);
+    },
+    [paintType],
+  );
 
   const handleApplyLayout = () => {
     try {
@@ -188,7 +191,7 @@ export function AircraftSeatMapEditor({
 
       <AircraftSeatLayoutControls
         rows={draftRows}
-        columns={parseColumnLayout(draftColumnsInput)}
+        columnsInput={draftColumnsInput}
         paintType={paintType}
         defaultCabinClass={defaultCabinClass}
         onRowsChange={setDraftRows}

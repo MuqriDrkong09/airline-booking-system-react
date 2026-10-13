@@ -2,22 +2,23 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { SEAT_CLASS_LABELS, type SeatStatus } from '../constants/seat';
-import type { Seat as SeatModel, SeatRowModel } from '../types/seat';
+import type { SeatRowModel } from '../types/seat';
 import { SeatRow } from './SeatRow';
 
 export interface SeatMapProps {
   aircraftModel: string;
   rows: SeatRowModel[];
-  getDisplayStatus: (seat: SeatModel) => SeatStatus;
-  getSelectedByLabel?: (seat: SeatModel) => string | undefined;
+  /** Precomputed status per seat id — avoids O(n×m) assignment scans per render. */
+  displayStatusBySeatId: ReadonlyMap<string, SeatStatus>;
+  selectedLabelBySeatId?: ReadonlyMap<string, string>;
   onSelect: (seatId: string) => void;
 }
 
 export function SeatMap({
   aircraftModel,
   rows,
-  getDisplayStatus,
-  getSelectedByLabel,
+  displayStatusBySeatId,
+  selectedLabelBySeatId,
   onSelect,
 }: SeatMapProps) {
   let lastClass: SeatRowModel['class'] | null = null;
@@ -72,8 +73,8 @@ export function SeatMap({
                 ) : null}
                 <SeatRow
                   row={row}
-                  getDisplayStatus={getDisplayStatus}
-                  getSelectedByLabel={getSelectedByLabel}
+                  displayStatusBySeatId={displayStatusBySeatId}
+                  selectedLabelBySeatId={selectedLabelBySeatId}
                   onSelect={onSelect}
                 />
               </Box>

@@ -1,23 +1,25 @@
 import Stack from '@mui/material/Stack';
+import { useMemo } from 'react';
 import { AppButton, EmptyState, ErrorState, PageLoader } from '@/components/common';
 import {
   useDeleteNotificationMutation,
   useMarkAllNotificationsAsReadMutation,
   useMarkNotificationAsReadMutation,
   useNotificationsQuery,
-  useUnreadNotificationCountQuery,
 } from '../hooks/useNotifications';
 import { NotificationCard } from './NotificationCard';
 
 export function NotificationsView() {
   const listQuery = useNotificationsQuery();
-  const unreadQuery = useUnreadNotificationCountQuery();
   const markAsRead = useMarkNotificationAsReadMutation();
   const markAllAsRead = useMarkAllNotificationsAsReadMutation();
   const deleteNotification = useDeleteNotificationMutation();
 
   const notifications = listQuery.data ?? [];
-  const unreadCount = unreadQuery.data ?? 0;
+  const unreadCount = useMemo(
+    () => notifications.filter((item) => item.readAt === null).length,
+    [notifications],
+  );
 
   if (listQuery.isLoading) {
     return <PageLoader label="Loading notifications" />;

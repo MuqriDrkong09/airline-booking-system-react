@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useMemo } from 'react';
 import { SEAT_CLASS_LABELS } from '@/features/seats/constants/seat';
 import type { AircraftConfiguredSeat, AircraftSeatMapConfig } from '../../types/adminAircraft';
 import { AircraftSeatCell } from './AircraftSeatCell';
@@ -16,8 +17,9 @@ export function AircraftSeatMapCanvas({
   selectedSeatId,
   onSelectSeat,
 }: AircraftSeatMapCanvasProps) {
-  const seatsByPosition = new Map(
-    config.seats.map((seat) => [`${seat.row}:${seat.column}`, seat] as const),
+  const seatsByPosition = useMemo(
+    () => new Map(config.seats.map((seat) => [`${seat.row}:${seat.column}`, seat] as const)),
+    [config.seats],
   );
 
   let lastCabinClass: AircraftConfiguredSeat['cabinClass'] | null = null;

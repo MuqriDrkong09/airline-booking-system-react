@@ -3,12 +3,9 @@ import Stack from '@mui/material/Stack';
 import { useMemo } from 'react';
 import { AppAlert, AppButton, AppCard, SeatMapSkeleton } from '@/components/common';
 import { useBookingStore } from '@/features/booking';
+import type { SeatStatus } from '../constants/seat';
 import { useSeatSelectionStore } from '../store/seatSelectionStore';
-import {
-  getAssignmentForSeat,
-  getSeatById,
-  resolveDisplayStatus,
-} from '../utils/seatRules';
+import { getSeatById } from '../utils/seatRules';
 import { groupSeatsIntoRows } from '../utils/seatMap';
 import { SeatLegend } from './SeatLegend';
 import { SeatMap } from './SeatMap';
@@ -44,6 +41,33 @@ export function SeatSelectionPanel({ onSaved }: SeatSelectionPanelProps) {
     return map;
   }, [passengers]);
 
+  const assignmentBySeatId = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const assignment of assignments) {
+      map.set(assignment.seatId, assignment.passengerId);
+    }
+    return map;
+  }, [assignments]);
+
+  const displayStatusBySeatId = useMemo(() => {
+    const map = new Map<string, SeatStatus>();
+    for (const seat of seats) {
+      map.set(seat.id, assignmentBySeatId.has(seat.id) ? 'SELECTED' : seat.status);
+    }
+    return map;
+  }, [seats, assignmentBySeatId]);
+
+  const selectedLabelBySeatId = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const [seatId, passengerId] of assignmentBySeatId) {
+      const name = passengerNameById.get(passengerId);
+      if (name) {
+        map.set(seatId, name);
+      }
+    }
+    return map;
+  }, [assignmentBySeatId, passengerNameById]);
+
   if (!context || seats.length === 0) {
     return <SeatMapSkeleton showInspector />;
   }
@@ -76,18 +100,9 @@ export function SeatSelectionPanel({ onSaved }: SeatSelectionPanelProps) {
             <SeatMap
               aircraftModel={context.aircraftModel}
               rows={rows}
-              getDisplayStatus={(seat) =>
-                resolveDisplayStatus(seat, assignments, selectedPassengerId)
-              }
-              getSelectedByLabel={(seat) => {
-                const assignment = getAssignmentForSeat(assignments, seat.id);
-                return assignment
-                  ? passengerNameById.get(assignment.passengerId)
-                  : undefined;
-              }}
-              onSelect={(seatId) => {
-                selectSeat(seatId);
-              }}
+              displayStatusBySeatId={displayStatusBySeatId}
+              selectedLabelBySeatId={selectedLabelBySeatId}
+              onSelect={selectSeat}
             />
           </Stack>
         </AppCard>

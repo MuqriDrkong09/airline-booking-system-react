@@ -1,48 +1,163 @@
+import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { AdminLayout, CustomerLayout, PublicLayout } from '@/components/layout';
 import { env } from '@/config/env';
 import { AdminRoute, CustomerRoute, ProtectedRoute } from '@/features/auth';
-import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage';
-import { LoginPage } from '@/pages/auth/LoginPage';
-import { RegisterPage } from '@/pages/auth/RegisterPage';
-import { ResetPasswordPage } from '@/pages/auth/ResetPasswordPage';
-import { VerifyEmailPage } from '@/pages/auth/VerifyEmailPage';
-import { ProfilePage } from '@/pages/customer/ProfilePage';
-import { CustomerHomePage } from '@/pages/customer/CustomerHomePage';
-import { FlightDetailsPage } from '@/pages/customer/FlightDetailsPage';
-import { PassengerDetailsPage } from '@/pages/customer/PassengerDetailsPage';
-import { AddonSelectionPage } from '@/pages/customer/AddonSelectionPage';
-import { BaggageSelectionPage } from '@/pages/customer/BaggageSelectionPage';
-import { BookingConfirmationPage } from '@/pages/customer/BookingConfirmationPage';
-import { BookingDetailPage } from '@/pages/customer/BookingDetailPage';
-import { BoardingPassPage } from '@/pages/customer/BoardingPassPage';
-import { BookingETicketPage } from '@/pages/customer/BookingETicketPage';
-import { BookingInvoicePage } from '@/pages/customer/BookingInvoicePage';
-import { BookingSummaryPage } from '@/pages/customer/BookingSummaryPage';
-import { CheckInPage } from '@/pages/customer/CheckInPage';
-import { FlightStatusPage } from '@/pages/customer/FlightStatusPage';
-import { FavouriteFlightsPage } from '@/pages/customer/FavouriteFlightsPage';
-import { ManageBookingPage } from '@/pages/customer/ManageBookingPage';
-import { MyBookingsPage } from '@/pages/customer/MyBookingsPage';
-import { MealSelectionPage } from '@/pages/customer/MealSelectionPage';
-import { NotificationPage } from '@/pages/customer/NotificationPage';
-import { PaymentPage } from '@/pages/customer/PaymentPage';
-import { SeatSelectionPage } from '@/pages/customer/SeatSelectionPage';
-import { SearchFlightsPage } from '@/pages/customer/SearchFlightsPage';
-import { AdminAircraftPage } from '@/pages/admin/AdminAircraftPage';
-import { AdminAircraftSeatConfigPage } from '@/pages/admin/AdminAircraftSeatConfigPage';
-import { AdminAirportsPage } from '@/pages/admin/AdminAirportsPage';
-import { AdminBookingsPage } from '@/pages/admin/AdminBookingsPage';
-import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage';
-import { AdminFlightsPage } from '@/pages/admin/AdminFlightsPage';
-import { AdminPromoCodesPage } from '@/pages/admin/AdminPromoCodesPage';
-import { AdminReportsPage } from '@/pages/admin/AdminReportsPage';
-import { AdminUsersPage } from '@/pages/admin/AdminUsersPage';
-import { ForbiddenPage } from '@/pages/ForbiddenPage';
-import { HomePage } from '@/pages/HomePage';
-import { NotFoundPage } from '@/pages/NotFoundPage';
-import { UnauthorizedPage } from '@/pages/UnauthorizedPage';
 import { RouteErrorFallback } from './RouteErrorFallback';
+
+/** Lazy-load a named page export for route-level code splitting. */
+function lazyPage<TProps extends object = object>(
+  loader: () => Promise<Record<string, ComponentType<TProps>>>,
+  exportName: string,
+): LazyExoticComponent<ComponentType<TProps>> {
+  return lazy(async () => {
+    const module = await loader();
+    const Page = module[exportName];
+    if (!Page) {
+      throw new Error(`Page export "${exportName}" was not found`);
+    }
+    return { default: Page };
+  });
+}
+
+const HomePage = lazyPage(() => import('@/pages/HomePage'), 'HomePage');
+const LoginPage = lazyPage(() => import('@/pages/auth/LoginPage'), 'LoginPage');
+const RegisterPage = lazyPage(() => import('@/pages/auth/RegisterPage'), 'RegisterPage');
+const ForgotPasswordPage = lazyPage(
+  () => import('@/pages/auth/ForgotPasswordPage'),
+  'ForgotPasswordPage',
+);
+const ResetPasswordPage = lazyPage(
+  () => import('@/pages/auth/ResetPasswordPage'),
+  'ResetPasswordPage',
+);
+const VerifyEmailPage = lazyPage(
+  () => import('@/pages/auth/VerifyEmailPage'),
+  'VerifyEmailPage',
+);
+const ForbiddenPage = lazyPage(() => import('@/pages/ForbiddenPage'), 'ForbiddenPage');
+const UnauthorizedPage = lazyPage(
+  () => import('@/pages/UnauthorizedPage'),
+  'UnauthorizedPage',
+);
+const NotFoundPage = lazyPage(() => import('@/pages/NotFoundPage'), 'NotFoundPage');
+
+const CustomerHomePage = lazyPage(
+  () => import('@/pages/customer/CustomerHomePage'),
+  'CustomerHomePage',
+);
+const SearchFlightsPage = lazyPage(
+  () => import('@/pages/customer/SearchFlightsPage'),
+  'SearchFlightsPage',
+);
+const FlightDetailsPage = lazyPage(
+  () => import('@/pages/customer/FlightDetailsPage'),
+  'FlightDetailsPage',
+);
+const PassengerDetailsPage = lazyPage(
+  () => import('@/pages/customer/PassengerDetailsPage'),
+  'PassengerDetailsPage',
+);
+const SeatSelectionPage = lazyPage(
+  () => import('@/pages/customer/SeatSelectionPage'),
+  'SeatSelectionPage',
+);
+const BaggageSelectionPage = lazyPage(
+  () => import('@/pages/customer/BaggageSelectionPage'),
+  'BaggageSelectionPage',
+);
+const MealSelectionPage = lazyPage(
+  () => import('@/pages/customer/MealSelectionPage'),
+  'MealSelectionPage',
+);
+const AddonSelectionPage = lazyPage(
+  () => import('@/pages/customer/AddonSelectionPage'),
+  'AddonSelectionPage',
+);
+const BookingSummaryPage = lazyPage(
+  () => import('@/pages/customer/BookingSummaryPage'),
+  'BookingSummaryPage',
+);
+const PaymentPage = lazyPage(() => import('@/pages/customer/PaymentPage'), 'PaymentPage');
+const BookingConfirmationPage = lazyPage(
+  () => import('@/pages/customer/BookingConfirmationPage'),
+  'BookingConfirmationPage',
+);
+const ManageBookingPage = lazyPage(
+  () => import('@/pages/customer/ManageBookingPage'),
+  'ManageBookingPage',
+);
+const BookingInvoicePage = lazyPage(
+  () => import('@/pages/customer/BookingInvoicePage'),
+  'BookingInvoicePage',
+);
+const BookingETicketPage = lazyPage(
+  () => import('@/pages/customer/BookingETicketPage'),
+  'BookingETicketPage',
+);
+const BoardingPassPage = lazyPage(
+  () => import('@/pages/customer/BoardingPassPage'),
+  'BoardingPassPage',
+);
+const BookingDetailPage = lazyPage(
+  () => import('@/pages/customer/BookingDetailPage'),
+  'BookingDetailPage',
+);
+const MyBookingsPage = lazyPage(
+  () => import('@/pages/customer/MyBookingsPage'),
+  'MyBookingsPage',
+);
+const CheckInPage = lazyPage(() => import('@/pages/customer/CheckInPage'), 'CheckInPage');
+const FlightStatusPage = lazyPage(
+  () => import('@/pages/customer/FlightStatusPage'),
+  'FlightStatusPage',
+);
+const FavouriteFlightsPage = lazyPage(
+  () => import('@/pages/customer/FavouriteFlightsPage'),
+  'FavouriteFlightsPage',
+);
+const NotificationPage = lazyPage(
+  () => import('@/pages/customer/NotificationPage'),
+  'NotificationPage',
+);
+const ProfilePage = lazyPage(() => import('@/pages/customer/ProfilePage'), 'ProfilePage');
+
+const AdminDashboardPage = lazyPage(
+  () => import('@/pages/admin/AdminDashboardPage'),
+  'AdminDashboardPage',
+);
+const AdminFlightsPage = lazyPage(
+  () => import('@/pages/admin/AdminFlightsPage'),
+  'AdminFlightsPage',
+);
+const AdminAirportsPage = lazyPage(
+  () => import('@/pages/admin/AdminAirportsPage'),
+  'AdminAirportsPage',
+);
+const AdminAircraftPage = lazyPage(
+  () => import('@/pages/admin/AdminAircraftPage'),
+  'AdminAircraftPage',
+);
+const AdminAircraftSeatConfigPage = lazyPage(
+  () => import('@/pages/admin/AdminAircraftSeatConfigPage'),
+  'AdminAircraftSeatConfigPage',
+);
+const AdminBookingsPage = lazyPage(
+  () => import('@/pages/admin/AdminBookingsPage'),
+  'AdminBookingsPage',
+);
+const AdminUsersPage = lazyPage(
+  () => import('@/pages/admin/AdminUsersPage'),
+  'AdminUsersPage',
+);
+const AdminPromoCodesPage = lazyPage(
+  () => import('@/pages/admin/AdminPromoCodesPage'),
+  'AdminPromoCodesPage',
+);
+const AdminReportsPage = lazyPage(
+  () => import('@/pages/admin/AdminReportsPage'),
+  'AdminReportsPage',
+);
 
 export const router = createBrowserRouter([
   {

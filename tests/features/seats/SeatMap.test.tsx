@@ -1,7 +1,14 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SeatMap, SeatLegend, createAircraftSeatMap, groupSeatsIntoRows } from '@/features/seats';
+import type { SeatStatus } from '@/features/seats';
 import { renderWithProviders } from '@tests/utils/test-utils';
+
+function statusMapFromSeats(
+  seats: ReturnType<typeof createAircraftSeatMap>['seats'],
+): Map<string, SeatStatus> {
+  return new Map(seats.map((seat) => [seat.id, seat.status]));
+}
 
 describe('SeatMap', () => {
   it('renders cabin sections and selects seats via click and keyboard', async () => {
@@ -19,7 +26,7 @@ describe('SeatMap', () => {
         <SeatMap
           aircraftModel={map.aircraftModel}
           rows={rows}
-          getDisplayStatus={(seat) => seat.status}
+          displayStatusBySeatId={statusMapFromSeats(map.seats)}
           onSelect={onSelect}
         />
       </>,
@@ -56,7 +63,7 @@ describe('SeatMap', () => {
       <SeatMap
         aircraftModel={map.aircraftModel}
         rows={rows}
-        getDisplayStatus={(seat) => seat.status}
+        displayStatusBySeatId={statusMapFromSeats(map.seats)}
         onSelect={onSelect}
       />,
     );
@@ -79,7 +86,7 @@ describe('SeatMap', () => {
       <SeatMap
         aircraftModel={map.aircraftModel}
         rows={rows}
-        getDisplayStatus={(seat) => seat.status}
+        displayStatusBySeatId={statusMapFromSeats(map.seats)}
         onSelect={jest.fn()}
       />,
     );
