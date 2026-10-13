@@ -14,12 +14,7 @@ export interface SeatSummaryProps {
   editTo?: string;
 }
 
-export function SeatSummary({
-  seats,
-  passengers,
-  currency = 'USD',
-  editTo,
-}: SeatSummaryProps) {
+export function SeatSummary({ seats, passengers, currency = 'USD', editTo }: SeatSummaryProps) {
   const nameById = new Map(
     passengers.map((passenger, index) => [
       passenger.id,
@@ -55,9 +50,7 @@ export function SeatSummary({
                 {nameById.get(seat.passengerId) ?? seat.passengerId}
               </Typography>
             </Stack>
-            <Typography variant="body2">
-              {formatBookingMoney(seat.price, currency)}
-            </Typography>
+            <Typography variant="body2">{formatBookingMoney(seat.price, currency)}</Typography>
           </Stack>
         ))}
         <Stack direction="row" sx={{ justifyContent: 'space-between' }}>

@@ -1,9 +1,6 @@
 import type { AxiosInstance } from 'axios';
 import type { PaymentApi } from '@/features/payment/api/paymentApi.types';
-import type {
-  ProcessPaymentRequest,
-  ProcessPaymentResult,
-} from '@/features/payment/types/payment';
+import type { ProcessPaymentRequest, ProcessPaymentResult } from '@/features/payment/types/payment';
 import { API_ENDPOINTS, apiClient, toApiError } from '@/services/api';
 
 /**

@@ -1,9 +1,4 @@
-import type {
-  AxiosError,
-  AxiosInstance,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from 'axios';
+import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import type { TokenStorage } from '@/services/auth/tokenStorage';
 import { tokenStorage } from '@/services/auth/tokenStorage';
 import { API_ENDPOINTS } from './endpoints';
@@ -26,9 +21,7 @@ export type ApiRequestConfig = InternalAxiosRequestConfig & {
 
 let interceptorsAttached = false;
 
-function asApiConfig(
-  config?: InternalAxiosRequestConfig | null,
-): ApiRequestConfig | undefined {
+function asApiConfig(config?: InternalAxiosRequestConfig | null): ApiRequestConfig | undefined {
   return config as ApiRequestConfig | undefined;
 }
 

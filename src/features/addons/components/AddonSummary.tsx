@@ -4,11 +4,7 @@ import Typography from '@mui/material/Typography';
 import { AppButton, AppCard } from '@/components/common';
 import { ADDON_CATALOG, formatAddonPrice } from '../constants/addons';
 import type { AddonPassenger, AddonSelection } from '../types/addon';
-import {
-  calculateAddonTotal,
-  calculateBookingTotal,
-  getAddonById,
-} from '../utils/addonRules';
+import { calculateAddonTotal, calculateBookingTotal, getAddonById } from '../utils/addonRules';
 
 export interface AddonSummaryProps {
   passengers: AddonPassenger[];
@@ -34,7 +30,9 @@ export function AddonSummary({
     addonTotal,
     seatTotal,
   });
-  const passengerName = new Map(passengers.map((passenger) => [passenger.id, passenger.displayName]));
+  const passengerName = new Map(
+    passengers.map((passenger) => [passenger.id, passenger.displayName]),
+  );
 
   return (
     <AppCard title="Add-ons summary" subtitle="Selected extras and updated booking total.">

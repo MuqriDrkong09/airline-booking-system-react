@@ -114,11 +114,9 @@ export function writeFlightFilterParams(
   const next = clearFlightFilterParams(params);
 
   const priceMinActive =
-    filters.priceMin !== null &&
-    (bounds ? filters.priceMin > bounds.priceMin : true);
+    filters.priceMin !== null && (bounds ? filters.priceMin > bounds.priceMin : true);
   const priceMaxActive =
-    filters.priceMax !== null &&
-    (bounds ? filters.priceMax < bounds.priceMax : true);
+    filters.priceMax !== null && (bounds ? filters.priceMax < bounds.priceMax : true);
 
   if (priceMinActive || priceMaxActive) {
     const min = filters.priceMin ?? bounds?.priceMin ?? 0;
@@ -137,25 +135,16 @@ export function writeFlightFilterParams(
   const depStartActive = filters.departureHourStart !== null && filters.departureHourStart > 0;
   const depEndActive = filters.departureHourEnd !== null && filters.departureHourEnd < 24;
   if (depStartActive || depEndActive) {
-    next.set(
-      'f_dep',
-      `${filters.departureHourStart ?? 0}-${filters.departureHourEnd ?? 24}`,
-    );
+    next.set('f_dep', `${filters.departureHourStart ?? 0}-${filters.departureHourEnd ?? 24}`);
   }
 
   const arrStartActive = filters.arrivalHourStart !== null && filters.arrivalHourStart > 0;
   const arrEndActive = filters.arrivalHourEnd !== null && filters.arrivalHourEnd < 24;
   if (arrStartActive || arrEndActive) {
-    next.set(
-      'f_arr',
-      `${filters.arrivalHourStart ?? 0}-${filters.arrivalHourEnd ?? 24}`,
-    );
+    next.set('f_arr', `${filters.arrivalHourStart ?? 0}-${filters.arrivalHourEnd ?? 24}`);
   }
 
-  if (
-    filters.durationMax !== null &&
-    (bounds ? filters.durationMax < bounds.durationMax : true)
-  ) {
+  if (filters.durationMax !== null && (bounds ? filters.durationMax < bounds.durationMax : true)) {
     next.set('f_duration', String(filters.durationMax));
   }
 

@@ -15,9 +15,7 @@ describe('ThemeModeToggle', () => {
   it('shows the dark-mode action when the theme is light', () => {
     renderWithProviders(<ThemeModeToggle />);
 
-    expect(
-      screen.getByRole('button', { name: 'Switch to dark mode' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Switch to dark mode' })).toBeInTheDocument();
     expect(document.querySelector('svg')).toBeInTheDocument();
   });
 
@@ -28,9 +26,7 @@ describe('ThemeModeToggle', () => {
 
     renderWithProviders(<ThemeModeToggle />);
 
-    expect(
-      screen.getByRole('button', { name: 'Switch to light mode' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Switch to light mode' })).toBeInTheDocument();
   });
 
   it('toggles the color scheme when clicked', async () => {
@@ -42,14 +38,10 @@ describe('ThemeModeToggle', () => {
     await user.click(screen.getByRole('button', { name: 'Switch to dark mode' }));
 
     expect(useUiStore.getState().themeMode).toBe('dark');
-    expect(
-      screen.getByRole('button', { name: 'Switch to light mode' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Switch to light mode' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Switch to light mode' }));
     expect(useUiStore.getState().themeMode).toBe('light');
-    expect(
-      screen.getByRole('button', { name: 'Switch to dark mode' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Switch to dark mode' })).toBeInTheDocument();
   });
 });

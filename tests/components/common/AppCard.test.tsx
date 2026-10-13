@@ -22,9 +22,7 @@ describe('AppCard', () => {
   });
 
   it('uses elevation when outlined is false', () => {
-    const { container } = renderWithProviders(
-      <AppCard outlined={false}>Elevated body</AppCard>,
-    );
+    const { container } = renderWithProviders(<AppCard outlined={false}>Elevated body</AppCard>);
 
     expect(container.querySelector('.MuiPaper-outlined')).not.toBeInTheDocument();
     expect(container.querySelector('.MuiPaper-elevation')).toBeInTheDocument();
@@ -66,9 +64,7 @@ describe('AppCard', () => {
   });
 
   it('renders a header when only an action is provided', () => {
-    renderWithProviders(
-      <AppCard action={<AppButton>More</AppButton>}>Body</AppCard>,
-    );
+    renderWithProviders(<AppCard action={<AppButton>More</AppButton>}>Body</AppCard>);
 
     expect(document.querySelector('.MuiCardHeader-root')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'More' })).toBeInTheDocument();
@@ -81,9 +77,7 @@ describe('AppCard', () => {
   });
 
   it('renders footer actions when provided', () => {
-    renderWithProviders(
-      <AppCard footer={<AppButton>Continue</AppButton>}>Body</AppCard>,
-    );
+    renderWithProviders(<AppCard footer={<AppButton>Continue</AppButton>}>Body</AppCard>);
 
     expect(document.querySelector('.MuiCardActions-root')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument();

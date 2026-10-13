@@ -7,7 +7,9 @@ import {
   type FlightOffer,
 } from '@/features/flights';
 
-function createSampleFlight(overrides: Partial<FlightOffer> & Pick<FlightOffer, 'id'>): FlightOffer {
+function createSampleFlight(
+  overrides: Partial<FlightOffer> & Pick<FlightOffer, 'id'>,
+): FlightOffer {
   const origin = overrides.origin ?? {
     code: 'KUL',
     city: 'Kuala Lumpur',
@@ -150,14 +152,12 @@ describe('flightResults helpers', () => {
       '1',
       '2',
     ]);
-    expect(sortFlightOffers(sampleFlights, 'shortest_duration').map((flight) => flight.id)).toEqual([
-      '1',
-      '2',
-    ]);
-    expect(sortFlightOffers(sampleFlights, 'earliest_departure').map((flight) => flight.id)).toEqual([
-      '1',
-      '2',
-    ]);
+    expect(sortFlightOffers(sampleFlights, 'shortest_duration').map((flight) => flight.id)).toEqual(
+      ['1', '2'],
+    );
+    expect(
+      sortFlightOffers(sampleFlights, 'earliest_departure').map((flight) => flight.id),
+    ).toEqual(['1', '2']);
     expect(sortFlightOffers(sampleFlights, 'latest_departure').map((flight) => flight.id)).toEqual([
       '2',
       '1',

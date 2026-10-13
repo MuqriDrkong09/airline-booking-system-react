@@ -19,10 +19,7 @@ export function calculateSeatCost(seats: BookingSeatSelection[]): number {
   return seats.reduce((sum, seat) => sum + seat.price, 0);
 }
 
-export function calculateDiscount(
-  subtotal: number,
-  promo: BookingPromoCode | null,
-): number {
+export function calculateDiscount(subtotal: number, promo: BookingPromoCode | null): number {
   if (!promo || subtotal <= 0) {
     return 0;
   }
@@ -80,16 +77,18 @@ export function buildPriceBreakdown(input: {
   };
 }
 
-export function priceBreakdownFromBooking(state: Pick<
-  BookingData,
-  | 'selectedFlight'
-  | 'passengers'
-  | 'seats'
-  | 'baggageTotal'
-  | 'mealTotal'
-  | 'addons'
-  | 'promoCode'
->): BookingPriceBreakdown {
+export function priceBreakdownFromBooking(
+  state: Pick<
+    BookingData,
+    | 'selectedFlight'
+    | 'passengers'
+    | 'seats'
+    | 'baggageTotal'
+    | 'mealTotal'
+    | 'addons'
+    | 'promoCode'
+  >,
+): BookingPriceBreakdown {
   const farePassengers = Math.max(countFarePassengers(state.passengers), 0);
   const unitFare = state.selectedFlight?.price.amount ?? 0;
   const currency = state.selectedFlight?.price.currency ?? 'USD';

@@ -132,9 +132,9 @@ describe('BookingDetailPage', () => {
 
   it('renders complete booking detail sections', () => {
     act(() => {
-      useBookingsStore.getState().saveBooking(
-        makeBooking({ reference: 'AB-DETAIL1', status: 'CONFIRMED' }),
-      );
+      useBookingsStore
+        .getState()
+        .saveBooking(makeBooking({ reference: 'AB-DETAIL1', status: 'CONFIRMED' }));
     });
 
     renderDetail('/app/bookings/AB-DETAIL1');

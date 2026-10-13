@@ -124,14 +124,7 @@ export function BoardingPassBarcode({
       >
         <rect x={0} y={0} width={totalWidth} height={height} fill="#fff" />
         {rects.map((bar) => (
-          <rect
-            key={bar.key}
-            x={bar.x}
-            y={0}
-            width={bar.width}
-            height={height}
-            fill="#0f172a"
-          />
+          <rect key={bar.key} x={bar.x} y={0} width={bar.width} height={height} fill="#0f172a" />
         ))}
       </Box>
       <Typography

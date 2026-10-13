@@ -5,11 +5,7 @@ import { useUiStore } from '@/app/store/uiStore';
 import { AdminLayout } from '@/components/layout/AdminLayout';
 import { useAuthStore } from '@/features/auth';
 import { renderWithProviders } from '@tests/utils/test-utils';
-import {
-  mockAdminUser,
-  resetAuthStore,
-  seedAuthenticatedUser,
-} from '@tests/utils/authTestUtils';
+import { mockAdminUser, resetAuthStore, seedAuthenticatedUser } from '@tests/utils/authTestUtils';
 
 describe('AdminLayout', () => {
   beforeEach(() => {
@@ -62,9 +58,7 @@ describe('AdminLayout', () => {
   it('calls logout when Log out is chosen from the user menu', async () => {
     seedAuthenticatedUser(mockAdminUser);
     const user = userEvent.setup();
-    const logoutSpy = jest
-      .spyOn(useAuthStore.getState(), 'logout')
-      .mockResolvedValue(undefined);
+    const logoutSpy = jest.spyOn(useAuthStore.getState(), 'logout').mockResolvedValue(undefined);
 
     renderWithProviders(
       <Routes>

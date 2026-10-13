@@ -40,10 +40,7 @@ describe('AdminReportsPage', () => {
     });
 
     expect(await screen.findByRole('heading', { name: 'Reports' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '30 days' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
+    expect(screen.getByRole('button', { name: '30 days' })).toHaveAttribute('aria-pressed', 'true');
     expect(screen.getByRole('button', { name: 'Today' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '7 days' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '3 months' })).toBeInTheDocument();
@@ -63,9 +60,7 @@ describe('AdminReportsPage', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(formatReportNumber(seed.summary.bookings))).toBeInTheDocument();
     expect(screen.getByText(formatReportNumber(seed.summary.passengers))).toBeInTheDocument();
-    expect(
-      screen.getByText(formatReportNumber(seed.summary.cancellations)),
-    ).toBeInTheDocument();
+    expect(screen.getByText(formatReportNumber(seed.summary.cancellations))).toBeInTheDocument();
     expect(screen.getByText(formatReportNumber(seed.summary.refunds))).toBeInTheDocument();
 
     expect(screen.getByText('Popular routes')).toBeInTheDocument();
@@ -85,11 +80,7 @@ describe('AdminReportsPage', () => {
     expect(await screen.findByRole('heading', { name: 'Reports' })).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Custom' }));
 
-    expect(
-      await screen.findByText(
-        /Choose a valid custom date range/i,
-      ),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/Choose a valid custom date range/i)).toBeInTheDocument();
     expect(screen.getByLabelText('From date')).toBeInTheDocument();
     expect(screen.getByLabelText('To date')).toBeInTheDocument();
   });
@@ -120,9 +111,7 @@ describe('AdminReportsPage', () => {
 
 describe('ReportMetricCard', () => {
   it('renders without helper text', () => {
-    renderWithProviders(
-      <ReportMetricCard label="Revenue" value="$10" icon={Wallet} />,
-    );
+    renderWithProviders(<ReportMetricCard label="Revenue" value="$10" icon={Wallet} />);
 
     expect(screen.getByText('Revenue')).toBeInTheDocument();
     expect(screen.getByText('$10')).toBeInTheDocument();

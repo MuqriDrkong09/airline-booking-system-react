@@ -57,10 +57,7 @@ export function ManageBookingOverview({ booking, onSelectSection }: ManageBookin
         <Typography variant="body2" color="text.secondary">
           Current total{' '}
           <strong>
-            {formatBookingMoney(
-              booking.priceBreakdown.finalTotal,
-              booking.priceBreakdown.currency,
-            )}
+            {formatBookingMoney(booking.priceBreakdown.finalTotal, booking.priceBreakdown.currency)}
           </strong>
           . Changes update this booking immediately after you save.
         </Typography>
@@ -88,7 +85,8 @@ export function ManageBookingOverview({ booking, onSelectSection }: ManageBookin
                   </Stack>
                 ) : (
                   <AppAlert severity="warning" title="Flight change unavailable">
-                    This booking cannot be changed right now (status, departure date, or fare rules).
+                    This booking cannot be changed right now (status, departure date, or fare
+                    rules).
                   </AppAlert>
                 )}
               </AppCard>

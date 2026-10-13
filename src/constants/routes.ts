@@ -16,18 +16,12 @@ export const APP_ROUTES = {
     flightDetails: (flightId: string) => `/app/flights/${encodeURIComponent(flightId)}`,
     flightPassengers: (flightId: string) =>
       `/app/flights/${encodeURIComponent(flightId)}/passengers`,
-    flightSeats: (flightId: string) =>
-      `/app/flights/${encodeURIComponent(flightId)}/seats`,
-    flightBaggage: (flightId: string) =>
-      `/app/flights/${encodeURIComponent(flightId)}/baggage`,
-    flightMeals: (flightId: string) =>
-      `/app/flights/${encodeURIComponent(flightId)}/meals`,
-    flightAddons: (flightId: string) =>
-      `/app/flights/${encodeURIComponent(flightId)}/addons`,
-    flightSummary: (flightId: string) =>
-      `/app/flights/${encodeURIComponent(flightId)}/summary`,
-    flightPayment: (flightId: string) =>
-      `/app/flights/${encodeURIComponent(flightId)}/payment`,
+    flightSeats: (flightId: string) => `/app/flights/${encodeURIComponent(flightId)}/seats`,
+    flightBaggage: (flightId: string) => `/app/flights/${encodeURIComponent(flightId)}/baggage`,
+    flightMeals: (flightId: string) => `/app/flights/${encodeURIComponent(flightId)}/meals`,
+    flightAddons: (flightId: string) => `/app/flights/${encodeURIComponent(flightId)}/addons`,
+    flightSummary: (flightId: string) => `/app/flights/${encodeURIComponent(flightId)}/summary`,
+    flightPayment: (flightId: string) => `/app/flights/${encodeURIComponent(flightId)}/payment`,
     bookingConfirmation: (bookingReference: string) =>
       `/app/bookings/${encodeURIComponent(bookingReference)}/confirmation`,
     bookingDetail: (bookingReference: string) =>

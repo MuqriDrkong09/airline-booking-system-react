@@ -11,11 +11,7 @@ export interface AircraftSeatCellProps {
   onSelect: (seatId: string) => void;
 }
 
-function AircraftSeatCellComponent({
-  seat,
-  selected = false,
-  onSelect,
-}: AircraftSeatCellProps) {
+function AircraftSeatCellComponent({ seat, selected = false, onSelect }: AircraftSeatCellProps) {
   const colors = ADMIN_SEAT_TYPE_COLORS[seat.seatType];
   const title = [
     seat.label,

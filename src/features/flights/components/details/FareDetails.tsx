@@ -11,15 +11,7 @@ export interface FareDetailsProps {
   flight: FlightOffer;
 }
 
-function AmenityRow({
-  icon,
-  label,
-  value,
-}: {
-  icon: ReactNode;
-  label: string;
-  value: string;
-}) {
+function AmenityRow({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
     <Stack direction="row" spacing={1.25} sx={{ alignItems: 'flex-start' }}>
       <Stack

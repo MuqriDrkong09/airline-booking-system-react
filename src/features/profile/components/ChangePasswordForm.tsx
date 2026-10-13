@@ -5,10 +5,7 @@ import { AppAlert } from '@/components/common/AppAlert';
 import { AppButton } from '@/components/common/AppButton';
 import { AppInput } from '@/components/common/AppInput';
 import { FormField } from '@/components/forms/FormField';
-import {
-  getMutationErrorMessage,
-  useChangePasswordMutation,
-} from '../hooks/useProfile';
+import { getMutationErrorMessage, useChangePasswordMutation } from '../hooks/useProfile';
 import { changePasswordSchema, type ChangePasswordFormValues } from '../schemas';
 
 export interface ChangePasswordFormProps {

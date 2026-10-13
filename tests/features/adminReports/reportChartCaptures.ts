@@ -1,9 +1,6 @@
 export type TooltipCapture = {
   formatter?: (value: unknown, name?: unknown) => unknown;
-  labelFormatter?: (
-    label: unknown,
-    payload?: Array<{ payload?: unknown }>,
-  ) => unknown;
+  labelFormatter?: (label: unknown, payload?: Array<{ payload?: unknown }>) => unknown;
 };
 
 export type YAxisCapture = {

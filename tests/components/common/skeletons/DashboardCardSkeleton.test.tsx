@@ -41,9 +41,7 @@ describe('DashboardCardSkeleton', () => {
   it('scales skeleton placeholders with the card count', () => {
     renderWithProviders(<DashboardCardSkeleton count={3} />);
 
-    expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(
-      SKELETONS_PER_CARD * 3,
-    );
+    expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(SKELETONS_PER_CARD * 3);
   });
 
   it('renders with custom grid column props without changing card count', () => {
@@ -51,27 +49,21 @@ describe('DashboardCardSkeleton', () => {
       <DashboardCardSkeleton count={4} columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} />,
     );
 
-    expect(
-      screen.getByRole('status', { name: 'Loading dashboard metrics' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Loading dashboard metrics' })).toBeInTheDocument();
     expect(document.querySelectorAll('.MuiCard-root')).toHaveLength(4);
   });
 
   it('renders when only xs columns are provided', () => {
     renderWithProviders(<DashboardCardSkeleton count={2} columns={{ xs: 2 }} />);
 
-    expect(
-      screen.getByRole('status', { name: 'Loading dashboard metrics' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Loading dashboard metrics' })).toBeInTheDocument();
     expect(document.querySelectorAll('.MuiCard-root')).toHaveLength(2);
   });
 
   it('renders an empty grid when count is zero', () => {
     renderWithProviders(<DashboardCardSkeleton count={0} />);
 
-    expect(
-      screen.getByRole('status', { name: 'Loading dashboard metrics' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Loading dashboard metrics' })).toBeInTheDocument();
     expect(document.querySelectorAll('.MuiCard-root')).toHaveLength(0);
     expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(0);
   });

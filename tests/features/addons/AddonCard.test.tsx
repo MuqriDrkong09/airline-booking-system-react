@@ -55,12 +55,7 @@ describe('AddonCard', () => {
     const onRemove = jest.fn();
 
     renderWithProviders(
-      <AddonCard
-        addon={availableAddon}
-        selected
-        onSelect={onSelect}
-        onRemove={onRemove}
-      />,
+      <AddonCard addon={availableAddon} selected onSelect={onSelect} onRemove={onRemove} />,
     );
 
     expect(screen.getByText('Selected')).toBeInTheDocument();

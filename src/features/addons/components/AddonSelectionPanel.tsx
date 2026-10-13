@@ -19,11 +19,7 @@ export interface AddonSelectionPanelProps {
   onSaved?: () => void;
 }
 
-export function AddonSelectionPanel({
-  flightId,
-  passengers,
-  onSaved,
-}: AddonSelectionPanelProps) {
+export function AddonSelectionPanel({ flightId, passengers, onSaved }: AddonSelectionPanelProps) {
   const storedAddons = useBookingStore((state) => state.addons);
   const storedFlightId = useBookingStore((state) => state.flightId);
   const baggageTotal = useBookingStore((state) => state.baggageTotal);
@@ -88,11 +84,7 @@ export function AddonSelectionPanel({
           alignItems: 'start',
         }}
       >
-        <AddonSelector
-          passengers={passengers}
-          selections={selections}
-          onChange={handleChange}
-        />
+        <AddonSelector passengers={passengers} selections={selections} onChange={handleChange} />
 
         <Stack spacing={2}>
           <AddonSummary

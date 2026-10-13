@@ -1,15 +1,8 @@
 import { APP_ROUTES } from '@/constants/routes';
 import type { Booking } from '../types/bookingRecord';
 import { downloadTextFile } from '../utils/bookingDocuments';
-import {
-  buildBookingInvoice,
-  formatInvoiceAsText,
-} from '../utils/buildBookingInvoice';
-import type {
-  InvoiceArtifact,
-  InvoiceDeliveryMode,
-  InvoiceProvider,
-} from './invoiceProvider';
+import { buildBookingInvoice, formatInvoiceAsText } from '../utils/buildBookingInvoice';
+import type { InvoiceArtifact, InvoiceDeliveryMode, InvoiceProvider } from './invoiceProvider';
 
 function invoiceFilename(booking: Booking, extension: string): string {
   return `aerobook-invoice-${booking.reference}.${extension}`;
@@ -59,15 +52,12 @@ export class ClientInvoiceProvider implements InvoiceProvider {
     }
 
     if (options.navigate) {
-      options.navigate(
-        options.mode === 'print' ? `${invoicePath}?print=1` : invoicePath,
-      );
+      options.navigate(options.mode === 'print' ? `${invoicePath}?print=1` : invoicePath);
       return;
     }
 
     if (typeof window !== 'undefined') {
-      const url =
-        options.mode === 'print' ? `${invoicePath}?print=1` : invoicePath;
+      const url = options.mode === 'print' ? `${invoicePath}?print=1` : invoicePath;
       window.location.assign(url);
     }
   }

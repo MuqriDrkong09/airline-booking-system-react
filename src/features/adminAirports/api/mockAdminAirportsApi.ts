@@ -1,8 +1,4 @@
-import type {
-  AdminAirport,
-  AdminAirportFilters,
-  AdminAirportInput,
-} from '../types/adminAirport';
+import type { AdminAirport, AdminAirportFilters, AdminAirportInput } from '../types/adminAirport';
 import { filterAdminAirports, sortAdminAirports } from '../utils/filterAdminAirports';
 import { cloneAdminAirport } from '../utils/formatAdminAirport';
 import type { AdminAirportsApi } from './adminAirportsApi.types';

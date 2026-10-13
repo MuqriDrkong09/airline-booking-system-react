@@ -26,7 +26,9 @@ export interface BookingCancellationDialogProps {
    * Optional cancel implementation (e.g. admin API).
    * Defaults to the customer bookings store pipeline.
    */
-  cancelFn?: (reference: string) => Booking | null | undefined | Promise<Booking | null | undefined>;
+  cancelFn?: (
+    reference: string,
+  ) => Booking | null | undefined | Promise<Booking | null | undefined>;
 }
 
 export function BookingCancellationDialog({
@@ -43,10 +45,7 @@ export function BookingCancellationDialog({
   const [resultBooking, setResultBooking] = useState<Booking | null>(null);
 
   const todayIso = todayIsoDate();
-  const quote = useMemo(
-    () => (booking ? calculateCancellationQuote(booking) : null),
-    [booking],
-  );
+  const quote = useMemo(() => (booking ? calculateCancellationQuote(booking) : null), [booking]);
 
   useEffect(() => {
     if (open) {
@@ -218,10 +217,7 @@ function PolicyStep({ booking, quote }: { booking: Booking; quote: CancellationQ
 function FeesStep({ quote }: { quote: CancellationQuote }) {
   return (
     <Stack spacing={1}>
-      <MoneyRow
-        label="Amount paid"
-        value={formatBookingMoney(quote.paidTotal, quote.currency)}
-      />
+      <MoneyRow label="Amount paid" value={formatBookingMoney(quote.paidTotal, quote.currency)} />
       <MoneyRow
         label="Cancellation fee"
         value={formatBookingMoney(quote.cancellationFee, quote.currency)}
@@ -276,10 +272,7 @@ function ResultStep({ booking, quote }: { booking: Booking; quote: CancellationQ
       />
       <MoneyRow
         label="Refund amount"
-        value={formatBookingMoney(
-          info?.refundAmount ?? quote.refundAmount,
-          quote.currency,
-        )}
+        value={formatBookingMoney(info?.refundAmount ?? quote.refundAmount, quote.currency)}
         emphasize
       />
       <Typography variant="body2" color="text.secondary">

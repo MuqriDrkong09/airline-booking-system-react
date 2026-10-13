@@ -92,12 +92,8 @@ describe('promoRules', () => {
   });
 
   it('detects expiry against as-of date', () => {
-    expect(isPromoExpired({ ...basePromo, expiresAt: '2020-01-01' }, '2021-01-01')).toBe(
-      true,
-    );
-    expect(isPromoExpired({ ...basePromo, expiresAt: '2099-12-31' }, '2026-01-01')).toBe(
-      false,
-    );
+    expect(isPromoExpired({ ...basePromo, expiresAt: '2020-01-01' }, '2021-01-01')).toBe(true);
+    expect(isPromoExpired({ ...basePromo, expiresAt: '2099-12-31' }, '2026-01-01')).toBe(false);
     expect(isPromoExpired({ ...basePromo, expiresAt: null }, '2026-01-01')).toBe(false);
   });
 

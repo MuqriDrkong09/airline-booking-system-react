@@ -100,9 +100,9 @@ describe('bookingsStore status updates', () => {
 
   it('cancels an eligible booking and records refund outcome', () => {
     act(() => {
-      useBookingsStore.getState().saveBooking(
-        makeBooking({ reference: 'AB-CANCEL', status: 'CONFIRMED' }),
-      );
+      useBookingsStore
+        .getState()
+        .saveBooking(makeBooking({ reference: 'AB-CANCEL', status: 'CONFIRMED' }));
     });
 
     let result: Booking | undefined;
@@ -112,9 +112,7 @@ describe('bookingsStore status updates', () => {
 
     expect(result?.status).toBe('REFUNDED');
     expect(result?.cancellation?.refundAmount).toBeGreaterThan(0);
-    expect(useBookingsStore.getState().getBookingByReference('AB-CANCEL')?.status).toBe(
-      'REFUNDED',
-    );
+    expect(useBookingsStore.getState().getBookingByReference('AB-CANCEL')?.status).toBe('REFUNDED');
   });
 
   it('rejects cancel for completed flights', () => {
@@ -163,9 +161,9 @@ describe('bookingsStore status updates', () => {
 
   it('rejects cancel for already cancelled bookings', () => {
     act(() => {
-      useBookingsStore.getState().saveBooking(
-        makeBooking({ reference: 'AB-DONE', status: 'CANCELLED' }),
-      );
+      useBookingsStore
+        .getState()
+        .saveBooking(makeBooking({ reference: 'AB-DONE', status: 'CANCELLED' }));
     });
 
     let result: Booking | undefined;

@@ -57,9 +57,9 @@ describe('report date range helpers', () => {
     });
 
     expect(isCustomRangeReady({ ...EMPTY_REPORT_FILTERS, preset: '30d' })).toBe(true);
-    expect(
-      isCustomRangeReady({ preset: 'custom', startDate: '', endDate: '2026-10-01' }),
-    ).toBe(false);
+    expect(isCustomRangeReady({ preset: 'custom', startDate: '', endDate: '2026-10-01' })).toBe(
+      false,
+    );
     expect(
       isCustomRangeReady({
         preset: 'custom',
@@ -107,13 +107,7 @@ describe('mockAdminReportsApi', () => {
     expect(data.refundsSeries.length).toBeGreaterThan(0);
     expect(data.popularRoutes[0]?.route).toBe('KUL → SIN');
     expect(data.popularDestinations[0]?.destination).toBe('SIN');
-    expect(data.airlinePerformance.map((row) => row.code)).toEqual([
-      'MH',
-      'AK',
-      'SQ',
-      'EK',
-      'QR',
-    ]);
+    expect(data.airlinePerformance.map((row) => row.code)).toEqual(['MH', 'AK', 'SQ', 'EK', 'QR']);
     expect(data.generatedAt).toEqual(expect.any(String));
   });
 

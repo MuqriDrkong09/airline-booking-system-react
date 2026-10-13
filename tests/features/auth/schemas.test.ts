@@ -40,9 +40,7 @@ function dobTurningAgeLaterThisMonth(age: number): string | null {
  */
 function dobTurningAgeNextMonth(age: number): string {
   const today = new Date();
-  const birth = new Date(
-    Date.UTC(today.getUTCFullYear() - age, today.getUTCMonth() + 1, 1),
-  );
+  const birth = new Date(Date.UTC(today.getUTCFullYear() - age, today.getUTCMonth() + 1, 1));
   return `${birth.getUTCFullYear()}-${pad(birth.getUTCMonth() + 1)}-${pad(birth.getUTCDate())}`;
 }
 
@@ -142,9 +140,9 @@ describe('auth schemas', () => {
       false,
     );
     expect(registerSchema.safeParse(validRegisterPayload({ phone: '123' })).success).toBe(false);
-    expect(
-      registerSchema.safeParse(validRegisterPayload({ phone: '++++++++' })).success,
-    ).toBe(false);
+    expect(registerSchema.safeParse(validRegisterPayload({ phone: '++++++++' })).success).toBe(
+      false,
+    );
   });
 
   it('rejects underage registrants and age boundary before birthday', () => {
@@ -153,9 +151,8 @@ describe('auth schemas', () => {
     ).toBe(false);
 
     expect(
-      registerSchema.safeParse(
-        validRegisterPayload({ dateOfBirth: dobTurningAgeNextMonth(18) }),
-      ).success,
+      registerSchema.safeParse(validRegisterPayload({ dateOfBirth: dobTurningAgeNextMonth(18) }))
+        .success,
     ).toBe(false);
 
     const laterThisMonth = dobTurningAgeLaterThisMonth(18);
@@ -180,9 +177,7 @@ describe('auth schemas', () => {
     expect(
       registerSchema.safeParse(validRegisterPayload({ dateOfBirth: 'not-a-date' })).success,
     ).toBe(false);
-    expect(registerSchema.safeParse(validRegisterPayload({ dateOfBirth: '' })).success).toBe(
-      false,
-    );
+    expect(registerSchema.safeParse(validRegisterPayload({ dateOfBirth: '' })).success).toBe(false);
   });
 
   it('requires accepted terms', () => {

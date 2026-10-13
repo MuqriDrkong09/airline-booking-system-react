@@ -12,9 +12,7 @@ export function ProtectedRoute() {
   }
 
   if (!isAuthenticated) {
-    return (
-      <Navigate to={APP_ROUTES.public.login} replace state={{ from: location.pathname }} />
-    );
+    return <Navigate to={APP_ROUTES.public.login} replace state={{ from: location.pathname }} />;
   }
 
   return <Outlet />;

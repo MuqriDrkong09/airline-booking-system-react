@@ -19,11 +19,7 @@ export interface MealSelectionPanelProps {
   onSaved?: () => void;
 }
 
-export function MealSelectionPanel({
-  flightId,
-  passengers,
-  onSaved,
-}: MealSelectionPanelProps) {
+export function MealSelectionPanel({ flightId, passengers, onSaved }: MealSelectionPanelProps) {
   const storedMeals = useBookingStore((state) => state.meals);
   const storedFlightId = useBookingStore((state) => state.flightId);
   const setMeals = useBookingStore((state) => state.setMeals);

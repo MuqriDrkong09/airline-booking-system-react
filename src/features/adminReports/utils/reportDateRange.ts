@@ -1,9 +1,5 @@
 import { addDaysIso, isValidCalendarDate, todayIsoDate } from '@/features/flights/utils/dates';
-import type {
-  ReportFilters,
-  ReportPeriodPreset,
-  ResolvedReportRange,
-} from '../types/adminReport';
+import type { ReportFilters, ReportPeriodPreset, ResolvedReportRange } from '../types/adminReport';
 
 function addMonthsIso(isoDate: string, months: number): string {
   const [yearText, monthText, dayText] = isoDate.split('-');

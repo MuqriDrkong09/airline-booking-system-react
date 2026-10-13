@@ -33,10 +33,7 @@ export function BaggageSelectionPanel({
   const setBaggage = useBookingStore((state) => state.setBaggage);
 
   const initial = useMemo(() => {
-    const stored =
-      storedFlightId === flightId
-        ? storedBaggage
-        : [];
+    const stored = storedFlightId === flightId ? storedBaggage : [];
     return passengers.map((passenger) => {
       const existing = stored.find((item) => item.passengerId === passenger.id);
       if (existing) {
@@ -117,11 +114,7 @@ export function BaggageSelectionPanel({
         </Stack>
 
         <Stack spacing={2}>
-          <BaggageSummary
-            allowance={allowance}
-            passengers={passengers}
-            selections={selections}
-          />
+          <BaggageSummary allowance={allowance} passengers={passengers} selections={selections} />
           <AppButton
             variant="contained"
             fullWidth

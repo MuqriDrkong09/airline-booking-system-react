@@ -296,8 +296,7 @@ export function ensureSeatMapConfig(
       : buildSeatsFromCabins(config.cabins);
 
   const rows = config.rows > 0 ? config.rows : Math.max(...seats.map((seat) => seat.row), 1);
-  const cabins =
-    config.cabins.length > 0 ? config.cabins : deriveCabinsFromSeats(seats, columns);
+  const cabins = config.cabins.length > 0 ? config.cabins : deriveCabinsFromSeats(seats, columns);
 
   return {
     ...config,
@@ -338,7 +337,8 @@ export function applySeatType(
   return {
     ...seat,
     seatType,
-    emergencyExit: seatType === 'EMERGENCY_EXIT' ? true : seatType === 'STANDARD' ? false : seat.emergencyExit,
+    emergencyExit:
+      seatType === 'EMERGENCY_EXIT' ? true : seatType === 'STANDARD' ? false : seat.emergencyExit,
     disabled: seatType === 'UNAVAILABLE' ? true : seatType === 'STANDARD' ? false : seat.disabled,
   };
 }

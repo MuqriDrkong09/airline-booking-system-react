@@ -38,11 +38,7 @@ export async function pickAirportById(
   await page.getByRole('option', { name: optionName }).click();
 }
 
-export async function fillLabeledInput(
-  page: Page,
-  label: string | RegExp,
-  value: string,
-) {
+export async function fillLabeledInput(page: Page, label: string | RegExp, value: string) {
   // FormField required markers make the accessible name "Email *" (not exact "Email").
   await page.getByLabel(label).fill(value);
 }

@@ -31,15 +31,9 @@ const ResetPasswordPage = lazyPage(
   () => import('@/pages/auth/ResetPasswordPage'),
   'ResetPasswordPage',
 );
-const VerifyEmailPage = lazyPage(
-  () => import('@/pages/auth/VerifyEmailPage'),
-  'VerifyEmailPage',
-);
+const VerifyEmailPage = lazyPage(() => import('@/pages/auth/VerifyEmailPage'), 'VerifyEmailPage');
 const ForbiddenPage = lazyPage(() => import('@/pages/ForbiddenPage'), 'ForbiddenPage');
-const UnauthorizedPage = lazyPage(
-  () => import('@/pages/UnauthorizedPage'),
-  'UnauthorizedPage',
-);
+const UnauthorizedPage = lazyPage(() => import('@/pages/UnauthorizedPage'), 'UnauthorizedPage');
 const NotFoundPage = lazyPage(() => import('@/pages/NotFoundPage'), 'NotFoundPage');
 
 const CustomerHomePage = lazyPage(
@@ -103,10 +97,7 @@ const BookingDetailPage = lazyPage(
   () => import('@/pages/customer/BookingDetailPage'),
   'BookingDetailPage',
 );
-const MyBookingsPage = lazyPage(
-  () => import('@/pages/customer/MyBookingsPage'),
-  'MyBookingsPage',
-);
+const MyBookingsPage = lazyPage(() => import('@/pages/customer/MyBookingsPage'), 'MyBookingsPage');
 const CheckInPage = lazyPage(() => import('@/pages/customer/CheckInPage'), 'CheckInPage');
 const FlightStatusPage = lazyPage(
   () => import('@/pages/customer/FlightStatusPage'),
@@ -146,10 +137,7 @@ const AdminBookingsPage = lazyPage(
   () => import('@/pages/admin/AdminBookingsPage'),
   'AdminBookingsPage',
 );
-const AdminUsersPage = lazyPage(
-  () => import('@/pages/admin/AdminUsersPage'),
-  'AdminUsersPage',
-);
+const AdminUsersPage = lazyPage(() => import('@/pages/admin/AdminUsersPage'), 'AdminUsersPage');
 const AdminPromoCodesPage = lazyPage(
   () => import('@/pages/admin/AdminPromoCodesPage'),
   'AdminPromoCodesPage',

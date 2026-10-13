@@ -14,9 +14,7 @@ function resolveRouteError(error: unknown): { title: string; message: string } {
   if (isRouteErrorResponse(error)) {
     return {
       title: HTTP_STATUS_TITLES[error.status] ?? 'We could not load this page',
-      message:
-        HTTP_STATUS_MESSAGES[error.status] ??
-        DEFAULT_ERROR_MESSAGE,
+      message: HTTP_STATUS_MESSAGES[error.status] ?? DEFAULT_ERROR_MESSAGE,
     };
   }
 

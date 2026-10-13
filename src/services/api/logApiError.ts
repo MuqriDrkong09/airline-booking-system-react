@@ -44,7 +44,7 @@ export function logApiError(error: unknown, context: LogApiErrorContext = {}): v
   }
 
   const payload: Record<string, unknown> = {
-    ...redactSensitive(context) as Record<string, unknown>,
+    ...(redactSensitive(context) as Record<string, unknown>),
     name: error instanceof Error ? error.name : typeof error,
   };
 

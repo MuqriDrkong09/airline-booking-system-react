@@ -7,13 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowLeftRight, Plus, Trash2 } from 'lucide-react';
 import { useEffect } from 'react';
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
-import {
-  AppAlert,
-  AppButton,
-  AppCard,
-  AppInput,
-  AppSelect,
-} from '@/components/common';
+import { AppAlert, AppButton, AppCard, AppInput, AppSelect } from '@/components/common';
 import { FormField } from '@/components/forms/FormField';
 import {
   CABIN_CLASS_OPTIONS,

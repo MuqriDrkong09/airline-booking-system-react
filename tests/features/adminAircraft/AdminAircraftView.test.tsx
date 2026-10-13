@@ -415,9 +415,7 @@ describe('AdminAircraftView', () => {
 
     const activeRow = screen.getByText('9M-AAZ').closest('tr');
     expect(activeRow).toBeTruthy();
-    await user.click(
-      within(activeRow as HTMLElement).getByRole('button', { name: 'Deactivate' }),
-    );
+    await user.click(within(activeRow as HTMLElement).getByRole('button', { name: 'Deactivate' }));
 
     await waitFor(() => {
       expect(
@@ -429,18 +427,14 @@ describe('AdminAircraftView', () => {
 
   it('shows an error when toggling active status fails', async () => {
     const user = userEvent.setup({ delay: null });
-    jest
-      .spyOn(adminAircraftApi, 'setAircraftActive')
-      .mockRejectedValue(new Error('status boom'));
+    jest.spyOn(adminAircraftApi, 'setAircraftActive').mockRejectedValue(new Error('status boom'));
 
     renderAdminAircraftView();
 
     await screen.findByText('9M-AAZ');
     await user.click(screen.getAllByRole('button', { name: 'Activate' })[0]!);
 
-    expect(
-      await screen.findByText('Unable to update status for 9M-AAZ.'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Unable to update status for 9M-AAZ.')).toBeInTheDocument();
   });
 
   it('cancels delete confirmation without removing the aircraft', async () => {

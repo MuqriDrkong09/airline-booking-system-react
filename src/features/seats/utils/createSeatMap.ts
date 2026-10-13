@@ -90,9 +90,7 @@ function buildRow(spec: RowSpec): SeatRowModel {
  * Builds a reusable mock narrow-body seat map covering first, business,
  * premium economy, and economy cabins with mixed seat states.
  */
-export function createAircraftSeatMap(
-  aircraftModel = 'Airbus A320',
-): SeatMapModel {
+export function createAircraftSeatMap(aircraftModel = 'Airbus A320'): SeatMapModel {
   const specs: RowSpec[] = [
     {
       row: 1,

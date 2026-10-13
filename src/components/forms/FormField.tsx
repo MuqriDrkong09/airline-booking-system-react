@@ -14,13 +14,8 @@ export interface FormFieldProps extends Omit<FormControlProps, 'error'> {
   hideLabel?: boolean;
 }
 
-function mergeDescribedBy(
-  existing: unknown,
-  helperId: string | undefined,
-): string | undefined {
-  const parts = [typeof existing === 'string' ? existing : undefined, helperId].filter(
-    Boolean,
-  );
+function mergeDescribedBy(existing: unknown, helperId: string | undefined): string | undefined {
+  const parts = [typeof existing === 'string' ? existing : undefined, helperId].filter(Boolean);
   return parts.length > 0 ? parts.join(' ') : undefined;
 }
 

@@ -3,12 +3,7 @@ import type { Airport } from './airport';
 export const TRIP_TYPES = ['ONE_WAY', 'ROUND_TRIP', 'MULTI_CITY'] as const;
 export type TripType = (typeof TRIP_TYPES)[number];
 
-export const CABIN_CLASSES = [
-  'ECONOMY',
-  'PREMIUM_ECONOMY',
-  'BUSINESS',
-  'FIRST',
-] as const;
+export const CABIN_CLASSES = ['ECONOMY', 'PREMIUM_ECONOMY', 'BUSINESS', 'FIRST'] as const;
 export type CabinClass = (typeof CABIN_CLASSES)[number];
 
 export interface FlightLegValues {

@@ -17,9 +17,7 @@ const RETURN_PATH_ROOTS = [APP_ROUTES.customer.root, APP_ROUTES.admin.root] as c
  * Clears the local session after a 401 from a protected API call.
  * Redirects to the unauthorized page so the user sees a friendly message.
  */
-export function handleUnauthorizedSession(
-  options: HandleUnauthorizedOptions = {},
-): void {
+export function handleUnauthorizedSession(options: HandleUnauthorizedOptions = {}): void {
   const storage = options.storage ?? tokenStorage;
   storage.clear();
 
@@ -43,8 +41,6 @@ export function handleUnauthorizedSession(
   }
   const query = params.toString();
   window.location.assign(
-    query
-      ? `${APP_ROUTES.public.unauthorized}?${query}`
-      : APP_ROUTES.public.unauthorized,
+    query ? `${APP_ROUTES.public.unauthorized}?${query}` : APP_ROUTES.public.unauthorized,
   );
 }

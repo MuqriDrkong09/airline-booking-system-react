@@ -6,18 +6,20 @@ export function createRecentSearchId(): string {
   return `search-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-export function recentSearchFingerprint(search: Pick<
-  RecentFlightSearch,
-  | 'origin'
-  | 'destination'
-  | 'departureDate'
-  | 'returnDate'
-  | 'passengerCount'
-  | 'cabinClass'
-  | 'adults'
-  | 'children'
-  | 'infants'
->): string {
+export function recentSearchFingerprint(
+  search: Pick<
+    RecentFlightSearch,
+    | 'origin'
+    | 'destination'
+    | 'departureDate'
+    | 'returnDate'
+    | 'passengerCount'
+    | 'cabinClass'
+    | 'adults'
+    | 'children'
+    | 'infants'
+  >,
+): string {
   return [
     search.origin,
     search.destination,
@@ -71,8 +73,7 @@ export function recentSearchFromFormValues(
     origin: values.origin.code,
     destination: values.destination.code,
     departureDate: values.departureDate,
-    returnDate:
-      values.tripType === 'ROUND_TRIP' && values.returnDate ? values.returnDate : null,
+    returnDate: values.tripType === 'ROUND_TRIP' && values.returnDate ? values.returnDate : null,
     passengerCount,
     adults,
     children,
@@ -119,8 +120,6 @@ export function prependRecentSearch(
   limit: number,
 ): RecentFlightSearch[] {
   const fingerprint = recentSearchFingerprint(entry);
-  const withoutDuplicate = history.filter(
-    (item) => recentSearchFingerprint(item) !== fingerprint,
-  );
+  const withoutDuplicate = history.filter((item) => recentSearchFingerprint(item) !== fingerprint);
   return [entry, ...withoutDuplicate].slice(0, limit);
 }

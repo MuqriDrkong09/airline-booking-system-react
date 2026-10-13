@@ -54,10 +54,7 @@ export function countPassengersByType(passengers: readonly PassengerDraft[]): Pa
   );
 }
 
-export function passengerCountsMatch(
-  actual: PassengerCounts,
-  expected: PassengerCounts,
-): boolean {
+export function passengerCountsMatch(actual: PassengerCounts, expected: PassengerCounts): boolean {
   return (
     actual.adults === expected.adults &&
     actual.children === expected.children &&

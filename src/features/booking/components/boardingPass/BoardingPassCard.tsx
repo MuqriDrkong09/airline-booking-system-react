@@ -186,11 +186,7 @@ export function BoardingPassCard({ pass }: BoardingPassCardProps) {
         />
 
         <Stack spacing={2} sx={{ alignItems: 'center' }}>
-          <BookingETicketQr
-            payload={pass.scanPayload}
-            size={168}
-            label="Boarding pass QR"
-          />
+          <BookingETicketQr payload={pass.scanPayload} size={168} label="Boarding pass QR" />
           <BoardingPassBarcode payload={pass.scanPayload} />
           <Typography
             variant="caption"

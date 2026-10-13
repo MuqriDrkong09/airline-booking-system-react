@@ -61,12 +61,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
         control={control}
         render={({ field }) => (
           <FormField id="login-email" label="Email" required errorMessage={errors.email?.message}>
-            <AppInput
-              {...field}
-              type="email"
-              autoComplete="email"
-              placeholder="you@example.com"
-            />
+            <AppInput {...field} type="email" autoComplete="email" placeholder="you@example.com" />
           </FormField>
         )}
       />

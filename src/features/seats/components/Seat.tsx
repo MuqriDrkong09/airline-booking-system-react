@@ -50,12 +50,11 @@ function focusAdjacentSeat(current: HTMLElement, key: string) {
   } else if (key === 'ArrowLeft') {
     next = seats[index - 1];
   } else if (key === 'ArrowDown' || key === 'ArrowUp') {
-    const rowNumbers = [
-      ...new Set(seats.map((seat) => Number(seat.dataset.seatRow))),
-    ].sort((a, b) => a - b);
+    const rowNumbers = [...new Set(seats.map((seat) => Number(seat.dataset.seatRow)))].sort(
+      (a, b) => a - b,
+    );
     const rowIndex = rowNumbers.indexOf(currentRow);
-    const targetRow =
-      key === 'ArrowDown' ? rowNumbers[rowIndex + 1] : rowNumbers[rowIndex - 1];
+    const targetRow = key === 'ArrowDown' ? rowNumbers[rowIndex + 1] : rowNumbers[rowIndex - 1];
     if (targetRow !== undefined) {
       const sameRow = seats.filter((seat) => Number(seat.dataset.seatRow) === targetRow);
       next = sameRow.find((seat) => seat.dataset.seatCol === currentCol) ?? sameRow[0];
@@ -80,7 +79,12 @@ function SeatComponent({ seat, displayStatus, selectedByLabel, onSelect }: SeatP
     .join(', ');
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+    if (
+      event.key === 'ArrowRight' ||
+      event.key === 'ArrowLeft' ||
+      event.key === 'ArrowUp' ||
+      event.key === 'ArrowDown'
+    ) {
       event.preventDefault();
       focusAdjacentSeat(event.currentTarget, event.key);
       return;

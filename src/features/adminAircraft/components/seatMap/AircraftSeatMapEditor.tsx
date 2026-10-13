@@ -34,7 +34,10 @@ export interface AircraftSeatMapEditorProps {
 
 function getErrorMessage(error: unknown): string {
   if (error instanceof ZodError) {
-    return error.issues.map((issue) => issue.message).slice(0, 3).join('; ');
+    return error.issues
+      .map((issue) => issue.message)
+      .slice(0, 3)
+      .join('; ');
   }
   if (error instanceof Error) {
     return error.message;
@@ -55,12 +58,9 @@ export function AircraftSeatMapEditor({
 
   const [config, setConfig] = useState<AircraftSeatMapConfig>(initialConfig);
   const [draftRows, setDraftRows] = useState(initialConfig.rows);
-  const [draftColumnsInput, setDraftColumnsInput] = useState(
-    initialConfig.columns.join(' '),
-  );
+  const [draftColumnsInput, setDraftColumnsInput] = useState(initialConfig.columns.join(' '));
   const [paintType, setPaintType] = useState<AdminSeatType | ''>('');
-  const [defaultCabinClass, setDefaultCabinClass] =
-    useState<AircraftCabinClass>('ECONOMY');
+  const [defaultCabinClass, setDefaultCabinClass] = useState<AircraftCabinClass>('ECONOMY');
   const [selectedSeatId, setSelectedSeatId] = useState<string | null>(
     initialConfig.seats[0]?.id ?? null,
   );
@@ -75,8 +75,7 @@ export function AircraftSeatMapEditor({
     setValidationError(null);
   }, [aircraft]);
 
-  const selectedSeat =
-    config.seats.find((seat) => seat.id === selectedSeatId) ?? null;
+  const selectedSeat = config.seats.find((seat) => seat.id === selectedSeatId) ?? null;
 
   const updateSeat = (nextSeat: AircraftConfiguredSeat) => {
     setConfig((current) =>
@@ -127,9 +126,7 @@ export function AircraftSeatMapEditor({
       setDraftRows(next.rows);
       setDraftColumnsInput(next.columns.join(' '));
       setSelectedSeatId((current) =>
-        next.seats.some((seat) => seat.id === current)
-          ? current
-          : (next.seats[0]?.id ?? null),
+        next.seats.some((seat) => seat.id === current) ? current : (next.seats[0]?.id ?? null),
       );
       setValidationError(null);
     } catch (error) {

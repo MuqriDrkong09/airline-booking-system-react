@@ -18,9 +18,7 @@ const child: AddonPassenger = {
 
 describe('AddonSummary', () => {
   it('shows an empty state and zero totals by default', () => {
-    renderWithProviders(
-      <AddonSummary passengers={[adult]} selections={[]} />,
-    );
+    renderWithProviders(<AddonSummary passengers={[adult]} selections={[]} />);
 
     expect(screen.getByText(/no add-ons selected yet/i)).toBeInTheDocument();
     expect(screen.getByText('Add-ons')).toBeInTheDocument();
@@ -65,9 +63,7 @@ describe('AddonSummary', () => {
       { addonId: 'not-a-real-addon', passengerId: 'adult-1' },
     ];
 
-    renderWithProviders(
-      <AddonSummary passengers={[adult]} selections={selections} />,
-    );
+    renderWithProviders(<AddonSummary passengers={[adult]} selections={selections} />);
 
     expect(screen.getByText('Priority boarding')).toBeInTheDocument();
     expect(screen.getByText('ghost-1')).toBeInTheDocument();
@@ -78,16 +74,10 @@ describe('AddonSummary', () => {
   it('calls onRemove for a listed addon', async () => {
     const user = userEvent.setup();
     const onRemove = jest.fn();
-    const selections: AddonSelection[] = [
-      { addonId: 'lounge-access', passengerId: 'adult-1' },
-    ];
+    const selections: AddonSelection[] = [{ addonId: 'lounge-access', passengerId: 'adult-1' }];
 
     renderWithProviders(
-      <AddonSummary
-        passengers={[adult]}
-        selections={selections}
-        onRemove={onRemove}
-      />,
+      <AddonSummary passengers={[adult]} selections={selections} onRemove={onRemove} />,
     );
 
     const summary = screen.getByText('Add-ons summary').closest('.MuiCard-root');

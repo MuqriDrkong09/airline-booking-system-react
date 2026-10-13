@@ -1,10 +1,7 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { AppBadge } from '@/components/common';
-import {
-  PASSENGER_TYPE_LABELS,
-  type PassengerDraft,
-} from '@/features/passengers';
+import { PASSENGER_TYPE_LABELS, type PassengerDraft } from '@/features/passengers';
 import { passengerDisplayName } from '@/features/seats';
 import { SummarySection } from './SummarySection';
 
@@ -29,11 +26,7 @@ export function PassengerSummary({ passengers, editTo }: PassengerSummaryProps) 
       <Stack spacing={1.25}>
         {passengers.map((passenger, index) => {
           const fallback = `${PASSENGER_TYPE_LABELS[passenger.type]} ${index + 1}`;
-          const name = passengerDisplayName(
-            passenger.firstName,
-            passenger.lastName,
-            fallback,
-          );
+          const name = passengerDisplayName(passenger.firstName, passenger.lastName, fallback);
 
           return (
             <Stack

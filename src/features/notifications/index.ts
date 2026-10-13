@@ -1,12 +1,5 @@
-export type {
-  AppNotification,
-  NotificationType,
-} from './types/notification';
-export {
-  NOTIFICATION_TYPES,
-  isNotificationType,
-  isNotificationUnread,
-} from './types/notification';
+export type { AppNotification, NotificationType } from './types/notification';
+export { NOTIFICATION_TYPES, isNotificationType, isNotificationUnread } from './types/notification';
 export {
   notificationKeys,
   notificationsApi,

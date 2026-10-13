@@ -9,11 +9,7 @@ export function CustomerHomePage() {
       title="Home"
       description="Your trips, quick actions, and recent flight activity."
       action={
-        <AppButton
-          component={RouterLink}
-          to={APP_ROUTES.customer.flights}
-          variant="contained"
-        >
+        <AppButton component={RouterLink} to={APP_ROUTES.customer.flights} variant="contained">
           Search flights
         </AppButton>
       }

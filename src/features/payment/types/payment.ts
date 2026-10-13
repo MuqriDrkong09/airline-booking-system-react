@@ -1,11 +1,6 @@
 import type { PaymentMethod } from '@/features/booking';
 
-export const PAYMENT_UI_STATUSES = [
-  'IDLE',
-  'PROCESSING',
-  'SUCCESS',
-  'FAILED',
-] as const;
+export const PAYMENT_UI_STATUSES = ['IDLE', 'PROCESSING', 'SUCCESS', 'FAILED'] as const;
 
 export type PaymentUiStatus = (typeof PAYMENT_UI_STATUSES)[number];
 

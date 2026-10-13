@@ -1,10 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AircraftSeatMapCanvas } from '@/features/adminAircraft/components/seatMap/AircraftSeatMapCanvas';
-import type {
-  AircraftConfiguredSeat,
-  AircraftSeatMapConfig,
-} from '@/features/adminAircraft';
+import type { AircraftConfiguredSeat, AircraftSeatMapConfig } from '@/features/adminAircraft';
 import { renderWithProviders } from '@tests/utils/test-utils';
 
 function makeSeat(overrides: Partial<AircraftConfiguredSeat> = {}): AircraftConfiguredSeat {
@@ -49,9 +46,7 @@ describe('AircraftSeatMapCanvas', () => {
       />,
     );
 
-    expect(
-      screen.getByRole('grid', { name: 'Airbus A320 seat map editor' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('grid', { name: 'Airbus A320 seat map editor' })).toBeInTheDocument();
     expect(screen.getByText('FRONT OF AIRCRAFT · Airbus A320')).toBeInTheDocument();
     expect(screen.getByText('REAR OF AIRCRAFT')).toBeInTheDocument();
     expect(screen.getByText('Business')).toBeInTheDocument();
@@ -115,9 +110,7 @@ describe('AircraftSeatMapCanvas', () => {
     );
 
     const row = screen.getByRole('row', { name: 'Row 1' });
-    expect(
-      within(row).getByRole('button', { name: /Configure seat 1A/i }),
-    ).toBeInTheDocument();
+    expect(within(row).getByRole('button', { name: /Configure seat 1A/i })).toBeInTheDocument();
     expect(within(row).queryByRole('button', { name: /Configure seat 1C/i })).toBeNull();
     expect(within(row).getAllByRole('button')).toHaveLength(1);
   });
@@ -139,9 +132,9 @@ describe('AircraftSeatMapCanvas', () => {
     );
 
     expect(screen.getByRole('row', { name: 'Row 1' })).toBeInTheDocument();
-    expect(within(screen.getByRole('row', { name: 'Row 1' })).queryAllByRole('button')).toHaveLength(
-      0,
-    );
+    expect(
+      within(screen.getByRole('row', { name: 'Row 1' })).queryAllByRole('button'),
+    ).toHaveLength(0);
     expect(screen.getByText('First class')).toBeInTheDocument();
     expect(container.querySelectorAll('[aria-hidden="true"]').length).toBeGreaterThan(0);
   });

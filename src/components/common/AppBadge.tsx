@@ -1,7 +1,8 @@
 import Chip from '@mui/material/Chip';
 import type { ChipProps } from '@mui/material/Chip';
 
-export type AppBadgeTone = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+export type AppBadgeTone =
+  'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
 
 export interface AppBadgeProps extends Omit<ChipProps, 'color'> {
   tone?: AppBadgeTone;

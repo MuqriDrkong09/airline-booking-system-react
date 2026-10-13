@@ -52,7 +52,9 @@ export function NotificationsView() {
         direction={{ xs: 'column', sm: 'row' }}
         spacing={1.5}
         sx={{ justifyContent: 'flex-end' }}
-      >        <AppButton
+      >
+        {' '}
+        <AppButton
           variant="outlined"
           onClick={() => markAllAsRead.mutate()}
           disabled={unreadCount === 0}
@@ -70,12 +72,9 @@ export function NotificationsView() {
             notification={notification}
             onMarkAsRead={(notificationId) => markAsRead.mutate(notificationId)}
             onDelete={(notificationId) => deleteNotification.mutate(notificationId)}
-            markAsReadPending={
-              markAsRead.isPending && markAsRead.variables === notification.id
-            }
+            markAsReadPending={markAsRead.isPending && markAsRead.variables === notification.id}
             deletePending={
-              deleteNotification.isPending &&
-              deleteNotification.variables === notification.id
+              deleteNotification.isPending && deleteNotification.variables === notification.id
             }
           />
         ))}

@@ -32,9 +32,7 @@ describe('AircraftTable', () => {
   });
 
   it('shows an empty filter message when there are no aircraft', () => {
-    renderWithProviders(
-      <AircraftTable aircraftList={[]} {...defaultHandlers} />,
-    );
+    renderWithProviders(<AircraftTable aircraftList={[]} {...defaultHandlers} />);
 
     expect(screen.getByRole('status')).toHaveTextContent('No aircraft match your filters.');
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
@@ -42,10 +40,7 @@ describe('AircraftTable', () => {
 
   it('renders the desktop table with active and inactive aircraft', () => {
     renderWithProviders(
-      <AircraftTable
-        aircraftList={[activeAircraft, inactiveAircraft]}
-        {...defaultHandlers}
-      />,
+      <AircraftTable aircraftList={[activeAircraft, inactiveAircraft]} {...defaultHandlers} />,
     );
 
     const table = screen.getByRole('table', { name: 'Admin aircraft' });
@@ -54,7 +49,9 @@ describe('AircraftTable', () => {
     expect(activeRow).toBeTruthy();
     expect(inactiveRow).toBeTruthy();
 
-    expect(within(activeRow as HTMLElement).getByText(activeAircraft.manufacturer)).toBeInTheDocument();
+    expect(
+      within(activeRow as HTMLElement).getByText(activeAircraft.manufacturer),
+    ).toBeInTheDocument();
     expect(within(activeRow as HTMLElement).getByText(activeAircraft.model)).toBeInTheDocument();
     expect(
       within(activeRow as HTMLElement).getByText(String(activeAircraft.totalSeats)),
@@ -63,11 +60,17 @@ describe('AircraftTable', () => {
       within(activeRow as HTMLElement).getByText(formatSeatBreakdown(activeAircraft)),
     ).toBeInTheDocument();
     expect(within(activeRow as HTMLElement).getByText('Active')).toBeInTheDocument();
-    expect(within(activeRow as HTMLElement).getByRole('button', { name: 'Deactivate' })).toBeInTheDocument();
+    expect(
+      within(activeRow as HTMLElement).getByRole('button', { name: 'Deactivate' }),
+    ).toBeInTheDocument();
 
-    expect(within(inactiveRow as HTMLElement).getByText(inactiveAircraft.model)).toBeInTheDocument();
+    expect(
+      within(inactiveRow as HTMLElement).getByText(inactiveAircraft.model),
+    ).toBeInTheDocument();
     expect(within(inactiveRow as HTMLElement).getByText('Inactive')).toBeInTheDocument();
-    expect(within(inactiveRow as HTMLElement).getByRole('button', { name: 'Activate' })).toBeInTheDocument();
+    expect(
+      within(inactiveRow as HTMLElement).getByRole('button', { name: 'Activate' }),
+    ).toBeInTheDocument();
   });
 
   it('invokes desktop view, edit, configure seats, delete, and toggle handlers', async () => {
@@ -89,20 +92,14 @@ describe('AircraftTable', () => {
       />,
     );
 
-    await user.click(
-      screen.getByRole('button', { name: `View ${activeAircraft.registration}` }),
-    );
+    await user.click(screen.getByRole('button', { name: `View ${activeAircraft.registration}` }));
     await user.click(
       screen.getByRole('button', {
         name: `Configure seats ${activeAircraft.registration}`,
       }),
     );
-    await user.click(
-      screen.getByRole('button', { name: `Edit ${activeAircraft.registration}` }),
-    );
-    await user.click(
-      screen.getByRole('button', { name: `Delete ${activeAircraft.registration}` }),
-    );
+    await user.click(screen.getByRole('button', { name: `Edit ${activeAircraft.registration}` }));
+    await user.click(screen.getByRole('button', { name: `Delete ${activeAircraft.registration}` }));
     await user.click(screen.getByRole('button', { name: 'Deactivate' }));
 
     expect(onView).toHaveBeenCalledWith(activeAircraft);
@@ -165,9 +162,7 @@ describe('AircraftTable', () => {
     const section = screen.getByRole('region', { name: 'Admin aircraft' });
 
     expect(within(section).getByText(activeAircraft.registration)).toBeInTheDocument();
-    expect(
-      within(section).getByText(formatAircraftLabel(activeAircraft)),
-    ).toBeInTheDocument();
+    expect(within(section).getByText(formatAircraftLabel(activeAircraft))).toBeInTheDocument();
     expect(within(section).getAllByText('Manufacturer').length).toBeGreaterThan(0);
     expect(within(section).getAllByText('Model').length).toBeGreaterThan(0);
     expect(within(section).getAllByText('Total seats').length).toBeGreaterThan(0);
@@ -177,17 +172,13 @@ describe('AircraftTable', () => {
     expect(within(section).getByText('Active')).toBeInTheDocument();
     expect(within(section).getByText('Inactive')).toBeInTheDocument();
 
-    await user.click(
-      screen.getByRole('button', { name: `View ${activeAircraft.registration}` }),
-    );
+    await user.click(screen.getByRole('button', { name: `View ${activeAircraft.registration}` }));
     await user.click(
       screen.getByRole('button', {
         name: `Configure seats ${activeAircraft.registration}`,
       }),
     );
-    await user.click(
-      screen.getByRole('button', { name: `Edit ${activeAircraft.registration}` }),
-    );
+    await user.click(screen.getByRole('button', { name: `Edit ${activeAircraft.registration}` }));
     await user.click(
       screen.getByRole('button', { name: `Delete ${inactiveAircraft.registration}` }),
     );

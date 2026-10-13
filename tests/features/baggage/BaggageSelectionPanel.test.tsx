@@ -45,9 +45,8 @@ describe('BaggageSelectionPanel', () => {
     );
 
     expect(screen.getAllByText('Ada Lovelace').length).toBeGreaterThan(0);
-    expect(screen.getAllByText('Baby Lovelace').length).toBeGreaterThan(0);    expect(
-      screen.getByText(/Infants travel with a 7KG cabin bag only/i),
-    ).toBeInTheDocument();
+    expect(screen.getAllByText('Baby Lovelace').length).toBeGreaterThan(0);
+    expect(screen.getByText(/Infants travel with a 7KG cabin bag only/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /Save baggage/i }));
 
@@ -152,11 +151,7 @@ describe('BaggageSelectionPanel', () => {
     });
 
     renderWithProviders(
-      <BaggageSelectionPanel
-        flightId="FL-100"
-        cabinClass="ECONOMY"
-        passengers={[adult]}
-      />,
+      <BaggageSelectionPanel flightId="FL-100" cabinClass="ECONOMY" passengers={[adult]} />,
     );
 
     const cabinGroup = screen.getByRole('radiogroup', {
@@ -194,11 +189,7 @@ describe('BaggageSelectionPanel', () => {
     });
 
     renderWithProviders(
-      <BaggageSelectionPanel
-        flightId="FL-100"
-        cabinClass="ECONOMY"
-        passengers={[adult]}
-      />,
+      <BaggageSelectionPanel flightId="FL-100" cabinClass="ECONOMY" passengers={[adult]} />,
     );
 
     const cabinGroup = screen.getByRole('radiogroup', {
@@ -214,11 +205,7 @@ describe('BaggageSelectionPanel', () => {
     const user = userEvent.setup();
 
     renderWithProviders(
-      <BaggageSelectionPanel
-        flightId="FL-100"
-        cabinClass="ECONOMY"
-        passengers={[adult]}
-      />,
+      <BaggageSelectionPanel flightId="FL-100" cabinClass="ECONOMY" passengers={[adult]} />,
     );
 
     await user.click(screen.getByRole('button', { name: /Save baggage/i }));
@@ -230,11 +217,7 @@ describe('BaggageSelectionPanel', () => {
 
   it('falls back to a default selection when a new passenger is added', () => {
     const { rerender } = renderWithProviders(
-      <BaggageSelectionPanel
-        flightId="FL-100"
-        cabinClass="ECONOMY"
-        passengers={[adult]}
-      />,
+      <BaggageSelectionPanel flightId="FL-100" cabinClass="ECONOMY" passengers={[adult]} />,
     );
 
     rerender(

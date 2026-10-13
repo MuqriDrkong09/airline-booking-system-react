@@ -5,11 +5,7 @@ import {
   CANCELLATION_FEE_REFUNDABLE_PER_PASSENGER,
 } from '../constants/cancellation';
 import { roundMoney } from './priceBreakdown';
-import {
-  getBookingDepartureDate,
-  getBookingTab,
-  isCancelledBooking,
-} from './bookingStatus';
+import { getBookingDepartureDate, getBookingTab, isCancelledBooking } from './bookingStatus';
 
 export interface CancellationQuote {
   currency: string;
@@ -75,17 +71,14 @@ export function calculateCancellationQuote(booking: Booking): CancellationQuote 
     );
     cancellationFee = Math.min(cancellationFee, paidTotal);
   } else {
-    const retainedAncillaries = roundMoney(
-      ancillaryTotal * CANCELLATION_ANCILLARY_RETENTION_RATE,
-    );
+    const retainedAncillaries = roundMoney(ancillaryTotal * CANCELLATION_ANCILLARY_RETENTION_RATE);
     cancellationFee = roundMoney(
       Math.min(paidTotal, booking.priceBreakdown.baseFare + retainedAncillaries),
     );
   }
 
   const refundAmount = roundMoney(Math.max(0, paidTotal - cancellationFee));
-  const finalStatus: 'CANCELLED' | 'REFUNDED' =
-    refundAmount > 0 ? 'REFUNDED' : 'CANCELLED';
+  const finalStatus: 'CANCELLED' | 'REFUNDED' = refundAmount > 0 ? 'REFUNDED' : 'CANCELLED';
 
   return {
     currency,
@@ -99,10 +92,7 @@ export function calculateCancellationQuote(booking: Booking): CancellationQuote 
   };
 }
 
-export function getCancellationBlockedReason(
-  booking: Booking,
-  todayIso: string,
-): string | null {
+export function getCancellationBlockedReason(booking: Booking, todayIso: string): string | null {
   if (booking.status === 'CANCELLATION_REQUESTED') {
     return 'A cancellation request is already in progress for this booking.';
   }

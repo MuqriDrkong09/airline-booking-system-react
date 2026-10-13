@@ -10,11 +10,7 @@ import { AppButton, AppCard } from '@/components/common';
 import { CABIN_CLASS_OPTIONS } from '../../constants/search';
 import type { CabinClass } from '../../types';
 import type { FlightFilterBounds, FlightFilterState } from '../../types/flight';
-import {
-  formatDuration,
-  formatHourLabel,
-  formatPrice,
-} from '../../utils/flightResults';
+import { formatDuration, formatHourLabel, formatPrice } from '../../utils/flightResults';
 
 export interface FlightFiltersProps {
   value: FlightFilterState;
@@ -58,10 +54,7 @@ function FlightFiltersComponent({
     value.departureHourStart ?? 0,
     value.departureHourEnd ?? 24,
   ];
-  const arrivalRange: [number, number] = [
-    value.arrivalHourStart ?? 0,
-    value.arrivalHourEnd ?? 24,
-  ];
+  const arrivalRange: [number, number] = [value.arrivalHourStart ?? 0, value.arrivalHourEnd ?? 24];
   const durationValue = value.durationMax ?? bounds.durationMax;
 
   // Local slider drafts avoid URL churn / list recomputation while dragging.
@@ -223,9 +216,7 @@ function FlightFiltersComponent({
           valueLabelDisplay="auto"
           valueLabelFormat={formatHourLabel}
           aria-labelledby="filter-arrival-label"
-          getAriaLabel={(index) =>
-            index === 0 ? 'Earliest arrival hour' : 'Latest arrival hour'
-          }
+          getAriaLabel={(index) => (index === 0 ? 'Earliest arrival hour' : 'Latest arrival hour')}
           onChange={(_event, next) => setDraftArrival(next as [number, number])}
           onChangeCommitted={(_event, next) => {
             const [start, end] = next as [number, number];

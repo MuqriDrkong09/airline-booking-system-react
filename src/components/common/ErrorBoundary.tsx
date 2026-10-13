@@ -1,9 +1,6 @@
 import type { ErrorInfo, ReactNode } from 'react';
 import { Component } from 'react';
-import {
-  UNEXPECTED_ERROR_MESSAGE,
-  logApiError,
-} from '@/services/api';
+import { UNEXPECTED_ERROR_MESSAGE, logApiError } from '@/services/api';
 import { ErrorState } from './ErrorState';
 
 interface ErrorBoundaryProps {

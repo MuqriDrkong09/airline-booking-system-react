@@ -1,8 +1,5 @@
 import { z } from 'zod';
-import {
-  CABIN_CLASSES,
-  FLIGHT_OPERATIONAL_STATUSES,
-} from '@/features/flights';
+import { CABIN_CLASSES, FLIGHT_OPERATIONAL_STATUSES } from '@/features/flights';
 
 const datetimeLocalPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
 
@@ -23,10 +20,7 @@ export const flightFormSchema = z
       .string()
       .trim()
       .regex(datetimeLocalPattern, 'Enter a valid departure date and time'),
-    arrival: z
-      .string()
-      .trim()
-      .regex(datetimeLocalPattern, 'Enter a valid arrival date and time'),
+    arrival: z.string().trim().regex(datetimeLocalPattern, 'Enter a valid arrival date and time'),
     terminal: z.string().trim().min(1, 'Enter a terminal'),
     gate: z.string().trim().min(1, 'Enter a gate'),
     status: z.enum(FLIGHT_OPERATIONAL_STATUSES),
@@ -35,9 +29,7 @@ export const flightFormSchema = z
       .int('Seats must be a whole number')
       .min(0, 'Seats cannot be negative')
       .max(850, 'Seats look too high'),
-    fareClasses: z
-      .array(z.enum(CABIN_CLASSES))
-      .min(1, 'Select at least one fare class'),
+    fareClasses: z.array(z.enum(CABIN_CLASSES)).min(1, 'Select at least one fare class'),
   })
   .superRefine((values, ctx) => {
     if (values.origin && values.destination && values.origin === values.destination) {

@@ -161,9 +161,9 @@ describe('MyBookingsPage', () => {
     const user = userEvent.setup();
 
     act(() => {
-      useBookingsStore.getState().saveBooking(
-        makeBooking({ reference: 'AB-CXL', status: 'CONFIRMED' }),
-      );
+      useBookingsStore
+        .getState()
+        .saveBooking(makeBooking({ reference: 'AB-CXL', status: 'CONFIRMED' }));
     });
 
     renderWithProviders(<MyBookingsPage />, { initialEntries: ['/app/bookings'] });
@@ -184,8 +184,6 @@ describe('MyBookingsPage', () => {
       'true',
     );
     expect(screen.getByText('AB-CXL')).toBeInTheDocument();
-    expect(useBookingsStore.getState().getBookingByReference('AB-CXL')?.status).toBe(
-      'REFUNDED',
-    );
+    expect(useBookingsStore.getState().getBookingByReference('AB-CXL')?.status).toBe('REFUNDED');
   });
 });

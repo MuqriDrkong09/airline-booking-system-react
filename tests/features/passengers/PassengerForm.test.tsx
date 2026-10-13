@@ -118,9 +118,7 @@ describe('PassengerForm', () => {
     );
 
     expect(screen.getByText(/^Infant 1$/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole('combobox', { name: /Traveling with adult/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: /Traveling with adult/i })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Save passengers' }));
 

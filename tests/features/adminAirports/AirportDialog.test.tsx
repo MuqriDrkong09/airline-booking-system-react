@@ -12,9 +12,7 @@ describe('AirportDialog', () => {
     const onClose = jest.fn();
     const onSubmit = jest.fn();
 
-    renderWithProviders(
-      <AirportDialog open mode="create" onClose={onClose} onSubmit={onSubmit} />,
-    );
+    renderWithProviders(<AirportDialog open mode="create" onClose={onClose} onSubmit={onSubmit} />);
 
     expect(screen.getByRole('heading', { name: 'Create airport' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Create airport' })).toBeEnabled();
@@ -26,13 +24,7 @@ describe('AirportDialog', () => {
 
   it('renders edit mode with airport code and prefilled form', () => {
     renderWithProviders(
-      <AirportDialog
-        open
-        mode="edit"
-        airport={airport}
-        onClose={jest.fn()}
-        onSubmit={jest.fn()}
-      />,
+      <AirportDialog open mode="edit" airport={airport} onClose={jest.fn()} onSubmit={jest.fn()} />,
     );
 
     expect(screen.getByRole('heading', { name: `Edit ${airport.code}` })).toBeInTheDocument();
@@ -52,13 +44,7 @@ describe('AirportDialog', () => {
 
   it('disables cancel and shows Creating label while submitting in create mode', () => {
     renderWithProviders(
-      <AirportDialog
-        open
-        mode="create"
-        submitting
-        onClose={jest.fn()}
-        onSubmit={jest.fn()}
-      />,
+      <AirportDialog open mode="create" submitting onClose={jest.fn()} onSubmit={jest.fn()} />,
     );
 
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeDisabled();

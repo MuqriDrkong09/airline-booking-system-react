@@ -23,18 +23,12 @@ export function RoleRoute({ allowedRoles }: RoleRouteProps) {
   }
 
   if (!isAuthenticated || !user) {
-    return (
-      <Navigate to={APP_ROUTES.public.login} replace state={{ from: location.pathname }} />
-    );
+    return <Navigate to={APP_ROUTES.public.login} replace state={{ from: location.pathname }} />;
   }
 
   if (!hasRole(user, allowedRoles)) {
     return (
-      <Navigate
-        to={APP_ROUTES.public.forbidden}
-        replace
-        state={{ from: location.pathname }}
-      />
+      <Navigate to={APP_ROUTES.public.forbidden} replace state={{ from: location.pathname }} />
     );
   }
 

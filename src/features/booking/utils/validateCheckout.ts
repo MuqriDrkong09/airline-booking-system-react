@@ -5,16 +5,10 @@ import { passengerDisplayName } from '@/features/seats';
 import type { BookingData, BookingPaymentInfo, BookingSeatSelection } from '../types/booking';
 
 export type BookingValidationResult =
-  | { ok: true }
-  | { ok: false; step: BookingValidationStep; message: string };
+  { ok: true } | { ok: false; step: BookingValidationStep; message: string };
 
 export type BookingValidationStep =
-  | 'booking'
-  | 'passengers'
-  | 'seats'
-  | 'baggage'
-  | 'addons'
-  | 'payment';
+  'booking' | 'passengers' | 'seats' | 'baggage' | 'addons' | 'payment';
 
 function displayName(passenger: PassengerDraft, index: number): string {
   return passengerDisplayName(

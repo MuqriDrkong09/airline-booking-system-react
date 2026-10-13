@@ -1,8 +1,4 @@
-﻿import {
-  createAuthStore,
-  selectIsAuthenticated,
-  useAuthStore,
-} from '@/features/auth';
+﻿import { createAuthStore, selectIsAuthenticated, useAuthStore } from '@/features/auth';
 import { AuthApiError, createMemoryTokenStorage, type AuthApi } from '@/services/auth';
 import type { AuthSession, AuthUser } from '@/types/auth';
 import { UserRole } from '@/types/auth';
@@ -216,9 +212,9 @@ describe('createAuthStore', () => {
 
     await expect(store.getState().register(registerPayload)).resolves.toBe('Registered');
 
-    await expect(
-      store.getState().forgotPassword({ email: 'alex@example.com' }),
-    ).resolves.toBe('Reset sent');
+    await expect(store.getState().forgotPassword({ email: 'alex@example.com' })).resolves.toBe(
+      'Reset sent',
+    );
 
     await expect(
       store.getState().resetPassword({

@@ -322,10 +322,7 @@ export function createPassengersFormSchema(options: PassengerSchemaOptions) {
         if (passenger.type !== 'INFANT') {
           return;
         }
-        if (
-          passenger.associatedAdultId &&
-          !adultIds.has(passenger.associatedAdultId)
-        ) {
+        if (passenger.associatedAdultId && !adultIds.has(passenger.associatedAdultId)) {
           ctx.addIssue({
             code: 'custom',
             path: ['passengers', index, 'associatedAdultId'],

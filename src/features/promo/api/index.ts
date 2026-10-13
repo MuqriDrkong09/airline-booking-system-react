@@ -4,9 +4,7 @@ import { createHttpPromoApi } from './httpPromoApi';
 import { mockPromoApi } from './mockPromoApi';
 import type { PromoApi } from './promoApi.types';
 
-export const promoApi: PromoApi = env.useMockAuth
-  ? mockPromoApi
-  : createHttpPromoApi();
+export const promoApi: PromoApi = env.useMockAuth ? mockPromoApi : createHttpPromoApi();
 
 export const promoKeys = {
   all: ['promo'] as const,

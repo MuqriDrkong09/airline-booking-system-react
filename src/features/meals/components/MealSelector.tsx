@@ -18,16 +18,9 @@ export interface MealSelectorProps {
   onRemove: () => void;
 }
 
-export function MealSelector({
-  passenger,
-  selection,
-  onChange,
-  onRemove,
-}: MealSelectorProps) {
+export function MealSelector({ passenger, selection, onChange, onRemove }: MealSelectorProps) {
   const options = mealsForPassenger(passenger);
-  const selectedMeal = selection.mealType
-    ? getMealCatalogItem(selection.mealType)
-    : undefined;
+  const selectedMeal = selection.mealType ? getMealCatalogItem(selection.mealType) : undefined;
   const lineTotal = pricePassengerMeal(selection);
 
   if (passenger.type === 'INFANT') {
@@ -85,13 +78,10 @@ export function MealSelector({
             id={`meal-qty-${passenger.id}`}
             label="Quantity"
             value={selection.quantity || 1}
-            options={Array.from(
-              { length: selectedMeal.maxQuantityPerPassenger },
-              (_, index) => {
-                const qty = index + 1;
-                return { value: qty, label: String(qty) };
-              },
-            )}
+            options={Array.from({ length: selectedMeal.maxQuantityPerPassenger }, (_, index) => {
+              const qty = index + 1;
+              return { value: qty, label: String(qty) };
+            })}
             onChange={(value) =>
               onChange({
                 passengerId: passenger.id,

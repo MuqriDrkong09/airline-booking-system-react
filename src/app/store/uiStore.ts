@@ -51,10 +51,7 @@ export const useUiStore = create<UiState>()(
   ),
 );
 
-export function resolveColorScheme(
-  themeMode: ThemeMode,
-  prefersDark: boolean,
-): ColorScheme {
+export function resolveColorScheme(themeMode: ThemeMode, prefersDark: boolean): ColorScheme {
   if (themeMode === 'system') {
     return prefersDark ? 'dark' : 'light';
   }

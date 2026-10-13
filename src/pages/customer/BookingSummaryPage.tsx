@@ -1,17 +1,8 @@
 import { useMemo } from 'react';
 import { Link as RouterLink, useParams, useSearchParams } from 'react-router-dom';
-import {
-  AppButton,
-  EmptyState,
-  FlightDetailsSkeleton,
-  PageContainer,
-} from '@/components/common';
+import { AppButton, EmptyState, FlightDetailsSkeleton, PageContainer } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
-import {
-  BookingSummary,
-  useBookingStore,
-  useBookingSummaryHydration,
-} from '@/features/booking';
+import { BookingSummary, useBookingStore, useBookingSummaryHydration } from '@/features/booking';
 import {
   parseFlightSearchParams,
   useFlightDetailsQuery,
@@ -29,10 +20,8 @@ function toSearchCriteria(
   }
 
   const from =
-    parsed.from ??
-    (parsed.tripType === 'MULTI_CITY' ? parsed.legs?.[0]?.from : undefined);
-  const to =
-    parsed.to ?? (parsed.tripType === 'MULTI_CITY' ? parsed.legs?.[0]?.to : undefined);
+    parsed.from ?? (parsed.tripType === 'MULTI_CITY' ? parsed.legs?.[0]?.from : undefined);
+  const to = parsed.to ?? (parsed.tripType === 'MULTI_CITY' ? parsed.legs?.[0]?.to : undefined);
   const departure =
     parsed.departure ??
     (parsed.tripType === 'MULTI_CITY' ? parsed.legs?.[0]?.departure : undefined);
@@ -150,11 +139,7 @@ export function BookingSummaryPage() {
           title="No booking in progress"
           message="Search for a flight and complete the booking steps before reviewing your summary."
           action={
-            <AppButton
-              component={RouterLink}
-              to={APP_ROUTES.customer.flights}
-              variant="contained"
-            >
+            <AppButton component={RouterLink} to={APP_ROUTES.customer.flights} variant="contained">
               Search flights
             </AppButton>
           }

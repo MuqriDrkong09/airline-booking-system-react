@@ -7,13 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Ban, Banknote, Eye, Pencil } from 'lucide-react';
 import type { ReactNode } from 'react';
-import {
-  AppBadge,
-  AppButton,
-  AppCard,
-  AppTable,
-  type AppTableColumn,
-} from '@/components/common';
+import { AppBadge, AppButton, AppCard, AppTable, type AppTableColumn } from '@/components/common';
 import {
   BOOKING_STATUS_LABELS,
   BOOKING_STATUS_TONE,

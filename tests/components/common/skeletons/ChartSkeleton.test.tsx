@@ -47,9 +47,7 @@ describe('ChartSkeleton', () => {
   it('scales skeleton placeholders with the chart count', () => {
     renderWithProviders(<ChartSkeleton count={2} />);
 
-    expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(
-      SKELETONS_PER_CHART * 2,
-    );
+    expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(SKELETONS_PER_CHART * 2);
   });
 
   it('uses the default md height when height is omitted', () => {

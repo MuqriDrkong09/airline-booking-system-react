@@ -7,10 +7,7 @@ import {
   listFlightFilterOptions,
 } from '../utils/adminBookingActions';
 import { queryAdminBookings } from '../utils/queryAdminBookings';
-import type {
-  AdminBookingListQuery,
-  AdminBookingModifyInput,
-} from '../types/adminBooking';
+import type { AdminBookingListQuery, AdminBookingModifyInput } from '../types/adminBooking';
 import { EMPTY_ADMIN_BOOKING_QUERY } from '../types/adminBooking';
 import type { AdminBookingsApi } from './adminBookingsApi.types';
 import { createSeedAdminBookings } from './adminBookingsData';

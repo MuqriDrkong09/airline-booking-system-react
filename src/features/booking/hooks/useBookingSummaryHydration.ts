@@ -5,10 +5,7 @@ import { getSeatById, type SeatAssignment, type SeatModel } from '@/features/sea
 import { useBookingStore } from '../store/bookingStore';
 import type { BookingSeatSelection } from '../types/booking';
 
-function toBookingSeats(
-  seats: SeatModel[],
-  assignments: SeatAssignment[],
-): BookingSeatSelection[] {
+function toBookingSeats(seats: SeatModel[], assignments: SeatAssignment[]): BookingSeatSelection[] {
   return assignments
     .map((assignment) => {
       const seat = getSeatById(seats, assignment.seatId);
@@ -38,15 +35,8 @@ export function useBookingSummaryHydration(options: {
   seatAssignments: SeatAssignment[];
   seatFlightId: string | null;
 }) {
-  const {
-    flightId,
-    flight,
-    searchCriteria,
-    passengers,
-    seatSeats,
-    seatAssignments,
-    seatFlightId,
-  } = options;
+  const { flightId, flight, searchCriteria, passengers, seatSeats, seatAssignments, seatFlightId } =
+    options;
 
   const setSearchCriteria = useBookingStore((state) => state.setSearchCriteria);
   const setSelectedFlight = useBookingStore((state) => state.setSelectedFlight);

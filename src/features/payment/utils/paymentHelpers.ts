@@ -16,6 +16,9 @@ export function createPaymentIdempotencyKey(): string {
 }
 
 export function createBookingReference(transactionId: string): string {
-  const suffix = transactionId.replace(/[^A-Z0-9]/gi, '').slice(-8).toUpperCase();
+  const suffix = transactionId
+    .replace(/[^A-Z0-9]/gi, '')
+    .slice(-8)
+    .toUpperCase();
   return `AB-${suffix || Date.now().toString(36).toUpperCase()}`;
 }

@@ -17,17 +17,17 @@ import {
   FlightSearchResults,
   formatSearchSummary,
   isCompleteFlightSearchRequest,
-  parseFlightSearchParams,
   serializeFlightSearchCriteria,
   useFlightSearchHydration,
   useRecentSearchesStore,
   type FlightOffer,
+  type FlightSearchCriteria,
   type FlightSearchFormValues,
   type FlightSearchRequest,
 } from '@/features/flights';
 
 function toSearchRequest(
-  criteria: ReturnType<typeof parseFlightSearchParams>,
+  criteria: Partial<FlightSearchCriteria> | null,
 ): Partial<FlightSearchRequest> | null {
   if (!criteria) {
     return null;
@@ -173,7 +173,11 @@ export function SearchFlightsPage() {
         ) : null}
 
         {changeError ? (
-          <AppAlert severity="error" title="Cannot change flight" onClose={() => setChangeError(null)}>
+          <AppAlert
+            severity="error"
+            title="Cannot change flight"
+            onClose={() => setChangeError(null)}
+          >
             {changeError}
           </AppAlert>
         ) : null}

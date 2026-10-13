@@ -1,9 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import {
-  clearLegacyPiiLocalStorage,
-  sessionPersistStorage,
-} from '@/utils/sessionPersistStorage';
+import { clearLegacyPiiLocalStorage, sessionPersistStorage } from '@/utils/sessionPersistStorage';
 import type {
   PassengerDraft,
   PassengerDraftSaveStatus,

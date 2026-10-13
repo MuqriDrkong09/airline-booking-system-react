@@ -105,9 +105,7 @@ export function AdminPromoCodesView() {
       closeDialog();
     } catch (error) {
       const message =
-        error instanceof Error
-          ? error.message
-          : 'Unable to save the promo code. Please try again.';
+        error instanceof Error ? error.message : 'Unable to save the promo code. Please try again.';
       setActionError(message);
     }
   };
@@ -173,9 +171,7 @@ export function AdminPromoCodesView() {
       ) : (
         <PromoCodeTable
           promoCodes={promoCodes}
-          activeUpdatingId={
-            activeMutation.isPending ? activeMutation.variables?.promoId : null
-          }
+          activeUpdatingId={activeMutation.isPending ? activeMutation.variables?.promoId : null}
           onEdit={openEditDialog}
           onDelete={setDeleteTarget}
           onToggleActive={(promo) => {
@@ -196,11 +192,7 @@ export function AdminPromoCodesView() {
       <ConfirmDialog
         open={Boolean(deleteTarget)}
         title="Delete promo code"
-        description={
-          deleteTarget
-            ? `Delete ${deleteTarget.code}? This cannot be undone.`
-            : ''
-        }
+        description={deleteTarget ? `Delete ${deleteTarget.code}? This cannot be undone.` : ''}
         confirmLabel="Delete"
         confirmColor="error"
         loading={deleteMutation.isPending}

@@ -88,9 +88,7 @@ describe('AppInput', () => {
   });
 
   it('supports multiline input', () => {
-    renderWithProviders(
-      <AppInput label="Notes" multiline minRows={3} defaultValue="Gate notes" />,
-    );
+    renderWithProviders(<AppInput label="Notes" multiline minRows={3} defaultValue="Gate notes" />);
 
     const input = screen.getByLabelText('Notes');
     expect(input.tagName).toBe('TEXTAREA');
@@ -109,4 +107,3 @@ describe('AppInput', () => {
     expect(screen.getByRole('textbox', { name: 'Search bookings' })).toBeInTheDocument();
   });
 });
-

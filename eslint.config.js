@@ -30,6 +30,14 @@ export default defineConfig([
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+      'react-refresh/only-export-components': ['error', { allowConstantExport: true }],
+      /**
+       * React Compiler–oriented rules. Established UI patterns (dialog prop sync,
+       * hold-last-props during MUI exit transitions) trip these without being
+       * runtime bugs. Keep as warnings so CI can enforce real errors first.
+       */
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-hooks/refs': 'warn',
     },
   },
   {
@@ -41,6 +49,9 @@ export default defineConfig([
     },
     rules: {
       'react-refresh/only-export-components': 'off',
+      // Jest mocks commonly use require() / typeof import(...).
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/consistent-type-imports': 'off',
     },
   },
 ]);

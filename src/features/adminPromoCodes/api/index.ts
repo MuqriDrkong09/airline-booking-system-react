@@ -17,9 +17,7 @@ export const adminPromoCodeKeys = {
   detail: (promoId: string) => [...adminPromoCodeKeys.details(), promoId] as const,
 };
 
-export function listAdminPromoCodes(
-  filters?: AdminPromoCodeFilters,
-): Promise<AdminPromoCode[]> {
+export function listAdminPromoCodes(filters?: AdminPromoCodeFilters): Promise<AdminPromoCode[]> {
   return adminPromoCodesApi.listPromoCodes(filters);
 }
 
@@ -38,10 +36,7 @@ export function updateAdminPromoCode(
   return adminPromoCodesApi.updatePromoCode(promoId, input);
 }
 
-export function setAdminPromoCodeActive(
-  promoId: string,
-  active: boolean,
-): Promise<AdminPromoCode> {
+export function setAdminPromoCodeActive(promoId: string, active: boolean): Promise<AdminPromoCode> {
   return adminPromoCodesApi.setPromoCodeActive(promoId, active);
 }
 
@@ -51,8 +46,5 @@ export function deleteAdminPromoCode(promoId: string): Promise<void> {
 
 export type { AdminPromoCodesApi } from './adminPromoCodesApi.types';
 export { createHttpAdminPromoCodesApi } from './httpAdminPromoCodesApi';
-export {
-  createMockAdminPromoCodesApi,
-  mockAdminPromoCodesApi,
-} from './mockAdminPromoCodesApi';
+export { createMockAdminPromoCodesApi, mockAdminPromoCodesApi } from './mockAdminPromoCodesApi';
 export { createSeedAdminPromoCodes } from './adminPromoCodesData';

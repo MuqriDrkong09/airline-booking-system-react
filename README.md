@@ -32,11 +32,11 @@ Copy the example env file and adjust values as needed:
 cp .env.example .env
 ```
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_API_BASE_URL` | Backend API base URL | `http://localhost:3000/api` |
-| `VITE_APP_NAME` | Product name shown in the UI | `AeroBook` |
-| `VITE_USE_MOCK_AUTH` | Use in-browser mock auth instead of real API | `true` |
+| Variable             | Description                                  | Default                     |
+| -------------------- | -------------------------------------------- | --------------------------- |
+| `VITE_API_BASE_URL`  | Backend API base URL                         | `http://localhost:3000/api` |
+| `VITE_APP_NAME`      | Product name shown in the UI                 | `AeroBook`                  |
+| `VITE_USE_MOCK_AUTH` | Use in-browser mock auth instead of real API | `true`                      |
 
 4. **Start the development server**
 
@@ -48,27 +48,27 @@ Open the URL printed in the terminal (typically `http://localhost:5173`).
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start the Vite development server |
-| `npm run build` | Typecheck and build for production |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | Run ESLint |
-| `npm run format` | Format files with Prettier |
-| `npm run format:check` | Check Prettier formatting |
-| `npm run typecheck` | Run TypeScript in strict project mode |
-| `npm test` | Run unit tests with Jest |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run test:coverage` | Run tests with coverage report |
+| Command                 | Description                           |
+| ----------------------- | ------------------------------------- |
+| `npm run dev`           | Start the Vite development server     |
+| `npm run build`         | Typecheck and build for production    |
+| `npm run preview`       | Preview the production build          |
+| `npm run lint`          | Run ESLint                            |
+| `npm run format`        | Format files with Prettier            |
+| `npm run format:check`  | Check Prettier formatting             |
+| `npm run typecheck`     | Run TypeScript in strict project mode |
+| `npm test`              | Run unit tests with Jest              |
+| `npm run test:watch`    | Run tests in watch mode               |
+| `npm run test:coverage` | Run tests with coverage report        |
 
 ## Demo accounts (mock auth)
 
 With `VITE_USE_MOCK_AUTH=true` (default), you can sign in without a backend:
 
-| Role | Email | Password |
-|------|-------|----------|
-| Customer (`USER`) | `user@example.com` | `Password123!` |
-| Admin (`ADMIN`) | `admin@example.com` | `Password123!` |
+| Role              | Email               | Password       |
+| ----------------- | ------------------- | -------------- |
+| Customer (`USER`) | `user@example.com`  | `Password123!` |
+| Admin (`ADMIN`)   | `admin@example.com` | `Password123!` |
 
 Registration, email verification, and password reset also work in mock mode. Verification and reset tokens are shown in on-screen success messages (and persisted in session storage).
 
@@ -192,10 +192,10 @@ Registration, email verification, and password reset also work in mock mode. Ver
   `VITE_USE_MOCK_AUTH=true`, otherwise `/admin/reports`
 - Favourite flights at `/app/favourites` (TanStack Query): save offers from
 
-
   `FlightCard` and `FlightDetailsHeader` via `FavouriteButton`, browse saved
   flights with `FavouriteFlightCard`, and remove them. Mock mode persists to
   `localStorage`; live mode uses the backend favourites API
+
 - Flight status lookup at `/app/flight-status` (TanStack Query): search by flight
   number and date; show airline, route, scheduled/estimated departure and arrival,
   terminal, gate, and status (`SCHEDULED`, `BOARDING`, `DELAYED`, `DEPARTED`,

@@ -7,13 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import { Pencil, Trash2 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { FlightOperationalStatus } from '@/features/flights';
-import {
-  AppBadge,
-  AppCard,
-  AppSelect,
-  AppTable,
-  type AppTableColumn,
-} from '@/components/common';
+import { AppBadge, AppCard, AppSelect, AppTable, type AppTableColumn } from '@/components/common';
 import { STATUS_OPTIONS } from '../constants/options';
 import type { AdminFlight } from '../types/adminFlight';
 import {
@@ -106,9 +100,7 @@ function FlightMobileCard({
           label="Status"
           value={
             <AppBadge
-              label={
-                STATUS_OPTIONS.find((option) => option.value === flight.status)?.label
-              }
+              label={STATUS_OPTIONS.find((option) => option.value === flight.status)?.label}
               tone={getStatusTone(flight.status)}
             />
           }
@@ -121,9 +113,7 @@ function FlightMobileCard({
             options={STATUS_OPTIONS}
             value={flight.status}
             disabled={statusUpdatingId === flight.id}
-            onChange={(status) =>
-              onStatusChange(flight, status as FlightOperationalStatus)
-            }
+            onChange={(status) => onStatusChange(flight, status as FlightOperationalStatus)}
           />
         </Box>
       </Box>
@@ -204,9 +194,7 @@ export function FlightTable({
             options={STATUS_OPTIONS}
             value={flight.status}
             disabled={statusUpdatingId === flight.id}
-            onChange={(status) =>
-              onStatusChange(flight, status as FlightOperationalStatus)
-            }
+            onChange={(status) => onStatusChange(flight, status as FlightOperationalStatus)}
           />
         </Stack>
       ),

@@ -4,12 +4,7 @@ import type { Booking, BookingRecordStatus } from '@/features/booking';
 export type AdminBooking = Booking;
 
 export type AdminBookingSortField =
-  | 'reference'
-  | 'status'
-  | 'departure'
-  | 'createdAt'
-  | 'total'
-  | 'flight';
+  'reference' | 'status' | 'departure' | 'createdAt' | 'total' | 'flight';
 
 export type AdminBookingSortDirection = 'asc' | 'desc';
 

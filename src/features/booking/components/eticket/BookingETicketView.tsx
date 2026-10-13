@@ -5,10 +5,7 @@ import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import { AppButton } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import type { Booking } from '../../types/bookingRecord';
-import {
-  buildBookingETickets,
-  formatETicketAsText,
-} from '../../utils/buildBookingETicket';
+import { buildBookingETickets, formatETicketAsText } from '../../utils/buildBookingETicket';
 import { downloadTextFile } from '../../utils/bookingDocuments';
 import { BookingETicketDocument } from './BookingETicketDocument';
 
@@ -34,10 +31,7 @@ export function BookingETicketView({ booking }: BookingETicketViewProps) {
   }, [shouldAutoPrint]);
 
   const handleDownload = () => {
-    downloadTextFile(
-      `aerobook-eticket-${booking.reference}.txt`,
-      formatETicketAsText(tickets),
-    );
+    downloadTextFile(`aerobook-eticket-${booking.reference}.txt`, formatETicketAsText(tickets));
   };
 
   return (

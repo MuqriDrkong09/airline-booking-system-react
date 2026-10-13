@@ -111,9 +111,7 @@ describe('ClientInvoiceProvider', () => {
     expect(navigate).toHaveBeenCalledWith('/app/bookings/AB-TEST1234/invoice');
 
     await provider.deliver(booking, { mode: 'print', navigate });
-    expect(navigate).toHaveBeenCalledWith(
-      '/app/bookings/AB-TEST1234/invoice?print=1',
-    );
+    expect(navigate).toHaveBeenCalledWith('/app/bookings/AB-TEST1234/invoice?print=1');
   });
 
   it('allows swapping the active provider for a future PDF implementation', async () => {

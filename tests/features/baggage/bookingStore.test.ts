@@ -158,9 +158,9 @@ describe('booking store', () => {
       });
       useBookingStore.getState().setSelectedFlight(flight);
       useBookingStore.getState().setPassengers([adult]);
-      useBookingStore.getState().setSeats([
-        { passengerId: 'adult-1', seatId: 'economy-10A', label: '10A', price: 35 },
-      ]);
+      useBookingStore
+        .getState()
+        .setSeats([{ passengerId: 'adult-1', seatId: 'economy-10A', label: '10A', price: 35 }]);
       useBookingStore.getState().setBaggage({
         flightId: 'FL-100',
         cabinClass: 'ECONOMY',
@@ -226,9 +226,9 @@ describe('booking store', () => {
     expect(payment).not.toHaveProperty('cardNumber');
     expect(payment).not.toHaveProperty('cvv');
 
-    const persisted = useBookingStore.persist.getOptions().partialize?.(
-      useBookingStore.getState(),
-    ) as { payment: unknown };
+    const persisted = useBookingStore.persist
+      .getOptions()
+      .partialize?.(useBookingStore.getState()) as { payment: unknown };
     expect(JSON.stringify(persisted.payment)).not.toMatch(/4111111111111111|cvv|12\/30/i);
   });
 

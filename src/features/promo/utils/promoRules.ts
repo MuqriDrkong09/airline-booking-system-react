@@ -20,10 +20,7 @@ function todayIso(asOfDate?: string): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-export function isPromoExpired(
-  promo: PromoCodeDefinition,
-  asOfDate?: string,
-): boolean {
+export function isPromoExpired(promo: PromoCodeDefinition, asOfDate?: string): boolean {
   if (!promo.expiresAt) {
     return false;
   }

@@ -35,9 +35,7 @@ const nrt = {
   active: true,
 } as Airport;
 
-function makeFormValues(
-  overrides: Partial<FlightSearchFormValues> = {},
-): FlightSearchFormValues {
+function makeFormValues(overrides: Partial<FlightSearchFormValues> = {}): FlightSearchFormValues {
   return {
     tripType: 'ONE_WAY',
     origin: kul,

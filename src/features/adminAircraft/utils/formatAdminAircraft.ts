@@ -1,11 +1,12 @@
 import type { AircraftFormParsedValues } from '../schemas/aircraftFormSchema';
-import type { AdminAircraft, AdminAircraftInput, AircraftSeatMapConfig } from '../types/adminAircraft';
+import type {
+  AdminAircraft,
+  AdminAircraftInput,
+  AircraftSeatMapConfig,
+} from '../types/adminAircraft';
 import { buildDefaultSeatMapConfig, ensureSeatMapConfig } from './seatMapConfig';
 
-function cabinCountsMatch(
-  existing: AdminAircraft,
-  values: AircraftFormParsedValues,
-): boolean {
+function cabinCountsMatch(existing: AdminAircraft, values: AircraftFormParsedValues): boolean {
   return (
     existing.economySeats === values.economySeats &&
     existing.premiumEconomySeats === values.premiumEconomySeats &&
@@ -47,7 +48,9 @@ export function toAdminAircraftInput(
   };
 }
 
-export function formatAircraftLabel(aircraft: Pick<AdminAircraft, 'manufacturer' | 'model'>): string {
+export function formatAircraftLabel(
+  aircraft: Pick<AdminAircraft, 'manufacturer' | 'model'>,
+): string {
   return `${aircraft.manufacturer} ${aircraft.model}`.trim();
 }
 

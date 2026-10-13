@@ -12,25 +12,20 @@ const cabinOptions = [
 
 describe('AppSelect', () => {
   it('renders a labeled select with options and default full width', () => {
-    renderWithProviders(
-      <AppSelect label="Cabin class" options={cabinOptions} value="ECONOMY" />,
-    );
+    renderWithProviders(<AppSelect label="Cabin class" options={cabinOptions} value="ECONOMY" />);
 
     const select = screen.getByLabelText('Cabin class');
     expect(select).toBeInTheDocument();
     expect(select).toHaveAttribute('id', 'app-select-cabin-class');
-    expect(document.getElementById('app-select-cabin-class-label')).toHaveTextContent('Cabin class');
+    expect(document.getElementById('app-select-cabin-class-label')).toHaveTextContent(
+      'Cabin class',
+    );
     expect(document.querySelector('.MuiFormControl-fullWidth')).toBeInTheDocument();
   });
 
   it('uses a provided id instead of the generated one', () => {
     renderWithProviders(
-      <AppSelect
-        id="flight-cabin"
-        label="Cabin class"
-        options={cabinOptions}
-        value="ECONOMY"
-      />,
+      <AppSelect id="flight-cabin" label="Cabin class" options={cabinOptions} value="ECONOMY" />,
     );
 
     expect(screen.getByLabelText('Cabin class')).toHaveAttribute('id', 'flight-cabin');
@@ -42,12 +37,7 @@ describe('AppSelect', () => {
     const onChange = jest.fn();
 
     renderWithProviders(
-      <AppSelect
-        label="Cabin class"
-        options={cabinOptions}
-        value="ECONOMY"
-        onChange={onChange}
-      />,
+      <AppSelect label="Cabin class" options={cabinOptions} value="ECONOMY" onChange={onChange} />,
     );
 
     await user.click(screen.getByLabelText('Cabin class'));
@@ -60,9 +50,7 @@ describe('AppSelect', () => {
   it('supports selecting without an onChange handler', async () => {
     const user = userEvent.setup();
 
-    renderWithProviders(
-      <AppSelect label="Cabin class" options={cabinOptions} value="ECONOMY" />,
-    );
+    renderWithProviders(<AppSelect label="Cabin class" options={cabinOptions} value="ECONOMY" />);
 
     await user.click(screen.getByRole('combobox', { name: 'Cabin class' }));
     await user.click(await screen.findByRole('option', { name: 'Business' }));
@@ -111,9 +99,7 @@ describe('AppSelect', () => {
   });
 
   it('omits helper text and aria-describedby when helperText is absent', () => {
-    renderWithProviders(
-      <AppSelect label="Cabin class" options={cabinOptions} value="ECONOMY" />,
-    );
+    renderWithProviders(<AppSelect label="Cabin class" options={cabinOptions} value="ECONOMY" />);
 
     expect(screen.queryByText(/helper/i)).not.toBeInTheDocument();
     expect(screen.getByLabelText('Cabin class')).not.toHaveAttribute('aria-describedby');

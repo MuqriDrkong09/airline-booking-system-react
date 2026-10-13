@@ -70,8 +70,7 @@ function createDualTokenStorage(persistent: StorageLike, session: StorageLike): 
   const activeBucket = (): StorageLike =>
     readRememberPreference(persistent) ? persistent : session;
 
-  const readToken = (key: string): string | null =>
-    session.getItem(key) ?? persistent.getItem(key);
+  const readToken = (key: string): string | null => session.getItem(key) ?? persistent.getItem(key);
 
   return {
     getAccessToken: () => readToken(ACCESS_TOKEN_KEY),
@@ -124,6 +123,4 @@ export function createBrowserTokenStorage(
 }
 
 export const tokenStorage: TokenStorage =
-  typeof window === 'undefined'
-    ? createMemoryTokenStorage()
-    : createBrowserTokenStorage();
+  typeof window === 'undefined' ? createMemoryTokenStorage() : createBrowserTokenStorage();

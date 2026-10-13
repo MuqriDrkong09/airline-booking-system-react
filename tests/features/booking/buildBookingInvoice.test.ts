@@ -108,12 +108,8 @@ describe('buildBookingInvoice', () => {
   });
 
   it('derives payment status from booking lifecycle', () => {
-    expect(deriveInvoicePaymentStatus(makeBooking({ status: 'PENDING' }))).toBe(
-      'PENDING',
-    );
-    expect(deriveInvoicePaymentStatus(makeBooking({ status: 'REFUNDED' }))).toBe(
-      'REFUNDED',
-    );
+    expect(deriveInvoicePaymentStatus(makeBooking({ status: 'PENDING' }))).toBe('PENDING');
+    expect(deriveInvoicePaymentStatus(makeBooking({ status: 'REFUNDED' }))).toBe('REFUNDED');
     expect(
       deriveInvoicePaymentStatus(
         makeBooking({

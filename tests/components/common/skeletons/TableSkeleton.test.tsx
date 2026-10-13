@@ -27,9 +27,7 @@ describe('TableSkeleton', () => {
   });
 
   it('honors custom columnCount and rowCount', () => {
-    renderWithProviders(
-      <TableSkeleton columnCount={4} rowCount={3} showToolbar={false} />,
-    );
+    renderWithProviders(<TableSkeleton columnCount={4} rowCount={3} showToolbar={false} />);
 
     expect(document.querySelectorAll('thead .MuiSkeleton-root')).toHaveLength(4);
     expect(document.querySelectorAll('tbody tr')).toHaveLength(3);
@@ -37,9 +35,7 @@ describe('TableSkeleton', () => {
   });
 
   it('hides the toolbar placeholders when showToolbar is false', () => {
-    renderWithProviders(
-      <TableSkeleton columnCount={3} rowCount={2} showToolbar={false} />,
-    );
+    renderWithProviders(<TableSkeleton columnCount={3} rowCount={2} showToolbar={false} />);
 
     expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(
       3 + 6 + PAGINATION_SKELETONS,
@@ -74,9 +70,7 @@ describe('TableSkeleton', () => {
   });
 
   it('renders zero header and body cells when columnCount and rowCount are zero', () => {
-    renderWithProviders(
-      <TableSkeleton columnCount={0} rowCount={0} showToolbar={false} />,
-    );
+    renderWithProviders(<TableSkeleton columnCount={0} rowCount={0} showToolbar={false} />);
 
     expect(document.querySelectorAll('thead .MuiSkeleton-root')).toHaveLength(0);
     expect(document.querySelectorAll('tbody tr')).toHaveLength(0);

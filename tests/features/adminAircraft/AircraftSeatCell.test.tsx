@@ -21,9 +21,7 @@ function makeSeat(overrides: Partial<AircraftConfiguredSeat> = {}): AircraftConf
 
 describe('AircraftSeatCell', () => {
   it('renders the column letter and base accessible name', () => {
-    renderWithProviders(
-      <AircraftSeatCell seat={makeSeat()} onSelect={jest.fn()} />,
-    );
+    renderWithProviders(<AircraftSeatCell seat={makeSeat()} onSelect={jest.fn()} />);
 
     const button = screen.getByRole('button', {
       name: /Configure seat 12A, Standard, ECONOMY/i,
@@ -68,9 +66,7 @@ describe('AircraftSeatCell', () => {
   });
 
   it('marks the seat as selected in aria attributes and label', () => {
-    renderWithProviders(
-      <AircraftSeatCell seat={makeSeat()} selected onSelect={jest.fn()} />,
-    );
+    renderWithProviders(<AircraftSeatCell seat={makeSeat()} selected onSelect={jest.fn()} />);
 
     const button = screen.getByRole('button', {
       name: /Configure seat 12A, Standard, ECONOMY, Selected/i,

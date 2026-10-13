@@ -24,10 +24,7 @@ export const aircraftConfiguredSeatSchema = z
       .transform((value) => value.toUpperCase()),
     cabinClass: z.enum(CABIN_CLASSES),
     seatType: z.enum(ADMIN_SEAT_TYPE_VALUES),
-    price: z
-      .number()
-      .min(0, 'Price cannot be negative')
-      .max(10_000, 'Price looks too high'),
+    price: z.number().min(0, 'Price cannot be negative').max(10_000, 'Price looks too high'),
     emergencyExit: z.boolean(),
     disabled: z.boolean(),
   })

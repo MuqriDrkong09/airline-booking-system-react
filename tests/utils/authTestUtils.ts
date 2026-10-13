@@ -31,10 +31,7 @@ export function resetAuthStore(): void {
   });
 }
 
-export function seedAuthenticatedUser(
-  user: AuthUser,
-  accessToken = 'test-access-token',
-): void {
+export function seedAuthenticatedUser(user: AuthUser, accessToken = 'test-access-token'): void {
   useAuthStore.setState({
     user,
     accessToken,

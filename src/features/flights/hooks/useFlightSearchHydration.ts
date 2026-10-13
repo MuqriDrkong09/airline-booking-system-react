@@ -1,10 +1,7 @@
 import { useQueries } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { airportKeys, getAirportByCode } from '../api';
-import {
-  createDefaultFlightSearchValues,
-  createEmptyLeg,
-} from '../schemas/searchSchema';
+import { createDefaultFlightSearchValues, createEmptyLeg } from '../schemas/searchSchema';
 import type { Airport, FlightSearchCriteria, FlightSearchFormValues } from '../types';
 import { addDaysIso, todayIsoDate } from '../utils/dates';
 import { parseFlightSearchParams } from '../utils/searchParams';
@@ -13,9 +10,7 @@ function uniqueCodes(codes: Array<string | undefined>): string[] {
   return [...new Set(codes.filter((code): code is string => Boolean(code)))];
 }
 
-export function collectAirportCodesFromCriteria(
-  criteria: Partial<FlightSearchCriteria>,
-): string[] {
+export function collectAirportCodesFromCriteria(criteria: Partial<FlightSearchCriteria>): string[] {
   if (criteria.tripType === 'MULTI_CITY' && criteria.legs?.length) {
     return uniqueCodes(criteria.legs.flatMap((leg) => [leg.from, leg.to]));
   }
@@ -74,10 +69,7 @@ export function useFlightSearchHydration(searchParams: URLSearchParams) {
     () => parseFlightSearchParams(new URLSearchParams(paramsKey)),
     [paramsKey],
   );
-  const codes = useMemo(
-    () => (parsed ? collectAirportCodesFromCriteria(parsed) : []),
-    [parsed],
-  );
+  const codes = useMemo(() => (parsed ? collectAirportCodesFromCriteria(parsed) : []), [parsed]);
   const codesKey = codes.join(',');
 
   const airportQueries = useQueries({

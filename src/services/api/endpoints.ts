@@ -44,16 +44,13 @@ export const API_ENDPOINTS = {
     root: '/notifications',
     unreadCount: '/notifications/unread-count',
     readAll: '/notifications/read-all',
-    read: (notificationId: string) =>
-      `/notifications/${encodeURIComponent(notificationId)}/read`,
-    byId: (notificationId: string) =>
-      `/notifications/${encodeURIComponent(notificationId)}`,
+    read: (notificationId: string) => `/notifications/${encodeURIComponent(notificationId)}/read`,
+    byId: (notificationId: string) => `/notifications/${encodeURIComponent(notificationId)}`,
   },
   favourites: {
     root: '/favourites',
     byFlightId: (flightId: string) => `/favourites/${encodeURIComponent(flightId)}`,
-    status: (flightId: string) =>
-      `/favourites/${encodeURIComponent(flightId)}/status`,
+    status: (flightId: string) => `/favourites/${encodeURIComponent(flightId)}/status`,
   },
   promoCodes: {
     validate: '/promo-codes/validate',
@@ -62,31 +59,25 @@ export const API_ENDPOINTS = {
     dashboard: '/admin/dashboard',
     flights: '/admin/flights',
     flightById: (flightId: string) => `/admin/flights/${encodeURIComponent(flightId)}`,
-    flightStatus: (flightId: string) =>
-      `/admin/flights/${encodeURIComponent(flightId)}/status`,
+    flightStatus: (flightId: string) => `/admin/flights/${encodeURIComponent(flightId)}/status`,
     airports: '/admin/airports',
     airportById: (airportId: string) => `/admin/airports/${encodeURIComponent(airportId)}`,
-    airportActive: (airportId: string) =>
-      `/admin/airports/${encodeURIComponent(airportId)}/active`,
+    airportActive: (airportId: string) => `/admin/airports/${encodeURIComponent(airportId)}/active`,
     aircraft: '/admin/aircraft',
     aircraftById: (aircraftId: string) => `/admin/aircraft/${encodeURIComponent(aircraftId)}`,
     aircraftActive: (aircraftId: string) =>
       `/admin/aircraft/${encodeURIComponent(aircraftId)}/active`,
     bookings: '/admin/bookings',
-    bookingByReference: (reference: string) =>
-      `/admin/bookings/${encodeURIComponent(reference)}`,
-    bookingCancel: (reference: string) =>
-      `/admin/bookings/${encodeURIComponent(reference)}/cancel`,
-    bookingRefund: (reference: string) =>
-      `/admin/bookings/${encodeURIComponent(reference)}/refund`,
+    bookingByReference: (reference: string) => `/admin/bookings/${encodeURIComponent(reference)}`,
+    bookingCancel: (reference: string) => `/admin/bookings/${encodeURIComponent(reference)}/cancel`,
+    bookingRefund: (reference: string) => `/admin/bookings/${encodeURIComponent(reference)}/refund`,
     bookingFlightOptions: '/admin/bookings/flight-options',
     users: '/admin/users',
     userById: (userId: string) => `/admin/users/${encodeURIComponent(userId)}`,
     userActive: (userId: string) => `/admin/users/${encodeURIComponent(userId)}/active`,
     userRole: (userId: string) => `/admin/users/${encodeURIComponent(userId)}/role`,
     promoCodes: '/admin/promo-codes',
-    promoCodeById: (promoCodeId: string) =>
-      `/admin/promo-codes/${encodeURIComponent(promoCodeId)}`,
+    promoCodeById: (promoCodeId: string) => `/admin/promo-codes/${encodeURIComponent(promoCodeId)}`,
     promoCodeActive: (promoCodeId: string) =>
       `/admin/promo-codes/${encodeURIComponent(promoCodeId)}/active`,
     reports: '/admin/reports',

@@ -68,23 +68,18 @@ export function createHttpFlightApi(client: AxiosInstance = apiClient): FlightsA
   };
 }
 
-export function createHttpFlightStatusApi(
-  client: AxiosInstance = apiClient,
-): FlightStatusApi {
+export function createHttpFlightStatusApi(client: AxiosInstance = apiClient): FlightStatusApi {
   return {
     async lookupFlightStatus(
       request: FlightStatusLookupRequest,
     ): Promise<FlightStatusRecord | null> {
       try {
-        const { data } = await client.get<FlightStatusRecord | null>(
-          API_ENDPOINTS.flights.status,
-          {
-            params: {
-              flightNumber: request.flightNumber,
-              date: request.date,
-            },
+        const { data } = await client.get<FlightStatusRecord | null>(API_ENDPOINTS.flights.status, {
+          params: {
+            flightNumber: request.flightNumber,
+            date: request.date,
           },
-        );
+        });
         return data;
       } catch (error) {
         const apiError = toApiError(error);

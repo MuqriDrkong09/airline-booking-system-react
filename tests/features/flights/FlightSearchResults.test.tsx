@@ -109,7 +109,11 @@ describe('FlightSearchResults', () => {
           cabinClass: 'ECONOMY',
         }}
       />,
-      { initialEntries: ['/app/flights?from=KUL&to=SIN&departure=2026-10-20&adults=1&cabin=ECONOMY'] },
+      {
+        initialEntries: [
+          '/app/flights?from=KUL&to=SIN&departure=2026-10-20&adults=1&cabin=ECONOMY',
+        ],
+      },
     );
 
     await screen.findByText(/Available flights/i);

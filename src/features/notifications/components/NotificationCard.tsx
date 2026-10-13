@@ -53,7 +53,9 @@ export function NotificationCard({
               spacing={1}
               useFlexGap
               sx={{ alignItems: 'center', flexWrap: 'wrap' }}
-            >              <AppBadge
+            >
+              {' '}
+              <AppBadge
                 label={NOTIFICATION_TYPE_LABELS[notification.type]}
                 tone={NOTIFICATION_TYPE_TONES[notification.type]}
                 size="small"
@@ -76,9 +78,7 @@ export function NotificationCard({
 
             <Typography variant="caption" color="text.secondary">
               {formatNotificationTime(notification.createdAt)}
-              {notification.bookingReference
-                ? ` · ${notification.bookingReference}`
-                : null}
+              {notification.bookingReference ? ` · ${notification.bookingReference}` : null}
             </Typography>
           </Stack>
 

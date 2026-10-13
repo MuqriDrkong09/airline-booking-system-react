@@ -1,10 +1,5 @@
 import { z } from 'zod';
-import {
-  CABIN_CLASSES,
-  type Airport,
-  type FlightSearchFormValues,
-  TRIP_TYPES,
-} from '../types';
+import { CABIN_CLASSES, type Airport, type FlightSearchFormValues, TRIP_TYPES } from '../types';
 import {
   MAX_MULTI_CITY_LEGS,
   MAX_PASSENGERS,
@@ -226,7 +221,9 @@ export const flightSearchSchema = z
 
 export type FlightSearchSchemaValues = z.infer<typeof flightSearchSchema>;
 
-export function createEmptyLeg(departureDate = todayIsoDate()): FlightSearchFormValues['legs'][number] {
+export function createEmptyLeg(
+  departureDate = todayIsoDate(),
+): FlightSearchFormValues['legs'][number] {
   return {
     origin: null,
     destination: null,

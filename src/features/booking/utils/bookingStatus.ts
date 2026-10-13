@@ -58,11 +58,7 @@ export function getBookingTab(booking: Booking, todayIso: string): MyBookingsTab
 }
 
 /** Delegates to check-in window rules (departure datetime, not calendar day). */
-export function canCheckInBooking(
-  booking: Booking,
-  todayIso?: string,
-  now?: Date,
-): boolean {
+export function canCheckInBooking(booking: Booking, todayIso?: string, now?: Date): boolean {
   return canCheckInBookingRules(booking, todayIso, now);
 }
 

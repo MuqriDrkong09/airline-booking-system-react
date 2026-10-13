@@ -33,17 +33,11 @@ export interface BookingListCardProps {
   onCancel: (booking: Booking) => void;
 }
 
-export function BookingListCard({
-  booking,
-  todayIso,
-  onCancel,
-}: BookingListCardProps) {
+export function BookingListCard({ booking, todayIso, onCancel }: BookingListCardProps) {
   const { flight } = booking;
   const route = `${flight.origin.code} → ${flight.destination.code}`;
   const passengerLabel =
-    booking.passengers.length === 1
-      ? '1 passenger'
-      : `${booking.passengers.length} passengers`;
+    booking.passengers.length === 1 ? '1 passenger' : `${booking.passengers.length} passengers`;
 
   const showManage = canManageBooking(booking);
   const showCancel = canCancelBooking(booking, todayIso);
@@ -115,10 +109,7 @@ export function BookingListCard({
           sx={{ alignItems: { sm: 'center' }, justifyContent: 'space-between' }}
         >
           <Typography variant="h6" sx={{ fontWeight: 700 }}>
-            {formatBookingMoney(
-              booking.priceBreakdown.finalTotal,
-              booking.priceBreakdown.currency,
-            )}
+            {formatBookingMoney(booking.priceBreakdown.finalTotal, booking.priceBreakdown.currency)}
           </Typography>
 
           <Stack
@@ -137,15 +128,15 @@ export function BookingListCard({
               View
             </AppButton>
             {showManage ? (
-            <AppButton
-              component={RouterLink}
-              to={APP_ROUTES.customer.bookingManage(booking.reference)}
-              variant="outlined"
-              size="small"
-              startIcon={<Settings2 size={16} aria-hidden />}
-            >
-              Manage
-            </AppButton>
+              <AppButton
+                component={RouterLink}
+                to={APP_ROUTES.customer.bookingManage(booking.reference)}
+                variant="outlined"
+                size="small"
+                startIcon={<Settings2 size={16} aria-hidden />}
+              >
+                Manage
+              </AppButton>
             ) : null}
             {showCancel ? (
               <AppButton

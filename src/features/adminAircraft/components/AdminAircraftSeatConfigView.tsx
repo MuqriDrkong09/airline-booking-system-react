@@ -56,8 +56,8 @@ export function AdminAircraftSeatConfigView({ aircraftId }: AdminAircraftSeatCon
           {aircraft.registration} · {formatAircraftLabel(aircraft)}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Configure rows, columns, seat labels, cabin class, seat type, price, emergency exits,
-          and disabled seats on an interactive map.
+          Configure rows, columns, seat labels, cabin class, seat type, price, emergency exits, and
+          disabled seats on an interactive map.
         </Typography>
       </Stack>
 

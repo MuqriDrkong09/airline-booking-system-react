@@ -46,8 +46,7 @@ export function removeAddon(
   passengerId: string,
 ): AddonSelection[] {
   return selections.filter(
-    (selection) =>
-      !(selection.addonId === addonId && selection.passengerId === passengerId),
+    (selection) => !(selection.addonId === addonId && selection.passengerId === passengerId),
   );
 }
 

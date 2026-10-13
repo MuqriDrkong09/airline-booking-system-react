@@ -40,24 +40,14 @@ function boardingOpenTime(departureIso: string): string {
   }
   const [, year, month, day, hour, minute] = match;
   const date = new Date(
-    Date.UTC(
-      Number(year),
-      Number(month) - 1,
-      Number(day),
-      Number(hour),
-      Number(minute),
-    ),
+    Date.UTC(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute)),
   );
   date.setUTCMinutes(date.getUTCMinutes() - 45);
   const pad = (value: number) => String(value).padStart(2, '0');
   return `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())}T${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}`;
 }
 
-function passengerDisplayName(
-  title: string,
-  firstName: string,
-  lastName: string,
-): string {
+function passengerDisplayName(title: string, firstName: string, lastName: string): string {
   return `${title} ${firstName} ${lastName}`.trim();
 }
 
@@ -75,16 +65,11 @@ export function buildBookingETickets(booking: Booking): BookingETicket[] {
 
   return booking.passengers.map((passenger) => {
     const seat =
-      booking.seats.find((item) => item.passengerId === passenger.id)?.label ??
-      'Not assigned';
+      booking.seats.find((item) => item.passengerId === passenger.id)?.label ?? 'Not assigned';
 
     return {
       bookingReference: booking.reference,
-      passengerName: passengerDisplayName(
-        passenger.title,
-        passenger.firstName,
-        passenger.lastName,
-      ),
+      passengerName: passengerDisplayName(passenger.title, passenger.firstName, passenger.lastName),
       passengerId: passenger.id,
       airline: flight.airline.name,
       airlineCode: flight.airline.code,
@@ -140,7 +125,5 @@ export function formatETicketAsText(tickets: BookingETicket[]): string {
     return lines.join('\n');
   });
 
-  return [...blocks, '', 'This is a mock e-ticket for demo purposes only.'].join(
-    '\n',
-  );
+  return [...blocks, '', 'This is a mock e-ticket for demo purposes only.'].join('\n');
 }

@@ -88,9 +88,7 @@ describe('api errors', () => {
     const network = new axios.AxiosError('Network Error', 'ERR_NETWORK');
     expect(isNetworkError(network)).toBe(true);
     expect(isNetworkError(axiosError(500))).toBe(false);
-    expect(
-      isNetworkError(new ApiError('Unable to connect to the internet')),
-    ).toBe(true);
+    expect(isNetworkError(new ApiError('Unable to connect to the internet'))).toBe(true);
     expect(isNetworkError(new ApiError('Denied', { status: 403 }))).toBe(false);
   });
 

@@ -48,7 +48,10 @@ export interface FlightFormProps {
 
 function toFormValues(flight?: AdminFlight | null): FlightFormValues {
   if (!flight) {
-    return { ...DEFAULT_FLIGHT_FORM_VALUES, fareClasses: [...DEFAULT_FLIGHT_FORM_VALUES.fareClasses] };
+    return {
+      ...DEFAULT_FLIGHT_FORM_VALUES,
+      fareClasses: [...DEFAULT_FLIGHT_FORM_VALUES.fareClasses],
+    };
   }
 
   return {
@@ -243,12 +246,7 @@ export function FlightForm({ formId, initialFlight, onSubmit }: FlightFormProps)
           name="gate"
           control={control}
           render={({ field }) => (
-            <FormField
-              id="flight-gate"
-              label="Gate"
-              required
-              errorMessage={errors.gate?.message}
-            >
+            <FormField id="flight-gate" label="Gate" required errorMessage={errors.gate?.message}>
               <AppInput {...field} placeholder="A12" />
             </FormField>
           )}

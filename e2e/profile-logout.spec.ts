@@ -27,5 +27,3 @@ test.describe('Profile and logout', () => {
     await expect(page.getByRole('button', { name: 'Open user menu' })).toHaveCount(0);
   });
 });
-
-

@@ -77,9 +77,7 @@ describe('AircraftDetailsDialog', () => {
     const user = userEvent.setup({ delay: null });
     const onClose = jest.fn();
 
-    renderWithProviders(
-      <AircraftDetailsDialog open aircraft={aircraft} onClose={onClose} />,
-    );
+    renderWithProviders(<AircraftDetailsDialog open aircraft={aircraft} onClose={onClose} />);
 
     await user.click(screen.getByRole('button', { name: 'Close' }));
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -90,12 +88,7 @@ describe('AircraftDetailsDialog', () => {
     const onEdit = jest.fn();
 
     renderWithProviders(
-      <AircraftDetailsDialog
-        open
-        aircraft={aircraft}
-        onClose={jest.fn()}
-        onEdit={onEdit}
-      />,
+      <AircraftDetailsDialog open aircraft={aircraft} onClose={jest.fn()} onEdit={onEdit} />,
     );
 
     await user.click(screen.getByRole('button', { name: 'Edit aircraft' }));
@@ -122,9 +115,7 @@ describe('AircraftDetailsDialog', () => {
   });
 
   it('hides edit and configure actions when callbacks are omitted', () => {
-    renderWithProviders(
-      <AircraftDetailsDialog open aircraft={aircraft} onClose={jest.fn()} />,
-    );
+    renderWithProviders(<AircraftDetailsDialog open aircraft={aircraft} onClose={jest.fn()} />);
 
     expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Edit aircraft' })).not.toBeInTheDocument();
@@ -186,9 +177,7 @@ describe('AircraftDetailsDialog', () => {
       },
     };
 
-    renderWithProviders(
-      <AircraftDetailsDialog open aircraft={withNotes} onClose={jest.fn()} />,
-    );
+    renderWithProviders(<AircraftDetailsDialog open aircraft={withNotes} onClose={jest.fn()} />);
 
     expect(screen.getByText('Notes')).toBeInTheDocument();
     expect(screen.getByText('Exit rows marked for crew briefing.')).toBeInTheDocument();

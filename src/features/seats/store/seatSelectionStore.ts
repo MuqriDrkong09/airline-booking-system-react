@@ -1,9 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import {
-  clearLegacyPiiLocalStorage,
-  sessionPersistStorage,
-} from '@/utils/sessionPersistStorage';
+import { clearLegacyPiiLocalStorage, sessionPersistStorage } from '@/utils/sessionPersistStorage';
 import type {
   Seat,
   SeatAssignment,
@@ -50,9 +47,7 @@ function sameContext(
   flightId: string,
   aircraftModel: string,
 ): boolean {
-  return Boolean(
-    left && left.flightId === flightId && left.aircraftModel === aircraftModel,
-  );
+  return Boolean(left && left.flightId === flightId && left.aircraftModel === aircraftModel);
 }
 
 export const useSeatSelectionStore = create<SeatSelectionState>()(

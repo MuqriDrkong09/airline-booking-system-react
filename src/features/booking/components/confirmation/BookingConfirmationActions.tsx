@@ -1,12 +1,5 @@
 import Box from '@mui/material/Box';
-import {
-  CalendarPlus,
-  Download,
-  Eye,
-  FileText,
-  Printer,
-  Ticket,
-} from 'lucide-react';
+import { CalendarPlus, Download, Eye, FileText, Printer, Ticket } from 'lucide-react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppButton, AppCard } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
@@ -52,10 +45,7 @@ export function BookingConfirmationActions({ booking }: BookingConfirmationActio
           variant="outlined"
           startIcon={<Download size={18} aria-hidden />}
           onClick={() =>
-            downloadTextFile(
-              `aerobook-eticket-${booking.reference}.txt`,
-              buildETicketText(booking),
-            )
+            downloadTextFile(`aerobook-eticket-${booking.reference}.txt`, buildETicketText(booking))
           }
         >
           Download e-ticket

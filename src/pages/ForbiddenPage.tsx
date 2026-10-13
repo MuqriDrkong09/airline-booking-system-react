@@ -25,12 +25,7 @@ export function ForbiddenPage() {
         message={`${HTTP_STATUS_MESSAGES[403]} Authorization is also enforced by the API.`}
         icon={<ShieldBan aria-hidden="true" size={40} />}
         action={
-          <AppButton
-            component={RouterLink}
-            to={homePath}
-            variant="contained"
-            sx={{ mt: 1 }}
-          >
+          <AppButton component={RouterLink} to={homePath} variant="contained" sx={{ mt: 1 }}>
             Go to your home
           </AppButton>
         }

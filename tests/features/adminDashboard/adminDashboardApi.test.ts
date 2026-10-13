@@ -54,13 +54,7 @@ describe('mockAdminDashboardApi', () => {
     const data = await api.getDashboard();
 
     expect(data.metrics.currency).toBe('USD');
-    expect(data.airlinePerformance.map((row) => row.code)).toEqual([
-      'MH',
-      'AK',
-      'SQ',
-      'EK',
-      'QR',
-    ]);
+    expect(data.airlinePerformance.map((row) => row.code)).toEqual(['MH', 'AK', 'SQ', 'EK', 'QR']);
   });
 
   it('resolves through the shared mock singleton and fetch helper', async () => {

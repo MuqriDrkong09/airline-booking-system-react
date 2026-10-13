@@ -108,10 +108,7 @@ export function UserDetailsDialog({
           <DetailItem label="Phone" value={user.phone || '—'} />
           <DetailItem label="Nationality" value={user.nationality || '—'} />
           <DetailItem label="Date of birth" value={user.dateOfBirth || '—'} />
-          <DetailItem
-            label="Created"
-            value={user.createdAt.replace('T', ' ').slice(0, 16)}
-          />
+          <DetailItem label="Created" value={user.createdAt.replace('T', ' ').slice(0, 16)} />
           <Stack sx={{ gridColumn: '1 / -1' }}>
             <DetailItem label="User ID" value={user.id} />
           </Stack>

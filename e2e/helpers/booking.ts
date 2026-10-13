@@ -16,12 +16,7 @@ export async function searchOneWayFlights(
   await expect(page.getByRole('heading', { name: 'Search flights' })).toBeVisible();
 
   await page.getByRole('button', { name: 'One-way' }).click();
-  await pickAirport(
-    page,
-    /^From/i,
-    from,
-    new RegExp(`${from} —`, 'i'),
-  );
+  await pickAirport(page, /^From/i, from, new RegExp(`${from} —`, 'i'));
   await pickAirport(page, /^To/i, to, new RegExp(`${to} —`, 'i'));
   await page.getByLabel(/Departure date/i).fill(departure);
   await page.getByRole('button', { name: 'Search flights' }).click();
@@ -155,9 +150,7 @@ export async function selectMeal(page: Page) {
 
 export async function skipAddons(page: Page) {
   await page.getByRole('button', { name: /Save add-ons/i }).click();
-  await expect(
-    page.getByRole('heading', { name: 'Booking summary', exact: true }),
-  ).toBeVisible({
+  await expect(page.getByRole('heading', { name: 'Booking summary', exact: true })).toBeVisible({
     timeout: 20_000,
   });
 }
@@ -223,8 +216,16 @@ export async function openCheckInWindowForBooking(page: Page, reference: string)
     }
 
     const parsed = JSON.parse(raw) as {
-      state?: { bookings?: Array<{ reference: string; flight: { departureTime: string; arrivalTime?: string } }> };
-      bookings?: Array<{ reference: string; flight: { departureTime: string; arrivalTime?: string } }>;
+      state?: {
+        bookings?: Array<{
+          reference: string;
+          flight: { departureTime: string; arrivalTime?: string };
+        }>;
+      };
+      bookings?: Array<{
+        reference: string;
+        flight: { departureTime: string; arrivalTime?: string };
+      }>;
     };
 
     const bookings = parsed.state?.bookings ?? parsed.bookings;

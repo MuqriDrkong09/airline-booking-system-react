@@ -1,11 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { screen } from '@testing-library/react';
-import {
-  AdminRoute,
-  CustomerRoute,
-  RoleRoute,
-  useAuthStore,
-} from '@/features/auth';
+import { AdminRoute, CustomerRoute, RoleRoute, useAuthStore } from '@/features/auth';
 import { UserRole } from '@/types/auth';
 import { renderWithProviders } from '@tests/utils/test-utils';
 import {

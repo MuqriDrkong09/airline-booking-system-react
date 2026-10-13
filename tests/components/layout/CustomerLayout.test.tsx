@@ -76,9 +76,7 @@ describe('CustomerLayout', () => {
   it('calls logout when Log out is chosen from the user menu', async () => {
     seedAuthenticatedUser(mockCustomerUser);
     const user = userEvent.setup();
-    const logoutSpy = jest
-      .spyOn(useAuthStore.getState(), 'logout')
-      .mockResolvedValue(undefined);
+    const logoutSpy = jest.spyOn(useAuthStore.getState(), 'logout').mockResolvedValue(undefined);
 
     renderWithProviders(
       <Routes>

@@ -11,10 +11,7 @@ export const DEMO_ADMIN = {
   password: 'Password123!',
 } as const;
 
-export async function loginAs(
-  page: Page,
-  credentials: { email: string; password: string },
-) {
+export async function loginAs(page: Page, credentials: { email: string; password: string }) {
   await page.goto('/login');
   await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
   await page.getByPlaceholder('you@example.com').fill(credentials.email);

@@ -1,8 +1,5 @@
 import { calculateAddonTotal } from '@/features/addons/utils/addonRules';
-import {
-  calculateBaggageTotal,
-  getAllowanceForCabin,
-} from '@/features/baggage/utils/baggageRules';
+import { calculateBaggageTotal, getAllowanceForCabin } from '@/features/baggage/utils/baggageRules';
 import { calculateMealTotal } from '@/features/meals/utils/mealRules';
 import type { BookingPriceBreakdown } from '../types/booking';
 import type { Booking, BookingPassenger } from '../types/bookingRecord';
@@ -15,14 +12,7 @@ function countFarePayingPassengers(passengers: BookingPassenger[]): number {
 export function recomputeBookingPriceBreakdown(
   booking: Pick<
     Booking,
-    | 'flight'
-    | 'cabinClass'
-    | 'passengers'
-    | 'seats'
-    | 'baggage'
-    | 'meals'
-    | 'addons'
-    | 'promoCode'
+    'flight' | 'cabinClass' | 'passengers' | 'seats' | 'baggage' | 'meals' | 'addons' | 'promoCode'
   >,
 ): BookingPriceBreakdown {
   const farePassengers = countFarePayingPassengers(booking.passengers);

@@ -9,17 +9,12 @@ import {
   ReportTimeSeriesChart,
 } from '@/features/adminReports';
 import { renderWithProviders } from '@tests/utils/test-utils';
-import {
-  reportChartCaptures,
-  type TooltipCapture,
-  type YAxisCapture,
-} from './reportChartCaptures';
+import { reportChartCaptures, type TooltipCapture, type YAxisCapture } from './reportChartCaptures';
 
 jest.mock('recharts', () => {
   const React = require('react') as typeof import('react');
-  const {
-    reportChartCaptures: captures,
-  } = require('./reportChartCaptures') as typeof import('./reportChartCaptures');
+  const { reportChartCaptures: captures } =
+    require('./reportChartCaptures') as typeof import('./reportChartCaptures');
 
   function Passthrough({ children }: { children?: ReactNode }) {
     return React.createElement('div', null, children);
@@ -105,14 +100,8 @@ describe('ReportCharts', () => {
     expect(tickFormatter?.(65_000)).toBe(formatCompactNumber(65_000));
 
     const tooltip = reportChartCaptures.tooltips.find((item) => item.formatter);
-    expect(tooltip?.formatter?.(72_880)).toEqual([
-      formatReportCurrency(72_880, 'USD'),
-      'Revenue',
-    ]);
-    expect(tooltip?.formatter?.(null)).toEqual([
-      formatReportCurrency(0, 'USD'),
-      'Revenue',
-    ]);
+    expect(tooltip?.formatter?.(72_880)).toEqual([formatReportCurrency(72_880, 'USD'), 'Revenue']);
+    expect(tooltip?.formatter?.(null)).toEqual([formatReportCurrency(0, 'USD'), 'Revenue']);
   });
 
   it('formats airline performance tooltip labels and revenue values', () => {
@@ -131,8 +120,6 @@ describe('ReportCharts', () => {
       new Intl.NumberFormat(undefined).format(412),
       'Bookings',
     ]);
-    expect(tooltip?.labelFormatter?.('MH')).toEqual(
-      expect.stringContaining('Malaysia Airlines'),
-    );
+    expect(tooltip?.labelFormatter?.('MH')).toEqual(expect.stringContaining('Malaysia Airlines'));
   });
 });

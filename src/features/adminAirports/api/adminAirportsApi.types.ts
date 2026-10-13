@@ -1,8 +1,4 @@
-import type {
-  AdminAirport,
-  AdminAirportFilters,
-  AdminAirportInput,
-} from '../types/adminAirport';
+import type { AdminAirport, AdminAirportFilters, AdminAirportInput } from '../types/adminAirport';
 
 export interface AdminAirportsApi {
   listAirports: (filters?: AdminAirportFilters) => Promise<AdminAirport[]>;

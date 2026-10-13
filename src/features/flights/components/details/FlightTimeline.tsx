@@ -41,8 +41,9 @@ export function FlightTimeline({ flight }: FlightDetailsTimelineProps) {
           Itinerary
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {flight.origin.code} → {flight.destination.code} · {formatFlightTime(flight.departureTime)}–
-          {formatFlightTime(flight.arrivalTime)} · {formatDuration(flight.durationMinutes)} ·{' '}
+          {flight.origin.code} → {flight.destination.code} ·{' '}
+          {formatFlightTime(flight.departureTime)}–{formatFlightTime(flight.arrivalTime)} ·{' '}
+          {formatDuration(flight.durationMinutes)} ·{' '}
           {formatStopsLabel(flight.stops, flight.stopAirports)}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -56,12 +57,7 @@ export function FlightTimeline({ flight }: FlightDetailsTimelineProps) {
 
       <Stack spacing={1.5}>
         {segments.map((segment, index) => (
-          <FlightSegment
-            key={segment.id}
-            segment={segment}
-            index={index}
-            total={segments.length}
-          />
+          <FlightSegment key={segment.id} segment={segment} index={index} total={segments.length} />
         ))}
       </Stack>
     </Stack>

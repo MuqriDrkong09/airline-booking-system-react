@@ -39,11 +39,7 @@ export function ChangeRoleDialog({
   }, [open, user]);
 
   const canSubmit = user ? canChangeAdminUserRole(user, role, actorUserId) : false;
-  const selfLock =
-    user &&
-    actorUserId === user.id &&
-    user.role === 'ADMIN' &&
-    role !== 'ADMIN';
+  const selfLock = user && actorUserId === user.id && user.role === 'ADMIN' && role !== 'ADMIN';
 
   const handleConfirm = async () => {
     if (!user) {
@@ -54,9 +50,7 @@ export function ChangeRoleDialog({
       await onConfirm(role);
     } catch (submitError) {
       setError(
-        submitError instanceof Error
-          ? submitError.message
-          : 'Unable to change this user role.',
+        submitError instanceof Error ? submitError.message : 'Unable to change this user role.',
       );
     }
   };
@@ -91,9 +85,7 @@ export function ChangeRoleDialog({
             : null}
         </Typography>
         {selfLock ? (
-          <AppAlert severity="warning">
-            You cannot remove your own administrator access.
-          </AppAlert>
+          <AppAlert severity="warning">You cannot remove your own administrator access.</AppAlert>
         ) : null}
         {error ? (
           <AppAlert severity="error" onClose={() => setError(null)}>

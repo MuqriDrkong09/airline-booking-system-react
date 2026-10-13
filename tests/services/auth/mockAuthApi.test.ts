@@ -23,9 +23,9 @@ describe('mockAuthApi', () => {
     const storage = createMemoryTokenStorage();
     const api = createMockAuthApiWithSessionLookup(() => storage.getAccessToken());
 
-    await expect(
-      api.login({ email: 'user@example.com', password: 'nope' }),
-    ).rejects.toMatchObject({ message: 'Invalid email or password.' });
+    await expect(api.login({ email: 'user@example.com', password: 'nope' })).rejects.toMatchObject({
+      message: 'Invalid email or password.',
+    });
   });
 
   it('supports register, verify, forgot, reset, profile update, and password change', async () => {

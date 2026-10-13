@@ -168,9 +168,7 @@ describe('AircraftForm', () => {
 
     await user.click(screen.getByRole('button', { name: 'Submit aircraft' }));
 
-    expect(
-      await screen.findByText('Total seats must equal cabin seats (100)'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Total seats must equal cabin seats (100)')).toBeInTheDocument();
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
@@ -185,9 +183,7 @@ describe('AircraftForm', () => {
 
     await user.click(screen.getByRole('button', { name: 'Submit aircraft' }));
 
-    expect(
-      await screen.findByText('Use letters, numbers, and hyphens only'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Use letters, numbers, and hyphens only')).toBeInTheDocument();
     expect(onSubmit).not.toHaveBeenCalled();
   });
 

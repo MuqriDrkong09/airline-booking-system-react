@@ -1,11 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { UserRole } from '@/types/auth';
-import {
-  adminUserKeys,
-  changeAdminUserRole,
-  listAdminUsers,
-  setAdminUserActive,
-} from '../api';
+import { adminUserKeys, changeAdminUserRole, listAdminUsers, setAdminUserActive } from '../api';
 import type { AdminUserFilters } from '../types/adminUser';
 
 export function useAdminUsersQuery(filters: AdminUserFilters, enabled = true) {

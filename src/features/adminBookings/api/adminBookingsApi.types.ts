@@ -10,9 +10,6 @@ export interface AdminBookingsApi {
   getBooking: (reference: string) => Promise<AdminBooking>;
   cancelBooking: (reference: string) => Promise<AdminBooking>;
   refundBooking: (reference: string) => Promise<AdminBooking>;
-  modifyBooking: (
-    reference: string,
-    input: AdminBookingModifyInput,
-  ) => Promise<AdminBooking>;
+  modifyBooking: (reference: string, input: AdminBookingModifyInput) => Promise<AdminBooking>;
   listFlightOptions: () => Promise<string[]>;
 }

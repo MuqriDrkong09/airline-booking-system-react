@@ -2,11 +2,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import type { FlightOfferSegment } from '../../types/flight';
-import {
-  formatDuration,
-  formatFlightDate,
-  formatFlightTime,
-} from '../../utils/flightResults';
+import { formatDuration, formatFlightDate, formatFlightTime } from '../../utils/flightResults';
 
 export interface FlightSegmentProps {
   segment: FlightOfferSegment;

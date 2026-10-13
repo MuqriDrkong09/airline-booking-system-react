@@ -1,8 +1,5 @@
 import type { Booking, BookingPassenger } from '../types/bookingRecord';
-import {
-  CHECK_IN_CLOSES_HOURS_BEFORE,
-  CHECK_IN_OPENS_HOURS_BEFORE,
-} from '../constants/checkIn';
+import { CHECK_IN_CLOSES_HOURS_BEFORE, CHECK_IN_OPENS_HOURS_BEFORE } from '../constants/checkIn';
 
 function isCancelledBooking(booking: Booking): boolean {
   return (
@@ -24,8 +21,7 @@ export type CheckInBlockedReason =
 
 export const CHECK_IN_BLOCKED_MESSAGES: Record<CheckInBlockedReason, string> = {
   NOT_FOUND: 'We could not find a booking with that reference.',
-  LAST_NAME_MISMATCH:
-    'The last name does not match any passenger on this booking.',
+  LAST_NAME_MISMATCH: 'The last name does not match any passenger on this booking.',
   CANCELLED: 'This booking is cancelled and cannot be checked in.',
   DEPARTED: 'This flight has already departed.',
   WINDOW_NOT_OPEN: `Online check-in opens ${CHECK_IN_OPENS_HOURS_BEFORE} hours before departure.`,
@@ -106,15 +102,11 @@ export function bookingMatchesLastName(booking: Booking, lastName: string): bool
   if (!needle) {
     return false;
   }
-  return booking.passengers.some(
-    (passenger) => normalizeLastName(passenger.lastName) === needle,
-  );
+  return booking.passengers.some((passenger) => normalizeLastName(passenger.lastName) === needle);
 }
 
 export function getEligibleCheckInPassengers(booking: Booking): BookingPassenger[] {
-  return booking.passengers.filter(
-    (passenger) => !isPassengerCheckedIn(booking, passenger.id),
-  );
+  return booking.passengers.filter((passenger) => !isPassengerCheckedIn(booking, passenger.id));
 }
 
 export function getCheckInBlockedReason(
@@ -200,10 +192,7 @@ export function seatLabelForPassenger(booking: Booking, passengerId: string): st
   return booking.seats.find((seat) => seat.passengerId === passengerId)?.label ?? 'Not assigned';
 }
 
-export function baggageSummaryForPassenger(
-  booking: Booking,
-  passengerId: string,
-): string {
+export function baggageSummaryForPassenger(booking: Booking, passengerId: string): string {
   const selection = booking.baggage.find((item) => item.passengerId === passengerId);
   if (!selection) {
     return 'No baggage selected';

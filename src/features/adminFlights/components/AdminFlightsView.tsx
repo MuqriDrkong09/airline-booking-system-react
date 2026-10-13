@@ -28,10 +28,7 @@ import { FlightDialog } from './FlightDialog';
 import { FlightFilters } from './FlightFilters';
 import { FlightTable } from './FlightTable';
 
-type DialogState =
-  | { mode: 'closed' }
-  | { mode: 'create' }
-  | { mode: 'edit'; flight: AdminFlight };
+type DialogState = { mode: 'closed' } | { mode: 'create' } | { mode: 'edit'; flight: AdminFlight };
 
 export function AdminFlightsView() {
   const [filters, setFilters] = useState<AdminFlightFilters>(EMPTY_ADMIN_FLIGHT_FILTERS);
@@ -88,10 +85,7 @@ export function AdminFlightsView() {
     }
   };
 
-  const handleStatusChange = async (
-    flight: AdminFlight,
-    status: FlightOperationalStatus,
-  ) => {
+  const handleStatusChange = async (flight: AdminFlight, status: FlightOperationalStatus) => {
     if (flight.status === status) {
       return;
     }

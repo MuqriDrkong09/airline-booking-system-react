@@ -6,13 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Pencil, Trash2 } from 'lucide-react';
 import type { ReactNode } from 'react';
-import {
-  AppBadge,
-  AppButton,
-  AppCard,
-  AppTable,
-  type AppTableColumn,
-} from '@/components/common';
+import { AppBadge, AppButton, AppCard, AppTable, type AppTableColumn } from '@/components/common';
 import type { AdminPromoCode } from '../types/adminPromoCode';
 import {
   formatDiscountValue,
@@ -61,11 +55,7 @@ function PromoMobileCard({
       subtitle={promo.description}
       action={
         <Stack direction="row" spacing={0.5}>
-          <IconButton
-            aria-label={`Edit ${promo.code}`}
-            size="small"
-            onClick={() => onEdit(promo)}
-          >
+          <IconButton aria-label={`Edit ${promo.code}`} size="small" onClick={() => onEdit(promo)}>
             <Pencil aria-hidden="true" size={16} />
           </IconButton>
           <IconButton
@@ -182,11 +172,7 @@ export function PromoCodeTable({
       align: 'right',
       cell: (promo) => (
         <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }}>
-          <IconButton
-            aria-label={`Edit ${promo.code}`}
-            size="small"
-            onClick={() => onEdit(promo)}
-          >
+          <IconButton aria-label={`Edit ${promo.code}`} size="small" onClick={() => onEdit(promo)}>
             <Pencil aria-hidden="true" size={16} />
           </IconButton>
           <IconButton

@@ -2,10 +2,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { AppButton, AppInput, AppSelect } from '@/components/common';
 import { ACTIVE_FILTER_OPTIONS, ROLE_FILTER_OPTIONS } from '../constants/options';
-import {
-  EMPTY_ADMIN_USER_FILTERS,
-  type AdminUserFilters,
-} from '../types/adminUser';
+import { EMPTY_ADMIN_USER_FILTERS, type AdminUserFilters } from '../types/adminUser';
 
 export interface UserFiltersProps {
   value: AdminUserFilters;

@@ -11,11 +11,7 @@ export { RoleRoute } from './components/RoleRoute';
 export type { RoleRouteProps } from './components/RoleRoute';
 export { VerifyEmailForm } from './components/VerifyEmailForm';
 export { useAuth } from './hooks/useAuth';
-export {
-  createAuthStore,
-  selectIsAuthenticated,
-  useAuthStore,
-} from './store/authStore';
+export { createAuthStore, selectIsAuthenticated, useAuthStore } from './store/authStore';
 export type { AuthStatus } from './store/authStore';
 export * from './schemas';
 export {

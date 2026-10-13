@@ -13,9 +13,9 @@ describe('httpErrorMessages', () => {
     expect(isTechnicalErrorMessage('Network Error')).toBe(true);
     expect(isTechnicalErrorMessage('timeout of 15000ms exceeded')).toBe(true);
     expect(isTechnicalErrorMessage('Request failed with status code 500')).toBe(true);
-    expect(
-      isTechnicalErrorMessage('Error: boom\n    at Object.<anonymous> (file.js:1:1)'),
-    ).toBe(true);
+    expect(isTechnicalErrorMessage('Error: boom\n    at Object.<anonymous> (file.js:1:1)')).toBe(
+      true,
+    );
     expect(isTechnicalErrorMessage('Email is already registered.')).toBe(false);
   });
 

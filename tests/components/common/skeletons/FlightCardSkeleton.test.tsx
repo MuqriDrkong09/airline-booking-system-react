@@ -47,15 +47,11 @@ describe('FlightCardSkeleton', () => {
   it('scales skeleton placeholders with the card count', () => {
     renderWithProviders(<FlightCardSkeleton count={2} />);
 
-    expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(
-      SKELETONS_PER_CARD * 2,
-    );
+    expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(SKELETONS_PER_CARD * 2);
   });
 
   it('switches to a grid layout when columns are provided', () => {
-    renderWithProviders(
-      <FlightCardSkeleton count={2} columns={{ xs: 1, sm: 2, lg: 3 }} />,
-    );
+    renderWithProviders(<FlightCardSkeleton count={2} columns={{ xs: 1, sm: 2, lg: 3 }} />);
 
     const status = screen.getByRole('status', { name: 'Loading flights' });
     expect(status.querySelector(':scope > .MuiBox-root')).toBeInTheDocument();

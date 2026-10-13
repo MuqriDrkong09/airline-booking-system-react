@@ -103,7 +103,9 @@ describe('FavouriteFlightsPage', () => {
     });
 
     expect(await screen.findByRole('heading', { name: 'Favourite flights' })).toBeInTheDocument();
-    expect(await screen.findByRole('heading', { name: /No favourite flights yet/i })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: /No favourite flights yet/i }),
+    ).toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: /Search flights/i }).length).toBeGreaterThan(0);
   });
 

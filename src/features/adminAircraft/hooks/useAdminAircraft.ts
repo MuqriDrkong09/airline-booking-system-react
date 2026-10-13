@@ -41,13 +41,8 @@ export function useUpdateAdminAircraftMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      aircraftId,
-      input,
-    }: {
-      aircraftId: string;
-      input: AdminAircraftInput;
-    }) => updateAdminAircraft(aircraftId, input),
+    mutationFn: ({ aircraftId, input }: { aircraftId: string; input: AdminAircraftInput }) =>
+      updateAdminAircraft(aircraftId, input),
     onSuccess: (aircraft) => {
       queryClient.setQueryData(adminAircraftKeys.detail(aircraft.id), aircraft);
       void queryClient.invalidateQueries({ queryKey: adminAircraftKeys.lists() });

@@ -28,9 +28,7 @@ export function createHttpBookingApi(client: AxiosInstance = apiClient): Booking
 
     async getBooking(reference: string): Promise<Booking> {
       try {
-        const { data } = await client.get<Booking>(
-          API_ENDPOINTS.bookings.byReference(reference),
-        );
+        const { data } = await client.get<Booking>(API_ENDPOINTS.bookings.byReference(reference));
         return data;
       } catch (error) {
         throw toApiError(error);

@@ -34,9 +34,7 @@ import { UserFilters } from './UserFilters';
 import { UserTable } from './UserTable';
 
 type DialogState =
-  | { mode: 'closed' }
-  | { mode: 'view'; user: AdminUser }
-  | { mode: 'changeRole'; user: AdminUser };
+  { mode: 'closed' } | { mode: 'view'; user: AdminUser } | { mode: 'changeRole'; user: AdminUser };
 
 export function AdminUsersView() {
   const { user: actor } = useAuth();
@@ -165,9 +163,7 @@ export function AdminUsersView() {
         <UserTable
           users={users}
           actorUserId={actorUserId}
-          activeUpdatingId={
-            activeMutation.isPending ? activeMutation.variables?.userId : null
-          }
+          activeUpdatingId={activeMutation.isPending ? activeMutation.variables?.userId : null}
           onView={(user) => {
             setActionError(null);
             setDialog({ mode: 'view', user });
@@ -192,9 +188,7 @@ export function AdminUsersView() {
         user={dialog.mode === 'view' ? dialog.user : null}
         onClose={() => setDialog({ mode: 'closed' })}
         onChangeRole={
-          dialog.mode === 'view'
-            ? (user) => setDialog({ mode: 'changeRole', user })
-            : undefined
+          dialog.mode === 'view' ? (user) => setDialog({ mode: 'changeRole', user }) : undefined
         }
         onActivate={
           dialog.mode === 'view' && canActivateAdminUser(dialog.user)

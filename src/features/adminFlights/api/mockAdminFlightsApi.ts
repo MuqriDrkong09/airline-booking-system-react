@@ -1,9 +1,5 @@
 import type { FlightOperationalStatus } from '@/features/flights';
-import type {
-  AdminFlight,
-  AdminFlightFilters,
-  AdminFlightInput,
-} from '../types/adminFlight';
+import type { AdminFlight, AdminFlightFilters, AdminFlightInput } from '../types/adminFlight';
 import { filterAdminFlights } from '../utils/filterAdminFlights';
 import { sortAdminFlights } from '../utils/formatAdminFlight';
 import type { AdminFlightsApi } from './adminFlightsApi.types';

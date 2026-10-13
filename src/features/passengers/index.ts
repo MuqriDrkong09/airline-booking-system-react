@@ -31,10 +31,7 @@ export {
   createPassengerSlots,
   passengerCountsMatch,
 } from './utils/createPassengerSlots';
-export {
-  createPassengerSchema,
-  createPassengersFormSchema,
-} from './schemas/passengerSchema';
+export { createPassengerSchema, createPassengersFormSchema } from './schemas/passengerSchema';
 export type { PassengerSchemaOptions } from './schemas/passengerSchema';
 export { usePassengerDraftStore } from './store/passengerDraftStore';
 export { PassengerFields } from './components/PassengerFields';

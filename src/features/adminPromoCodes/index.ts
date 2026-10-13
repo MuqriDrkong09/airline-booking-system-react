@@ -4,14 +4,8 @@ export type {
   AdminPromoCodeInput,
 } from './types/adminPromoCode';
 export { EMPTY_ADMIN_PROMO_CODE_FILTERS } from './types/adminPromoCode';
-export {
-  DEFAULT_PROMO_CODE_FORM_VALUES,
-  promoCodeFormSchema,
-} from './schemas/promoCodeFormSchema';
-export type {
-  PromoCodeFormParsedValues,
-  PromoCodeFormValues,
-} from './schemas/promoCodeFormSchema';
+export { DEFAULT_PROMO_CODE_FORM_VALUES, promoCodeFormSchema } from './schemas/promoCodeFormSchema';
+export type { PromoCodeFormParsedValues, PromoCodeFormValues } from './schemas/promoCodeFormSchema';
 export {
   adminPromoCodeKeys,
   adminPromoCodesApi,

@@ -19,9 +19,7 @@ const infant: AddonPassenger = {
 
 function passengerCard(displayName: string): HTMLElement {
   const title = screen.getByText((content, element) => {
-    return (
-      element?.classList.contains('MuiCardHeader-title') === true && content === displayName
-    );
+    return element?.classList.contains('MuiCardHeader-title') === true && content === displayName;
   });
   const card = title.closest('.MuiCard-root');
   if (!card) {
@@ -49,9 +47,7 @@ describe('AddonSelector', () => {
     );
 
     const card = passengerCard('Ada Lovelace');
-    expect(
-      within(card).getByText(/select optional extras for this traveler/i),
-    ).toBeInTheDocument();
+    expect(within(card).getByText(/select optional extras for this traveler/i)).toBeInTheDocument();
     expect(within(card).getByText('Priority boarding')).toBeInTheDocument();
     expect(within(card).getByText('Lounge access')).toBeInTheDocument();
     expect(within(card).getAllByRole('button', { name: 'Add' }).length).toBeGreaterThan(0);
@@ -65,21 +61,15 @@ describe('AddonSelector', () => {
       <AddonSelector passengers={[adult]} selections={[]} onChange={onChange} />,
     );
 
-    await user.click(
-      within(addonCard('Priority boarding')).getByRole('button', { name: 'Add' }),
-    );
+    await user.click(within(addonCard('Priority boarding')).getByRole('button', { name: 'Add' }));
 
     expect(onChange).toHaveBeenCalledWith([
       { addonId: 'priority-boarding', passengerId: 'adult-1' },
     ]);
 
-    const selected: AddonSelection[] = [
-      { addonId: 'priority-boarding', passengerId: 'adult-1' },
-    ];
+    const selected: AddonSelection[] = [{ addonId: 'priority-boarding', passengerId: 'adult-1' }];
     onChange.mockClear();
-    rerender(
-      <AddonSelector passengers={[adult]} selections={selected} onChange={onChange} />,
-    );
+    rerender(<AddonSelector passengers={[adult]} selections={selected} onChange={onChange} />);
 
     await user.click(
       within(addonCard('Priority boarding')).getByRole('button', { name: 'Remove' }),
@@ -112,10 +102,9 @@ describe('AddonSelector', () => {
     expect(passengerCard('Baby Lovelace')).toBeInTheDocument();
 
     expect(
-      within(addonCard('Travel insurance', passengerCard('Baby Lovelace'))).getByRole(
-        'button',
-        { name: 'Remove' },
-      ),
+      within(addonCard('Travel insurance', passengerCard('Baby Lovelace'))).getByRole('button', {
+        name: 'Remove',
+      }),
     ).toBeInTheDocument();
   });
 

@@ -7,10 +7,7 @@ import {
   formatExpiryInput,
   type CardFormSchemaInput,
 } from '../schemas/cardSchema';
-import {
-  MOCK_DECLINE_CARD_NUMBER,
-  MOCK_SUCCESS_CARD_NUMBER,
-} from '../constants/paymentMethods';
+import { MOCK_DECLINE_CARD_NUMBER, MOCK_SUCCESS_CARD_NUMBER } from '../constants/paymentMethods';
 
 export interface CardFormProps {
   disabled?: boolean;

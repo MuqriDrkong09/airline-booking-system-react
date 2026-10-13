@@ -1,10 +1,5 @@
 export type { MealCatalogItem, MealPassengerType, MealType } from './constants/meals';
-export {
-  formatMealPrice,
-  MEAL_CATALOG,
-  MEAL_TYPE_LABELS,
-  MEAL_TYPES,
-} from './constants/meals';
+export { formatMealPrice, MEAL_CATALOG, MEAL_TYPE_LABELS, MEAL_TYPES } from './constants/meals';
 export type { MealPassenger, MealSaveStatus, PassengerMealSelection } from './types/meal';
 export {
   assignPassengerMeal,

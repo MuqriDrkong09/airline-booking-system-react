@@ -28,10 +28,7 @@ describe('SearchFlightsPage', () => {
     );
 
     expect(screen.getByRole('heading', { name: 'Search flights' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'One-way' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
+    expect(screen.getByRole('button', { name: 'One-way' })).toHaveAttribute('aria-pressed', 'true');
 
     await user.click(screen.getByRole('button', { name: 'Round-trip' }));
     expect(screen.getByRole('button', { name: 'Round-trip' })).toHaveAttribute(
@@ -40,12 +37,7 @@ describe('SearchFlightsPage', () => {
     );
     expect(screen.getByLabelText(/Return date/i)).toBeInTheDocument();
 
-    await pickAirport(
-      user,
-      /^From/i,
-      'KUL',
-      /KUL — Kuala Lumpur International Airport/i,
-    );
+    await pickAirport(user, /^From/i, 'KUL', /KUL — Kuala Lumpur International Airport/i);
     await pickAirport(user, /^To/i, 'NRT', /NRT — Narita International Airport/i);
 
     await user.click(screen.getByRole('button', { name: 'Increase Adults' }));
@@ -107,10 +99,7 @@ describe('SearchFlightsPage', () => {
       { initialEntries: ['/app/flights'] },
     );
 
-    expect(screen.getByRole('button', { name: 'One-way' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
+    expect(screen.getByRole('button', { name: 'One-way' })).toHaveAttribute('aria-pressed', 'true');
     expect(screen.queryByLabelText(/Return date/i)).not.toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Round-trip' }));

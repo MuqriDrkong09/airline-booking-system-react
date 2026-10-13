@@ -117,7 +117,9 @@ describe('CustomerHomePage', () => {
     });
 
     expect(await screen.findByRole('heading', { name: 'Home' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Welcome back, Alex Traveler/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: /Welcome back, Alex Traveler/i }),
+    ).toBeInTheDocument();
 
     expect(screen.getByText('Check-in ready')).toBeInTheDocument();
     expect(screen.getByText('Unread alerts')).toBeInTheDocument();

@@ -6,18 +6,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Pencil, Trash2 } from 'lucide-react';
 import type { ReactNode } from 'react';
-import {
-  AppBadge,
-  AppButton,
-  AppCard,
-  AppTable,
-  type AppTableColumn,
-} from '@/components/common';
+import { AppBadge, AppButton, AppCard, AppTable, type AppTableColumn } from '@/components/common';
 import type { AdminAirport } from '../types/adminAirport';
-import {
-  formatCoordinates,
-  getActiveLabel,
-} from '../utils/formatAdminAirport';
+import { formatCoordinates, getActiveLabel } from '../utils/formatAdminAirport';
 
 export interface AirportTableProps {
   airports: readonly AdminAirport[];

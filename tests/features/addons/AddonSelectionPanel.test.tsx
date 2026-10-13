@@ -46,9 +46,7 @@ describe('AddonSelectionPanel', () => {
   it('adds an addon, syncs the booking store, and can remove it from the summary', async () => {
     const user = userEvent.setup();
 
-    renderWithProviders(
-      <AddonSelectionPanel flightId="FL-100" passengers={[adult]} />,
-    );
+    renderWithProviders(<AddonSelectionPanel flightId="FL-100" passengers={[adult]} />);
 
     const priorityHeading = screen.getByText('Priority boarding');
     const priorityCard = priorityHeading.closest('.MuiCard-root');
@@ -81,9 +79,7 @@ describe('AddonSelectionPanel', () => {
       });
     });
 
-    renderWithProviders(
-      <AddonSelectionPanel flightId="FL-100" passengers={[adult]} />,
-    );
+    renderWithProviders(<AddonSelectionPanel flightId="FL-100" passengers={[adult]} />);
 
     const summary = screen.getByText('Add-ons summary').closest('.MuiCard-root');
     expect(summary).toBeTruthy();
@@ -100,9 +96,7 @@ describe('AddonSelectionPanel', () => {
       });
     });
 
-    renderWithProviders(
-      <AddonSelectionPanel flightId="FL-100" passengers={[adult]} />,
-    );
+    renderWithProviders(<AddonSelectionPanel flightId="FL-100" passengers={[adult]} />);
 
     expect(screen.getByText(/no add-ons selected yet/i)).toBeInTheDocument();
   });
@@ -138,9 +132,7 @@ describe('AddonSelectionPanel', () => {
   it('dismisses the success alert after a valid save', async () => {
     const user = userEvent.setup();
 
-    renderWithProviders(
-      <AddonSelectionPanel flightId="FL-100" passengers={[adult]} />,
-    );
+    renderWithProviders(<AddonSelectionPanel flightId="FL-100" passengers={[adult]} />);
 
     await user.click(screen.getByRole('button', { name: /save add-ons/i }));
     expect(screen.getByText(/add-ons saved/i)).toBeInTheDocument();

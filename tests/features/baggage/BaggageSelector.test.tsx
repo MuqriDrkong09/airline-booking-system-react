@@ -39,9 +39,7 @@ describe('BaggageSelector', () => {
     );
 
     expect(screen.getByText('Ada Lovelace')).toBeInTheDocument();
-    expect(
-      screen.getByText(/Cabin included 7KG · checked included 20KG/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Cabin included 7KG · checked included 20KG/i)).toBeInTheDocument();
     expect(screen.getByText(/Passenger baggage fees \$0/i)).toBeInTheDocument();
 
     const cabinGroup = screen.getByRole('radiogroup', {
@@ -64,9 +62,7 @@ describe('BaggageSelector', () => {
       />,
     );
 
-    expect(
-      screen.getByText(/Cabin included 7KG · checked included none/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Cabin included 7KG · checked included none/i)).toBeInTheDocument();
   });
 
   it('renders infant restrictions and keeps non-cabin options disabled', () => {
@@ -84,9 +80,7 @@ describe('BaggageSelector', () => {
       />,
     );
 
-    expect(
-      screen.getByText(/Infants travel with a 7KG cabin bag only/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Infants travel with a 7KG cabin bag only/i)).toBeInTheDocument();
 
     const cabinGroup = screen.getByRole('radiogroup', {
       name: /Baby Lovelace cabin baggage/i,

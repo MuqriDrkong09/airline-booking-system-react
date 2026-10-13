@@ -37,9 +37,11 @@ describe('theme module', () => {
 
     const lightPalette = createPalette('light');
     const darkPalette = createPalette('dark');
-    expect(lightPalette?.primary && 'main' in lightPalette.primary ? lightPalette.primary.main : undefined).toBe(
-      colorTokens.brand.primary.main,
-    );
+    expect(
+      lightPalette?.primary && 'main' in lightPalette.primary
+        ? lightPalette.primary.main
+        : undefined,
+    ).toBe(colorTokens.brand.primary.main);
     expect(darkPalette?.background?.default).toBe(colorTokens.dark.background.default);
     expect(zIndexTokens.modal).toBe(1300);
     expect(radiusTokens.lg).toBe(16);

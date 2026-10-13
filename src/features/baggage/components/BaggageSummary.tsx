@@ -20,7 +20,10 @@ export function BaggageSummary({ allowance, passengers, selections }: BaggageSum
     <AppCard title="Baggage summary" subtitle="Included allowance and extra fees for this booking.">
       <Stack spacing={1.5}>
         <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
-          <AppBadge label={`Cabin allowance ${formatBaggageWeight(allowance.cabinKg)}`} tone="info" />
+          <AppBadge
+            label={`Cabin allowance ${formatBaggageWeight(allowance.cabinKg)}`}
+            tone="info"
+          />
           <AppBadge
             label={
               allowance.checkedKg > 0
@@ -48,8 +51,7 @@ export function BaggageSummary({ allowance, passengers, selections }: BaggageSum
                 {selection.additionalKg > 0
                   ? ` · Extra ${formatBaggageWeight(selection.additionalKg)}`
                   : ''}
-                {' · '}
-                ${line.total}
+                {' · '}${line.total}
               </Typography>
             </Stack>
           );

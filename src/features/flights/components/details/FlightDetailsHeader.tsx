@@ -7,11 +7,7 @@ import { AppBadge } from '@/components/common';
 import { FavouriteButton } from '@/features/favourites/components/FavouriteButton';
 import type { FlightOffer } from '../../types/flight';
 import { formatCabinLabel } from '../../utils/searchParams';
-import {
-  formatDuration,
-  formatFlightDate,
-  formatStopsLabel,
-} from '../../utils/flightResults';
+import { formatDuration, formatFlightDate, formatStopsLabel } from '../../utils/flightResults';
 
 export interface FlightDetailsHeaderProps {
   flight: FlightOffer;
@@ -64,7 +60,12 @@ export function FlightDetailsHeader({ flight }: FlightDetailsHeaderProps) {
         </Box>
       </Stack>
 
-      <Stack direction="row" spacing={0.75} useFlexGap sx={{ flexWrap: 'wrap', alignItems: 'center' }}>
+      <Stack
+        direction="row"
+        spacing={0.75}
+        useFlexGap
+        sx={{ flexWrap: 'wrap', alignItems: 'center' }}
+      >
         <FavouriteButton flight={flight} size="small" />
         <AppBadge label={formatCabinLabel(flight.cabinClass)} tone="info" variant="outlined" />
         {flight.refundable ? (

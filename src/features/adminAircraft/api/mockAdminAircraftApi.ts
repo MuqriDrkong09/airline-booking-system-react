@@ -5,11 +5,7 @@ import type {
 } from '../types/adminAircraft';
 import { filterAdminAircraft, sortAdminAircraft } from '../utils/filterAdminAircraft';
 import { cloneAdminAircraft } from '../utils/formatAdminAircraft';
-import {
-  ensureSeatMapConfig,
-  sumCabinSeats,
-  validateSeatMapConfig,
-} from '../utils/seatMapConfig';
+import { ensureSeatMapConfig, sumCabinSeats, validateSeatMapConfig } from '../utils/seatMapConfig';
 import type { AdminAircraftApi } from './adminAircraftApi.types';
 import { createSeedAdminAircraft } from './adminAircraftData';
 
@@ -87,10 +83,7 @@ export function createMockAdminAircraftApi(
       aircraftList = [created, ...aircraftList];
       return cloneAdminAircraft(created);
     },
-    async updateAircraft(
-      aircraftId: string,
-      input: AdminAircraftInput,
-    ): Promise<AdminAircraft> {
+    async updateAircraft(aircraftId: string, input: AdminAircraftInput): Promise<AdminAircraft> {
       await delay(delayMs);
       const index = aircraftList.findIndex((item) => item.id === aircraftId);
       if (index < 0) {
@@ -109,9 +102,7 @@ export function createMockAdminAircraftApi(
         ...normalized,
         id: aircraftId,
       };
-      aircraftList = aircraftList.map((item, itemIndex) =>
-        itemIndex === index ? updated : item,
-      );
+      aircraftList = aircraftList.map((item, itemIndex) => (itemIndex === index ? updated : item));
       return cloneAdminAircraft(updated);
     },
     async setAircraftActive(aircraftId: string, active: boolean): Promise<AdminAircraft> {
@@ -124,9 +115,7 @@ export function createMockAdminAircraftApi(
         ...aircraftList[index]!,
         active,
       };
-      aircraftList = aircraftList.map((item, itemIndex) =>
-        itemIndex === index ? updated : item,
-      );
+      aircraftList = aircraftList.map((item, itemIndex) => (itemIndex === index ? updated : item));
       return cloneAdminAircraft(updated);
     },
     async deleteAircraft(aircraftId: string): Promise<void> {

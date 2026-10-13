@@ -22,8 +22,7 @@ export function PromoCodeDialog({
   onClose,
   onSubmit,
 }: PromoCodeDialogProps) {
-  const title =
-    mode === 'create' ? 'Create promo code' : `Edit ${promoCode?.code ?? 'promo code'}`;
+  const title = mode === 'create' ? 'Create promo code' : `Edit ${promoCode?.code ?? 'promo code'}`;
 
   return (
     <AppDialog

@@ -1,11 +1,4 @@
-export const REPORT_PERIOD_PRESETS = [
-  'today',
-  '7d',
-  '30d',
-  '3m',
-  '12m',
-  'custom',
-] as const;
+export const REPORT_PERIOD_PRESETS = ['today', '7d', '30d', '3m', '12m', 'custom'] as const;
 
 export type ReportPeriodPreset = (typeof REPORT_PERIOD_PRESETS)[number];
 

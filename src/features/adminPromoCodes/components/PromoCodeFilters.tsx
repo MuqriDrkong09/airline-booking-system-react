@@ -1,10 +1,7 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { AppButton, AppInput, AppSelect } from '@/components/common';
-import {
-  ACTIVE_FILTER_OPTIONS,
-  DISCOUNT_TYPE_FILTER_OPTIONS,
-} from '../constants/options';
+import { ACTIVE_FILTER_OPTIONS, DISCOUNT_TYPE_FILTER_OPTIONS } from '../constants/options';
 import {
   EMPTY_ADMIN_PROMO_CODE_FILTERS,
   type AdminPromoCodeFilters,

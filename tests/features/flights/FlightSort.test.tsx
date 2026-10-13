@@ -1,10 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  FLIGHT_SORT_OPTIONS,
-  FLIGHT_SORT_OPTION_LABELS,
-  FlightSort,
-} from '@/features/flights';
+import { FLIGHT_SORT_OPTIONS, FLIGHT_SORT_OPTION_LABELS, FlightSort } from '@/features/flights';
 import { renderWithProviders } from '@tests/utils/test-utils';
 
 describe('FlightSort', () => {
@@ -12,9 +8,7 @@ describe('FlightSort', () => {
     const user = userEvent.setup();
     const onChange = jest.fn();
 
-    renderWithProviders(
-      <FlightSort value="recommended" onChange={onChange} />,
-    );
+    renderWithProviders(<FlightSort value="recommended" onChange={onChange} />);
 
     await user.click(screen.getByLabelText('Sort by'));
 
@@ -29,9 +23,7 @@ describe('FlightSort', () => {
     const user = userEvent.setup();
     const onChange = jest.fn();
 
-    renderWithProviders(
-      <FlightSort value="recommended" onChange={onChange} />,
-    );
+    renderWithProviders(<FlightSort value="recommended" onChange={onChange} />);
 
     await user.click(screen.getByLabelText('Sort by'));
     await user.click(await screen.findByRole('option', { name: 'Lowest Price' }));

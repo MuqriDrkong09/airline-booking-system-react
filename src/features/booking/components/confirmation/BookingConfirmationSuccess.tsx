@@ -4,10 +4,7 @@ import Typography from '@mui/material/Typography';
 import { CircleCheck } from 'lucide-react';
 import { AppBadge, AppCard } from '@/components/common';
 import type { Booking } from '../../types/bookingRecord';
-import {
-  BOOKING_STATUS_LABELS,
-  BOOKING_STATUS_TONE,
-} from '../../utils/bookingStatus';
+import { BOOKING_STATUS_LABELS, BOOKING_STATUS_TONE } from '../../utils/bookingStatus';
 
 export interface BookingConfirmationSuccessProps {
   booking: Booking;

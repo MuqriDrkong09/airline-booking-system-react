@@ -21,7 +21,10 @@ export function ProfilePage() {
 
   if (profileQuery.isLoading) {
     return (
-      <PageContainer title="Profile" description="Manage your personal details and travel preferences.">
+      <PageContainer
+        title="Profile"
+        description="Manage your personal details and travel preferences."
+      >
         <ProfileSkeleton />
       </PageContainer>
     );
@@ -57,11 +60,7 @@ export function ProfilePage() {
     >
       <Stack spacing={3}>
         {successMessage ? (
-          <AppAlert
-            severity="success"
-            title="Saved"
-            onClose={() => setSuccessMessage(null)}
-          >
+          <AppAlert severity="success" title="Saved" onClose={() => setSuccessMessage(null)}>
             {successMessage}
           </AppAlert>
         ) : null}

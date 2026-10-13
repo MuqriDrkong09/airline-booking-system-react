@@ -1,12 +1,6 @@
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import { SearchX } from 'lucide-react';
-import {
-  AppButton,
-  EmptyState,
-  ErrorState,
-  PageContainer,
-  PageLoader,
-} from '@/components/common';
+import { AppButton, EmptyState, ErrorState, PageContainer, PageLoader } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import { BookingETicketView, useBookingDetail } from '@/features/booking';
 
@@ -60,11 +54,7 @@ export function BookingETicketPage() {
               : 'We could not find this booking.'
           }
           action={
-            <AppButton
-              component={RouterLink}
-              to={APP_ROUTES.customer.bookings}
-              variant="contained"
-            >
+            <AppButton component={RouterLink} to={APP_ROUTES.customer.bookings} variant="contained">
               My bookings
             </AppButton>
           }

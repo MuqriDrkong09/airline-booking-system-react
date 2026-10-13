@@ -16,13 +16,7 @@ export interface MobileNavDrawerProps {
   ariaLabel: string;
 }
 
-export function MobileNavDrawer({
-  open,
-  onClose,
-  title,
-  items,
-  ariaLabel,
-}: MobileNavDrawerProps) {
+export function MobileNavDrawer({ open, onClose, title, items, ariaLabel }: MobileNavDrawerProps) {
   const titleId = useId();
 
   return (

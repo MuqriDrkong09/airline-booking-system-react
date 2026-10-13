@@ -22,11 +22,7 @@ export interface ManageBookingViewProps {
   onSectionChange: (section: ManageBookingSection) => void;
 }
 
-export function ManageBookingView({
-  booking,
-  section,
-  onSectionChange,
-}: ManageBookingViewProps) {
+export function ManageBookingView({ booking, section, onSectionChange }: ManageBookingViewProps) {
   const [feedback, setFeedback] = useState<string | null>(null);
 
   useEffect(() => {

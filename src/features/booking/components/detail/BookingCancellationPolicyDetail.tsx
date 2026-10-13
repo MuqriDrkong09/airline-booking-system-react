@@ -8,9 +8,7 @@ export interface BookingCancellationPolicyDetailProps {
   booking: Booking;
 }
 
-export function BookingCancellationPolicyDetail({
-  booking,
-}: BookingCancellationPolicyDetailProps) {
+export function BookingCancellationPolicyDetail({ booking }: BookingCancellationPolicyDetailProps) {
   const { policies, refundable } = booking.flight;
   const conditions = policies.fareConditions.filter((item) => item.trim().length > 0);
   const hasContent =

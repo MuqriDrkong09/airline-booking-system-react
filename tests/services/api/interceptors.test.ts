@@ -53,19 +53,13 @@ describe('api interceptors', () => {
     client.defaults.adapter = jest.fn(async (config) => {
       attempts += 1;
       if (attempts < 3) {
-        throw new axios.AxiosError(
-          'Service unavailable',
-          'ERR_BAD_RESPONSE',
+        throw new axios.AxiosError('Service unavailable', 'ERR_BAD_RESPONSE', config, undefined, {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: {},
           config,
-          undefined,
-          {
-            status: 503,
-            statusText: 'Service Unavailable',
-            headers: {},
-            config,
-            data: {},
-          },
-        );
+          data: {},
+        });
       }
       return {
         data: { ok: true },

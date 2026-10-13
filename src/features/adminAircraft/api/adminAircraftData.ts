@@ -2,9 +2,7 @@ import type { AdminAircraft } from '../types/adminAircraft';
 import { cloneAdminAircraft } from '../utils/formatAdminAircraft';
 import { buildDefaultSeatMapConfig } from '../utils/seatMapConfig';
 
-function withSeatMap(
-  aircraft: Omit<AdminAircraft, 'seatMapConfig'>,
-): AdminAircraft {
+function withSeatMap(aircraft: Omit<AdminAircraft, 'seatMapConfig'>): AdminAircraft {
   return {
     ...aircraft,
     seatMapConfig: buildDefaultSeatMapConfig(aircraft),

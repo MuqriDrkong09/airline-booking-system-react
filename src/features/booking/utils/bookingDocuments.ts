@@ -1,8 +1,5 @@
 import type { Booking } from '../types/bookingRecord';
-import {
-  buildBookingETickets,
-  formatETicketAsText,
-} from './buildBookingETicket';
+import { buildBookingETickets, formatETicketAsText } from './buildBookingETicket';
 import { buildBookingInvoice, formatInvoiceAsText } from './buildBookingInvoice';
 
 export function buildETicketText(booking: Booking): string {
@@ -35,7 +32,10 @@ function toIcsDateTime(isoLocal: string): string {
 
 export function buildCalendarIcs(booking: Booking): string {
   const { flight } = booking;
-  const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+  const stamp = new Date()
+    .toISOString()
+    .replace(/[-:]/g, '')
+    .replace(/\.\d{3}Z$/, 'Z');
   const summary = `${flight.airline.code}${flight.flightNumber} ${flight.origin.code}→${flight.destination.code}`;
   const description = `AeroBook booking ${booking.reference}\\nStatus ${booking.status}`;
 
@@ -60,9 +60,5 @@ export function buildCalendarIcs(booking: Booking): string {
 }
 
 export function downloadCalendarEvent(booking: Booking): void {
-  downloadTextFile(
-    `aerobook-${booking.reference}.ics`,
-    buildCalendarIcs(booking),
-    'text/calendar',
-  );
+  downloadTextFile(`aerobook-${booking.reference}.ics`, buildCalendarIcs(booking), 'text/calendar');
 }

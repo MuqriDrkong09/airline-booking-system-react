@@ -6,10 +6,7 @@ export type {
   PromoValidationResult,
   PromoValidationStatus,
 } from './types/promo';
-export {
-  PROMO_DISCOUNT_TYPES,
-  PROMO_VALIDATION_STATUSES,
-} from './types/promo';
+export { PROMO_DISCOUNT_TYPES, PROMO_VALIDATION_STATUSES } from './types/promo';
 export {
   formatPromoAmount,
   getPromoDefinition,

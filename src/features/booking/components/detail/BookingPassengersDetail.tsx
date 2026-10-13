@@ -21,13 +21,14 @@ export function BookingPassengersDetail({ booking }: BookingPassengersDetailProp
       <Stack spacing={1.5}>
         {booking.passengers.map((passenger) => (
           <Stack key={passenger.id} spacing={0.25}>
-            <Stack direction="row" spacing={1} useFlexGap sx={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <Stack
+              direction="row"
+              spacing={1}
+              useFlexGap
+              sx={{ alignItems: 'center', flexWrap: 'wrap' }}
+            >
               <Typography variant="subtitle2">{formatPassengerLabel(passenger)}</Typography>
-              <AppBadge
-                label={PASSENGER_TYPE_LABELS[passenger.type]}
-                size="small"
-                tone="default"
-              />
+              <AppBadge label={PASSENGER_TYPE_LABELS[passenger.type]} size="small" tone="default" />
             </Stack>
             <Typography variant="body2" color="text.secondary">
               {[

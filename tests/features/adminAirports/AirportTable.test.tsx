@@ -54,9 +54,7 @@ describe('AirportTable', () => {
     expect(within(table).getByText(activeAirport.timezone)).toBeInTheDocument();
     expect(within(table).getByText(String(activeAirport.terminalCount))).toBeInTheDocument();
     expect(
-      within(table).getByText(
-        formatCoordinates(activeAirport.latitude, activeAirport.longitude),
-      ),
+      within(table).getByText(formatCoordinates(activeAirport.latitude, activeAirport.longitude)),
     ).toBeInTheDocument();
 
     expect(within(table).getByText('Active')).toBeInTheDocument();
@@ -131,9 +129,7 @@ describe('AirportTable', () => {
     expect(within(section).getAllByText('Coordinates').length).toBeGreaterThan(0);
     expect(within(section).getAllByText('Status').length).toBeGreaterThan(0);
     expect(
-      within(section).getByText(
-        formatCoordinates(activeAirport.latitude, activeAirport.longitude),
-      ),
+      within(section).getByText(formatCoordinates(activeAirport.latitude, activeAirport.longitude)),
     ).toBeInTheDocument();
     expect(within(section).getByText('Active')).toBeInTheDocument();
     expect(within(section).getByText('Inactive')).toBeInTheDocument();

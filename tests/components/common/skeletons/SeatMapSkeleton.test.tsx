@@ -8,9 +8,7 @@ const SEATS_PER_ROW = 6;
 const ROW_LABELS_PER_ROW = 2;
 const MAP_HEADER_SKELETONS = 2; // title + subtitle
 const MAP_SKELETONS =
-  MAP_HEADER_SKELETONS +
-  LEGEND_SKELETONS +
-  SEAT_ROWS * (ROW_LABELS_PER_ROW + SEATS_PER_ROW);
+  MAP_HEADER_SKELETONS + LEGEND_SKELETONS + SEAT_ROWS * (ROW_LABELS_PER_ROW + SEATS_PER_ROW);
 const INSPECTOR_SKELETONS = 6; // title + 5 body placeholders
 
 describe('SeatMapSkeleton', () => {

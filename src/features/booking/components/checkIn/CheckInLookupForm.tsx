@@ -52,9 +52,7 @@ export function CheckInLookupForm({
       subtitle="Enter your booking reference and the last name of any passenger on the booking."
     >
       <Stack component="form" spacing={2} onSubmit={handleSubmit} noValidate>
-        {error || localError ? (
-          <AppAlert severity="error">{error ?? localError}</AppAlert>
-        ) : null}
+        {error || localError ? <AppAlert severity="error">{error ?? localError}</AppAlert> : null}
 
         <AppInput
           label="Booking reference"

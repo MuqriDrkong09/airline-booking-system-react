@@ -28,9 +28,7 @@ export function isValidCalendarDate(value: string): boolean {
   const day = Number(dayText);
   const date = new Date(year, month - 1, day);
 
-  return (
-    date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
-  );
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
 }
 
 export function compareIsoDates(a: string, b: string): number {

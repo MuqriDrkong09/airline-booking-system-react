@@ -2,10 +2,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { AppButton, AppInput, AppSelect } from '@/components/common';
 import { STATUS_FILTER_OPTIONS } from '../constants/options';
-import {
-  EMPTY_ADMIN_BOOKING_QUERY,
-  type AdminBookingListQuery,
-} from '../types/adminBooking';
+import { EMPTY_ADMIN_BOOKING_QUERY, type AdminBookingListQuery } from '../types/adminBooking';
 import type { BookingRecordStatus } from '@/features/booking';
 
 export interface BookingFiltersProps {

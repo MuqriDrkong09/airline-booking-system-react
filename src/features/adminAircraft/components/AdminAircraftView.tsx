@@ -93,10 +93,7 @@ export function AdminAircraftView() {
 
   const handleSubmit = async (values: AircraftFormParsedValues) => {
     setActionError(null);
-    const input = toAdminAircraftInput(
-      values,
-      dialog.mode === 'edit' ? dialog.aircraft : null,
-    );
+    const input = toAdminAircraftInput(values, dialog.mode === 'edit' ? dialog.aircraft : null);
     try {
       if (dialog.mode === 'create') {
         await createMutation.mutateAsync(input);
@@ -187,9 +184,7 @@ export function AdminAircraftView() {
       ) : (
         <AircraftTable
           aircraftList={aircraftList}
-          activeUpdatingId={
-            activeMutation.isPending ? activeMutation.variables?.aircraftId : null
-          }
+          activeUpdatingId={activeMutation.isPending ? activeMutation.variables?.aircraftId : null}
           onView={(aircraft) => {
             setActionError(null);
             setDialog({ mode: 'view', aircraft });

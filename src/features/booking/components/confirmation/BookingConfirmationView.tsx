@@ -18,7 +18,6 @@ export function BookingConfirmationView({ booking }: BookingConfirmationViewProp
       <BookingConfirmationActions booking={booking} />
       <BookingConfirmationDetails booking={booking} />
 
-
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
         spacing={1.5}

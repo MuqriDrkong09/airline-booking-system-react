@@ -3,11 +3,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import type { ReactNode } from 'react';
 import { AppBadge, AppButton, AppDialog } from '@/components/common';
-import {
-  BOOKING_STATUS_LABELS,
-  BOOKING_STATUS_TONE,
-  formatBookingMoney,
-} from '@/features/booking';
+import { BOOKING_STATUS_LABELS, BOOKING_STATUS_TONE, formatBookingMoney } from '@/features/booking';
 import type { AdminBooking } from '../types/adminBooking';
 
 export interface BookingDetailsDialogProps {
@@ -98,14 +94,8 @@ export function BookingDetailsDialog({
               label="Route"
               value={`${booking.flight.origin.code} → ${booking.flight.destination.code}`}
             />
-            <DetailItem
-              label="Departure"
-              value={booking.flight.departureTime.replace('T', ' ')}
-            />
-            <DetailItem
-              label="Arrival"
-              value={booking.flight.arrivalTime.replace('T', ' ')}
-            />
+            <DetailItem label="Departure" value={booking.flight.departureTime.replace('T', ' ')} />
+            <DetailItem label="Arrival" value={booking.flight.arrivalTime.replace('T', ' ')} />
             <DetailItem
               label="Passenger"
               value={primary ? `${primary.firstName} ${primary.lastName}` : '—'}
@@ -128,10 +118,7 @@ export function BookingDetailsDialog({
               <Typography variant="subtitle2">Cancellation / refund</Typography>
               <DetailItem
                 label="Fee"
-                value={formatBookingMoney(
-                  booking.cancellation.fee,
-                  booking.cancellation.currency,
-                )}
+                value={formatBookingMoney(booking.cancellation.fee, booking.cancellation.currency)}
               />
               <DetailItem
                 label="Refund"

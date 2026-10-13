@@ -40,9 +40,7 @@ describe('authHelpers', () => {
     expect(getPostLoginRedirect(UserRole.ADMIN, null)).toBe(APP_ROUTES.admin.dashboard);
     // Prefix tricks / open redirects must not be treated as safe app paths.
     expect(getPostLoginRedirect(UserRole.USER, '/apple')).toBe(APP_ROUTES.customer.home);
-    expect(getPostLoginRedirect(UserRole.USER, '//evil.example')).toBe(
-      APP_ROUTES.customer.home,
-    );
+    expect(getPostLoginRedirect(UserRole.USER, '//evil.example')).toBe(APP_ROUTES.customer.home);
     expect(getPostLoginRedirect(UserRole.ADMIN, 'https://evil.example/admin')).toBe(
       APP_ROUTES.admin.dashboard,
     );

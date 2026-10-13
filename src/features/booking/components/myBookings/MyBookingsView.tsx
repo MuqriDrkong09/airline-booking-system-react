@@ -4,11 +4,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect, useMemo, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Ticket } from 'lucide-react';
-import {
-  AppAlert,
-  AppButton,
-  EmptyState,
-} from '@/components/common';
+import { AppAlert, AppButton, EmptyState } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import { todayIsoDate } from '@/features/flights/utils/dates';
 import type { Booking } from '../../types/bookingRecord';
@@ -71,11 +67,7 @@ export function MyBookingsView() {
         title="No bookings yet"
         message="When you complete a flight booking, it will appear here for viewing, check-in, and ticket download."
         action={
-          <AppButton
-            component={RouterLink}
-            to={APP_ROUTES.customer.flights}
-            variant="contained"
-          >
+          <AppButton component={RouterLink} to={APP_ROUTES.customer.flights} variant="contained">
             Search flights
           </AppButton>
         }
@@ -105,17 +97,14 @@ export function MyBookingsView() {
         <EmptyState
           title={`No ${tab} bookings`}
           message={
-            search
-              ? 'Try a different search term or switch tabs.'
-              : 'Nothing matches this tab yet.'
+            search ? 'Try a different search term or switch tabs.' : 'Nothing matches this tab yet.'
           }
         />
       ) : (
         <Stack spacing={1.75}>
           <Typography variant="body2" color="text.secondary">
             Showing {(result.page - 1) * MY_BOOKINGS_PAGE_SIZE + 1}–
-            {Math.min(result.page * MY_BOOKINGS_PAGE_SIZE, result.total)} of{' '}
-            {result.total}
+            {Math.min(result.page * MY_BOOKINGS_PAGE_SIZE, result.total)} of {result.total}
           </Typography>
 
           {result.items.map((booking) => (

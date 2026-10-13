@@ -37,9 +37,7 @@ describe('usePassengerDraftStore', () => {
         requiresPassport: true,
       });
       const [first] = usePassengerDraftStore.getState().passengers;
-      usePassengerDraftStore.getState().setPassengers([
-        { ...first!, firstName: 'Alex' },
-      ]);
+      usePassengerDraftStore.getState().setPassengers([{ ...first!, firstName: 'Alex' }]);
       usePassengerDraftStore.getState().initTrip({
         flightId: 'flt-1',
         from: 'KUL',

@@ -9,18 +9,8 @@ describe('createPassengerSlots', () => {
   it('builds ordered adult, child, and infant slots', () => {
     const slots = createPassengerSlots({ adults: 2, children: 1, infants: 1 });
 
-    expect(slots.map((slot) => slot.id)).toEqual([
-      'adult-1',
-      'adult-2',
-      'child-1',
-      'infant-1',
-    ]);
-    expect(slots.map((slot) => slot.type)).toEqual([
-      'ADULT',
-      'ADULT',
-      'CHILD',
-      'INFANT',
-    ]);
+    expect(slots.map((slot) => slot.id)).toEqual(['adult-1', 'adult-2', 'child-1', 'infant-1']);
+    expect(slots.map((slot) => slot.type)).toEqual(['ADULT', 'ADULT', 'CHILD', 'INFANT']);
   });
 
   it('creates empty passenger drafts with blank required fields', () => {

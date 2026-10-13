@@ -38,7 +38,11 @@ export function FlightCard({ flight, onSelect }: FlightCardProps) {
         },
       }}
     >
-      <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+      <Stack
+        direction="row"
+        spacing={1.25}
+        sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+      >
         <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', minWidth: 0 }}>
           <Avatar
             variant="rounded"

@@ -9,9 +9,7 @@ test.describe('Manage booking', () => {
       lastName: 'Traveler',
     });
 
-    await page.goto(
-      `/app/bookings/${encodeURIComponent(reference)}/manage?section=contact`,
-    );
+    await page.goto(`/app/bookings/${encodeURIComponent(reference)}/manage?section=contact`);
     await expect(page.getByRole('heading', { name: 'Manage booking' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Save contact details' })).toBeVisible({
       timeout: 10_000,

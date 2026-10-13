@@ -210,9 +210,7 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
           method: result.method,
           billingName:
             result.billingName ||
-            (passengers[0]
-              ? `${passengers[0].firstName} ${passengers[0].lastName}`.trim()
-              : ''),
+            (passengers[0] ? `${passengers[0].firstName} ${passengers[0].lastName}`.trim() : ''),
           billingEmail: passengers[0]?.email ?? '',
           cardBrand: '',
           cardLast4: '',
@@ -264,8 +262,8 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
             >
               <CardForm disabled={locked} />
               <AppAlert severity="info" title="Mock payment only">
-                No real charges are made. Card details stay in memory for this request and are
-                never written to localStorage.
+                No real charges are made. Card details stay in memory for this request and are never
+                written to localStorage.
               </AppAlert>
               {uiStatus !== 'FAILED' ? (
                 <AppButton

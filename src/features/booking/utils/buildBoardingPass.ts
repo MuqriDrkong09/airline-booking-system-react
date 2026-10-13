@@ -24,13 +24,7 @@ function boardingOpenClock(departureIso: string): string {
   }
   const [, year, month, day, hour, minute] = match;
   const date = new Date(
-    Date.UTC(
-      Number(year),
-      Number(month) - 1,
-      Number(day),
-      Number(hour),
-      Number(minute),
-    ),
+    Date.UTC(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute)),
   );
   date.setUTCMinutes(date.getUTCMinutes() - BOARDING_OPENS_MINUTES_BEFORE);
   const pad = (value: number) => String(value).padStart(2, '0');
@@ -48,10 +42,7 @@ export function assignBoardingGate(flightNumber: string): string {
 }
 
 /** Boarding group from cabin and seat row (demo priority bands). */
-export function assignBoardingGroup(
-  cabinClass: Booking['cabinClass'],
-  seatLabel: string,
-): string {
+export function assignBoardingGroup(cabinClass: Booking['cabinClass'], seatLabel: string): string {
   if (cabinClass === 'FIRST' || cabinClass === 'BUSINESS') {
     return '1';
   }
@@ -128,8 +119,7 @@ export function buildBoardingPasses(booking: Booking): BoardingPass[] {
 
   return passengers.map((passenger, index) => {
     const seat =
-      booking.seats.find((item) => item.passengerId === passenger.id)?.label ??
-      'Not assigned';
+      booking.seats.find((item) => item.passengerId === passenger.id)?.label ?? 'Not assigned';
 
     return {
       bookingReference: booking.reference,
@@ -178,9 +168,5 @@ export function formatBoardingPassAsText(passes: BoardingPass[]): string {
     return lines.join('\n');
   });
 
-  return [
-    ...blocks,
-    '',
-    'This is a mock boarding pass for demo purposes only.',
-  ].join('\n');
+  return [...blocks, '', 'This is a mock boarding pass for demo purposes only.'].join('\n');
 }

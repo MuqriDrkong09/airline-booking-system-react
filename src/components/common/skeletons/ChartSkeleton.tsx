@@ -16,7 +16,7 @@ export function ChartSkeleton({
   height = { xs: 260, md: 300 },
   columns = { xs: 1, lg: 2 },
 }: ChartSkeletonProps) {
-  const chartHeight = typeof height === 'number' ? height : height.md ?? height.xs ?? 280;
+  const chartHeight = typeof height === 'number' ? height : (height.md ?? height.xs ?? 280);
 
   return (
     <SkeletonBlock label="Loading charts">

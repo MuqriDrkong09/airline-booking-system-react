@@ -72,7 +72,9 @@ describe('AdminAirportsPage', () => {
 
     const emptyState = screen.getByText('No airports found').closest('[role="status"]');
     expect(emptyState).not.toBeNull();
-    await user.click(within(emptyState as HTMLElement).getByRole('button', { name: 'Create airport' }));
+    await user.click(
+      within(emptyState as HTMLElement).getByRole('button', { name: 'Create airport' }),
+    );
     expect(await screen.findByRole('heading', { name: 'Create airport' })).toBeInTheDocument();
   });
 
@@ -103,10 +105,9 @@ describe('AdminAirportsPage', () => {
     fireEvent.change(within(dialog).getByPlaceholderText('KUL'), {
       target: { value: 'AAA' },
     });
-    fireEvent.change(
-      within(dialog).getByPlaceholderText('Kuala Lumpur International Airport'),
-      { target: { value: 'Alpha Test Airport' } },
-    );
+    fireEvent.change(within(dialog).getByPlaceholderText('Kuala Lumpur International Airport'), {
+      target: { value: 'Alpha Test Airport' },
+    });
     fireEvent.change(within(dialog).getByPlaceholderText('Kuala Lumpur'), {
       target: { value: 'Alpha City' },
     });
@@ -129,50 +130,44 @@ describe('AdminAirportsPage', () => {
     fireEvent.click(within(dialog).getByRole('button', { name: 'Create airport' }));
 
     await waitFor(() => {
-      expect(
-        mockAdminAirportsApi.getState().some((airport) => airport.code === 'AAA'),
-      ).toBe(true);
+      expect(mockAdminAirportsApi.getState().some((airport) => airport.code === 'AAA')).toBe(true);
     });
     expect(await screen.findByText('AAA')).toBeInTheDocument();
   });
 
-  it(
-    'edits an airport and can cancel the dialog',
-    async () => {
-      const user = userEvent.setup({ delay: null });
+  it('edits an airport and can cancel the dialog', async () => {
+    const user = userEvent.setup({ delay: null });
 
-      renderWithProviders(<AdminAirportsPage />, {
-        initialEntries: ['/admin/airports'],
-      });
+    renderWithProviders(<AdminAirportsPage />, {
+      initialEntries: ['/admin/airports'],
+    });
 
-      await screen.findByText('KUL');
-      await user.click(screen.getByRole('button', { name: 'Edit KUL' }));
+    await screen.findByText('KUL');
+    await user.click(screen.getByRole('button', { name: 'Edit KUL' }));
 
-      const dialog = await screen.findByRole('dialog');
-      expect(within(dialog).getByRole('heading', { name: 'Edit KUL' })).toBeInTheDocument();
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByRole('heading', { name: 'Edit KUL' })).toBeInTheDocument();
 
-      fireEvent.change(within(dialog).getByLabelText(/^City/i), {
-        target: { value: 'KL City' },
-      });
-      await user.click(within(dialog).getByRole('button', { name: 'Save changes' }));
+    fireEvent.change(within(dialog).getByLabelText(/^City/i), {
+      target: { value: 'KL City' },
+    });
+    await user.click(within(dialog).getByRole('button', { name: 'Save changes' }));
 
-      await waitFor(() => {
-        expect(
-          mockAdminAirportsApi.getState().find((airport) => airport.code === 'KUL')?.city,
-        ).toBe('KL City');
-        expect(screen.queryByRole('heading', { name: 'Edit KUL' })).not.toBeInTheDocument();
-      });
+    await waitFor(() => {
+      expect(mockAdminAirportsApi.getState().find((airport) => airport.code === 'KUL')?.city).toBe(
+        'KL City',
+      );
+      expect(screen.queryByRole('heading', { name: 'Edit KUL' })).not.toBeInTheDocument();
+    });
 
-      await user.click(screen.getByRole('button', { name: 'Edit KUL' }));
-      const reopen = await screen.findByRole('dialog');
-      expect(within(reopen).getByRole('heading', { name: 'Edit KUL' })).toBeInTheDocument();
-      await user.click(within(reopen).getByRole('button', { name: 'Cancel' }));
-      await waitFor(() => {
-        expect(screen.queryByRole('heading', { name: 'Edit KUL' })).not.toBeInTheDocument();
-      });
-    },
-    15_000,
-  );
+    await user.click(screen.getByRole('button', { name: 'Edit KUL' }));
+    const reopen = await screen.findByRole('dialog');
+    expect(within(reopen).getByRole('heading', { name: 'Edit KUL' })).toBeInTheDocument();
+    await user.click(within(reopen).getByRole('button', { name: 'Cancel' }));
+    await waitFor(() => {
+      expect(screen.queryByRole('heading', { name: 'Edit KUL' })).not.toBeInTheDocument();
+    });
+  }, 15_000);
 
   it('shows create errors and dismisses the alert', async () => {
     const user = userEvent.setup({ delay: null });
@@ -191,10 +186,9 @@ describe('AdminAirportsPage', () => {
     fireEvent.change(within(dialog).getByPlaceholderText('KUL'), {
       target: { value: 'BBB' },
     });
-    fireEvent.change(
-      within(dialog).getByPlaceholderText('Kuala Lumpur International Airport'),
-      { target: { value: 'Beta Airport' } },
-    );
+    fireEvent.change(within(dialog).getByPlaceholderText('Kuala Lumpur International Airport'), {
+      target: { value: 'Beta Airport' },
+    });
     fireEvent.change(within(dialog).getByPlaceholderText('Kuala Lumpur'), {
       target: { value: 'Beta City' },
     });
@@ -216,9 +210,7 @@ describe('AdminAirportsPage', () => {
 
     fireEvent.click(within(dialog).getByRole('button', { name: 'Create airport' }));
 
-    expect(
-      await screen.findByText('An airport with this code already exists'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('An airport with this code already exists')).toBeInTheDocument();
 
     fireEvent.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     await waitFor(() => {
@@ -249,10 +241,9 @@ describe('AdminAirportsPage', () => {
     fireEvent.change(within(dialog).getByPlaceholderText('KUL'), {
       target: { value: 'CCC' },
     });
-    fireEvent.change(
-      within(dialog).getByPlaceholderText('Kuala Lumpur International Airport'),
-      { target: { value: 'Gamma Airport' } },
-    );
+    fireEvent.change(within(dialog).getByPlaceholderText('Kuala Lumpur International Airport'), {
+      target: { value: 'Gamma Airport' },
+    });
     fireEvent.change(within(dialog).getByPlaceholderText('Kuala Lumpur'), {
       target: { value: 'Gamma City' },
     });
@@ -281,9 +272,7 @@ describe('AdminAirportsPage', () => {
 
   it('shows toggle and delete errors and can cancel delete', async () => {
     const user = userEvent.setup({ delay: null });
-    jest
-      .spyOn(adminAirportsApi, 'setAirportActive')
-      .mockRejectedValue(new Error('status failed'));
+    jest.spyOn(adminAirportsApi, 'setAirportActive').mockRejectedValue(new Error('status failed'));
     const deleteSpy = jest
       .spyOn(adminAirportsApi, 'deleteAirport')
       .mockRejectedValueOnce(new Error('delete failed'));

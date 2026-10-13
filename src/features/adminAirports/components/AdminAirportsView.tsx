@@ -171,9 +171,7 @@ export function AdminAirportsView() {
       ) : (
         <AirportTable
           airports={airports}
-          activeUpdatingId={
-            activeMutation.isPending ? activeMutation.variables?.airportId : null
-          }
+          activeUpdatingId={activeMutation.isPending ? activeMutation.variables?.airportId : null}
           onEdit={openEditDialog}
           onDelete={setDeleteTarget}
           onToggleActive={(airport) => {

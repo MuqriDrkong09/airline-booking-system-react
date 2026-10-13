@@ -88,9 +88,7 @@ describe('recent searches store and home page', () => {
 
     const nrtCardTitle = screen.getByText('KUL → NRT');
     const nrtCard = nrtCardTitle.closest('.MuiCard-root') as HTMLElement;
-    await user.click(
-      within(nrtCard).getByRole('button', { name: /Remove search KUL → NRT/i }),
-    );
+    await user.click(within(nrtCard).getByRole('button', { name: /Remove search KUL → NRT/i }));
 
     expect(screen.queryByText('KUL → NRT')).not.toBeInTheDocument();
     expect(screen.getByText('KUL → SIN')).toBeInTheDocument();

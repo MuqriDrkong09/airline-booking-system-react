@@ -1,10 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { FlightSearchFormValues } from '../types/search';
-import {
-  RECENT_SEARCH_HISTORY_LIMIT,
-  type RecentFlightSearch,
-} from '../types/recentSearch';
+import { RECENT_SEARCH_HISTORY_LIMIT, type RecentFlightSearch } from '../types/recentSearch';
 import { prependRecentSearch, recentSearchFromFormValues } from '../utils/recentSearch';
 
 interface RecentSearchesState {
@@ -26,11 +23,7 @@ export const useRecentSearchesStore = create<RecentSearchesState>()(
         }
 
         set({
-          searches: prependRecentSearch(
-            get().searches,
-            entry,
-            RECENT_SEARCH_HISTORY_LIMIT,
-          ),
+          searches: prependRecentSearch(get().searches, entry, RECENT_SEARCH_HISTORY_LIMIT),
         });
         return entry;
       },

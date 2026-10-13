@@ -33,13 +33,8 @@ export function useUpdateAdminAirportMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      airportId,
-      input,
-    }: {
-      airportId: string;
-      input: AdminAirportInput;
-    }) => updateAdminAirport(airportId, input),
+    mutationFn: ({ airportId, input }: { airportId: string; input: AdminAirportInput }) =>
+      updateAdminAirport(airportId, input),
     onSuccess: (airport) => {
       queryClient.setQueryData(adminAirportKeys.detail(airport.id), airport);
       void queryClient.invalidateQueries({ queryKey: adminAirportKeys.lists() });

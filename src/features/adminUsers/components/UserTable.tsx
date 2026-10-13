@@ -6,13 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Eye, Shield, UserMinus, UserPlus } from 'lucide-react';
 import type { ReactNode } from 'react';
-import {
-  AppBadge,
-  AppButton,
-  AppCard,
-  AppTable,
-  type AppTableColumn,
-} from '@/components/common';
+import { AppBadge, AppButton, AppCard, AppTable, type AppTableColumn } from '@/components/common';
 import type { AdminUser } from '../types/adminUser';
 import {
   canActivateAdminUser,
@@ -101,10 +95,7 @@ function UserMobileCard({
             />
           }
         />
-        <InfoRow
-          label="Verified"
-          value={user.emailVerified ? 'Yes' : 'No'}
-        />
+        <InfoRow label="Verified" value={user.emailVerified ? 'Yes' : 'No'} />
         <InfoRow label="You" value={isSelf ? 'Current account' : '—'} />
         <Box sx={{ gridColumn: '1 / -1', display: 'grid', gap: 1 }}>
           <AppButton size="small" variant="outlined" onClick={() => onChangeRole(user)}>
@@ -207,11 +198,7 @@ export function UserTable({
         const busy = activeUpdatingId === user.id;
         return (
           <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }}>
-            <IconButton
-              aria-label={`View ${user.email}`}
-              size="small"
-              onClick={() => onView(user)}
-            >
+            <IconButton aria-label={`View ${user.email}`} size="small" onClick={() => onView(user)}>
               <Eye aria-hidden="true" size={16} />
             </IconButton>
             <IconButton

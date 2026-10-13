@@ -64,11 +64,7 @@ export function PriceBreakdown({ breakdown, promoCode }: PriceBreakdownProps) {
         />
         <Line label="Taxes" value={formatBookingMoney(breakdown.taxes, currency)} muted />
         <Divider />
-        <Line
-          label="Total"
-          value={formatBookingMoney(breakdown.finalTotal, currency)}
-          emphasize
-        />
+        <Line label="Total" value={formatBookingMoney(breakdown.finalTotal, currency)} emphasize />
       </Stack>
     </AppCard>
   );

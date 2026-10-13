@@ -2,10 +2,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { AppButton, AppInput, AppSelect } from '@/components/common';
 import { ACTIVE_FILTER_OPTIONS, MANUFACTURER_FILTER_OPTIONS } from '../constants/options';
-import {
-  EMPTY_ADMIN_AIRCRAFT_FILTERS,
-  type AdminAircraftFilters,
-} from '../types/adminAircraft';
+import { EMPTY_ADMIN_AIRCRAFT_FILTERS, type AdminAircraftFilters } from '../types/adminAircraft';
 
 export interface AircraftFiltersProps {
   value: AdminAircraftFilters;

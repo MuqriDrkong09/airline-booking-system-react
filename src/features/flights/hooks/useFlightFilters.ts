@@ -1,8 +1,4 @@
-import {
-  startTransition,
-  useCallback,
-  useMemo,
-} from 'react';
+import { startTransition, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   DEFAULT_FLIGHT_SORT,
@@ -30,10 +26,7 @@ function parseSort(value: string | null): FlightSortOption {
 export function useFlightFilters(bounds?: FlightFilterBounds | null) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const filters = useMemo(
-    () => parseFlightFilterParams(searchParams),
-    [searchParams],
-  );
+  const filters = useMemo(() => parseFlightFilterParams(searchParams), [searchParams]);
 
   const sort = useMemo(() => parseSort(searchParams.get('sort')), [searchParams]);
 

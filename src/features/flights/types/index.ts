@@ -34,6 +34,7 @@ export {
   DEFAULT_FLIGHT_SORT,
   FLIGHT_SORT_OPTION_LABELS,
   FLIGHT_SORT_OPTIONS,
+  FLIGHT_SORT_SELECT_OPTIONS,
   isFlightSortOption,
 } from './flight';
 export {

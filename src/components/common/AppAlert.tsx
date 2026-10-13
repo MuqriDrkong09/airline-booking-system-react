@@ -8,7 +8,13 @@ export interface AppAlertProps extends Omit<AlertProps, 'title'> {
   children: ReactNode;
 }
 
-export function AppAlert({ title, children, severity = 'info', variant = 'standard', ...props }: AppAlertProps) {
+export function AppAlert({
+  title,
+  children,
+  severity = 'info',
+  variant = 'standard',
+  ...props
+}: AppAlertProps) {
   return (
     <Alert {...props} severity={severity} variant={variant} role="alert">
       {title ? <AlertTitle>{title}</AlertTitle> : null}

@@ -1,13 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {
-  Bell,
-  CalendarCheck,
-  Heart,
-  RadioTower,
-  Search,
-  Ticket,
-} from 'lucide-react';
+import { Bell, CalendarCheck, Heart, RadioTower, Search, Ticket } from 'lucide-react';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppButton, AppCard, SectionHeader } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
@@ -54,10 +47,7 @@ const QUICK_ACTIONS = [
 export function CustomerHomeQuickActions() {
   return (
     <Box>
-      <SectionHeader
-        title="Quick actions"
-        description="Jump into the most common booking tasks."
-      />
+      <SectionHeader title="Quick actions" description="Jump into the most common booking tasks." />
       <Box
         sx={{
           display: 'grid',

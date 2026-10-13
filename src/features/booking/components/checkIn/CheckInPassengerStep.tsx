@@ -6,10 +6,7 @@ import Typography from '@mui/material/Typography';
 import { AppAlert, AppBadge, AppCard } from '@/components/common';
 import type { Booking, BookingPassenger } from '../../types/bookingRecord';
 import { formatPassengerLabel } from '../../utils/bookingDetailHelpers';
-import {
-  isPassengerCheckedIn,
-  seatLabelForPassenger,
-} from '../../utils/checkInRules';
+import { isPassengerCheckedIn, seatLabelForPassenger } from '../../utils/checkInRules';
 
 export interface CheckInPassengerStepProps {
   booking: Booking;
@@ -59,12 +56,7 @@ export function CheckInPassengerStep({
               return (
                 <FormControlLabel
                   key={passenger.id}
-                  control={
-                    <Checkbox
-                      checked={checked}
-                      onChange={() => toggle(passenger.id)}
-                    />
-                  }
+                  control={<Checkbox checked={checked} onChange={() => toggle(passenger.id)} />}
                   label={
                     <Stack spacing={0.25} sx={{ py: 0.5 }}>
                       <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>

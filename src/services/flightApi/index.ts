@@ -8,9 +8,7 @@ import { createHttpFlightApi, createHttpFlightStatusApi } from './httpFlightApi'
 /**
  * Domain service: flights + flight status.
  */
-export const flightApi: FlightsApi = env.useMockAuth
-  ? mockFlightsApi
-  : createHttpFlightApi();
+export const flightApi: FlightsApi = env.useMockAuth ? mockFlightsApi : createHttpFlightApi();
 
 export const flightStatusApi: FlightStatusApi = env.useMockAuth
   ? mockFlightStatusApi

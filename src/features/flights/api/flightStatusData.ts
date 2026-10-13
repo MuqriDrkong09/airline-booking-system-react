@@ -69,7 +69,10 @@ function pickRoute(seed: number): { origin: string; destination: string } {
   return { origin: origin.code, destination: destination.code };
 }
 
-function scheduledTimes(date: string, seed: number): {
+function scheduledTimes(
+  date: string,
+  seed: number,
+): {
   departure: string;
   arrival: string;
 } {
@@ -142,8 +145,7 @@ export function generateMockFlightStatus(
   const status = resolveOperationalStatus(date, seed, options.nowIsoDate ?? todayIsoDate());
   const delayMinutes = status === 'DELAYED' ? 20 + (seed % 70) : 0;
   const originTerminal = String((seed % 3) + 1);
-  const gate =
-    status === 'CANCELLED' ? '—' : String((seed % 28) + 1);
+  const gate = status === 'CANCELLED' ? '—' : String((seed % 28) + 1);
 
   const origin = toEndpoint(route.origin, originTerminal);
   const destination = toEndpoint(route.destination, String((seed % 2) + 1));
@@ -154,9 +156,7 @@ export function generateMockFlightStatus(
     origin,
     destination,
     scheduledDeparture: times.departure,
-    estimatedDeparture: delayMinutes
-      ? addMinutes(times.departure, delayMinutes)
-      : times.departure,
+    estimatedDeparture: delayMinutes ? addMinutes(times.departure, delayMinutes) : times.departure,
     scheduledArrival: times.arrival,
     estimatedArrival: delayMinutes ? addMinutes(times.arrival, delayMinutes) : times.arrival,
     terminal: originTerminal,

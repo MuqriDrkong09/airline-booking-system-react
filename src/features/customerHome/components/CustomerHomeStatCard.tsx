@@ -31,49 +31,56 @@ export function CustomerHomeStatCard({
   tone = 'default',
 }: CustomerHomeStatCardProps) {
   return (
-    <AppCard
+    <Box
       component={RouterLink}
       to={to}
       sx={{
         height: '100%',
         textDecoration: 'none',
         color: 'inherit',
-        transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
-        '&:hover': {
-          borderColor: 'primary.main',
-          boxShadow: 2,
-        },
+        display: 'block',
       }}
     >
-      <Stack spacing={1.25}>
-        <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
-          <Box
-            sx={{
-              width: 40,
-              height: 40,
-              borderRadius: 1.5,
-              display: 'grid',
-              placeItems: 'center',
-              bgcolor: TONE_BG[tone],
-              color: tone === 'default' ? 'text.primary' : `${tone}.dark`,
-              flexShrink: 0,
-            }}
-          >
-            <Icon aria-hidden="true" size={20} />
+      <AppCard
+        sx={{
+          height: '100%',
+          transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+          '&:hover': {
+            borderColor: 'primary.main',
+            boxShadow: 2,
+          },
+        }}
+      >
+        <Stack spacing={1.25}>
+          <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
+            <Box
+              sx={{
+                width: 40,
+                height: 40,
+                borderRadius: 1.5,
+                display: 'grid',
+                placeItems: 'center',
+                bgcolor: TONE_BG[tone],
+                color: tone === 'default' ? 'text.primary' : `${tone}.dark`,
+                flexShrink: 0,
+              }}
+            >
+              <Icon aria-hidden="true" size={20} />
+            </Box>
+            <Typography variant="body2" color="text.secondary">
+              {label}
+            </Typography>
+          </Stack>
+          <Box>
+            <Typography variant="h5" component="p" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
+              {value}
+            </Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+              {helperText}
+            </Typography>
           </Box>
-          <Typography variant="body2" color="text.secondary">
-            {label}
-          </Typography>
         </Stack>
-        <Box>
-          <Typography variant="h5" component="p" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
-            {value}
-          </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
-            {helperText}
-          </Typography>
-        </Box>
-      </Stack>
-    </AppCard>
+      </AppCard>
+    </Box>
   );
 }

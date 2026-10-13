@@ -294,12 +294,7 @@ export function PassengerFields({
                 }
                 errorMessage={fieldErrors?.phone?.message}
               >
-                <AppInput
-                  {...field}
-                  type="tel"
-                  autoComplete="tel"
-                  placeholder="+60 12 345 6789"
-                />
+                <AppInput {...field} type="tel" autoComplete="tel" placeholder="+60 12 345 6789" />
               </FormField>
             )}
           />

@@ -2,13 +2,7 @@
 export const FLIGHT_CHANGE_FEE_PER_PASSENGER = 50;
 
 export type ManageBookingSection =
-  | 'overview'
-  | 'seats'
-  | 'baggage'
-  | 'meals'
-  | 'addons'
-  | 'contact'
-  | 'flight';
+  'overview' | 'seats' | 'baggage' | 'meals' | 'addons' | 'contact' | 'flight';
 
 export const MANAGE_BOOKING_SECTIONS: readonly {
   id: ManageBookingSection;

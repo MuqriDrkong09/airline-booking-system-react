@@ -86,9 +86,7 @@ describe('VerifyEmailForm', () => {
     await user.type(screen.getByLabelText(/^Verification token/i), 'bad-token');
     await user.click(screen.getByRole('button', { name: 'Verify email' }));
 
-    expect(
-      await screen.findByText('Verification link is invalid or expired.'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Verification link is invalid or expired.')).toBeInTheDocument();
     expect(screen.getByText(/Verification failed/i)).toBeInTheDocument();
   });
 });

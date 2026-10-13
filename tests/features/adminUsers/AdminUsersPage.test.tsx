@@ -9,11 +9,7 @@ import {
 } from '@/features/adminUsers';
 import { AdminUsersPage } from '@/pages/admin/AdminUsersPage';
 import { UserRole } from '@/types/auth';
-import {
-  mockAdminUser,
-  resetAuthStore,
-  seedAuthenticatedUser,
-} from '@tests/utils/authTestUtils';
+import { mockAdminUser, resetAuthStore, seedAuthenticatedUser } from '@tests/utils/authTestUtils';
 import { renderWithProviders } from '@tests/utils/test-utils';
 
 async function chooseSelectOption(
@@ -155,9 +151,7 @@ describe('AdminUsersPage', () => {
     await chooseSelectOption(user, dialog, /^Role$/i, /^Administrator$/i);
     await user.click(within(dialog).getByRole('button', { name: 'Change role' }));
 
-    expect(
-      await screen.findByText('Updated Alex Traveler to Administrator.'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Updated Alex Traveler to Administrator.')).toBeInTheDocument();
     expect(
       mockAdminUsersApi.getState().find((item) => item.email === 'user@example.com')?.role,
     ).toBe(UserRole.ADMIN);
@@ -199,7 +193,9 @@ describe('AdminUsersPage', () => {
       initialEntries: ['/admin/users'],
     });
 
-    expect(await screen.findByText('Unable to load users', {}, { timeout: 3000 })).toBeInTheDocument();
+    expect(
+      await screen.findByText('Unable to load users', {}, { timeout: 3000 }),
+    ).toBeInTheDocument();
 
     listUsers.mockResolvedValue(createSeedAdminUsers());
     await user.click(screen.getByRole('button', { name: /try again/i }));

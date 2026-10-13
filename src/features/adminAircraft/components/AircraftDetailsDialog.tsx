@@ -126,8 +126,7 @@ export function AircraftDetailsDialog({
                   {aircraft.seatMapConfig.cabins.map((cabin) => (
                     <Typography key={cabin.cabinClass} component="li" variant="body2">
                       {cabin.cabinClass}: {cabin.seatCount} seats · rows {cabin.startRow}–
-                      {cabin.startRow + cabin.rowCount - 1} · columns{' '}
-                      {cabin.columns.join('')}
+                      {cabin.startRow + cabin.rowCount - 1} · columns {cabin.columns.join('')}
                     </Typography>
                   ))}
                 </Box>

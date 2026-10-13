@@ -1,8 +1,4 @@
-import {
-  createMockFlightsApi,
-  generateMockFlightOffers,
-  searchFlights,
-} from '@/features/flights';
+import { createMockFlightsApi, generateMockFlightOffers, searchFlights } from '@/features/flights';
 
 describe('flights API', () => {
   it('generates deterministic offers for a known route', () => {

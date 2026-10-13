@@ -8,10 +8,7 @@ import type { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ThemeModeToggle } from '@/components/common/ThemeModeToggle';
 import type { DemoUser } from '@/constants/demoUser';
-import {
-  LAYOUT_CONTENT_MAX_WIDTH,
-  LAYOUT_PAGE_GUTTER_X,
-} from '@/constants/layout';
+import { LAYOUT_CONTENT_MAX_WIDTH, LAYOUT_PAGE_GUTTER_X } from '@/constants/layout';
 import { UserMenu } from './UserMenu';
 
 export interface DashboardHeaderProps {

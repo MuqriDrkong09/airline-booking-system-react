@@ -73,10 +73,7 @@ export function createMockAdminPromoCodesApi(
       promos = [created, ...promos];
       return cloneAdminPromoCode(created);
     },
-    async updatePromoCode(
-      promoId: string,
-      input: AdminPromoCodeInput,
-    ): Promise<AdminPromoCode> {
+    async updatePromoCode(promoId: string, input: AdminPromoCodeInput): Promise<AdminPromoCode> {
       await delay(delayMs);
       const index = promos.findIndex((item) => item.id === promoId);
       if (index < 0) {

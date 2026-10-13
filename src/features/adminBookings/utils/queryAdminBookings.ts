@@ -105,7 +105,11 @@ export function queryAdminBookings(
   bookings: readonly AdminBooking[],
   query: AdminBookingListQuery,
 ): AdminBookingListResult {
-  const filtered = sortAdminBookings(filterAdminBookings(bookings, query), query.sortBy, query.sortDir);
+  const filtered = sortAdminBookings(
+    filterAdminBookings(bookings, query),
+    query.sortBy,
+    query.sortDir,
+  );
   const total = filtered.length;
   const pageSize = Math.max(1, query.pageSize);
   const pageCount = Math.max(1, Math.ceil(total / pageSize));

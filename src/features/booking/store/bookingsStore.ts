@@ -1,20 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { todayIsoDate } from '@/features/flights/utils/dates';
-import {
-  clearLegacyPiiLocalStorage,
-  sessionPersistStorage,
-} from '@/utils/sessionPersistStorage';
+import { clearLegacyPiiLocalStorage, sessionPersistStorage } from '@/utils/sessionPersistStorage';
 import type {
   Booking,
   BookingCancellationInfo,
   BookingRecordStatus,
   BookingReference,
 } from '../types/bookingRecord';
-import {
-  calculateCancellationQuote,
-  canCancelBooking,
-} from '../utils/cancellationQuote';
+import { calculateCancellationQuote, canCancelBooking } from '../utils/cancellationQuote';
 import {
   canCheckInBooking,
   getCheckedInPassengerIds,
@@ -44,10 +38,7 @@ interface BookingsState {
    * Checks in the given passengers (or all remaining eligible passengers).
    * Sets booking status to CHECKED_IN.
    */
-  checkInBooking: (
-    reference: BookingReference,
-    passengerIds?: string[],
-  ) => Booking | undefined;
+  checkInBooking: (reference: BookingReference, passengerIds?: string[]) => Booking | undefined;
   getBookingByReference: (reference: BookingReference) => Booking | undefined;
   getBookingById: (id: string) => Booking | undefined;
   clearBookings: () => void;
@@ -145,9 +136,7 @@ export const useBookingsStore = create<BookingsState>()(
         const eligible = getEligibleCheckInPassengers(current);
         const requested =
           passengerIds && passengerIds.length > 0
-            ? passengerIds.filter((id) =>
-                eligible.some((passenger) => passenger.id === id),
-              )
+            ? passengerIds.filter((id) => eligible.some((passenger) => passenger.id === id))
             : eligible.map((passenger) => passenger.id);
 
         if (requested.length === 0) {
@@ -158,9 +147,7 @@ export const useBookingsStore = create<BookingsState>()(
           return undefined;
         }
 
-        const merged = Array.from(
-          new Set([...getCheckedInPassengerIds(current), ...requested]),
-        );
+        const merged = Array.from(new Set([...getCheckedInPassengerIds(current), ...requested]));
 
         return get().updateBooking(reference, (booking) =>
           patchBooking(booking, {

@@ -57,9 +57,8 @@ function makeDraft(overrides: Partial<BookingData> = {}): BookingData {
     searchCriteria: null,
     passengers: [adult],
     seats: [{ passengerId: 'adult-1', seatId: '10A', label: '10A', price: 25 }],
-    baggage: [
-      { passengerId: 'adult-1', cabinKg: 7, checkedKg: 20, additionalKg: 0 },
-    ],
+    baggage: [{ passengerId: 'adult-1', cabinKg: 7, checkedKg: 20, additionalKg: 0 }],
+    seatTotal: 25,
     baggageTotal: 0,
     meals: [],
     mealTotal: 0,
@@ -82,6 +81,9 @@ function makeDraft(overrides: Partial<BookingData> = {}): BookingData {
       taxes: 18,
       finalTotal: 243,
     },
+    bookingReference: null,
+    bookingStatus: 'DRAFT',
+    updatedAt: null,
     ...overrides,
   };
 }
@@ -119,7 +121,11 @@ describe('validateCheckout', () => {
           priceBreakdown: { ...EMPTY_PRICE_BREAKDOWN, finalTotal: 0 },
         }),
       ),
-    ).toMatchObject({ ok: false, step: 'booking', message: expect.stringMatching(/greater than zero/i) });
+    ).toMatchObject({
+      ok: false,
+      step: 'booking',
+      message: expect.stringMatching(/greater than zero/i),
+    });
 
     expect(validateBookingState(makeDraft({ cabinClass: null }))).toMatchObject({
       ok: false,
@@ -135,39 +141,32 @@ describe('validateCheckout', () => {
       message: expect.stringMatching(/at least one passenger/i),
     });
 
-    expect(
-      validateBookingPassengers([{ ...adult, firstName: '', lastName: '' }]),
-    ).toMatchObject({ ok: false, step: 'passengers', message: expect.stringMatching(/name/i) });
+    expect(validateBookingPassengers([{ ...adult, firstName: '', lastName: '' }])).toMatchObject({
+      ok: false,
+      step: 'passengers',
+      message: expect.stringMatching(/name/i),
+    });
 
-    expect(
-      validateBookingPassengers([{ ...adult, dateOfBirth: '' }]),
-    ).toMatchObject({
+    expect(validateBookingPassengers([{ ...adult, dateOfBirth: '' }])).toMatchObject({
       ok: false,
       step: 'passengers',
       message: expect.stringMatching(/date of birth/i),
     });
 
-    expect(
-      validateBookingPassengers([{ ...adult, gender: '' }]),
-    ).toMatchObject({
+    expect(validateBookingPassengers([{ ...adult, gender: '' }])).toMatchObject({
       ok: false,
       step: 'passengers',
       message: expect.stringMatching(/gender/i),
     });
 
-    expect(
-      validateBookingPassengers([{ ...infant, associatedAdultId: '' }]),
-    ).toMatchObject({
+    expect(validateBookingPassengers([{ ...infant, associatedAdultId: '' }])).toMatchObject({
       ok: false,
       step: 'passengers',
       message: expect.stringMatching(/accompanying adult/i),
     });
 
     expect(
-      validateBookingPassengers([
-        adult,
-        { ...infant, associatedAdultId: 'missing-adult' },
-      ]),
+      validateBookingPassengers([adult, { ...infant, associatedAdultId: 'missing-adult' }]),
     ).toMatchObject({
       ok: false,
       step: 'passengers',

@@ -114,9 +114,7 @@ describe('AircraftSeatMapEditor', () => {
       />,
     );
 
-    expect(
-      screen.getByText(/Click a seat on the map to edit/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Click a seat on the map to edit/i)).toBeInTheDocument();
   });
 
   it('resets editor state when the aircraft prop changes', () => {
@@ -139,9 +137,7 @@ describe('AircraftSeatMapEditor', () => {
 
     expect(screen.getByText(/4 seats · 2 rows · version 1/i)).toBeInTheDocument();
 
-    rerender(
-      <AircraftSeatMapEditor aircraft={second} onSave={jest.fn()} onCancel={jest.fn()} />,
-    );
+    rerender(<AircraftSeatMapEditor aircraft={second} onSave={jest.fn()} onCancel={jest.fn()} />);
 
     expect(screen.getByText(/1 seats · 1 rows · version 3/i)).toBeInTheDocument();
     expect(screen.getByRole('grid', { name: /Test T2 seat map editor/i })).toBeInTheDocument();
@@ -416,12 +412,7 @@ describe('AircraftSeatMapEditor', () => {
     const aircraft = makeAircraft();
 
     const { rerender } = renderWithProviders(
-      <AircraftSeatMapEditor
-        aircraft={aircraft}
-        saving
-        onSave={jest.fn()}
-        onCancel={onCancel}
-      />,
+      <AircraftSeatMapEditor aircraft={aircraft} saving onSave={jest.fn()} onCancel={onCancel} />,
     );
 
     const back = screen.getByRole('button', { name: 'Back' });
@@ -429,11 +420,8 @@ describe('AircraftSeatMapEditor', () => {
     fireEvent.click(back);
     expect(onCancel).not.toHaveBeenCalled();
 
-    rerender(
-      <AircraftSeatMapEditor aircraft={aircraft} onSave={jest.fn()} onCancel={onCancel} />,
-    );
+    rerender(<AircraftSeatMapEditor aircraft={aircraft} onSave={jest.fn()} onCancel={onCancel} />);
     fireEvent.click(screen.getByRole('button', { name: 'Back' }));
     expect(onCancel).toHaveBeenCalledTimes(1);
   });
 });
-

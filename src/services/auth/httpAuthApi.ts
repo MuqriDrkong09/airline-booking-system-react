@@ -30,10 +30,7 @@ export function createHttpAuthApi(client: AxiosInstance): AuthApi {
 
     async register(payload: RegisterRequest): Promise<MessageResponse> {
       try {
-        const { data } = await client.post<MessageResponse>(
-          API_ENDPOINTS.auth.register,
-          payload,
-        );
+        const { data } = await client.post<MessageResponse>(API_ENDPOINTS.auth.register, payload);
         return data;
       } catch (error) {
         throw toAuthApiError(error);

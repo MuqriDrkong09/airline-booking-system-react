@@ -90,10 +90,7 @@ export function PromoCodeInput({ subtotal, currency }: PromoCodeInputProps) {
   };
 
   return (
-    <AppCard
-      title="Promo code"
-      subtitle="Apply a valid code to update your booking total."
-    >
+    <AppCard title="Promo code" subtitle="Apply a valid code to update your booking total.">
       <Stack spacing={2}>
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
@@ -144,11 +141,7 @@ export function PromoCodeInput({ subtotal, currency }: PromoCodeInputProps) {
           </Stack>
         </Stack>
 
-        <PromoCodeResult
-          result={result}
-          applied={applied}
-          isPending={mutation.isPending}
-        />
+        <PromoCodeResult result={result} applied={applied} isPending={mutation.isPending} />
       </Stack>
     </AppCard>
   );

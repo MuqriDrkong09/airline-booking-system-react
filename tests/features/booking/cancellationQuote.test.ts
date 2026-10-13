@@ -106,9 +106,9 @@ function makeBooking(overrides?: {
 describe('cancellationQuote', () => {
   it('blocks completed and departed flights', () => {
     expect(canCancelBooking(makeBooking({ status: 'COMPLETED' }), '2026-09-29')).toBe(false);
-    expect(
-      canCancelBooking(makeBooking({ departureTime: '2020-01-01T09:00' }), '2026-09-29'),
-    ).toBe(false);
+    expect(canCancelBooking(makeBooking({ departureTime: '2020-01-01T09:00' }), '2026-09-29')).toBe(
+      false,
+    );
     expect(isCompletedFlight(makeBooking({ status: 'COMPLETED' }), '2026-09-29')).toBe(true);
   });
 
@@ -119,22 +119,19 @@ describe('cancellationQuote', () => {
 
   it('blocks already cancelled or in-progress cancellation requests', () => {
     expect(canCancelBooking(makeBooking({ status: 'CANCELLED' }), '2026-09-29')).toBe(false);
-    expect(
-      canCancelBooking(makeBooking({ status: 'CANCELLATION_REQUESTED' }), '2026-09-29'),
-    ).toBe(false);
+    expect(canCancelBooking(makeBooking({ status: 'CANCELLATION_REQUESTED' }), '2026-09-29')).toBe(
+      false,
+    );
     expect(canCancelBooking(makeBooking({ status: 'CHECKED_IN' }), '2026-09-29')).toBe(false);
   });
 
   it('returns user-facing blocked reasons for non-cancellable bookings', () => {
     expect(
-      getCancellationBlockedReason(
-        makeBooking({ status: 'CANCELLATION_REQUESTED' }),
-        '2026-09-29',
-      ),
+      getCancellationBlockedReason(makeBooking({ status: 'CANCELLATION_REQUESTED' }), '2026-09-29'),
     ).toMatch(/already in progress/i);
-    expect(
-      getCancellationBlockedReason(makeBooking({ status: 'REFUNDED' }), '2026-09-29'),
-    ).toMatch(/already been cancelled/i);
+    expect(getCancellationBlockedReason(makeBooking({ status: 'REFUNDED' }), '2026-09-29')).toMatch(
+      /already been cancelled/i,
+    );
     expect(
       getCancellationBlockedReason(
         makeBooking({ departureTime: '2020-01-01T09:00' }),

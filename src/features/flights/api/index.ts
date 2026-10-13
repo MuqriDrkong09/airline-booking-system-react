@@ -1,9 +1,6 @@
 import type { Airport, AirportSearchParams } from '../types';
 import type { FlightOffer, FlightSearchRequest, FlightSearchResponse } from '../types/flight';
-import type {
-  FlightStatusLookupRequest,
-  FlightStatusRecord,
-} from '../types/flightStatus';
+import type { FlightStatusLookupRequest, FlightStatusRecord } from '../types/flightStatus';
 import { airportApi } from '@/services/airportApi';
 import { flightApi, flightStatusApi as flightStatusDomainApi } from '@/services/flightApi';
 
@@ -33,13 +30,10 @@ export const flightKeys = {
 export const flightStatusKeys = {
   all: ['flight-status'] as const,
   lookups: () => [...flightStatusKeys.all, 'lookup'] as const,
-  lookup: (request: FlightStatusLookupRequest) =>
-    [...flightStatusKeys.lookups(), request] as const,
+  lookup: (request: FlightStatusLookupRequest) => [...flightStatusKeys.lookups(), request] as const,
 };
 
-export function getAirports(
-  params?: Pick<AirportSearchParams, 'activeOnly'>,
-): Promise<Airport[]> {
+export function getAirports(params?: Pick<AirportSearchParams, 'activeOnly'>): Promise<Airport[]> {
   return airportsApi.getAirports(params);
 }
 

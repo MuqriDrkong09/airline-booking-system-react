@@ -2,17 +2,9 @@ import Stack from '@mui/material/Stack';
 import { Plane } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import {
-  AppAlert,
-  EmptyState,
-  ErrorState,
-  PageLoader,
-} from '@/components/common';
+import { AppAlert, EmptyState, ErrorState, PageLoader } from '@/components/common';
 import { isValidCalendarDate, todayIsoDate } from '../../utils/dates';
-import {
-  isCompleteFlightStatusRequest,
-  useFlightStatusQuery,
-} from '../../hooks/useFlightStatus';
+import { isCompleteFlightStatusRequest, useFlightStatusQuery } from '../../hooks/useFlightStatus';
 import { normalizeFlightNumber } from '../../api/flightStatusData';
 import { FlightStatusLookupForm } from './FlightStatusLookupForm';
 import { FlightStatusResult } from './FlightStatusResult';
@@ -23,9 +15,7 @@ export function FlightStatusView() {
 
   const initialFlightNumber = searchParams.get('flightNumber')?.trim() ?? '';
   const initialDateParam = searchParams.get('date')?.trim() ?? '';
-  const initialDate = isValidCalendarDate(initialDateParam)
-    ? initialDateParam
-    : todayIsoDate();
+  const initialDate = isValidCalendarDate(initialDateParam) ? initialDateParam : todayIsoDate();
 
   const [lookup, setLookup] = useState(() => {
     const flightNumber = normalizeFlightNumber(initialFlightNumber);

@@ -43,10 +43,13 @@ export const cardFormSchema = z.object({
     .string()
     .trim()
     .min(1, 'Card number is required')
-    .refine((value) => {
-      const digits = digitsOnly(value);
-      return digits.length >= 13 && digits.length <= 19;
-    }, { message: 'Enter a valid card number (13–19 digits)' })
+    .refine(
+      (value) => {
+        const digits = digitsOnly(value);
+        return digits.length >= 13 && digits.length <= 19;
+      },
+      { message: 'Enter a valid card number (13–19 digits)' },
+    )
     .refine((value) => isValidLuhn(digitsOnly(value)), {
       message: 'Card number failed validation',
     }),

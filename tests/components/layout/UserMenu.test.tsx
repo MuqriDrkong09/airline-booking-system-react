@@ -13,10 +13,7 @@ const demoUser: DemoUser = {
   roleLabel: 'Customer',
 };
 
-function renderUserMenu(
-  ui: ReactElement,
-  options?: { initialEntries?: string[] },
-) {
+function renderUserMenu(ui: ReactElement, options?: { initialEntries?: string[] }) {
   return renderWithProviders(ui, {
     initialEntries: options?.initialEntries ?? ['/app'],
   });

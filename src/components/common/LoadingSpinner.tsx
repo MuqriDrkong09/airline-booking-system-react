@@ -55,7 +55,5 @@ export function LoadingSpinner({
     return content;
   }
 
-  return (
-    <Box sx={{ display: 'grid', placeItems: 'center', width: '100%', py: 4 }}>{content}</Box>
-  );
+  return <Box sx={{ display: 'grid', placeItems: 'center', width: '100%', py: 4 }}>{content}</Box>;
 }

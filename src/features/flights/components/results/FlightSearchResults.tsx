@@ -6,13 +6,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { SlidersHorizontal, X } from 'lucide-react';
-import {
-  memo,
-  useCallback,
-  useDeferredValue,
-  useMemo,
-  useState,
-} from 'react';
+import { memo, useCallback, useDeferredValue, useMemo, useState } from 'react';
 import {
   AppBadge,
   AppButton,
@@ -59,14 +53,8 @@ function FlightSearchResultsComponent({
   const airlineOptions = useMemo(() => getAirlineOptions(flights), [flights]);
   const cabinOptions = useMemo(() => getCabinOptions(flights), [flights]);
 
-  const {
-    filters,
-    sort,
-    activeFilterCount,
-    setFilters,
-    setSort,
-    clearFilters,
-  } = useFlightFilters(bounds);
+  const { filters, sort, activeFilterCount, setFilters, setSort, clearFilters } =
+    useFlightFilters(bounds);
 
   const deferredFilters = useDeferredValue(filters);
   const deferredSort = useDeferredValue(sort);
@@ -209,11 +197,7 @@ function FlightSearchResultsComponent({
                   {activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
                 </AppButton>
               ) : null}
-              <FlightSort
-                value={sort}
-                onChange={setSort}
-                fullWidth={isDesktop}
-              />
+              <FlightSort value={sort} onChange={setSort} fullWidth={isDesktop} />
             </Stack>
           </Stack>
 
@@ -268,12 +252,7 @@ function FlightSearchResultsComponent({
           sx={{ overflow: 'auto', pb: 1 }}
         >
           {filterPanel}
-          <AppButton
-            variant="contained"
-            fullWidth
-            onClick={closeMobileFilters}
-            sx={{ mt: 2 }}
-          >
+          <AppButton variant="contained" fullWidth onClick={closeMobileFilters} sx={{ mt: 2 }}>
             Show results
           </AppButton>
         </Box>

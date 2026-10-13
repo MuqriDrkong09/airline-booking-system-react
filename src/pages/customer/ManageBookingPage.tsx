@@ -34,10 +34,7 @@ function parseSection(value: string | null): ManageBookingSection {
 export function ManageBookingPage() {
   const { bookingReference = '' } = useParams<{ bookingReference: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const section = useMemo(
-    () => parseSection(searchParams.get('section')),
-    [searchParams],
-  );
+  const section = useMemo(() => parseSection(searchParams.get('section')), [searchParams]);
   const { status, booking, reference, retry } = useBookingDetail(bookingReference);
 
   const setSection = (next: ManageBookingSection) => {
@@ -92,11 +89,7 @@ export function ManageBookingPage() {
           title="Booking not found"
           message="We could not find this booking to manage."
           action={
-            <AppButton
-              component={RouterLink}
-              to={APP_ROUTES.customer.bookings}
-              variant="contained"
-            >
+            <AppButton component={RouterLink} to={APP_ROUTES.customer.bookings} variant="contained">
               My bookings
             </AppButton>
           }
@@ -147,21 +140,13 @@ export function ManageBookingPage() {
           >
             View details
           </AppButton>
-          <AppButton
-            component={RouterLink}
-            to={APP_ROUTES.customer.bookings}
-            variant="outlined"
-          >
+          <AppButton component={RouterLink} to={APP_ROUTES.customer.bookings} variant="outlined">
             My bookings
           </AppButton>
         </Stack>
       }
     >
-      <ManageBookingView
-        booking={booking}
-        section={section}
-        onSectionChange={setSection}
-      />
+      <ManageBookingView booking={booking} section={section} onSectionChange={setSection} />
     </PageContainer>
   );
 }

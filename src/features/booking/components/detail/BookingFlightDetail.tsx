@@ -19,10 +19,7 @@ export function BookingFlightDetail({ booking }: BookingFlightDetailProps) {
   const { flight } = booking;
 
   return (
-    <BookingDetailSection
-      title="Flight"
-      subtitle={`${flight.airline.name} ${flight.flightNumber}`}
-    >
+    <BookingDetailSection title="Flight" subtitle={`${flight.airline.name} ${flight.flightNumber}`}>
       <Stack spacing={1}>
         <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
           <AppBadge label={formatCabinLabel(booking.cabinClass)} tone="info" variant="outlined" />

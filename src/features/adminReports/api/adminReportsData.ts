@@ -7,11 +7,7 @@ import type {
   ReportTimeSeriesPoint,
 } from '../types/adminReport';
 import { formatSeriesLabel } from '../utils/formatReport';
-import {
-  daysInclusive,
-  enumerateIsoDates,
-  resolveReportRange,
-} from '../utils/reportDateRange';
+import { daysInclusive, enumerateIsoDates, resolveReportRange } from '../utils/reportDateRange';
 
 function hashSeed(input: string): number {
   let hash = 0;
@@ -145,7 +141,9 @@ export function createMockAdminReportsData(filters: ReportFilters): AdminReports
   const multiplier = Math.max(0.2, dayCount / 30);
 
   const sampleStep = dayCount > 90 ? 7 : dayCount > 45 ? 2 : 1;
-  const dates = allDates.filter((_, index) => index % sampleStep === 0 || index === allDates.length - 1);
+  const dates = allDates.filter(
+    (_, index) => index % sampleStep === 0 || index === allDates.length - 1,
+  );
 
   const revenueSeries = seriesFor(dates, 18_000 * (sampleStep / 1), 4_200, 'revenue');
   const bookingsSeries = seriesFor(dates, 48 * sampleStep, 14, 'bookings');

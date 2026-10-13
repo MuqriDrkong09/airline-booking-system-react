@@ -24,9 +24,7 @@ export function createHttpAdminAirportsApi(client: AxiosInstance = apiClient): A
       return data;
     },
     async getAirport(airportId: string): Promise<AdminAirport> {
-      const { data } = await client.get<AdminAirport>(
-        API_ENDPOINTS.admin.airportById(airportId),
-      );
+      const { data } = await client.get<AdminAirport>(API_ENDPOINTS.admin.airportById(airportId));
       return data;
     },
     async createAirport(input: AdminAirportInput): Promise<AdminAirport> {

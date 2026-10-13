@@ -120,12 +120,15 @@ function amenitiesForCabin(cabin: CabinClass, seed: number, index: number): Flig
       return {
         meals: 'Enhanced meal service with snack',
         wifi,
-        wifiNotes: wifi ? 'Complimentary messaging; streaming available for purchase' : 'Wi-Fi unavailable on this aircraft',
+        wifiNotes: wifi
+          ? 'Complimentary messaging; streaming available for purchase'
+          : 'Wi-Fi unavailable on this aircraft',
         seatInformation: 'Recliner seat · 38–40" pitch · footrest',
       };
     default:
       return {
-        meals: (seed + index) % 2 === 0 ? 'Hot meal and soft drinks' : 'Light snack and soft drinks',
+        meals:
+          (seed + index) % 2 === 0 ? 'Hot meal and soft drinks' : 'Light snack and soft drinks',
         wifi,
         wifiNotes: wifi ? 'Wi-Fi available for purchase' : 'Wi-Fi unavailable on this aircraft',
         seatInformation: 'Standard seat · 30–32" pitch · seat selection at check-in',
@@ -152,7 +155,8 @@ function policiesForOffer(refundable: boolean, cabin: CabinClass): FlightFarePol
 
   return {
     refundPolicy: 'Non-refundable. Unused taxes may be reclaimable after departure date.',
-    changePolicy: 'Changes permitted up to 24 hours before departure with a change fee plus fare difference.',
+    changePolicy:
+      'Changes permitted up to 24 hours before departure with a change fee plus fare difference.',
     fareConditions: [
       'Fare is non-refundable except where required by law.',
       'Same-day standby may be available for a fee, subject to seat availability.',
@@ -297,9 +301,7 @@ export function generateMockFlightOffers(request: FlightSearchRequest): FlightOf
     ];
     const cabinClass = cabinOptions[(seed + index) % cabinOptions.length]!;
     const baggageBase =
-      index % 5 === 0
-        ? { cabinKg: 7, checkedKg: 0, pieces: 0 }
-        : baggageForCabin(cabinClass);
+      index % 5 === 0 ? { cabinKg: 7, checkedKg: 0, pieces: 0 } : baggageForCabin(cabinClass);
     const baggageIncluded = baggageBase.checkedKg > 0;
     const refundable = (seed + index) % 2 === 0;
     const departureTerminal = String(1 + ((seed + index) % 3));
@@ -393,9 +395,7 @@ export function findMockFlightOfferById(
   const cabinOptions: CabinClass[] = context?.cabinClass
     ? [context.cabinClass, 'ECONOMY', 'PREMIUM_ECONOMY', 'BUSINESS', 'FIRST']
     : ['ECONOMY', 'PREMIUM_ECONOMY', 'BUSINESS', 'FIRST'];
-  const adultOptions = context?.adults
-    ? [context.adults, 1, 2, 3, 4]
-    : [1, 2, 3, 4];
+  const adultOptions = context?.adults ? [context.adults, 1, 2, 3, 4] : [1, 2, 3, 4];
 
   const seen = new Set<string>();
   for (const cabinClass of cabinOptions) {

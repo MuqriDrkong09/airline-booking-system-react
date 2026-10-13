@@ -41,20 +41,14 @@ describe('AircraftSeatInspector', () => {
   });
 
   it('renders selected seat fields', () => {
-    renderWithProviders(
-      <AircraftSeatInspector seat={makeSeat()} onChange={jest.fn()} />,
-    );
+    renderWithProviders(<AircraftSeatInspector seat={makeSeat()} onChange={jest.fn()} />);
 
     expect(screen.getByText('Selected seat · 12A')).toBeInTheDocument();
     expect(screen.getByLabelText(/^Seat label$/i)).toHaveValue('12A');
     expect(screen.getByLabelText(/^Row$/i)).toHaveValue(12);
     expect(screen.getByLabelText(/^Column$/i)).toHaveValue('A');
-    expect(screen.getByRole('combobox', { name: /^Cabin class$/i })).toHaveTextContent(
-      /Economy/i,
-    );
-    expect(screen.getByRole('combobox', { name: /^Seat type$/i })).toHaveTextContent(
-      /Standard/i,
-    );
+    expect(screen.getByRole('combobox', { name: /^Cabin class$/i })).toHaveTextContent(/Economy/i);
+    expect(screen.getByRole('combobox', { name: /^Seat type$/i })).toHaveTextContent(/Standard/i);
     expect(screen.getByLabelText(/^Price$/i)).toHaveValue(25);
     expect(screen.getByRole('switch', { name: 'Emergency exit' })).not.toBeChecked();
     expect(screen.getByRole('switch', { name: 'Disabled seat' })).not.toBeChecked();
@@ -76,17 +70,13 @@ describe('AircraftSeatInspector', () => {
     fireEvent.change(screen.getByLabelText(/^Column$/i), {
       target: { value: 'cd' },
     });
-    expect(onChange).toHaveBeenLastCalledWith(
-      expect.objectContaining({ column: 'C' }),
-    );
+    expect(onChange).toHaveBeenLastCalledWith(expect.objectContaining({ column: 'C' }));
   });
 
   it('parses row and price numbers and falls back for invalid values', () => {
     const onChange = jest.fn();
 
-    renderWithProviders(
-      <AircraftSeatInspector seat={makeSeat()} onChange={onChange} />,
-    );
+    renderWithProviders(<AircraftSeatInspector seat={makeSeat()} onChange={onChange} />);
 
     fireEvent.change(screen.getByLabelText(/^Row$/i), {
       target: { value: '18' },
@@ -113,24 +103,18 @@ describe('AircraftSeatInspector', () => {
     const user = userEvent.setup({ delay: null });
     const onChange = jest.fn();
 
-    renderWithProviders(
-      <AircraftSeatInspector seat={makeSeat()} onChange={onChange} />,
-    );
+    renderWithProviders(<AircraftSeatInspector seat={makeSeat()} onChange={onChange} />);
 
     await chooseSelectOption(user, /^Cabin class$/i, /^Business$/i);
 
-    expect(onChange).toHaveBeenCalledWith(
-      expect.objectContaining({ cabinClass: 'BUSINESS' }),
-    );
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ cabinClass: 'BUSINESS' }));
   });
 
   it('sets emergencyExit when seat type becomes Emergency exit', async () => {
     const user = userEvent.setup({ delay: null });
     const onChange = jest.fn();
 
-    renderWithProviders(
-      <AircraftSeatInspector seat={makeSeat()} onChange={onChange} />,
-    );
+    renderWithProviders(<AircraftSeatInspector seat={makeSeat()} onChange={onChange} />);
 
     await chooseSelectOption(user, /^Seat type$/i, /^Emergency exit$/i);
 
@@ -146,9 +130,7 @@ describe('AircraftSeatInspector', () => {
     const user = userEvent.setup({ delay: null });
     const onChange = jest.fn();
 
-    renderWithProviders(
-      <AircraftSeatInspector seat={makeSeat()} onChange={onChange} />,
-    );
+    renderWithProviders(<AircraftSeatInspector seat={makeSeat()} onChange={onChange} />);
 
     await chooseSelectOption(user, /^Seat type$/i, /^Unavailable$/i);
 
@@ -164,9 +146,7 @@ describe('AircraftSeatInspector', () => {
     const user = userEvent.setup({ delay: null });
     const onChange = jest.fn();
 
-    renderWithProviders(
-      <AircraftSeatInspector seat={makeSeat()} onChange={onChange} />,
-    );
+    renderWithProviders(<AircraftSeatInspector seat={makeSeat()} onChange={onChange} />);
 
     await user.click(screen.getByRole('switch', { name: 'Emergency exit' }));
 
@@ -182,9 +162,7 @@ describe('AircraftSeatInspector', () => {
     const user = userEvent.setup({ delay: null });
     const onChange = jest.fn();
 
-    renderWithProviders(
-      <AircraftSeatInspector seat={makeSeat()} onChange={onChange} />,
-    );
+    renderWithProviders(<AircraftSeatInspector seat={makeSeat()} onChange={onChange} />);
 
     await user.click(screen.getByRole('switch', { name: 'Disabled seat' }));
 
@@ -274,9 +252,7 @@ describe('AircraftSeatInspector', () => {
     const user = userEvent.setup({ delay: null });
     const onChange = jest.fn();
 
-    renderWithProviders(
-      <AircraftSeatInspector seat={makeSeat()} onChange={onChange} />,
-    );
+    renderWithProviders(<AircraftSeatInspector seat={makeSeat()} onChange={onChange} />);
 
     await chooseSelectOption(user, /^Seat type$/i, /^Premium$/i);
 

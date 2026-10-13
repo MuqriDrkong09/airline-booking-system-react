@@ -1,10 +1,6 @@
 import type { FlightOperationalStatus } from '@/features/flights';
 import { adminApi } from '@/services/adminApi';
-import type {
-  AdminFlight,
-  AdminFlightFilters,
-  AdminFlightInput,
-} from '../types/adminFlight';
+import type { AdminFlight, AdminFlightFilters, AdminFlightInput } from '../types/adminFlight';
 import type { AdminFlightsApi } from './adminFlightsApi.types';
 
 export const adminFlightsApi: AdminFlightsApi = adminApi.flights;
@@ -12,8 +8,7 @@ export const adminFlightsApi: AdminFlightsApi = adminApi.flights;
 export const adminFlightKeys = {
   all: ['admin-flights'] as const,
   lists: () => [...adminFlightKeys.all, 'list'] as const,
-  list: (filters?: AdminFlightFilters) =>
-    [...adminFlightKeys.lists(), filters ?? {}] as const,
+  list: (filters?: AdminFlightFilters) => [...adminFlightKeys.lists(), filters ?? {}] as const,
   details: () => [...adminFlightKeys.all, 'detail'] as const,
   detail: (flightId: string) => [...adminFlightKeys.details(), flightId] as const,
 };
@@ -30,10 +25,7 @@ export function createAdminFlight(input: AdminFlightInput): Promise<AdminFlight>
   return adminFlightsApi.createFlight(input);
 }
 
-export function updateAdminFlight(
-  flightId: string,
-  input: AdminFlightInput,
-): Promise<AdminFlight> {
+export function updateAdminFlight(flightId: string, input: AdminFlightInput): Promise<AdminFlight> {
   return adminFlightsApi.updateFlight(flightId, input);
 }
 

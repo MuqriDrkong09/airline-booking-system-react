@@ -31,9 +31,7 @@ export function NotificationBell() {
         color="inherit"
         onClick={(event) => setAnchorEl(event.currentTarget)}
         aria-label={
-          unreadCount > 0
-            ? `Open notifications, ${unreadCount} unread`
-            : 'Open notifications'
+          unreadCount > 0 ? `Open notifications, ${unreadCount} unread` : 'Open notifications'
         }
         aria-controls={open ? menuId : undefined}
         aria-haspopup="menu"

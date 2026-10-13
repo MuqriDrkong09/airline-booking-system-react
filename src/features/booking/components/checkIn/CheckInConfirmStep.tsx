@@ -3,10 +3,7 @@ import Typography from '@mui/material/Typography';
 import { AppCard } from '@/components/common';
 import type { Booking, BookingPassenger } from '../../types/bookingRecord';
 import { formatPassengerLabel } from '../../utils/bookingDetailHelpers';
-import {
-  baggageSummaryForPassenger,
-  seatLabelForPassenger,
-} from '../../utils/checkInRules';
+import { baggageSummaryForPassenger, seatLabelForPassenger } from '../../utils/checkInRules';
 
 export interface CheckInConfirmStepProps {
   booking: Booking;

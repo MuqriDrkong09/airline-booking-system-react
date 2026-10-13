@@ -13,8 +13,10 @@ export interface AppSelectOption<T extends string | number = string> {
   disabled?: boolean;
 }
 
-export interface AppSelectProps<T extends string | number = string>
-  extends Omit<SelectProps<T>, 'onChange' | 'label'> {
+export interface AppSelectProps<T extends string | number = string> extends Omit<
+  SelectProps<T>,
+  'onChange' | 'label'
+> {
   label: string;
   options: readonly AppSelectOption<T>[];
   helperText?: ReactNode;

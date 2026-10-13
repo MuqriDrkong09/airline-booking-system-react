@@ -41,8 +41,7 @@ export function resolveDisplayStatus(
 }
 
 export type SeatSelectionResult =
-  | { ok: true; assignments: SeatAssignment[] }
-  | { ok: false; reason: string };
+  { ok: true; assignments: SeatAssignment[] } | { ok: false; reason: string };
 
 /**
  * Assigns `seatId` to `passengerId`, clearing any previous seat for that passenger
@@ -94,10 +93,7 @@ export function applySeatSelection(options: {
   return { ok: true, assignments: next };
 }
 
-export function calculateSeatPriceTotal(
-  seats: Seat[],
-  assignments: SeatAssignment[],
-): number {
+export function calculateSeatPriceTotal(seats: Seat[], assignments: SeatAssignment[]): number {
   return assignments.reduce((total, assignment) => {
     const seat = getSeatById(seats, assignment.seatId);
     return total + (seat?.price ?? 0);

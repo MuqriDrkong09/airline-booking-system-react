@@ -40,9 +40,7 @@ describe('BookingCardSkeleton', () => {
   it('scales skeleton placeholders with the card count', () => {
     renderWithProviders(<BookingCardSkeleton count={2} />);
 
-    expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(
-      SKELETONS_PER_CARD * 2,
-    );
+    expect(document.querySelectorAll('.MuiSkeleton-root')).toHaveLength(SKELETONS_PER_CARD * 2);
   });
 
   it('renders an empty list when count is zero', () => {

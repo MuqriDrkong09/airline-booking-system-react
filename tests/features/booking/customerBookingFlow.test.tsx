@@ -112,12 +112,7 @@ describe('customer booking flow (integration)', () => {
 
     expect(screen.getByRole('heading', { name: 'Search flights' })).toBeInTheDocument();
 
-    await pickAirport(
-      user,
-      /^From/i,
-      'KUL',
-      /KUL — Kuala Lumpur International Airport/i,
-    );
+    await pickAirport(user, /^From/i, 'KUL', /KUL — Kuala Lumpur International Airport/i);
     await pickAirport(user, /^To/i, 'NRT', /NRT — Narita International Airport/i);
     setInputValue(screen.getByLabelText(/Departure date/i), '2026-10-20');
     await user.click(screen.getByRole('button', { name: 'Search flights' }));
@@ -240,9 +235,7 @@ describe('customer booking flow (integration)', () => {
     expect(await screen.findByRole('heading', { name: 'Add-ons' })).toBeInTheDocument();
 
     expect(useBookingStore.getState().meals).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ passengerId: 'adult-1', mealType: null }),
-      ]),
+      expect.arrayContaining([expect.objectContaining({ passengerId: 'adult-1', mealType: null })]),
     );
     expect(useBookingStore.getState().baggage[0]?.checkedKg).toBe(20);
 
@@ -329,9 +322,7 @@ describe('customer booking flow (integration)', () => {
     expect(booking.baggage[0]).toEqual(
       expect.objectContaining({ passengerId: 'adult-1', checkedKg: 20 }),
     );
-    expect(booking.addons).toEqual([
-      { addonId: 'priority-boarding', passengerId: 'adult-1' },
-    ]);
+    expect(booking.addons).toEqual([{ addonId: 'priority-boarding', passengerId: 'adult-1' }]);
     expect(booking.promoCode?.code).toBe('FLIGHT100');
     expect(booking.priceBreakdown.discount).toBe(100);
     expect(booking.payment?.cardLast4).toBe('1111');

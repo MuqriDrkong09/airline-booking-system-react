@@ -30,9 +30,7 @@ export function createHttpAdminPromoCodesApi(
       return data;
     },
     async getPromoCode(promoId: string): Promise<AdminPromoCode> {
-      const { data } = await client.get<AdminPromoCode>(
-        API_ENDPOINTS.admin.promoCodeById(promoId),
-      );
+      const { data } = await client.get<AdminPromoCode>(API_ENDPOINTS.admin.promoCodeById(promoId));
       return data;
     },
     async createPromoCode(input: AdminPromoCodeInput): Promise<AdminPromoCode> {

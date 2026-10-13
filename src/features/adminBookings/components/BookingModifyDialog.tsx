@@ -41,9 +41,7 @@ export function BookingModifyDialog({
       });
     } catch (submitError) {
       setError(
-        submitError instanceof Error
-          ? submitError.message
-          : 'Unable to modify this booking.',
+        submitError instanceof Error ? submitError.message : 'Unable to modify this booking.',
       );
     }
   };
@@ -67,8 +65,8 @@ export function BookingModifyDialog({
     >
       <Stack spacing={2}>
         <Typography variant="body2" color="text.secondary">
-          Update the primary passenger contact details for this booking. Seat, baggage, and
-          flight changes remain available through the customer manage flow.
+          Update the primary passenger contact details for this booking. Seat, baggage, and flight
+          changes remain available through the customer manage flow.
         </Typography>
         {error ? (
           <AppAlert severity="error" onClose={() => setError(null)}>

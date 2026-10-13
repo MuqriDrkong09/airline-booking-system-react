@@ -34,10 +34,7 @@ describe('ForbiddenPage', () => {
     });
 
     expect(screen.getByRole('heading', { name: /403/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /go to your home/i })).toHaveAttribute(
-      'href',
-      '/app',
-    );
+    expect(screen.getByRole('link', { name: /go to your home/i })).toHaveAttribute('href', '/app');
   });
 
   it('links admins back to the admin dashboard', () => {

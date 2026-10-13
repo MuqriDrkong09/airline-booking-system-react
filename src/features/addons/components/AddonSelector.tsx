@@ -46,12 +46,8 @@ export function AddonSelector({ passengers, selections, onChange }: AddonSelecto
                       addon={addon}
                       selected={selected}
                       passengerLabel={passenger.displayName}
-                      onSelect={() =>
-                        onChange(selectAddon(selections, addon.id, passenger.id))
-                      }
-                      onRemove={() =>
-                        onChange(removeAddon(selections, addon.id, passenger.id))
-                      }
+                      onSelect={() => onChange(selectAddon(selections, addon.id, passenger.id))}
+                      onRemove={() => onChange(removeAddon(selections, addon.id, passenger.id))}
                     />
                   );
                 })}

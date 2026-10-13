@@ -1,21 +1,11 @@
-export type {
-  AdminFlight,
-  AdminFlightFilters,
-  AdminFlightInput,
-} from './types/adminFlight';
+export type { AdminFlight, AdminFlightFilters, AdminFlightInput } from './types/adminFlight';
 export {
   ADMIN_FARE_CLASSES,
   ADMIN_FLIGHT_STATUSES,
   EMPTY_ADMIN_FLIGHT_FILTERS,
 } from './types/adminFlight';
-export {
-  DEFAULT_FLIGHT_FORM_VALUES,
-  flightFormSchema,
-} from './schemas/flightFormSchema';
-export type {
-  FlightFormParsedValues,
-  FlightFormValues,
-} from './schemas/flightFormSchema';
+export { DEFAULT_FLIGHT_FORM_VALUES, flightFormSchema } from './schemas/flightFormSchema';
+export type { FlightFormParsedValues, FlightFormValues } from './schemas/flightFormSchema';
 export {
   adminFlightKeys,
   adminFlightsApi,

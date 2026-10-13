@@ -32,13 +32,8 @@ export function useUpdateAdminPromoCodeMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      promoId,
-      input,
-    }: {
-      promoId: string;
-      input: AdminPromoCodeInput;
-    }) => updateAdminPromoCode(promoId, input),
+    mutationFn: ({ promoId, input }: { promoId: string; input: AdminPromoCodeInput }) =>
+      updateAdminPromoCode(promoId, input),
     onSuccess: async (promo) => {
       await queryClient.invalidateQueries({ queryKey: adminPromoCodeKeys.lists() });
       queryClient.setQueryData(adminPromoCodeKeys.detail(promo.id), promo);

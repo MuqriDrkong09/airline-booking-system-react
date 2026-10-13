@@ -8,19 +8,13 @@ describe('auth errors', () => {
   });
 
   it('extracts axios response messages', () => {
-    const error = new axios.AxiosError(
-      'Request failed',
-      'ERR_BAD_REQUEST',
-      undefined,
-      undefined,
-      {
-        status: 400,
-        statusText: 'Bad Request',
-        headers: {},
-        config: {} as never,
-        data: { message: 'Email is already registered.', code: 'EMAIL_TAKEN' },
-      },
-    );
+    const error = new axios.AxiosError('Request failed', 'ERR_BAD_REQUEST', undefined, undefined, {
+      status: 400,
+      statusText: 'Bad Request',
+      headers: {},
+      config: {} as never,
+      data: { message: 'Email is already registered.', code: 'EMAIL_TAKEN' },
+    });
 
     expect(getErrorMessage(error)).toBe('Email is already registered.');
     const authError = toAuthApiError(error);

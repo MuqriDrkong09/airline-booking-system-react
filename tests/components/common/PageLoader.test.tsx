@@ -21,9 +21,7 @@ describe('PageLoader', () => {
   });
 
   it('fills the viewport when fullPage is true', () => {
-    const { container } = renderWithProviders(
-      <PageLoader fullPage label="Restoring session…" />,
-    );
+    const { container } = renderWithProviders(<PageLoader fullPage label="Restoring session…" />);
 
     const status = screen.getByRole('status');
     expect(status).toHaveTextContent('Restoring session…');

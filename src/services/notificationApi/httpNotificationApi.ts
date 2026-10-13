@@ -3,9 +3,7 @@ import type { NotificationsApi } from '@/features/notifications/api/notification
 import type { AppNotification } from '@/features/notifications/types/notification';
 import { API_ENDPOINTS, apiClient, toApiError } from '@/services/api';
 
-export function createHttpNotificationApi(
-  client: AxiosInstance = apiClient,
-): NotificationsApi {
+export function createHttpNotificationApi(client: AxiosInstance = apiClient): NotificationsApi {
   return {
     async listNotifications(): Promise<AppNotification[]> {
       try {
@@ -40,9 +38,7 @@ export function createHttpNotificationApi(
 
     async markAllAsRead(): Promise<AppNotification[]> {
       try {
-        const { data } = await client.post<AppNotification[]>(
-          API_ENDPOINTS.notifications.readAll,
-        );
+        const { data } = await client.post<AppNotification[]>(API_ENDPOINTS.notifications.readAll);
         return data;
       } catch (error) {
         throw toApiError(error);

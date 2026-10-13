@@ -1,13 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { FlightOffer } from '@/features/flights';
 import type { FavouriteFlight } from '../types/favourite';
-import {
-  addFavourite,
-  favouriteKeys,
-  isFavourite,
-  listFavourites,
-  removeFavourite,
-} from '../api';
+import { addFavourite, favouriteKeys, isFavourite, listFavourites, removeFavourite } from '../api';
 
 export function useFavouritesQuery(enabled = true) {
   return useQuery({

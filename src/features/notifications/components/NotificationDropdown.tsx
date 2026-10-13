@@ -71,7 +71,9 @@ export function NotificationDropdown({
           direction="row"
           spacing={1}
           sx={{ alignItems: 'center', justifyContent: 'space-between' }}
-        >          <Box>
+        >
+          {' '}
+          <Box>
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
               Notifications
             </Typography>

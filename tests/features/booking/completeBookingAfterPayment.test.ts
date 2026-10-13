@@ -61,9 +61,9 @@ function seedValidDraft() {
 
     useBookingStore.getState().setSelectedFlight(flight, 'ECONOMY');
     useBookingStore.getState().setPassengers([adult]);
-    useBookingStore.getState().setSeats([
-      { passengerId: 'adult-1', seatId: '10A', label: '10A', price: 25 },
-    ]);
+    useBookingStore
+      .getState()
+      .setSeats([{ passengerId: 'adult-1', seatId: '10A', label: '10A', price: 25 }]);
     useBookingStore.getState().setBaggage({
       flightId: 'FL-100',
       cabinClass: 'ECONOMY',

@@ -32,12 +32,12 @@ describe('notification helpers', () => {
     const now = new Date('2026-10-01T12:00:00.000Z');
 
     expect(formatNotificationTime(now.toISOString(), now)).toBe('Just now');
-    expect(
-      formatNotificationTime(new Date(now.getTime() - 5 * 60_000).toISOString(), now),
-    ).toBe('5m ago');
-    expect(
-      formatNotificationTime(new Date(now.getTime() - 3 * 3_600_000).toISOString(), now),
-    ).toBe('3h ago');
+    expect(formatNotificationTime(new Date(now.getTime() - 5 * 60_000).toISOString(), now)).toBe(
+      '5m ago',
+    );
+    expect(formatNotificationTime(new Date(now.getTime() - 3 * 3_600_000).toISOString(), now)).toBe(
+      '3h ago',
+    );
     expect(
       formatNotificationTime(new Date(now.getTime() - 2 * 86_400_000).toISOString(), now),
     ).toBe('2d ago');
@@ -56,9 +56,7 @@ describe('mockNotificationsApi', () => {
 
     expect(list.length).toBeGreaterThan(0);
     expect(unread).toBe(countUnreadNotifications(list));
-    expect(list.map((item) => item.type)).toEqual(
-      expect.arrayContaining([...NOTIFICATION_TYPES]),
-    );
+    expect(list.map((item) => item.type)).toEqual(expect.arrayContaining([...NOTIFICATION_TYPES]));
   });
 
   it('marks one notification as read', async () => {

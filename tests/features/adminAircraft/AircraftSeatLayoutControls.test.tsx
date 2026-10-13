@@ -41,17 +41,15 @@ describe('AircraftSeatLayoutControls', () => {
     expect(screen.getByLabelText('Rows')).toHaveValue(30);
     expect(screen.getByLabelText('Columns')).toHaveValue('A B C | D E F');
     expect(screen.getByText(/Letters with optional aisle markers/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole('combobox', { name: /^Default cabin class$/i }),
-    ).toHaveTextContent(/Business/i);
+    expect(screen.getByRole('combobox', { name: /^Default cabin class$/i })).toHaveTextContent(
+      /Business/i,
+    );
     expect(screen.getByRole('combobox', { name: /^Paint seat type$/i })).toHaveTextContent(
       /Premium/i,
     );
     expect(screen.getByText(/Optional: click seats to apply this type/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Apply layout' })).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: 'Reset to cabin defaults' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Reset to cabin defaults' })).toBeInTheDocument();
   });
 
   it('notifies on rows change with parsed numbers', () => {

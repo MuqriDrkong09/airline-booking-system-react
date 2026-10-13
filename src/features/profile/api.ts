@@ -15,6 +15,8 @@ export function updateCurrentProfile(payload: UpdateProfileRequest): Promise<Aut
   return userApi.updateProfile(payload);
 }
 
-export function changeCurrentPassword(payload: ChangePasswordRequest): Promise<{ message: string }> {
+export function changeCurrentPassword(
+  payload: ChangePasswordRequest,
+): Promise<{ message: string }> {
   return userApi.changePassword(payload);
 }

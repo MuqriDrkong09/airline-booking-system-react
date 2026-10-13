@@ -17,9 +17,8 @@ import {
 
 jest.mock('recharts', () => {
   const React = require('react') as typeof import('react');
-  const {
-    dashboardChartCaptures: captures,
-  } = require('./dashboardChartCaptures') as typeof import('./dashboardChartCaptures');
+  const { dashboardChartCaptures: captures } =
+    require('./dashboardChartCaptures') as typeof import('./dashboardChartCaptures');
 
   function Passthrough({ children }: { children?: ReactNode }) {
     return React.createElement('div', null, children);
@@ -39,8 +38,7 @@ jest.mock('recharts', () => {
     Line: () => null,
     Bar: () => null,
     Cell: () => null,
-    Pie: ({ children }: { children?: ReactNode }) =>
-      React.createElement('div', null, children),
+    Pie: ({ children }: { children?: ReactNode }) => React.createElement('div', null, children),
     YAxis: (props: YAxisCapture) => {
       captures.yAxes.push(props);
       return React.createElement('div', { 'data-testid': 'recharts-yaxis' });
@@ -73,9 +71,7 @@ describe('DashboardCharts', () => {
   });
 
   it('formats revenue axis ticks and tooltip values', () => {
-    renderWithProviders(
-      <RevenueOverTimeChart data={seed.revenueOverTime} currency="USD" />,
-    );
+    renderWithProviders(<RevenueOverTimeChart data={seed.revenueOverTime} currency="USD" />);
 
     const tickFormatter = dashboardChartCaptures.yAxes.find(
       (axis) => axis.tickFormatter,
@@ -93,10 +89,7 @@ describe('DashboardCharts', () => {
       formatDashboardCurrency(72_880, 'USD'),
       'Revenue',
     ]);
-    expect(tooltip?.formatter?.(null)).toEqual([
-      formatDashboardCurrency(0, 'USD'),
-      'Revenue',
-    ]);
+    expect(tooltip?.formatter?.(null)).toEqual([formatDashboardCurrency(0, 'USD'), 'Revenue']);
   });
 
   it('formats popular destination tooltips with and without payload', () => {
@@ -108,17 +101,15 @@ describe('DashboardCharts', () => {
     expect(tooltip?.formatter?.(286)).toEqual([286, 'Bookings']);
 
     const destination = seed.popularDestinations[0]!;
-    expect(
-      tooltip?.labelFormatter?.('NRT', [{ payload: destination }]),
-    ).toBe(`${destination.city} (${destination.destination})`);
+    expect(tooltip?.labelFormatter?.('NRT', [{ payload: destination }])).toBe(
+      `${destination.city} (${destination.destination})`,
+    );
     expect(tooltip?.labelFormatter?.('NRT', [])).toBe('');
     expect(tooltip?.labelFormatter?.('NRT')).toBe('');
   });
 
   it('formats airline performance ticks and dual-series tooltips', () => {
-    renderWithProviders(
-      <AirlinePerformanceChart data={seed.airlinePerformance} currency="USD" />,
-    );
+    renderWithProviders(<AirlinePerformanceChart data={seed.airlinePerformance} currency="USD" />);
 
     const revenueAxis = dashboardChartCaptures.yAxes.find(
       (axis) => axis.yAxisId === 'revenue' || axis.orientation === 'right',
@@ -145,9 +136,9 @@ describe('DashboardCharts', () => {
     ]);
 
     const airline = seed.airlinePerformance[0]!;
-    expect(
-      tooltip?.labelFormatter?.('MH', [{ payload: airline }]),
-    ).toBe(`${airline.airline} · on-time ${Math.round(airline.onTimeRate * 100)}%`);
+    expect(tooltip?.labelFormatter?.('MH', [{ payload: airline }])).toBe(
+      `${airline.airline} · on-time ${Math.round(airline.onTimeRate * 100)}%`,
+    );
     expect(tooltip?.labelFormatter?.('MH', [])).toBe('');
     expect(tooltip?.labelFormatter?.('MH')).toBe('');
   });

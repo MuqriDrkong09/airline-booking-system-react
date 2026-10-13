@@ -5,14 +5,10 @@ import { useBookingsStore } from '../store/bookingsStore';
 import type { BookingPaymentInfo } from '../types/booking';
 import type { Booking } from '../types/bookingRecord';
 import { createBooking, generateBookingReference } from '../utils/createBooking';
-import {
-  validateCheckoutForBooking,
-  type BookingValidationStep,
-} from '../utils/validateCheckout';
+import { validateCheckoutForBooking, type BookingValidationStep } from '../utils/validateCheckout';
 
 export type CompleteBookingResult =
-  | { ok: true; booking: Booking }
-  | { ok: false; message: string; step?: BookingValidationStep };
+  { ok: true; booking: Booking } | { ok: false; message: string; step?: BookingValidationStep };
 
 export interface CompleteBookingAfterPaymentInput {
   transactionId: string;

@@ -39,21 +39,11 @@ export function SeatMapSkeleton({ showInspector = true }: SeatMapSkeletonProps) 
               >
                 <Skeleton width={24} height={20} />
                 {Array.from({ length: 3 }).map((__, seatIndex) => (
-                  <Skeleton
-                    key={`l-${seatIndex}`}
-                    variant="rounded"
-                    width={36}
-                    height={36}
-                  />
+                  <Skeleton key={`l-${seatIndex}`} variant="rounded" width={36} height={36} />
                 ))}
                 <Box sx={{ width: 28 }} />
                 {Array.from({ length: 3 }).map((__, seatIndex) => (
-                  <Skeleton
-                    key={`r-${seatIndex}`}
-                    variant="rounded"
-                    width={36}
-                    height={36}
-                  />
+                  <Skeleton key={`r-${seatIndex}`} variant="rounded" width={36} height={36} />
                 ))}
                 <Skeleton width={24} height={20} />
               </Stack>

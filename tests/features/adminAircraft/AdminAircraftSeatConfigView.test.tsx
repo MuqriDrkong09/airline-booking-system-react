@@ -26,9 +26,7 @@ function renderSeatConfigView(aircraftId: string) {
 }
 
 async function dismissAlertContaining(text: string) {
-  const alerts = screen.getAllByRole('alert').filter((alert) =>
-    within(alert).queryByText(text),
-  );
+  const alerts = screen.getAllByRole('alert').filter((alert) => within(alert).queryByText(text));
   expect(alerts.length).toBeGreaterThan(0);
   const closeButton = within(alerts[0]!).getByRole('button');
   await userEvent.setup({ delay: null }).click(closeButton);
@@ -58,20 +56,14 @@ describe('AdminAircraftSeatConfigView', () => {
     expect(screen.getByRole('status', { name: 'Loading seat map' })).toBeInTheDocument();
 
     resolveAircraft?.(aircraft);
-    expect(
-      await screen.findByText(`${aircraft.registration} · Airbus A320`),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(`${aircraft.registration} · Airbus A320`)).toBeInTheDocument();
   });
 
   it('renders the aircraft heading and interactive seat map editor', async () => {
     renderSeatConfigView(aircraft.id);
 
-    expect(
-      await screen.findByText(`${aircraft.registration} · Airbus A320`),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/configure rows, columns, seat labels/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(`${aircraft.registration} · Airbus A320`)).toBeInTheDocument();
+    expect(screen.getByText(/configure rows, columns, seat labels/i)).toBeInTheDocument();
     expect(screen.getByRole('grid', { name: /seat map editor/i })).toBeInTheDocument();
   });
 
@@ -86,16 +78,12 @@ describe('AdminAircraftSeatConfigView', () => {
     expect(
       await screen.findByText('Unable to load aircraft', {}, { timeout: 5000 }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(/may have been removed|could not be loaded/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/may have been removed|could not be loaded/i)).toBeInTheDocument();
 
     getAircraft.mockResolvedValue(aircraft);
     await user.click(screen.getByRole('button', { name: /try again/i }));
 
-    expect(
-      await screen.findByText(`${aircraft.registration} · Airbus A320`),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(`${aircraft.registration} · Airbus A320`)).toBeInTheDocument();
   });
 
   it('navigates back to the aircraft list when Back is clicked', async () => {
@@ -139,9 +127,7 @@ describe('AdminAircraftSeatConfigView', () => {
     await user.click(screen.getByRole('button', { name: 'Save seat map' }));
 
     await waitFor(() => {
-      expect(
-        screen.getAllByText('Seat map validation failed on server').length,
-      ).toBeGreaterThan(0);
+      expect(screen.getAllByText('Seat map validation failed on server').length).toBeGreaterThan(0);
     });
 
     // View-level mutation alert is rendered above the editor validation alert.

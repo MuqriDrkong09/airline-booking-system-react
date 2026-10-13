@@ -18,18 +18,14 @@ export function PassengerDetailsPage() {
 
   const parsed = useMemo(() => parseFlightSearchParams(searchParams), [searchParams]);
 
-  const from = (
-    parsed?.tripType === 'MULTI_CITY' ? parsed.legs?.[0]?.from : parsed?.from
-  )
+  const from = (parsed?.tripType === 'MULTI_CITY' ? parsed.legs?.[0]?.from : parsed?.from)
     ?.trim()
     .toUpperCase();
   const to = (parsed?.tripType === 'MULTI_CITY' ? parsed.legs?.[0]?.to : parsed?.to)
     ?.trim()
     .toUpperCase();
   const departure =
-    parsed?.tripType === 'MULTI_CITY'
-      ? parsed.legs?.[0]?.departure
-      : parsed?.departure;
+    parsed?.tripType === 'MULTI_CITY' ? parsed.legs?.[0]?.departure : parsed?.departure;
 
   const counts = {
     adults: parsed?.adults ?? 1,

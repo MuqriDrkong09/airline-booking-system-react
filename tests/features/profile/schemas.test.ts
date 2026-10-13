@@ -22,9 +22,7 @@ describe('profile schemas', () => {
   });
 
   it('rejects invalid phone numbers', () => {
-    expect(updateProfileSchema.safeParse(validProfilePayload({ phone: '12' })).success).toBe(
-      false,
-    );
+    expect(updateProfileSchema.safeParse(validProfilePayload({ phone: '12' })).success).toBe(false);
   });
 
   it('rejects underage date of birth', () => {

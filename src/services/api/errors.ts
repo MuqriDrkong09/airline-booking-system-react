@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {
   DEFAULT_ERROR_MESSAGE,
-  HTTP_STATUS_MESSAGES,
   NETWORK_ERROR_MESSAGE,
   TIMEOUT_ERROR_MESSAGE,
   isTechnicalErrorMessage,
@@ -43,9 +42,7 @@ export class AuthApiError extends ApiError {
   }
 }
 
-function firstFieldErrorMessage(
-  fieldErrors?: Record<string, string[]>,
-): string | undefined {
+function firstFieldErrorMessage(fieldErrors?: Record<string, string[]>): string | undefined {
   if (!fieldErrors) {
     return undefined;
   }
@@ -116,10 +113,7 @@ export function isNetworkError(error: unknown): boolean {
  * User-facing error copy. Never returns stack traces or raw Axios internals.
  * Prefer backend `message` when it looks safe; otherwise map by HTTP status.
  */
-export function getErrorMessage(
-  error: unknown,
-  fallback = DEFAULT_ERROR_MESSAGE,
-): string {
+export function getErrorMessage(error: unknown, fallback = DEFAULT_ERROR_MESSAGE): string {
   const status = getErrorStatus(error);
   const raw = extractRawMessage(error);
 
@@ -139,9 +133,7 @@ export function getErrorMessage(
       error instanceof ApiError
         ? firstFieldErrorMessage(error.fieldErrors)
         : axios.isAxiosError(error)
-          ? firstFieldErrorMessage(
-              (error.response?.data as ApiErrorBody | undefined)?.fieldErrors,
-            )
+          ? firstFieldErrorMessage((error.response?.data as ApiErrorBody | undefined)?.fieldErrors)
           : undefined;
     if (fieldMessage && !isTechnicalErrorMessage(fieldMessage)) {
       return fieldMessage;

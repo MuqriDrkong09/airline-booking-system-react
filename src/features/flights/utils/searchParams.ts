@@ -88,7 +88,13 @@ export function parseFlightSearchParams(
   const legs = parseLegsParam(params.get(LEGS_PARAM));
   const tripType =
     parseTripType(params.get(TRIP_PARAM)) ??
-    (legs ? 'MULTI_CITY' : returnDate ? 'ROUND_TRIP' : from || to || departure ? 'ONE_WAY' : undefined);
+    (legs
+      ? 'MULTI_CITY'
+      : returnDate
+        ? 'ROUND_TRIP'
+        : from || to || departure
+          ? 'ONE_WAY'
+          : undefined);
   const cabinClass = parseCabinClass(params.get(CABIN_PARAM));
   const adults = parsePositiveInt(params.get(ADULTS_PARAM), 1);
   const children = parsePositiveInt(params.get(CHILDREN_PARAM), 0);
@@ -96,15 +102,15 @@ export function parseFlightSearchParams(
 
   const hasAnyCriteria = Boolean(
     tripType ||
-      from ||
-      to ||
-      departure ||
-      returnDate ||
-      legs ||
-      params.has(ADULTS_PARAM) ||
-      params.has(CHILDREN_PARAM) ||
-      params.has(INFANTS_PARAM) ||
-      cabinClass,
+    from ||
+    to ||
+    departure ||
+    returnDate ||
+    legs ||
+    params.has(ADULTS_PARAM) ||
+    params.has(CHILDREN_PARAM) ||
+    params.has(INFANTS_PARAM) ||
+    cabinClass,
   );
 
   if (!hasAnyCriteria) {

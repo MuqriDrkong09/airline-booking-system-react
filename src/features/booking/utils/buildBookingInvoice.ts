@@ -1,11 +1,7 @@
 import { formatCabinLabel } from '@/features/flights';
 import { PASSENGER_TYPE_LABELS } from '@/features/passengers';
 import type { Booking } from '../types/bookingRecord';
-import type {
-  BookingInvoice,
-  InvoiceMoneyLine,
-  InvoicePaymentStatus,
-} from '../types/invoice';
+import type { BookingInvoice, InvoiceMoneyLine, InvoicePaymentStatus } from '../types/invoice';
 
 export const INVOICE_PAYMENT_STATUS_LABELS: Record<InvoicePaymentStatus, string> = {
   PAID: 'Paid',
@@ -20,9 +16,7 @@ export function deriveInvoicePaymentStatus(booking: Booking): InvoicePaymentStat
       return 'REFUNDED';
     case 'CANCELLED':
     case 'CANCELLATION_REQUESTED':
-      return booking.cancellation && booking.cancellation.refundAmount > 0
-        ? 'REFUNDED'
-        : 'PAID';
+      return booking.cancellation && booking.cancellation.refundAmount > 0 ? 'REFUNDED' : 'PAID';
     case 'PENDING':
       return 'PENDING';
     case 'CONFIRMED':
@@ -104,8 +98,7 @@ export function buildBookingInvoice(booking: Booking): BookingInvoice {
 
 /** Plain-text invoice for download / fallback when PDF is unavailable. */
 export function formatInvoiceAsText(invoice: BookingInvoice): string {
-  const money = (amount: number) =>
-    `${invoice.currency} ${amount.toFixed(2)}`;
+  const money = (amount: number) => `${invoice.currency} ${amount.toFixed(2)}`;
 
   const lines = [
     'AeroBook Invoice',

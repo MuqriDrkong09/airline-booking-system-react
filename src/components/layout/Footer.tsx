@@ -1,8 +1,5 @@
 import { Box, Link, Typography } from '@mui/material';
-import {
-  LAYOUT_CONTENT_MAX_WIDTH,
-  LAYOUT_PAGE_GUTTER_X,
-} from '@/constants/layout';
+import { LAYOUT_CONTENT_MAX_WIDTH, LAYOUT_PAGE_GUTTER_X } from '@/constants/layout';
 
 interface FooterProps {
   appName: string;

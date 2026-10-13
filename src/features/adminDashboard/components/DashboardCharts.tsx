@@ -123,19 +123,10 @@ export function PopularDestinationsChart({ data }: { data: DestinationStat[] }) 
   return (
     <ChartShell title="Popular destinations" subtitle="Top destinations by booking count.">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={data}
-          layout="vertical"
-          margin={{ top: 8, right: 16, left: 8, bottom: 0 }}
-        >
+        <BarChart data={data} layout="vertical" margin={{ top: 8, right: 16, left: 8, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} horizontal={false} />
           <XAxis type="number" tick={{ fontSize: 12 }} />
-          <YAxis
-            type="category"
-            dataKey="destination"
-            tick={{ fontSize: 12 }}
-            width={48}
-          />
+          <YAxis type="category" dataKey="destination" tick={{ fontSize: 12 }} width={48} />
           <Tooltip
             formatter={(value) => [value, 'Bookings']}
             labelFormatter={(_, payload) => {
@@ -143,7 +134,12 @@ export function PopularDestinationsChart({ data }: { data: DestinationStat[] }) 
               return row ? `${row.city} (${row.destination})` : '';
             }}
           />
-          <Bar dataKey="bookings" name="Bookings" fill={DASHBOARD_CHART_COLORS[2]} radius={[0, 6, 6, 0]} />
+          <Bar
+            dataKey="bookings"
+            name="Bookings"
+            fill={DASHBOARD_CHART_COLORS[2]}
+            radius={[0, 6, 6, 0]}
+          />
         </BarChart>
       </ResponsiveContainer>
     </ChartShell>
@@ -217,9 +213,7 @@ export function AirlinePerformanceChart({
             }}
             labelFormatter={(_, payload) => {
               const row = payload?.[0]?.payload as AirlinePerformanceRow | undefined;
-              return row
-                ? `${row.airline} · on-time ${Math.round(row.onTimeRate * 100)}%`
-                : '';
+              return row ? `${row.airline} · on-time ${Math.round(row.onTimeRate * 100)}%` : '';
             }}
           />
           <Legend />

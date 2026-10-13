@@ -26,15 +26,11 @@ export function hasRole(
   return allowedRoles.includes(user.role);
 }
 
-export function canAccessCustomerArea(
-  user: Pick<AuthUser, 'role'> | null | undefined,
-): boolean {
+export function canAccessCustomerArea(user: Pick<AuthUser, 'role'> | null | undefined): boolean {
   return hasRole(user, CUSTOMER_AREA_ROLES);
 }
 
-export function canAccessAdminArea(
-  user: Pick<AuthUser, 'role'> | null | undefined,
-): boolean {
+export function canAccessAdminArea(user: Pick<AuthUser, 'role'> | null | undefined): boolean {
   return hasRole(user, ADMIN_AREA_ROLES);
 }
 

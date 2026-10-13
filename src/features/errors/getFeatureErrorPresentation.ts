@@ -1,10 +1,5 @@
 import { APP_ROUTES } from '@/constants/routes';
-import {
-  ApiError,
-  getErrorMessage,
-  getErrorStatus,
-  getErrorTitle,
-} from '@/services/api';
+import { ApiError, getErrorMessage, getErrorStatus, getErrorTitle } from '@/services/api';
 
 export interface FeatureErrorPresentation {
   title: string;

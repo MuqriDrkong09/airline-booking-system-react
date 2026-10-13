@@ -218,12 +218,7 @@ describe('AppTable', () => {
 
   it('renders the default empty message when there are no rows', () => {
     renderWithProviders(
-      <AppTable
-        ariaLabel="Flights"
-        columns={columns}
-        rows={[]}
-        getRowId={(row) => row.id}
-      />,
+      <AppTable ariaLabel="Flights" columns={columns} rows={[]} getRowId={(row) => row.id} />,
     );
 
     expect(screen.queryByRole('table')).not.toBeInTheDocument();

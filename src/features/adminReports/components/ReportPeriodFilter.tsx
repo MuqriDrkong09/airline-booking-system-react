@@ -15,11 +15,7 @@ export interface ReportPeriodFilterProps {
 
 export function ReportPeriodFilter({ value, onChange }: ReportPeriodFilterProps) {
   return (
-    <Stack
-      component="section"
-      aria-label="Report period filters"
-      spacing={2}
-    >
+    <Stack component="section" aria-label="Report period filters" spacing={2}>
       <Box>
         <Typography variant="subtitle2" sx={{ mb: 1 }}>
           Period

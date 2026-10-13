@@ -110,13 +110,7 @@ describe('AircraftDialog', () => {
 
   it('disables Cancel and shows Creating label while submitting in create mode', () => {
     renderWithProviders(
-      <AircraftDialog
-        open
-        mode="create"
-        submitting
-        onClose={jest.fn()}
-        onSubmit={jest.fn()}
-      />,
+      <AircraftDialog open mode="create" submitting onClose={jest.fn()} onSubmit={jest.fn()} />,
     );
 
     expect(screen.getByRole('button', { name: 'Cancel' })).toBeDisabled();
@@ -141,12 +135,7 @@ describe('AircraftDialog', () => {
 
   it('does not expose the dialog when closed', () => {
     renderWithProviders(
-      <AircraftDialog
-        open={false}
-        mode="create"
-        onClose={jest.fn()}
-        onSubmit={jest.fn()}
-      />,
+      <AircraftDialog open={false} mode="create" onClose={jest.fn()} onSubmit={jest.fn()} />,
     );
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

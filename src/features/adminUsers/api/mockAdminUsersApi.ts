@@ -52,11 +52,7 @@ export function createMockAdminUsersApi(
       }
       return cloneUser(user);
     },
-    async setUserActive(
-      userId: string,
-      active: boolean,
-      actorUserId: string,
-    ): Promise<AdminUser> {
+    async setUserActive(userId: string, active: boolean, actorUserId: string): Promise<AdminUser> {
       await delay(delayMs);
       const index = users.findIndex((item) => item.id === userId);
       if (index < 0) {
@@ -68,11 +64,7 @@ export function createMockAdminUsersApi(
       users = users.map((item, itemIndex) => (itemIndex === index ? updated : item));
       return cloneUser(updated);
     },
-    async changeUserRole(
-      userId: string,
-      role: UserRole,
-      actorUserId: string,
-    ): Promise<AdminUser> {
+    async changeUserRole(userId: string, role: UserRole, actorUserId: string): Promise<AdminUser> {
       await delay(delayMs);
       const index = users.findIndex((item) => item.id === userId);
       if (index < 0) {

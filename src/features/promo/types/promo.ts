@@ -1,12 +1,7 @@
 export const PROMO_DISCOUNT_TYPES = ['PERCENT', 'FIXED'] as const;
 export type PromoDiscountType = (typeof PROMO_DISCOUNT_TYPES)[number];
 
-export const PROMO_VALIDATION_STATUSES = [
-  'VALID',
-  'INVALID',
-  'EXPIRED',
-  'BELOW_MINIMUM',
-] as const;
+export const PROMO_VALIDATION_STATUSES = ['VALID', 'INVALID', 'EXPIRED', 'BELOW_MINIMUM'] as const;
 
 export type PromoValidationStatus = (typeof PROMO_VALIDATION_STATUSES)[number];
 

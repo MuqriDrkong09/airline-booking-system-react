@@ -1,7 +1,4 @@
-import type {
-  FlightStatusLookupRequest,
-  FlightStatusRecord,
-} from '../types/flightStatus';
+import type { FlightStatusLookupRequest, FlightStatusRecord } from '../types/flightStatus';
 import type { FlightStatusApi } from './flightStatusApi.types';
 import { generateMockFlightStatus, normalizeFlightNumber } from './flightStatusData';
 
@@ -13,9 +10,7 @@ function delay(ms: number): Promise<void> {
   });
 }
 
-export function createMockFlightStatusApi(
-  options: { delayMs?: number } = {},
-): FlightStatusApi {
+export function createMockFlightStatusApi(options: { delayMs?: number } = {}): FlightStatusApi {
   const delayMs = options.delayMs ?? MOCK_DELAY_MS;
 
   return {

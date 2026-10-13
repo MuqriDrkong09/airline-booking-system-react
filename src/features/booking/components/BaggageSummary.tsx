@@ -61,9 +61,7 @@ export function BaggageSummary({
           <Typography variant="body2" color="text.secondary">
             Baggage total
           </Typography>
-          <Typography variant="subtitle2">
-            {formatBookingMoney(baggageTotal, currency)}
-          </Typography>
+          <Typography variant="subtitle2">{formatBookingMoney(baggageTotal, currency)}</Typography>
         </Stack>
       </Stack>
     </SummarySection>

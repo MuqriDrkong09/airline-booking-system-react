@@ -88,11 +88,7 @@ export function BookingETicketDocument({ ticket }: BookingETicketDocumentProps) 
               </Typography>
             </Box>
             <Box sx={{ textAlign: 'right' }}>
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ display: 'block' }}
-              >
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
                 Booking reference
               </Typography>
               <Typography variant="h6" component="p" sx={{ fontWeight: 700 }}>
@@ -144,11 +140,7 @@ export function BookingETicketDocument({ ticket }: BookingETicketDocumentProps) 
               },
             }}
           >
-            <Typography
-              variant="overline"
-              color="text.secondary"
-              sx={{ display: 'block', mb: 1 }}
-            >
+            <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
               Boarding information
             </Typography>
             <Box
@@ -172,11 +164,7 @@ export function BookingETicketDocument({ ticket }: BookingETicketDocumentProps) 
             <Typography variant="body2" color="text.secondary">
               {ticket.boarding.instructions}
             </Typography>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ display: 'block', mt: 1 }}
-            >
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
               Cabin: {ticket.cabinClass}
             </Typography>
           </Box>

@@ -12,16 +12,13 @@ export const adminBookingsApi: AdminBookingsApi = adminApi.bookings;
 export const adminBookingKeys = {
   all: ['admin-bookings'] as const,
   lists: () => [...adminBookingKeys.all, 'list'] as const,
-  list: (query?: AdminBookingListQuery) =>
-    [...adminBookingKeys.lists(), query ?? {}] as const,
+  list: (query?: AdminBookingListQuery) => [...adminBookingKeys.lists(), query ?? {}] as const,
   details: () => [...adminBookingKeys.all, 'detail'] as const,
   detail: (reference: string) => [...adminBookingKeys.details(), reference] as const,
   flightOptions: () => [...adminBookingKeys.all, 'flight-options'] as const,
 };
 
-export function listAdminBookings(
-  query?: AdminBookingListQuery,
-): Promise<AdminBookingListResult> {
+export function listAdminBookings(query?: AdminBookingListQuery): Promise<AdminBookingListResult> {
   return adminBookingsApi.listBookings(query);
 }
 

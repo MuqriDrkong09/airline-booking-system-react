@@ -1,11 +1,6 @@
 import Box from '@mui/material/Box';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import {
-  AppButton,
-  EmptyState,
-  ErrorState,
-  FlightCardSkeleton,
-} from '@/components/common';
+import { AppButton, EmptyState, ErrorState, FlightCardSkeleton } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
 import type { FlightOffer } from '@/features/flights';
 import { useFavouritesQuery } from '../hooks/useFavourites';
@@ -64,11 +59,7 @@ export function FavouritesView() {
       }}
     >
       {favourites.map((favourite) => (
-        <FavouriteFlightCard
-          key={favourite.id}
-          flight={favourite.flight}
-          onSelect={handleSelect}
-        />
+        <FavouriteFlightCard key={favourite.id} flight={favourite.flight} onSelect={handleSelect} />
       ))}
     </Box>
   );

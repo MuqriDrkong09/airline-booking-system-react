@@ -22,9 +22,7 @@ function createTransactionId(): string {
  */
 const DEFAULT_LATENCY_MS = process.env.NODE_ENV === 'test' ? 0 : 900;
 
-export function createMockPaymentApi(options?: {
-  latencyMs?: number;
-}): PaymentApi {
+export function createMockPaymentApi(options?: { latencyMs?: number }): PaymentApi {
   const latencyMs = options?.latencyMs ?? DEFAULT_LATENCY_MS;
   const processedKeys = new Set<string>();
 

@@ -16,11 +16,7 @@ export function BookingConfirmationPage() {
           title="Booking not found"
           message="We could not find this booking reference. It may have been cleared from this browser."
           action={
-            <AppButton
-              component={RouterLink}
-              to={APP_ROUTES.customer.bookings}
-              variant="contained"
-            >
+            <AppButton component={RouterLink} to={APP_ROUTES.customer.bookings} variant="contained">
               My bookings
             </AppButton>
           }

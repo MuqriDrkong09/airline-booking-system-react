@@ -6,10 +6,7 @@ import type { PassengerBaggageSelection } from '@/features/baggage/types/baggage
 import type { CabinClass, FlightOffer, FlightSearchCriteria } from '@/features/flights';
 import type { PassengerMealSelection } from '@/features/meals/types/meal';
 import type { PassengerDraft } from '@/features/passengers';
-import {
-  clearLegacyPiiLocalStorage,
-  sessionPersistStorage,
-} from '@/utils/sessionPersistStorage';
+import { clearLegacyPiiLocalStorage, sessionPersistStorage } from '@/utils/sessionPersistStorage';
 import type {
   BookingData,
   BookingPaymentInfo,
@@ -18,10 +15,7 @@ import type {
   CheckoutStatus,
 } from '../types/booking';
 import { EMPTY_PRICE_BREAKDOWN } from '../types/booking';
-import {
-  priceBreakdownFromBooking,
-  toSafePaymentInfo,
-} from '../utils/priceBreakdown';
+import { priceBreakdownFromBooking, toSafePaymentInfo } from '../utils/priceBreakdown';
 
 clearLegacyPiiLocalStorage();
 
@@ -77,10 +71,9 @@ const empty: BookingData = {
   updatedAt: null,
 };
 
-function withTotals(state: BookingData): Pick<
-  BookingData,
-  'seatTotal' | 'addonTotal' | 'priceBreakdown' | 'updatedAt'
-> {
+function withTotals(
+  state: BookingData,
+): Pick<BookingData, 'seatTotal' | 'addonTotal' | 'priceBreakdown' | 'updatedAt'> {
   const priceBreakdown = priceBreakdownFromBooking(state);
   return {
     seatTotal: priceBreakdown.seatCost,
@@ -105,8 +98,7 @@ export const useBookingStore = create<BookingState>()(
 
       setSelectedFlight: (selectedFlight, cabinClass) => {
         const current = get();
-        const nextCabin =
-          cabinClass ?? selectedFlight?.cabinClass ?? current.cabinClass ?? null;
+        const nextCabin = cabinClass ?? selectedFlight?.cabinClass ?? current.cabinClass ?? null;
         const next = {
           ...current,
           selectedFlight,

@@ -32,6 +32,7 @@ export {
   FLIGHT_OPERATIONAL_STATUS_LABELS,
   FLIGHT_SORT_OPTION_LABELS,
   FLIGHT_SORT_OPTIONS,
+  FLIGHT_SORT_SELECT_OPTIONS,
   RECENT_SEARCH_HISTORY_LIMIT,
   isFlightOperationalStatus,
   isFlightSortOption,
@@ -78,10 +79,7 @@ export {
   useFlightDetailsQuery,
   useSearchFlightsQuery,
 } from './hooks/useFlights';
-export {
-  isCompleteFlightStatusRequest,
-  useFlightStatusQuery,
-} from './hooks/useFlightStatus';
+export { isCompleteFlightStatusRequest, useFlightStatusQuery } from './hooks/useFlightStatus';
 export { useFlightFilters } from './hooks/useFlightFilters';
 export { useFlightSearchHydration } from './hooks/useFlightSearchHydration';
 export { AirportAutocomplete } from './components/AirportAutocomplete';
@@ -105,7 +103,7 @@ export { FlightTimeline } from './components/results/FlightTimeline';
 export type { FlightTimelineProps } from './components/results/FlightTimeline';
 export { FlightFilters } from './components/results/FlightFilters';
 export type { FlightFiltersProps } from './components/results/FlightFilters';
-export { FlightSort, FLIGHT_SORT_SELECT_OPTIONS } from './components/results/FlightSort';
+export { FlightSort } from './components/results/FlightSort';
 export type { FlightSortProps } from './components/results/FlightSort';
 export { FlightSearchResults } from './components/results/FlightSearchResults';
 export type { FlightSearchResultsProps } from './components/results/FlightSearchResults';

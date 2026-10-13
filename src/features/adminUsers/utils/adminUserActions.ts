@@ -45,7 +45,11 @@ export function canChangeAdminUserRole(
   if (user.role === nextRole) {
     return false;
   }
-  if (isSelfAdminUser(user, actorUserId) && user.role === UserRole.ADMIN && nextRole !== UserRole.ADMIN) {
+  if (
+    isSelfAdminUser(user, actorUserId) &&
+    user.role === UserRole.ADMIN &&
+    nextRole !== UserRole.ADMIN
+  ) {
     return false;
   }
   return true;

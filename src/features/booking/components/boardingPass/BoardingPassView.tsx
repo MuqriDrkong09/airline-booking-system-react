@@ -56,8 +56,7 @@ export function BoardingPassView({ booking }: BoardingPassViewProps) {
     return (
       <Stack spacing={2} sx={{ width: '100%', maxWidth: 520, mx: 'auto' }}>
         <AppAlert severity="info" title="Boarding pass not ready">
-          Complete online check-in first. Boarding passes are issued for checked-in
-          passengers only.
+          Complete online check-in first. Boarding passes are issued for checked-in passengers only.
         </AppAlert>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.25} useFlexGap>
           <AppButton
@@ -83,8 +82,7 @@ export function BoardingPassView({ booking }: BoardingPassViewProps) {
     return (
       <Stack spacing={2} sx={{ width: '100%', maxWidth: 520, mx: 'auto' }}>
         <AppAlert severity="warning" title="Passenger not found">
-          No boarding pass matches the selected passenger on booking{' '}
-          {booking.reference}.
+          No boarding pass matches the selected passenger on booking {booking.reference}.
         </AppAlert>
         <AppButton
           component={RouterLink}

@@ -11,8 +11,7 @@ export const adminAircraftApi: AdminAircraftApi = adminApi.aircraft;
 export const adminAircraftKeys = {
   all: ['admin-aircraft'] as const,
   lists: () => [...adminAircraftKeys.all, 'list'] as const,
-  list: (filters?: AdminAircraftFilters) =>
-    [...adminAircraftKeys.lists(), filters ?? {}] as const,
+  list: (filters?: AdminAircraftFilters) => [...adminAircraftKeys.lists(), filters ?? {}] as const,
   details: () => [...adminAircraftKeys.all, 'detail'] as const,
   detail: (aircraftId: string) => [...adminAircraftKeys.details(), aircraftId] as const,
 };

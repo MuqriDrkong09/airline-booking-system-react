@@ -1,15 +1,11 @@
 import { useTheme } from '@mui/material/styles';
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { REPORT_CHART_COLORS } from '../constants/options';
-import { formatCompactNumber, formatReportCurrency, formatReportNumber } from '../utils/formatReport';
+import {
+  formatCompactNumber,
+  formatReportCurrency,
+  formatReportNumber,
+} from '../utils/formatReport';
 import { ReportChartCard } from './ReportChartCard';
 
 export interface ReportBarDatum {
@@ -42,9 +38,7 @@ export function ReportBarChart({
   const chartData = data.map((item) => ({ name: item.label, value: item.value }));
 
   const formatValue = (value: number) =>
-    valueFormat === 'currency'
-      ? formatReportCurrency(value, currency)
-      : formatReportNumber(value);
+    valueFormat === 'currency' ? formatReportCurrency(value, currency) : formatReportNumber(value);
 
   return (
     <ReportChartCard title={title} subtitle={subtitle}>

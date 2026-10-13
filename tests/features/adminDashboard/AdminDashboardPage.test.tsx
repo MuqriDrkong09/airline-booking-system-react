@@ -86,9 +86,7 @@ describe('AdminDashboardPage', () => {
 
 describe('DashboardMetricCard', () => {
   it('renders without helper text', () => {
-    renderWithProviders(
-      <DashboardMetricCard label="Total bookings" value="10" icon={Ticket} />,
-    );
+    renderWithProviders(<DashboardMetricCard label="Total bookings" value="10" icon={Ticket} />);
 
     expect(screen.getByText('Total bookings')).toBeInTheDocument();
     expect(screen.getByText('10')).toBeInTheDocument();

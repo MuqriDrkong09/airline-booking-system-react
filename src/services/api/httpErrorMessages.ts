@@ -3,13 +3,11 @@
 export const NETWORK_ERROR_MESSAGE =
   'Unable to connect. Check your internet connection and try again.';
 
-export const TIMEOUT_ERROR_MESSAGE =
-  'The request took too long. Please try again in a moment.';
+export const TIMEOUT_ERROR_MESSAGE = 'The request took too long. Please try again in a moment.';
 
 export const DEFAULT_ERROR_MESSAGE = 'Something went wrong. Please try again.';
 
-export const UNEXPECTED_ERROR_MESSAGE =
-  'An unexpected error occurred. Please try again.';
+export const UNEXPECTED_ERROR_MESSAGE = 'An unexpected error occurred. Please try again.';
 
 /** Status → friendly body copy shown in UI. */
 export const HTTP_STATUS_MESSAGES: Record<number, string> = {

@@ -1,10 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { flightStatusKeys, lookupFlightStatus } from '../api';
 import type { FlightStatusLookupRequest } from '../types/flightStatus';
-import {
-  isValidFlightNumber,
-  normalizeFlightNumber,
-} from '../api/flightStatusData';
+import { isValidFlightNumber, normalizeFlightNumber } from '../api/flightStatusData';
 import { isValidCalendarDate } from '../utils/dates';
 
 export function isCompleteFlightStatusRequest(
@@ -22,8 +19,7 @@ export function useFlightStatusQuery(
   request: Partial<FlightStatusLookupRequest> | null | undefined,
   options: { enabled?: boolean } = {},
 ) {
-  const enabled =
-    (options.enabled ?? true) && isCompleteFlightStatusRequest(request);
+  const enabled = (options.enabled ?? true) && isCompleteFlightStatusRequest(request);
 
   const normalized: FlightStatusLookupRequest | null = enabled
     ? {

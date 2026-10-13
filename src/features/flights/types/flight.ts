@@ -105,6 +105,14 @@ export const FLIGHT_SORT_OPTION_LABELS: Record<FlightSortOption, string> = {
   earliest_arrival: 'Earliest Arrival',
 };
 
+export const FLIGHT_SORT_SELECT_OPTIONS: ReadonlyArray<{
+  value: FlightSortOption;
+  label: string;
+}> = FLIGHT_SORT_OPTIONS.map((value) => ({
+  value,
+  label: FLIGHT_SORT_OPTION_LABELS[value],
+}));
+
 export function isFlightSortOption(value: string): value is FlightSortOption {
   return (FLIGHT_SORT_OPTIONS as readonly string[]).includes(value);
 }

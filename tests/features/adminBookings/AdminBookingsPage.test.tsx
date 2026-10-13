@@ -88,7 +88,9 @@ describe('AdminBookingsPage', () => {
     await user.click(screen.getByRole('button', { name: 'View AB-ADMIN001' }));
 
     const dialog = await screen.findByRole('dialog');
-    expect(within(dialog).getByRole('heading', { name: 'Booking AB-ADMIN001' })).toBeInTheDocument();
+    expect(
+      within(dialog).getByRole('heading', { name: 'Booking AB-ADMIN001' }),
+    ).toBeInTheDocument();
     expect(within(dialog).getByText('aisha@example.com')).toBeInTheDocument();
   });
 
@@ -108,9 +110,7 @@ describe('AdminBookingsPage', () => {
     });
     await user.click(within(dialog).getByRole('button', { name: 'Save changes' }));
 
-    expect(
-      await screen.findByText('Updated contact details for AB-ADMIN001.'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Updated contact details for AB-ADMIN001.')).toBeInTheDocument();
     expect(
       mockAdminBookingsApi.getState().find((booking) => booking.reference === 'AB-ADMIN001')
         ?.passengers[0]?.email,

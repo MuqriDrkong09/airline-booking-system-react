@@ -2,7 +2,10 @@ import {
   aircraftConfiguredSeatSchema,
   aircraftSeatMapConfigSchema,
 } from '@/features/adminAircraft/schemas/seatMapConfigSchema';
-import type { AircraftConfiguredSeatInput, AircraftSeatMapConfigInput } from '@/features/adminAircraft/schemas/seatMapConfigSchema';
+import type {
+  AircraftConfiguredSeatInput,
+  AircraftSeatMapConfigInput,
+} from '@/features/adminAircraft/schemas/seatMapConfigSchema';
 
 function makeSeat(
   overrides: Partial<AircraftConfiguredSeatInput> = {},
@@ -52,9 +55,7 @@ function issueMessages(result: { success: false; error: { issues: { message: str
 
 describe('aircraftConfiguredSeatSchema', () => {
   it('parses a valid seat and uppercases column and label', () => {
-    const parsed = aircraftConfiguredSeatSchema.parse(
-      makeSeat({ column: 'a', label: '1a' }),
-    );
+    const parsed = aircraftConfiguredSeatSchema.parse(makeSeat({ column: 'a', label: '1a' }));
 
     expect(parsed.column).toBe('A');
     expect(parsed.label).toBe('1A');
@@ -87,13 +88,11 @@ describe('aircraftConfiguredSeatSchema', () => {
     expect(aircraftConfiguredSeatSchema.safeParse(makeSeat({ row: 81 })).success).toBe(false);
     expect(aircraftConfiguredSeatSchema.safeParse(makeSeat({ column: 'AB' })).success).toBe(false);
     expect(aircraftConfiguredSeatSchema.safeParse(makeSeat({ label: '' })).success).toBe(false);
-    expect(
-      aircraftConfiguredSeatSchema.safeParse(makeSeat({ label: '123456789' })).success,
-    ).toBe(false);
-    expect(aircraftConfiguredSeatSchema.safeParse(makeSeat({ price: -1 })).success).toBe(false);
-    expect(aircraftConfiguredSeatSchema.safeParse(makeSeat({ price: 10_001 })).success).toBe(
+    expect(aircraftConfiguredSeatSchema.safeParse(makeSeat({ label: '123456789' })).success).toBe(
       false,
     );
+    expect(aircraftConfiguredSeatSchema.safeParse(makeSeat({ price: -1 })).success).toBe(false);
+    expect(aircraftConfiguredSeatSchema.safeParse(makeSeat({ price: 10_001 })).success).toBe(false);
   });
 
   it('requires emergencyExit for EMERGENCY_EXIT seat type', () => {
@@ -116,9 +115,7 @@ describe('aircraftConfiguredSeatSchema', () => {
 
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(issueMessages(result)).toContain(
-        'Unavailable seat type requires the disabled flag',
-      );
+      expect(issueMessages(result)).toContain('Unavailable seat type requires the disabled flag');
     }
   });
 });
@@ -139,18 +136,15 @@ describe('aircraftSeatMapConfigSchema', () => {
   });
 
   it('rejects invalid top-level config fields', () => {
+    expect(aircraftSeatMapConfigSchema.safeParse(makeConfig({ layoutKey: '' })).success).toBe(
+      false,
+    );
     expect(
-      aircraftSeatMapConfigSchema.safeParse(makeConfig({ layoutKey: '' })).success,
-    ).toBe(false);
-    expect(
-      aircraftSeatMapConfigSchema.safeParse(makeConfig({ layoutKey: 'x'.repeat(121) }))
-        .success,
+      aircraftSeatMapConfigSchema.safeParse(makeConfig({ layoutKey: 'x'.repeat(121) })).success,
     ).toBe(false);
     expect(aircraftSeatMapConfigSchema.safeParse(makeConfig({ rows: 0 })).success).toBe(false);
     expect(aircraftSeatMapConfigSchema.safeParse(makeConfig({ rows: 81 })).success).toBe(false);
-    expect(aircraftSeatMapConfigSchema.safeParse(makeConfig({ columns: [] })).success).toBe(
-      false,
-    );
+    expect(aircraftSeatMapConfigSchema.safeParse(makeConfig({ columns: [] })).success).toBe(false);
     expect(aircraftSeatMapConfigSchema.safeParse(makeConfig({ seats: [] })).success).toBe(false);
     expect(aircraftSeatMapConfigSchema.safeParse(makeConfig({ version: 0 })).success).toBe(false);
     expect(
@@ -209,9 +203,7 @@ describe('aircraftSeatMapConfigSchema', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(issueMessages(result)).toContain('Include at least one seat column letter');
-      expect(issueMessages(result)).toContain(
-        'Seat column must exist in the layout columns',
-      );
+      expect(issueMessages(result)).toContain('Seat column must exist in the layout columns');
     }
   });
 
@@ -276,9 +268,7 @@ describe('aircraftSeatMapConfigSchema', () => {
     );
     expect(badColumn.success).toBe(false);
     if (!badColumn.success) {
-      expect(issueMessages(badColumn)).toContain(
-        'Seat column must exist in the layout columns',
-      );
+      expect(issueMessages(badColumn)).toContain('Seat column must exist in the layout columns');
     }
   });
 

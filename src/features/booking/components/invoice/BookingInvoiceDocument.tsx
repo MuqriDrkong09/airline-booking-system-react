@@ -44,11 +44,7 @@ function ChargeRow({
       : formatBookingMoney(amount, currency);
 
   return (
-    <Stack
-      direction="row"
-      spacing={2}
-      sx={{ py: 0.5, justifyContent: 'space-between' }}
-    >
+    <Stack direction="row" spacing={2} sx={{ py: 0.5, justifyContent: 'space-between' }}>
       <Typography
         variant="body2"
         color={emphasize ? 'text.primary' : 'text.secondary'}
@@ -155,10 +151,7 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
           label="Payment status"
           value={INVOICE_PAYMENT_STATUS_LABELS[invoice.paymentStatus]}
         />
-        <MetaCell
-          label="Payment date"
-          value={formatBookingTimestamp(invoice.paymentDate)}
-        />
+        <MetaCell label="Payment date" value={formatBookingTimestamp(invoice.paymentDate)} />
         <MetaCell label="Payment method" value={paymentMethodLabel} />
       </Box>
 
@@ -174,11 +167,7 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
         }}
       >
         <Box>
-          <Typography
-            variant="overline"
-            color="text.secondary"
-            sx={{ display: 'block', mb: 1 }}
-          >
+          <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
             Bill to
           </Typography>
           <Typography variant="body1" sx={{ fontWeight: 600 }}>
@@ -195,11 +184,7 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
         </Box>
 
         <Box>
-          <Typography
-            variant="overline"
-            color="text.secondary"
-            sx={{ display: 'block', mb: 1 }}
-          >
+          <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
             Passenger{invoice.passengers.length === 1 ? '' : 's'}
           </Typography>
           <Stack spacing={0.5} component="ul" sx={{ m: 0, pl: 2 }}>
@@ -216,11 +201,7 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
       </Box>
 
       <Box sx={{ mb: 3 }}>
-        <Typography
-          variant="overline"
-          color="text.secondary"
-          sx={{ display: 'block', mb: 1 }}
-        >
+        <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
           Flight
         </Typography>
         <Typography variant="body1" sx={{ fontWeight: 600 }}>
@@ -240,11 +221,7 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
 
       <Divider sx={{ mb: 2 }} />
 
-      <Typography
-        variant="overline"
-        color="text.secondary"
-        sx={{ display: 'block', mb: 1 }}
-      >
+      <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
         Charges
       </Typography>
 
@@ -256,35 +233,17 @@ export function BookingInvoiceDocument({ invoice }: BookingInvoiceDocumentProps)
 
       <Divider sx={{ my: 1 }} />
 
-      <ChargeRow
-        label="Subtotal"
-        amount={invoice.subtotal}
-        currency={invoice.currency}
-      />
-      <ChargeRow
-        label="Discount"
-        amount={invoice.discount}
-        currency={invoice.currency}
-        negative
-      />
+      <ChargeRow label="Subtotal" amount={invoice.subtotal} currency={invoice.currency} />
+      <ChargeRow label="Discount" amount={invoice.discount} currency={invoice.currency} negative />
       <ChargeRow label="Taxes" amount={invoice.taxes} currency={invoice.currency} />
 
       <Divider sx={{ my: 1.5 }} />
 
-      <ChargeRow
-        label="Total"
-        amount={invoice.total}
-        currency={invoice.currency}
-        emphasize
-      />
+      <ChargeRow label="Total" amount={invoice.total} currency={invoice.currency} emphasize />
 
-      <Typography
-        variant="caption"
-        color="text.secondary"
-        sx={{ display: 'block', mt: 4 }}
-      >
-        This is a demo invoice generated client-side. A backend PDF service can
-        replace this layout using the same invoice fields.
+      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 4 }}>
+        This is a demo invoice generated client-side. A backend PDF service can replace this layout
+        using the same invoice fields.
       </Typography>
     </Box>
   );

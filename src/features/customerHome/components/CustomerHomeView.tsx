@@ -4,11 +4,7 @@ import Typography from '@mui/material/Typography';
 import { Bell, CalendarCheck, Heart, Ticket } from 'lucide-react';
 import { useMemo } from 'react';
 import { getDisplayName, useAuth } from '@/features/auth';
-import {
-  canCheckInBooking,
-  queryMyBookings,
-  useBookingsStore,
-} from '@/features/booking';
+import { canCheckInBooking, queryMyBookings, useBookingsStore } from '@/features/booking';
 import { useFavouritesQuery } from '@/features/favourites';
 import { RecentSearchesSection } from '@/features/flights';
 import { todayIsoDate } from '@/features/flights/utils/dates';
@@ -38,9 +34,7 @@ export function CustomerHomeView() {
       pageSize: 1,
       todayIso,
     });
-    const checkInReady = bookings.filter((booking) =>
-      canCheckInBooking(booking, todayIso),
-    ).length;
+    const checkInReady = bookings.filter((booking) => canCheckInBooking(booking, todayIso)).length;
 
     return {
       upcoming: upcoming.counts.upcoming,

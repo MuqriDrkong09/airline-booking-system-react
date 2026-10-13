@@ -1,9 +1,5 @@
 import { adminApi } from '@/services/adminApi';
-import type {
-  AdminAirport,
-  AdminAirportFilters,
-  AdminAirportInput,
-} from '../types/adminAirport';
+import type { AdminAirport, AdminAirportFilters, AdminAirportInput } from '../types/adminAirport';
 import type { AdminAirportsApi } from './adminAirportsApi.types';
 
 export const adminAirportsApi: AdminAirportsApi = adminApi.airports;
@@ -11,8 +7,7 @@ export const adminAirportsApi: AdminAirportsApi = adminApi.airports;
 export const adminAirportKeys = {
   all: ['admin-airports'] as const,
   lists: () => [...adminAirportKeys.all, 'list'] as const,
-  list: (filters?: AdminAirportFilters) =>
-    [...adminAirportKeys.lists(), filters ?? {}] as const,
+  list: (filters?: AdminAirportFilters) => [...adminAirportKeys.lists(), filters ?? {}] as const,
   details: () => [...adminAirportKeys.all, 'detail'] as const,
   detail: (airportId: string) => [...adminAirportKeys.details(), airportId] as const,
 };
@@ -36,10 +31,7 @@ export function updateAdminAirport(
   return adminAirportsApi.updateAirport(airportId, input);
 }
 
-export function setAdminAirportActive(
-  airportId: string,
-  active: boolean,
-): Promise<AdminAirport> {
+export function setAdminAirportActive(airportId: string, active: boolean): Promise<AdminAirport> {
   return adminAirportsApi.setAirportActive(airportId, active);
 }
 

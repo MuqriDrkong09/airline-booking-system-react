@@ -29,9 +29,7 @@ describe('AppDatePicker', () => {
   });
 
   it('applies min and max constraints on the underlying input', () => {
-    renderWithProviders(
-      <AppDatePicker label="Return date" min="2026-10-20" max="2026-12-31" />,
-    );
+    renderWithProviders(<AppDatePicker label="Return date" min="2026-10-20" max="2026-12-31" />);
 
     const input = screen.getByLabelText('Return date');
     expect(input).toHaveAttribute('min', '2026-10-20');

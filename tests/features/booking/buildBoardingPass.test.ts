@@ -139,9 +139,9 @@ describe('buildBoardingPass', () => {
 
   it('is available after check-in and assigns boarding groups by seat row', () => {
     expect(canViewBoardingPass(booking)).toBe(true);
-    expect(canViewBoardingPass({ ...booking, status: 'CONFIRMED', checkedInPassengerIds: [] })).toBe(
-      false,
-    );
+    expect(
+      canViewBoardingPass({ ...booking, status: 'CONFIRMED', checkedInPassengerIds: [] }),
+    ).toBe(false);
     expect(assignBoardingGroup('BUSINESS', '2A')).toBe('1');
     expect(assignBoardingGroup('ECONOMY', '8A')).toBe('2');
     expect(assignBoardingGroup('ECONOMY', '22B')).toBe('4');

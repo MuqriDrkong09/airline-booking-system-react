@@ -48,9 +48,7 @@ describe('loading skeletons', () => {
       </>,
     );
 
-    expect(
-      screen.getByRole('status', { name: 'Loading dashboard metrics' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Loading dashboard metrics' })).toBeInTheDocument();
     expect(screen.getByRole('status', { name: 'Loading charts' })).toBeInTheDocument();
   });
 
@@ -68,9 +66,7 @@ describe('loading skeletons', () => {
       </>,
     );
 
-    expect(
-      screen.getByRole('status', { name: 'Loading flight details' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Loading flight details' })).toBeInTheDocument();
     expect(screen.getByRole('status', { name: 'Loading seat map' })).toBeInTheDocument();
   });
 });

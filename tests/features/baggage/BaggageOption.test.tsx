@@ -7,13 +7,7 @@ import { renderWithProviders } from '@tests/utils/test-utils';
 describe('BaggageOption', () => {
   it('renders None for zero kilograms and shows a price label', () => {
     renderWithProviders(
-      <BaggageOption
-        name="cabin"
-        kg={0}
-        selected={false}
-        priceLabel="Free"
-        onSelect={jest.fn()}
-      />,
+      <BaggageOption name="cabin" kg={0} selected={false} priceLabel="Free" onSelect={jest.fn()} />,
     );
 
     const option = screen.getByRole('radio', { name: /None/i });
@@ -24,13 +18,7 @@ describe('BaggageOption', () => {
 
   it('renders a formatted weight when kilograms are positive', () => {
     renderWithProviders(
-      <BaggageOption
-        name="checked"
-        kg={20}
-        selected
-        priceLabel="RM 35"
-        onSelect={jest.fn()}
-      />,
+      <BaggageOption name="checked" kg={20} selected priceLabel="RM 35" onSelect={jest.fn()} />,
     );
 
     expect(screen.getByText(formatBaggageWeight(20))).toBeInTheDocument();
@@ -71,13 +59,7 @@ describe('BaggageOption', () => {
     const onSelect = jest.fn();
 
     renderWithProviders(
-      <BaggageOption
-        name="extra"
-        kg={40}
-        selected={false}
-        disabled
-        onSelect={onSelect}
-      />,
+      <BaggageOption name="extra" kg={40} selected={false} disabled onSelect={onSelect} />,
     );
 
     const option = screen.getByRole('radio');
@@ -90,16 +72,9 @@ describe('BaggageOption', () => {
 
   it('guards onSelect inside onClick when disabled is true', () => {
     const onSelect = jest.fn();
-    let capturedClick: (() => void) | undefined;
 
     const { container } = renderWithProviders(
-      <BaggageOption
-        name="extra"
-        kg={40}
-        selected={false}
-        disabled
-        onSelect={onSelect}
-      />,
+      <BaggageOption name="extra" kg={40} selected={false} disabled onSelect={onSelect} />,
     );
 
     const option = container.querySelector('button');
@@ -108,8 +83,10 @@ describe('BaggageOption', () => {
     // React skips dispatching clicks for disabled buttons; call the prop handler
     // through the fiber props so the `if (!disabled)` false branch is covered.
     const key = Object.keys(option!).find((name) => name.startsWith('__reactProps$'));
-    const props = key ? (option as unknown as Record<string, { onClick?: () => void }>)[key] : undefined;
-    capturedClick = props?.onClick;
+    const props = key
+      ? (option as unknown as Record<string, { onClick?: () => void }>)[key]
+      : undefined;
+    const capturedClick = props?.onClick;
     expect(typeof capturedClick).toBe('function');
 
     capturedClick?.();

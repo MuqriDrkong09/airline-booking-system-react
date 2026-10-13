@@ -3,11 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { Link as RouterLink, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { AppButton, EmptyState, PageContainer } from '@/components/common';
 import { APP_ROUTES } from '@/constants/routes';
-import {
-  passengerDisplayName,
-  SeatSelectionPanel,
-  useSeatSelectionStore,
-} from '@/features/seats';
+import { passengerDisplayName, SeatSelectionPanel, useSeatSelectionStore } from '@/features/seats';
 import { usePassengerDraftStore } from '@/features/passengers';
 
 export function SeatSelectionPage() {
@@ -42,8 +38,7 @@ export function SeatSelectionPage() {
     [passengers],
   );
 
-  const tripMatches =
-    Boolean(flightId) && trip?.flightId === flightId && seatPassengers.length > 0;
+  const tripMatches = Boolean(flightId) && trip?.flightId === flightId && seatPassengers.length > 0;
 
   useEffect(() => {
     if (!tripMatches) {

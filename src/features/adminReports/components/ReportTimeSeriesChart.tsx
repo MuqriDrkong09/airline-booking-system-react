@@ -12,7 +12,11 @@ import {
 } from 'recharts';
 import { REPORT_CHART_COLORS } from '../constants/options';
 import type { ReportTimeSeriesPoint } from '../types/adminReport';
-import { formatCompactNumber, formatReportCurrency, formatReportNumber } from '../utils/formatReport';
+import {
+  formatCompactNumber,
+  formatReportCurrency,
+  formatReportNumber,
+} from '../utils/formatReport';
 import { ReportChartCard } from './ReportChartCard';
 
 export interface ReportTimeSeriesChartProps {
@@ -40,9 +44,7 @@ export function ReportTimeSeriesChart({
   const chartData = [...data];
 
   const formatValue = (value: number) =>
-    valueFormat === 'currency'
-      ? formatReportCurrency(value, currency)
-      : formatReportNumber(value);
+    valueFormat === 'currency' ? formatReportCurrency(value, currency) : formatReportNumber(value);
 
   const chart =
     variant === 'line' ? (

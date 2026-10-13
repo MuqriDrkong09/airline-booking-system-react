@@ -130,9 +130,7 @@ describe('checkInRules', () => {
 
   it('detects departed flights and closed windows', () => {
     expect(isFlightDeparted(makeBooking({ departureHoursFromNow: -1 }))).toBe(true);
-    expect(getCheckInBlockedReason(makeBooking({ departureHoursFromNow: -1 }))).toBe(
-      'DEPARTED',
-    );
+    expect(getCheckInBlockedReason(makeBooking({ departureHoursFromNow: -1 }))).toBe('DEPARTED');
     expect(getCheckInBlockedReason(makeBooking({ departureHoursFromNow: 0.5 }))).toBe(
       'WINDOW_CLOSED',
     );

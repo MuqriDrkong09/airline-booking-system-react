@@ -68,12 +68,7 @@ export function AirportForm({ formId, initialAirport, onSubmit }: AirportFormPro
           name="code"
           control={control}
           render={({ field }) => (
-            <FormField
-              id="airport-code"
-              label="Code"
-              required
-              errorMessage={errors.code?.message}
-            >
+            <FormField id="airport-code" label="Code" required errorMessage={errors.code?.message}>
               <AppInput
                 {...field}
                 placeholder="KUL"
@@ -87,12 +82,7 @@ export function AirportForm({ formId, initialAirport, onSubmit }: AirportFormPro
           name="name"
           control={control}
           render={({ field }) => (
-            <FormField
-              id="airport-name"
-              label="Name"
-              required
-              errorMessage={errors.name?.message}
-            >
+            <FormField id="airport-name" label="Name" required errorMessage={errors.name?.message}>
               <AppInput {...field} placeholder="Kuala Lumpur International Airport" />
             </FormField>
           )}
@@ -104,12 +94,7 @@ export function AirportForm({ formId, initialAirport, onSubmit }: AirportFormPro
           name="city"
           control={control}
           render={({ field }) => (
-            <FormField
-              id="airport-city"
-              label="City"
-              required
-              errorMessage={errors.city?.message}
-            >
+            <FormField id="airport-city" label="City" required errorMessage={errors.city?.message}>
               <AppInput {...field} placeholder="Kuala Lumpur" />
             </FormField>
           )}

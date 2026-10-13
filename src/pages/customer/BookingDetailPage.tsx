@@ -82,11 +82,7 @@ export function BookingDetailPage() {
               >
                 My bookings
               </AppButton>
-              <AppButton
-                component={RouterLink}
-                to={APP_ROUTES.customer.flights}
-                variant="outlined"
-              >
+              <AppButton component={RouterLink} to={APP_ROUTES.customer.flights} variant="outlined">
                 Search flights
               </AppButton>
               <AppButton variant="text" onClick={retry}>
@@ -107,11 +103,7 @@ export function BookingDetailPage() {
       description={`Reference ${booking.reference} · ${BOOKING_STATUS_LABELS[booking.status]}`}
       action={
         <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
-          <AppButton
-            component={RouterLink}
-            to={APP_ROUTES.customer.bookings}
-            variant="outlined"
-          >
+          <AppButton component={RouterLink} to={APP_ROUTES.customer.bookings} variant="outlined">
             My bookings
           </AppButton>
           {showCancel ? (
@@ -163,13 +155,8 @@ export function BookingDetailPage() {
             title={BOOKING_STATUS_LABELS[booking.status]}
           >
             Cancellation fee{' '}
-            {formatBookingMoney(booking.cancellation.fee, booking.cancellation.currency)}
-            . Refund{' '}
-            {formatBookingMoney(
-              booking.cancellation.refundAmount,
-              booking.cancellation.currency,
-            )}
-            .
+            {formatBookingMoney(booking.cancellation.fee, booking.cancellation.currency)}. Refund{' '}
+            {formatBookingMoney(booking.cancellation.refundAmount, booking.cancellation.currency)}.
           </AppAlert>
         ) : null}
 

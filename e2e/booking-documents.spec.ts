@@ -43,7 +43,9 @@ test.describe('Booking documents', () => {
       .getByRole('link', { name: 'View boarding pass' })
       .or(page.getByRole('button', { name: 'View boarding pass' }))
       .click();
-    await expect(page.getByRole('heading', { name: 'Boarding pass', exact: true }).first()).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Boarding pass', exact: true }).first(),
+    ).toBeVisible();
     await expect(page.getByText(reference, { exact: true }).first()).toBeVisible();
   });
 });

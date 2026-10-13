@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useMemo } from 'react';
 import { SEAT_CLASS_LABELS, type SeatStatus } from '../constants/seat';
 import type { SeatRowModel } from '../types/seat';
 import { SeatRow } from './SeatRow';
@@ -21,7 +22,17 @@ export function SeatMap({
   selectedLabelBySeatId,
   onSelect,
 }: SeatMapProps) {
-  let lastClass: SeatRowModel['class'] | null = null;
+  const rowsWithCabinHeaders = useMemo(
+    () =>
+      rows.map((row, index) => {
+        const previous = index > 0 ? rows[index - 1] : undefined;
+        return {
+          row,
+          showCabinHeader: !previous || previous.class !== row.class,
+        };
+      }),
+    [rows],
+  );
 
   return (
     <Box
@@ -56,30 +67,26 @@ export function SeatMap({
         </Typography>
 
         <Stack spacing={0.25} sx={{ alignItems: 'center' }}>
-          {rows.map((row) => {
-            const showCabinHeader = row.class !== lastClass;
-            lastClass = row.class;
-            return (
-              <Box key={row.row} sx={{ width: 'fit-content' }}>
-                {showCabinHeader ? (
-                  <Typography
-                    variant="overline"
-                    color="primary"
-                    component="h3"
-                    sx={{ display: 'block', mt: 1, mb: 0.5, textAlign: 'center' }}
-                  >
-                    {SEAT_CLASS_LABELS[row.class]}
-                  </Typography>
-                ) : null}
-                <SeatRow
-                  row={row}
-                  displayStatusBySeatId={displayStatusBySeatId}
-                  selectedLabelBySeatId={selectedLabelBySeatId}
-                  onSelect={onSelect}
-                />
-              </Box>
-            );
-          })}
+          {rowsWithCabinHeaders.map(({ row, showCabinHeader }) => (
+            <Box key={row.row} sx={{ width: 'fit-content' }}>
+              {showCabinHeader ? (
+                <Typography
+                  variant="overline"
+                  color="primary"
+                  component="h3"
+                  sx={{ display: 'block', mt: 1, mb: 0.5, textAlign: 'center' }}
+                >
+                  {SEAT_CLASS_LABELS[row.class]}
+                </Typography>
+              ) : null}
+              <SeatRow
+                row={row}
+                displayStatusBySeatId={displayStatusBySeatId}
+                selectedLabelBySeatId={selectedLabelBySeatId}
+                onSelect={onSelect}
+              />
+            </Box>
+          ))}
         </Stack>
 
         <Typography

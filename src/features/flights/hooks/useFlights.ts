@@ -11,10 +11,10 @@ export function isCompleteFlightSearchRequest(
 
   return Boolean(
     request.from?.trim() &&
-      request.to?.trim() &&
-      request.departure?.trim() &&
-      request.cabinClass &&
-      typeof request.adults === 'number',
+    request.to?.trim() &&
+    request.departure?.trim() &&
+    request.cabinClass &&
+    typeof request.adults === 'number',
   );
 }
 
@@ -22,8 +22,7 @@ export function useSearchFlightsQuery(
   request: Partial<FlightSearchRequest> | null | undefined,
   options: { enabled?: boolean } = {},
 ) {
-  const enabled =
-    (options.enabled ?? true) && isCompleteFlightSearchRequest(request);
+  const enabled = (options.enabled ?? true) && isCompleteFlightSearchRequest(request);
 
   const normalized: FlightSearchRequest | null = enabled
     ? {

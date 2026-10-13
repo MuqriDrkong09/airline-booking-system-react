@@ -50,9 +50,7 @@ describe('AuthPageShell', () => {
 
 describe('AuthTextLink', () => {
   it('renders a router link to the given path', () => {
-    renderWithProviders(
-      <AuthTextLink to="/auth/register">Create an account</AuthTextLink>,
-    );
+    renderWithProviders(<AuthTextLink to="/auth/register">Create an account</AuthTextLink>);
 
     const link = screen.getByRole('link', { name: 'Create an account' });
     expect(link).toHaveAttribute('href', '/auth/register');

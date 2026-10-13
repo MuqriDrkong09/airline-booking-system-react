@@ -19,7 +19,11 @@ export function AppBreadcrumbs() {
 
         if (isCurrent) {
           return (
-            <Typography key={`${crumb.to}-${crumb.label}`} color="text.primary" sx={{ fontWeight: 600 }}>
+            <Typography
+              key={`${crumb.to}-${crumb.label}`}
+              color="text.primary"
+              sx={{ fontWeight: 600 }}
+            >
               {crumb.label}
             </Typography>
           );

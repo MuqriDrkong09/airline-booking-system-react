@@ -44,7 +44,11 @@ export function formatSeatPrice(price: number, currency = 'USD'): string {
   }).format(price);
 }
 
-export function passengerDisplayName(firstName: string, lastName: string, fallback: string): string {
+export function passengerDisplayName(
+  firstName: string,
+  lastName: string,
+  fallback: string,
+): string {
   const name = `${firstName} ${lastName}`.trim();
   return name || fallback;
 }

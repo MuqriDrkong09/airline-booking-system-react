@@ -9,11 +9,7 @@ export function MyBookingsPage() {
       title="My Bookings"
       description="View upcoming, past, and cancelled bookings. Manage, check in, or download tickets."
       action={
-        <AppButton
-          component={RouterLink}
-          to={APP_ROUTES.customer.flights}
-          variant="contained"
-        >
+        <AppButton component={RouterLink} to={APP_ROUTES.customer.flights} variant="contained">
           Search flights
         </AppButton>
       }

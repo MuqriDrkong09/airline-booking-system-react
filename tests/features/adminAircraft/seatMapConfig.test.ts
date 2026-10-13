@@ -42,9 +42,7 @@ describe('seat map configuration', () => {
 
     expect(next).toHaveLength(6);
     expect(next.find((seat) => seat.row === 1 && seat.column === 'A')?.seatType).toBe('PREMIUM');
-    expect(next.find((seat) => seat.row === 3 && seat.column === 'A')?.cabinClass).toBe(
-      'BUSINESS',
-    );
+    expect(next.find((seat) => seat.row === 3 && seat.column === 'A')?.cabinClass).toBe('BUSINESS');
   });
 
   it('rejects invalid seat maps through zod validation', () => {

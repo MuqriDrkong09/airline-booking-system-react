@@ -27,9 +27,7 @@ describe('LoadingSpinner', () => {
   });
 
   it('wraps the spinner in a centered layout when centered is true', () => {
-    const { container } = renderWithProviders(
-      <LoadingSpinner centered label="Please wait" />,
-    );
+    const { container } = renderWithProviders(<LoadingSpinner centered label="Please wait" />);
 
     const status = screen.getByRole('status');
     expect(container.firstElementChild).not.toBe(status);

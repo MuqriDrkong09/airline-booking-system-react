@@ -9,10 +9,7 @@ export type {
   ReportTimeSeriesPoint,
   ResolvedReportRange,
 } from './types/adminReport';
-export {
-  EMPTY_REPORT_FILTERS,
-  REPORT_PERIOD_PRESETS,
-} from './types/adminReport';
+export { EMPTY_REPORT_FILTERS, REPORT_PERIOD_PRESETS } from './types/adminReport';
 export {
   adminReportKeys,
   adminReportsApi,

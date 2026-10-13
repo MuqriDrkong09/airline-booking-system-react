@@ -59,12 +59,7 @@ export function AddonCard({
               Remove
             </AppButton>
           ) : (
-            <AppButton
-              size="small"
-              variant="contained"
-              disabled={isDisabled}
-              onClick={onSelect}
-            >
+            <AppButton size="small" variant="contained" disabled={isDisabled} onClick={onSelect}>
               Add
             </AppButton>
           )}

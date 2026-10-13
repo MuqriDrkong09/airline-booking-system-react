@@ -1,18 +1,10 @@
 import type { FlightSearchFormValues } from '../types';
 import { formatAirportOptionLabel } from './airportLabels';
-import {
-  criteriaFromFormValues,
-  formatCabinLabel,
-  formatPassengerSummary,
-} from './searchParams';
+import { criteriaFromFormValues, formatCabinLabel, formatPassengerSummary } from './searchParams';
 
 export function formatSearchSummary(values: FlightSearchFormValues): string {
   const criteria = criteriaFromFormValues(values);
-  const passengers = formatPassengerSummary(
-    values.adults,
-    values.children,
-    values.infants,
-  );
+  const passengers = formatPassengerSummary(values.adults, values.children, values.infants);
   const cabin = formatCabinLabel(values.cabinClass);
 
   if (values.tripType === 'MULTI_CITY') {

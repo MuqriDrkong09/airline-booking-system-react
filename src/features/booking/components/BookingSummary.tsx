@@ -83,10 +83,7 @@ export function BookingSummary({ editHrefs }: BookingSummaryProps) {
         </Stack>
 
         <Stack spacing={2.5}>
-          <PriceBreakdown
-            breakdown={priceBreakdown}
-            promoCode={promoCode?.code ?? null}
-          />
+          <PriceBreakdown breakdown={priceBreakdown} promoCode={promoCode?.code ?? null} />
 
           <PromoCodeInput />
 
@@ -104,8 +101,8 @@ export function BookingSummary({ editHrefs }: BookingSummaryProps) {
                 }
                 label={
                   <Typography variant="body2">
-                    I confirm that the flight, passenger, seat, baggage, meal, and add-on
-                    details above are correct.
+                    I confirm that the flight, passenger, seat, baggage, meal, and add-on details
+                    above are correct.
                   </Typography>
                 }
               />

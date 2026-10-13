@@ -7,9 +7,7 @@ import { createHttpAirportApi } from './httpAirportApi';
  * Domain service: airports.
  * Mock vs HTTP is selected via `VITE_USE_MOCK_AUTH`.
  */
-export const airportApi: AirportsApi = env.useMockAuth
-  ? mockAirportsApi
-  : createHttpAirportApi();
+export const airportApi: AirportsApi = env.useMockAuth ? mockAirportsApi : createHttpAirportApi();
 
 export { createHttpAirportApi };
 export type { AirportsApi };

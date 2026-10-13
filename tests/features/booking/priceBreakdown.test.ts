@@ -123,10 +123,7 @@ describe('priceBreakdown', () => {
 
     const breakdown = priceBreakdownFromBooking({
       selectedFlight: flight,
-      passengers: [
-        passenger({ id: 'a', type: 'ADULT' }),
-        passenger({ id: 'i', type: 'INFANT' }),
-      ],
+      passengers: [passenger({ id: 'a', type: 'ADULT' }), passenger({ id: 'i', type: 'INFANT' })],
       seats: [{ passengerId: 'a', seatId: '12A', label: '12A', price: 20 }],
       baggageTotal: 15,
       mealTotal: 8,

@@ -51,9 +51,21 @@ export function createMockAdminDashboardData(): AdminDashboardData {
       { status: 'REFUNDED', label: 'Refunded', count: 30 },
     ],
     airlinePerformance: [
-      { airline: 'Malaysia Airlines', code: 'MH', bookings: 412, revenue: 186_400, onTimeRate: 0.91 },
+      {
+        airline: 'Malaysia Airlines',
+        code: 'MH',
+        bookings: 412,
+        revenue: 186_400,
+        onTimeRate: 0.91,
+      },
       { airline: 'AirAsia', code: 'AK', bookings: 388, revenue: 142_250, onTimeRate: 0.87 },
-      { airline: 'Singapore Airlines', code: 'SQ', bookings: 276, revenue: 198_720, onTimeRate: 0.94 },
+      {
+        airline: 'Singapore Airlines',
+        code: 'SQ',
+        bookings: 276,
+        revenue: 198_720,
+        onTimeRate: 0.94,
+      },
       { airline: 'Emirates', code: 'EK', bookings: 198, revenue: 156_100, onTimeRate: 0.9 },
       { airline: 'Qatar Airways', code: 'QR', bookings: 164, revenue: 121_480, onTimeRate: 0.92 },
     ],

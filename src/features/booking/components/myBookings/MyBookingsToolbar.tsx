@@ -3,10 +3,7 @@ import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { AppInput, AppSelect } from '@/components/common';
-import {
-  MY_BOOKINGS_TABS,
-  type MyBookingsTab,
-} from '../../utils/bookingStatus';
+import { MY_BOOKINGS_TABS, type MyBookingsTab } from '../../utils/bookingStatus';
 import type { MyBookingsSort } from '../../utils/myBookingsQuery';
 
 const SORT_OPTIONS: { label: string; value: MyBookingsSort }[] = [
@@ -44,11 +41,7 @@ export function MyBookingsToolbar({
         aria-label="Booking status tabs"
       >
         {MY_BOOKINGS_TABS.map((item) => (
-          <Tab
-            key={item.id}
-            value={item.id}
-            label={`${item.label} (${counts[item.id]})`}
-          />
+          <Tab key={item.id} value={item.id} label={`${item.label} (${counts[item.id]})`} />
         ))}
       </Tabs>
 

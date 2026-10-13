@@ -145,7 +145,12 @@ export function AdminBookingsView() {
         </AppAlert>
       ) : null}
 
-      {total === 0 && !query.search && !query.status && !query.flight && !query.dateFrom && !query.dateTo ? (
+      {total === 0 &&
+      !query.search &&
+      !query.status &&
+      !query.flight &&
+      !query.dateFrom &&
+      !query.dateTo ? (
         <EmptyState
           title="No bookings yet"
           message="Bookings will appear here once customers complete checkout, or use the mock seed data in development."

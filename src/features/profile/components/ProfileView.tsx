@@ -92,10 +92,7 @@ export function ProfileView({ user }: ProfileViewProps) {
         <ProfileField label="Date of birth" value={formatDate(user.dateOfBirth)} />
       </Stack>
 
-      <ProfileField
-        label="Nationality"
-        value={findLabel(NATIONALITIES, user.nationality)}
-      />
+      <ProfileField label="Nationality" value={findLabel(NATIONALITIES, user.nationality)} />
 
       <Stack
         direction={{ xs: 'column', md: 'row' }}

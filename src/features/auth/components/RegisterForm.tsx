@@ -39,7 +39,9 @@ const fieldColumnSx = {
 
 function getMaxDateOfBirth(): string {
   const today = new Date();
-  const max = new Date(Date.UTC(today.getUTCFullYear() - 18, today.getUTCMonth(), today.getUTCDate()));
+  const max = new Date(
+    Date.UTC(today.getUTCFullYear() - 18, today.getUTCMonth(), today.getUTCDate()),
+  );
   return max.toISOString().slice(0, 10);
 }
 
@@ -279,7 +281,8 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
                   slotProps={{
                     input: { 'aria-describedby': 'register-terms-helper' },
                   }}
-                />              }
+                />
+              }
               label={
                 <Typography variant="body2">
                   I accept the terms and conditions and privacy policy

@@ -33,8 +33,7 @@ export function AppDialog({
   // Avoid flaky close assertions under load; production keeps MUI defaults.
   const resolvedTransitionDuration =
     transitionDuration ?? (process.env.NODE_ENV === 'test' ? 0 : undefined);
-  const resolvedShowClose =
-    showCloseButton ?? (actions === undefined || actions === null);
+  const resolvedShowClose = showCloseButton ?? (actions === undefined || actions === null);
 
   return (
     <Dialog

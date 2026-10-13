@@ -323,9 +323,7 @@ export const mockAuthApi: AuthApi = {
   },
 };
 
-export function createMockAuthApiWithSessionLookup(
-  getAccessToken: () => string | null,
-): AuthApi {
+export function createMockAuthApiWithSessionLookup(getAccessToken: () => string | null): AuthApi {
   function requireAccount(): MockAccount {
     const token = getAccessToken();
     if (!token) {

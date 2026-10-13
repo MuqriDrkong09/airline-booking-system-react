@@ -24,10 +24,7 @@ export type {
   BookingRecordStatus,
   BookingReference,
 } from './types/bookingRecord';
-export {
-  BOOKING_DOMAIN_STATUSES,
-  BOOKING_RECORD_STATUSES,
-} from './types/bookingRecord';
+export { BOOKING_DOMAIN_STATUSES, BOOKING_RECORD_STATUSES } from './types/bookingRecord';
 export {
   BOOKING_TAX_RATE,
   buildPriceBreakdown,
@@ -39,11 +36,7 @@ export {
   toSafePaymentInfo,
 } from './utils/priceBreakdown';
 export { formatBookingMoney } from './utils/formatMoney';
-export {
-  createBooking,
-  generateBookingId,
-  generateBookingReference,
-} from './utils/createBooking';
+export { createBooking, generateBookingId, generateBookingReference } from './utils/createBooking';
 export type { CreateBookingInput } from './utils/createBooking';
 export {
   validateBookingAddons,
@@ -54,10 +47,7 @@ export {
   validateBookingState,
   validateCheckoutForBooking,
 } from './utils/validateCheckout';
-export type {
-  BookingValidationResult,
-  BookingValidationStep,
-} from './utils/validateCheckout';
+export type { BookingValidationResult, BookingValidationStep } from './utils/validateCheckout';
 export {
   selectBookingReference,
   selectBookingStatus,
@@ -87,10 +77,7 @@ export type {
 } from './services/completeBookingAfterPayment';
 export { useBookingSummaryHydration } from './hooks/useBookingSummaryHydration';
 export { BookingSummary } from './components/BookingSummary';
-export type {
-  BookingSummaryEditHrefs,
-  BookingSummaryProps,
-} from './components/BookingSummary';
+export type { BookingSummaryEditHrefs, BookingSummaryProps } from './components/BookingSummary';
 export { FlightSummary } from './components/FlightSummary';
 export type { FlightSummaryProps } from './components/FlightSummary';
 export { PassengerSummary } from './components/PassengerSummary';
@@ -136,10 +123,7 @@ export type { BookingCancellationPolicyDetailProps } from './components/detail/B
 export { BookingDetailView } from './components/detail/BookingDetailView';
 export type { BookingDetailViewProps } from './components/detail/BookingDetailView';
 export { useBookingDetail } from './hooks/useBookingDetail';
-export type {
-  BookingDetailState,
-  BookingDetailStatus,
-} from './hooks/useBookingDetail';
+export type { BookingDetailState, BookingDetailStatus } from './hooks/useBookingDetail';
 export {
   formatBookingTimestamp,
   formatPassengerLabel,
@@ -160,10 +144,7 @@ export {
   formatETicketAsText,
   parseETicketQrPayload,
 } from './utils/buildBookingETicket';
-export type {
-  BookingETicket,
-  BookingETicketBoardingInfo,
-} from './types/eticket';
+export type { BookingETicket, BookingETicketBoardingInfo } from './types/eticket';
 export type { BoardingPass } from './types/boardingPass';
 export {
   assignBoardingGate,
@@ -221,10 +202,7 @@ export { CheckInView } from './components/checkIn/CheckInView';
 export type { CheckInStep } from './components/checkIn/CheckInView';
 export { CheckInLookupForm } from './components/checkIn/CheckInLookupForm';
 export type { CheckInLookupFormProps } from './components/checkIn/CheckInLookupForm';
-export {
-  CHECK_IN_CLOSES_HOURS_BEFORE,
-  CHECK_IN_OPENS_HOURS_BEFORE,
-} from './constants/checkIn';
+export { CHECK_IN_CLOSES_HOURS_BEFORE, CHECK_IN_OPENS_HOURS_BEFORE } from './constants/checkIn';
 export {
   baggageSummaryForPassenger,
   bookingMatchesLastName,

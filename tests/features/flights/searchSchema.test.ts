@@ -1,4 +1,7 @@
-import { flightSearchSchema, createDefaultFlightSearchValues } from '@/features/flights/schemas/searchSchema';
+import {
+  flightSearchSchema,
+  createDefaultFlightSearchValues,
+} from '@/features/flights/schemas/searchSchema';
 import { MOCK_AIRPORTS } from '@/features/flights';
 import { addDaysIso, todayIsoDate } from '@/features/flights/utils/dates';
 
@@ -88,9 +91,7 @@ describe('flightSearchSchema', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(
-        result.error.issues.some(
-          (issue) => issue.path.join('.') === 'legs.1.departureDate',
-        ),
+        result.error.issues.some((issue) => issue.path.join('.') === 'legs.1.departureDate'),
       ).toBe(true);
     }
   });
@@ -123,9 +124,7 @@ describe('flightSearchSchema', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(
-        result.error.issues.some((issue) =>
-          issue.message.toLowerCase().includes('past'),
-        ),
+        result.error.issues.some((issue) => issue.message.toLowerCase().includes('past')),
       ).toBe(true);
     }
   });

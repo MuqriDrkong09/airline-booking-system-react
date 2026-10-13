@@ -65,11 +65,7 @@ export function CustomerHomeUpcomingTrips() {
           title="No upcoming trips"
           message="Search for a flight and complete a booking to see your trips here."
           action={
-            <AppButton
-              component={RouterLink}
-              to={APP_ROUTES.customer.flights}
-              variant="contained"
-            >
+            <AppButton component={RouterLink} to={APP_ROUTES.customer.flights} variant="contained">
               Search flights
             </AppButton>
           }

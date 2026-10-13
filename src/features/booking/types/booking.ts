@@ -20,12 +20,7 @@ export type BookingStatus = CheckoutStatus;
 /** @deprecated Prefer CHECKOUT_STATUSES */
 export const BOOKING_STATUSES = CHECKOUT_STATUSES;
 
-export const PAYMENT_METHODS = [
-  'CREDIT_CARD',
-  'DEBIT_CARD',
-  'FPX',
-  'E_WALLET',
-] as const;
+export const PAYMENT_METHODS = ['CREDIT_CARD', 'DEBIT_CARD', 'FPX', 'E_WALLET'] as const;
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
 /** Seat assignment persisted on the booking with priced snapshot. */

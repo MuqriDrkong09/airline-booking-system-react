@@ -38,11 +38,7 @@ export function FlightDetails({
         <FlightTimeline flight={flight} />
       </AppCard>
 
-      <Stack
-        direction={{ xs: 'column', md: 'row' }}
-        spacing={2}
-        sx={{ alignItems: 'stretch' }}
-      >
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ alignItems: 'stretch' }}>
         <AppCard
           outlined
           sx={{

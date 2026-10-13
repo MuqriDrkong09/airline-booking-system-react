@@ -32,8 +32,7 @@ export function MealSelectionPage() {
     [passengers],
   );
 
-  const tripMatches =
-    Boolean(flightId) && trip?.flightId === flightId && mealPassengers.length > 0;
+  const tripMatches = Boolean(flightId) && trip?.flightId === flightId && mealPassengers.length > 0;
 
   if (!tripMatches) {
     return (

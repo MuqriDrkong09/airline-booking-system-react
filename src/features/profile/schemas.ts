@@ -1,10 +1,6 @@
 import { z } from 'zod';
 import { MIN_REGISTRATION_AGE, USER_TITLES } from '@/constants/registration';
-import {
-  CABIN_PREFERENCES,
-  MEAL_PREFERENCES,
-  SEAT_PREFERENCES,
-} from '@/types/profile';
+import { CABIN_PREFERENCES, MEAL_PREFERENCES, SEAT_PREFERENCES } from '@/types/profile';
 
 const titleValues = USER_TITLES.map((title) => title.value) as [
   (typeof USER_TITLES)[number]['value'],
@@ -46,9 +42,7 @@ function isValidCalendarDate(value: string): boolean {
   const date = new Date(Date.UTC(year, month - 1, day));
 
   return (
-    date.getUTCFullYear() === year &&
-    date.getUTCMonth() === month - 1 &&
-    date.getUTCDate() === day
+    date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day
   );
 }
 

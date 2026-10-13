@@ -1,8 +1,5 @@
 export { apiClient } from './client';
-export {
-  createApiClient,
-  DEFAULT_API_TIMEOUT_MS,
-} from './createApiClient';
+export { createApiClient, DEFAULT_API_TIMEOUT_MS } from './createApiClient';
 export type { CreateApiClientOptions } from './createApiClient';
 export { API_ENDPOINTS, endpoints } from './endpoints';
 export {

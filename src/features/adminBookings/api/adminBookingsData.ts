@@ -153,8 +153,9 @@ function booking(params: {
     addons: [],
     promoCode: null,
     payment: {
-      method: 'CARD',
-      billingName: `${params.passengers[0]?.firstName ?? ''} ${params.passengers[0]?.lastName ?? ''}`.trim(),
+      method: 'CREDIT_CARD',
+      billingName:
+        `${params.passengers[0]?.firstName ?? ''} ${params.passengers[0]?.lastName ?? ''}`.trim(),
       billingEmail: params.passengers[0]?.email ?? '',
       cardBrand: 'Visa',
       cardLast4: '4242',

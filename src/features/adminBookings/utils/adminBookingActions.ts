@@ -104,10 +104,7 @@ export function applyBookingRefund(booking: Booking, todayIso = todayIsoDate()):
   };
 }
 
-export function applyBookingModify(
-  booking: Booking,
-  input: AdminBookingModifyInput,
-): Booking {
+export function applyBookingModify(booking: Booking, input: AdminBookingModifyInput): Booking {
   if (!canModifyBooking(booking)) {
     throw new Error('This booking cannot be modified.');
   }

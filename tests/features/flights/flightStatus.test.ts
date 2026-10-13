@@ -44,9 +44,7 @@ describe('flight status data', () => {
   });
 
   it('returns null for the ZZ000 empty fixture', () => {
-    expect(
-      generateMockFlightStatus({ flightNumber: 'ZZ000', date: '2026-10-20' }),
-    ).toBeNull();
+    expect(generateMockFlightStatus({ flightNumber: 'ZZ000', date: '2026-10-20' })).toBeNull();
   });
 
   it('resolves past dates to arrived or cancelled', () => {

@@ -75,9 +75,7 @@ export function SeatSelectionSummary({
                   {isActive ? <AppBadge label="Selecting" size="small" tone="primary" /> : null}
                 </Stack>
                 <Typography variant="body2" color="text.secondary">
-                  {seat
-                    ? `${seat.label} · ${formatSeatPrice(seat.price)}`
-                    : 'No seat assigned'}
+                  {seat ? `${seat.label} · ${formatSeatPrice(seat.price)}` : 'No seat assigned'}
                 </Typography>
               </Stack>
 
@@ -91,11 +89,7 @@ export function SeatSelectionSummary({
                   {isActive ? 'Selected' : 'Select'}
                 </AppButton>
                 {seat ? (
-                  <AppButton
-                    size="small"
-                    variant="text"
-                    onClick={() => onClearSeat(passenger.id)}
-                  >
+                  <AppButton size="small" variant="text" onClick={() => onClearSeat(passenger.id)}>
                     Clear
                   </AppButton>
                 ) : null}
@@ -113,10 +107,7 @@ export function SeatSelectionSummary({
 
         <Divider />
 
-        <Stack
-          direction="row"
-          sx={{ justifyContent: 'space-between', alignItems: 'center' }}
-        >
+        <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant="body2" color="text.secondary">
             {assignments.length} of {eligible.length} seats assigned
           </Typography>

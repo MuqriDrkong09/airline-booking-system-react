@@ -78,55 +78,49 @@ describe('AdminPromoCodesPage', () => {
     });
   });
 
-  it(
-    'creates a promo code through the dialog form',
-    async () => {
-      const user = userEvent.setup({ delay: null });
+  it('creates a promo code through the dialog form', async () => {
+    const user = userEvent.setup({ delay: null });
 
-      renderWithProviders(<AdminPromoCodesPage />, {
-        initialEntries: ['/admin/promo-codes'],
-      });
+    renderWithProviders(<AdminPromoCodesPage />, {
+      initialEntries: ['/admin/promo-codes'],
+    });
 
-      await screen.findByText('FLIGHT100');
-      await user.click(screen.getByRole('button', { name: 'Create promo code' }));
+    await screen.findByText('FLIGHT100');
+    await user.click(screen.getByRole('button', { name: 'Create promo code' }));
 
-      const dialog = await screen.findByRole('dialog');
-      expect(
-        within(dialog).getByRole('heading', { name: 'Create promo code' }),
-      ).toBeInTheDocument();
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByRole('heading', { name: 'Create promo code' })).toBeInTheDocument();
 
-      fireEvent.change(within(dialog).getByPlaceholderText('SAVE15'), {
-        target: { value: 'SUMMER10' },
-      });
-      fireEvent.change(within(dialog).getByPlaceholderText('15% off bookings'), {
-        target: { value: 'Summer 10% off' },
-      });
-      await chooseSelectOption(user, /^Discount type$/i, /^Percentage$/i, dialog);
-      fireEvent.change(within(dialog).getByLabelText(/^Discount value/i), {
-        target: { value: '10' },
-      });
-      fireEvent.change(within(dialog).getByLabelText(/^Minimum booking amount/i), {
-        target: { value: '100' },
-      });
-      fireEvent.change(within(dialog).getByLabelText(/^Maximum discount/i), {
-        target: { value: '40' },
-      });
-      fireEvent.change(within(dialog).getByLabelText(/^Start date/i), {
-        target: { value: '2026-06-01' },
-      });
-      fireEvent.change(within(dialog).getByLabelText(/^End date/i), {
-        target: { value: '2026-08-31' },
-      });
-      fireEvent.change(within(dialog).getByLabelText(/^Usage limit/i), {
-        target: { value: '250' },
-      });
+    fireEvent.change(within(dialog).getByPlaceholderText('SAVE15'), {
+      target: { value: 'SUMMER10' },
+    });
+    fireEvent.change(within(dialog).getByPlaceholderText('15% off bookings'), {
+      target: { value: 'Summer 10% off' },
+    });
+    await chooseSelectOption(user, /^Discount type$/i, /^Percentage$/i, dialog);
+    fireEvent.change(within(dialog).getByLabelText(/^Discount value/i), {
+      target: { value: '10' },
+    });
+    fireEvent.change(within(dialog).getByLabelText(/^Minimum booking amount/i), {
+      target: { value: '100' },
+    });
+    fireEvent.change(within(dialog).getByLabelText(/^Maximum discount/i), {
+      target: { value: '40' },
+    });
+    fireEvent.change(within(dialog).getByLabelText(/^Start date/i), {
+      target: { value: '2026-06-01' },
+    });
+    fireEvent.change(within(dialog).getByLabelText(/^End date/i), {
+      target: { value: '2026-08-31' },
+    });
+    fireEvent.change(within(dialog).getByLabelText(/^Usage limit/i), {
+      target: { value: '250' },
+    });
 
-      fireEvent.click(within(dialog).getByRole('button', { name: 'Create promo code' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Create promo code' }));
 
-      expect(await screen.findByText('SUMMER10', {}, { timeout: 3000 })).toBeInTheDocument();
-    },
-    15_000,
-  );
+    expect(await screen.findByText('SUMMER10', {}, { timeout: 3000 })).toBeInTheDocument();
+  }, 15_000);
 
   it('edits a promo code and deletes with confirmation', async () => {
     const user = userEvent.setup({ delay: null });

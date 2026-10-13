@@ -22,11 +22,7 @@ export {
   SEAT_STATUS_LABELS,
 } from './constants/seat';
 export { createAircraftSeatMap } from './utils/createSeatMap';
-export {
-  formatSeatPrice,
-  groupSeatsIntoRows,
-  passengerDisplayName,
-} from './utils/seatMap';
+export { formatSeatPrice, groupSeatsIntoRows, passengerDisplayName } from './utils/seatMap';
 export {
   applySeatSelection,
   calculateSeatPriceTotal,

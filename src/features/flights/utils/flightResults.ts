@@ -67,11 +67,7 @@ export function getHourOfDay(isoLocal: string): number {
   return Number.parseInt(hoursText, 10) || 0;
 }
 
-function matchesHourRange(
-  hour: number,
-  start: number | null,
-  end: number | null,
-): boolean {
+function matchesHourRange(hour: number, start: number | null, end: number | null): boolean {
   if (start !== null && hour < start) {
     return false;
   }
@@ -118,10 +114,7 @@ export function filterFlightOffers(
       return false;
     }
 
-    if (
-      filters.cabinClasses.length > 0 &&
-      !filters.cabinClasses.includes(flight.cabinClass)
-    ) {
+    if (filters.cabinClasses.length > 0 && !filters.cabinClasses.includes(flight.cabinClass)) {
       return false;
     }
 

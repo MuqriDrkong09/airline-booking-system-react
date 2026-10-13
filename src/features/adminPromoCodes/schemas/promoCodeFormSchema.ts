@@ -25,15 +25,10 @@ export const promoCodeFormSchema = z
       .max(160, 'Description is too long'),
     discountType: z.enum(PROMO_DISCOUNT_TYPES),
     discountValue: z.coerce.number().positive('Discount value must be greater than 0'),
-    minimumBookingAmount: z.coerce
-      .number()
-      .min(0, 'Minimum booking amount cannot be negative'),
+    minimumBookingAmount: z.coerce.number().min(0, 'Minimum booking amount cannot be negative'),
     maximumDiscount: z.preprocess(
       emptyToNull,
-      z.union([
-        z.null(),
-        z.coerce.number().min(0, 'Maximum discount cannot be negative'),
-      ]),
+      z.union([z.null(), z.coerce.number().min(0, 'Maximum discount cannot be negative')]),
     ),
     startDate: z
       .string()

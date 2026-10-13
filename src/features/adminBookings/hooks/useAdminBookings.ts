@@ -8,10 +8,7 @@ import {
   modifyAdminBooking,
   refundAdminBooking,
 } from '../api';
-import type {
-  AdminBookingListQuery,
-  AdminBookingModifyInput,
-} from '../types/adminBooking';
+import type { AdminBookingListQuery, AdminBookingModifyInput } from '../types/adminBooking';
 
 export function useAdminBookingsQuery(query: AdminBookingListQuery, enabled = true) {
   return useQuery({
@@ -66,13 +63,8 @@ export function useModifyAdminBookingMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      reference,
-      input,
-    }: {
-      reference: string;
-      input: AdminBookingModifyInput;
-    }) => modifyAdminBooking(reference, input),
+    mutationFn: ({ reference, input }: { reference: string; input: AdminBookingModifyInput }) =>
+      modifyAdminBooking(reference, input),
     onSuccess: async (booking) => {
       await queryClient.invalidateQueries({ queryKey: adminBookingKeys.lists() });
       queryClient.setQueryData(adminBookingKeys.detail(booking.reference), booking);

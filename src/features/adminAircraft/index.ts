@@ -8,18 +8,9 @@ export type {
   AircraftSeatMapCabinSection,
   AircraftSeatMapConfig,
 } from './types/adminAircraft';
-export {
-  ADMIN_SEAT_TYPE_VALUES,
-  EMPTY_ADMIN_AIRCRAFT_FILTERS,
-} from './types/adminAircraft';
-export {
-  DEFAULT_AIRCRAFT_FORM_VALUES,
-  aircraftFormSchema,
-} from './schemas/aircraftFormSchema';
-export type {
-  AircraftFormParsedValues,
-  AircraftFormValues,
-} from './schemas/aircraftFormSchema';
+export { ADMIN_SEAT_TYPE_VALUES, EMPTY_ADMIN_AIRCRAFT_FILTERS } from './types/adminAircraft';
+export { DEFAULT_AIRCRAFT_FORM_VALUES, aircraftFormSchema } from './schemas/aircraftFormSchema';
+export type { AircraftFormParsedValues, AircraftFormValues } from './schemas/aircraftFormSchema';
 export {
   aircraftConfiguredSeatSchema,
   aircraftSeatMapConfigSchema,

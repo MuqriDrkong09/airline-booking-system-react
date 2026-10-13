@@ -69,9 +69,7 @@ export function PaymentSummary({
           <Typography variant="body2" color="text.secondary">
             Taxes
           </Typography>
-          <Typography variant="body2">
-            {formatBookingMoney(breakdown.taxes, currency)}
-          </Typography>
+          <Typography variant="body2">{formatBookingMoney(breakdown.taxes, currency)}</Typography>
         </Stack>
         <Divider />
         <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>

@@ -1,10 +1,7 @@
 import type { Booking } from '@/features/booking';
 import { canCheckInBooking, getBookingTab } from '@/features/booking/utils/bookingStatus';
 import { canCancelBooking } from '@/features/booking/utils/cancellationQuote';
-import {
-  MY_BOOKINGS_PAGE_SIZE,
-  queryMyBookings,
-} from '@/features/booking/utils/myBookingsQuery';
+import { MY_BOOKINGS_PAGE_SIZE, queryMyBookings } from '@/features/booking/utils/myBookingsQuery';
 import type { FlightOffer } from '@/features/flights';
 
 function makeFlight(overrides?: Partial<FlightOffer>): FlightOffer {

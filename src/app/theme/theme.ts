@@ -8,10 +8,4 @@ export { breakpoints } from './breakpoints';
 export { createPalette } from './palette';
 export { shadows } from './shadows';
 export { typography } from './typography';
-export {
-  colorTokens,
-  radiusTokens,
-  spacingUnit,
-  zIndexTokens,
-  type ColorScheme,
-} from './tokens';
+export { colorTokens, radiusTokens, spacingUnit, zIndexTokens, type ColorScheme } from './tokens';

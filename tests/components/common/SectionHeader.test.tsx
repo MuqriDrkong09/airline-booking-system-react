@@ -29,16 +29,18 @@ describe('SectionHeader', () => {
   });
 
   it('maps h3 and h4 components to the h5 typography variant', () => {
-    const { rerender } = renderWithProviders(
-      <SectionHeader title="Filters" component="h3" />,
-    );
+    const { rerender } = renderWithProviders(<SectionHeader title="Filters" component="h3" />);
 
     expect(screen.getByRole('heading', { level: 3, name: 'Filters' })).toHaveClass(
       'MuiTypography-h5',
     );
 
     rerender(
-      <SectionHeader title="Sort options" component="h4" description={<span>Optional help</span>} />,
+      <SectionHeader
+        title="Sort options"
+        component="h4"
+        description={<span>Optional help</span>}
+      />,
     );
 
     expect(screen.getByRole('heading', { level: 4, name: 'Sort options' })).toHaveClass(

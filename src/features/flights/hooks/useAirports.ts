@@ -1,10 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-  airportKeys,
-  getAirportByCode,
-  getAirports,
-  searchAirports,
-} from '../api';
+import { airportKeys, getAirportByCode, getAirports, searchAirports } from '../api';
 import type { AirportSearchParams } from '../types';
 
 export function useAirportsQuery(params: Pick<AirportSearchParams, 'activeOnly'> = {}) {

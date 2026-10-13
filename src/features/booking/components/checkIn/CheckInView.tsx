@@ -22,22 +22,9 @@ import { CheckInPassengerStep } from './CheckInPassengerStep';
 import { CheckInResultStep } from './CheckInResultStep';
 import { CheckInSeatsStep } from './CheckInSeatsStep';
 
-export type CheckInStep =
-  | 'lookup'
-  | 'passengers'
-  | 'seats'
-  | 'baggage'
-  | 'confirm'
-  | 'result';
+export type CheckInStep = 'lookup' | 'passengers' | 'seats' | 'baggage' | 'confirm' | 'result';
 
-const STEP_ORDER: CheckInStep[] = [
-  'lookup',
-  'passengers',
-  'seats',
-  'baggage',
-  'confirm',
-  'result',
-];
+const STEP_ORDER: CheckInStep[] = ['lookup', 'passengers', 'seats', 'baggage', 'confirm', 'result'];
 
 const STEP_LABELS: Record<CheckInStep, string> = {
   lookup: 'Find booking',
@@ -60,22 +47,15 @@ export function CheckInView() {
   const [lookupError, setLookupError] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [checkedInPassengers, setCheckedInPassengers] = useState<BookingPassenger[]>(
-    [],
-  );
+  const [checkedInPassengers, setCheckedInPassengers] = useState<BookingPassenger[]>([]);
 
   const prefillReference = searchParams.get('reference')?.trim() ?? '';
 
-  const eligible = useMemo(
-    () => (booking ? getEligibleCheckInPassengers(booking) : []),
-    [booking],
-  );
+  const eligible = useMemo(() => (booking ? getEligibleCheckInPassengers(booking) : []), [booking]);
 
   const selectedPassengers = useMemo(
     () =>
-      booking
-        ? booking.passengers.filter((passenger) => selectedIds.includes(passenger.id))
-        : [],
+      booking ? booking.passengers.filter((passenger) => selectedIds.includes(passenger.id)) : [],
     [booking, selectedIds],
   );
 

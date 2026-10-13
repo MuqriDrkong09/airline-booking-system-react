@@ -1,8 +1,4 @@
-import {
-  MEAL_CATALOG,
-  type MealCatalogItem,
-  type MealType,
-} from '../constants/meals';
+import { MEAL_CATALOG, type MealCatalogItem, type MealType } from '../constants/meals';
 import type { MealPassenger, PassengerMealSelection } from '../types/meal';
 
 export function getMealCatalogItem(type: MealType): MealCatalogItem | undefined {
@@ -19,10 +15,7 @@ export function mealsForPassenger(
   return catalog.filter((item) => item.allowedPassengerTypes.includes(passenger.type));
 }
 
-export function isMealSelectable(
-  item: MealCatalogItem,
-  passenger: MealPassenger,
-): boolean {
+export function isMealSelectable(item: MealCatalogItem, passenger: MealPassenger): boolean {
   if (!item.available || item.remaining <= 0) {
     return false;
   }
@@ -61,10 +54,7 @@ export function calculateMealTotal(
   return selections.reduce((sum, selection) => sum + pricePassengerMeal(selection, catalog), 0);
 }
 
-export function countMealDemand(
-  selections: PassengerMealSelection[],
-  mealType: MealType,
-): number {
+export function countMealDemand(selections: PassengerMealSelection[], mealType: MealType): number {
   return selections.reduce((sum, selection) => {
     if (selection.mealType !== mealType) {
       return sum;
@@ -151,9 +141,7 @@ export function removePassengerMeal(
   passengerId: string,
 ): PassengerMealSelection[] {
   return selections.map((selection) =>
-    selection.passengerId === passengerId
-      ? defaultMealSelection(passengerId)
-      : selection,
+    selection.passengerId === passengerId ? defaultMealSelection(passengerId) : selection,
   );
 }
 

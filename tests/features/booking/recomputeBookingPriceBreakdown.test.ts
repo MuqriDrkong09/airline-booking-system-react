@@ -68,7 +68,13 @@ function makeBooking(overrides?: Partial<Booking>): Booking {
     meals: [],
     addons: [],
     promoCode: null,
-    payment: null,
+    payment: {
+      method: null,
+      billingName: '',
+      billingEmail: '',
+      cardBrand: '',
+      cardLast4: '',
+    },
     priceBreakdown: {
       currency: 'USD',
       baseFare: 0,

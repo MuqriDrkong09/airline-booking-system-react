@@ -45,10 +45,9 @@ export function createHttpAdminFlightsApi(client: AxiosInstance = apiClient): Ad
       flightId: string,
       status: FlightOperationalStatus,
     ): Promise<AdminFlight> {
-      const { data } = await client.patch<AdminFlight>(
-        API_ENDPOINTS.admin.flightStatus(flightId),
-        { status },
-      );
+      const { data } = await client.patch<AdminFlight>(API_ENDPOINTS.admin.flightStatus(flightId), {
+        status,
+      });
       return data;
     },
     async deleteFlight(flightId: string): Promise<void> {

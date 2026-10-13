@@ -40,8 +40,7 @@ export function PromoCodeResult({
             />
           </Stack>
           <Typography variant="body2" color="text.secondary">
-            You save {formatPromoAmount(applied.discountAmount, applied.currency)} on this
-            booking.
+            You save {formatPromoAmount(applied.discountAmount, applied.currency)} on this booking.
           </Typography>
         </Stack>
       </AppCard>

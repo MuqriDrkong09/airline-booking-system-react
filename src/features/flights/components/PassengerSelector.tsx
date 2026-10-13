@@ -70,7 +70,12 @@ export function PassengerCountControl({
           aria-labelledby={`${id}-label`}
           aria-live="polite"
           variant="body1"
-          sx={{ minWidth: 28, textAlign: 'center', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}
+          sx={{
+            minWidth: 28,
+            textAlign: 'center',
+            fontWeight: 700,
+            fontVariantNumeric: 'tabular-nums',
+          }}
         >
           {value}
         </Typography>

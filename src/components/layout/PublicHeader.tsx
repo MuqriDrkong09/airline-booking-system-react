@@ -4,10 +4,7 @@ import { useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useUiStore } from '@/app/store/uiStore';
 import { ThemeModeToggle } from '@/components/common/ThemeModeToggle';
-import {
-  LAYOUT_CONTENT_MAX_WIDTH,
-  LAYOUT_PAGE_GUTTER_X,
-} from '@/constants/layout';
+import { LAYOUT_CONTENT_MAX_WIDTH, LAYOUT_PAGE_GUTTER_X } from '@/constants/layout';
 import { PUBLIC_NAV_ITEMS, type NavItem } from '@/constants/nav';
 import { APP_ROUTES } from '@/constants/routes';
 import { getPostLoginRedirect, useAuth } from '@/features/auth';

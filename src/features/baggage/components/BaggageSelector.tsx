@@ -20,7 +20,11 @@ export interface BaggageSelectorProps {
   onChange: (selection: PassengerBaggageSelection) => void;
 }
 
-function priceLabel(kg: BaggageWeightKg, includedKg: number, alwaysPaid: boolean): {
+function priceLabel(
+  kg: BaggageWeightKg,
+  includedKg: number,
+  alwaysPaid: boolean,
+): {
   included: boolean;
   priceLabel: string;
 } {
@@ -76,7 +80,11 @@ export function BaggageSelector({
           </Stack>
         </Stack>
 
-        <Stack spacing={1} role="radiogroup" aria-label={`${passenger.displayName} checked baggage`}>
+        <Stack
+          spacing={1}
+          role="radiogroup"
+          aria-label={`${passenger.displayName} checked baggage`}
+        >
           <Typography variant="subtitle2">{BAGGAGE_TYPE_LABELS.CHECKED}</Typography>
           <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
             <BaggageOption

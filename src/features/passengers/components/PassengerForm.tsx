@@ -3,13 +3,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useMemo } from 'react';
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useWatch,
-  type Resolver,
-} from 'react-hook-form';
+import { FormProvider, useFieldArray, useForm, useWatch, type Resolver } from 'react-hook-form';
 import { AppAlert, AppButton, AppCard } from '@/components/common';
 import { useBookingStore } from '@/features/booking';
 import { createPassengersFormSchema } from '../schemas/passengerSchema';
@@ -80,19 +74,11 @@ export function PassengerForm({
   const watchedPassengers = useWatch({ control, name: 'passengers' });
 
   useEffect(() => {
-    const next =
-      storedPassengers.length > 0 ? storedPassengers : createPassengerSlots(counts);
+    const next = storedPassengers.length > 0 ? storedPassengers : createPassengerSlots(counts);
     reset({ passengers: next });
     // Reset only when the trip shape changes, not on every draft write.
     // eslint-disable-next-line react-hooks/exhaustive-deps -- trip-scoped
-  }, [
-    counts.adults,
-    counts.children,
-    counts.infants,
-    departureDate,
-    requiresPassport,
-    reset,
-  ]);
+  }, [counts.adults, counts.children, counts.infants, departureDate, requiresPassport, reset]);
 
   const adultOptions = useMemo(() => {
     const list = watchedPassengers ?? [];
@@ -186,8 +172,7 @@ export function PassengerForm({
           }}
         >
           <Typography variant="body2" color="text.secondary">
-            Total passengers:{' '}
-            {counts.adults} adult{counts.adults === 1 ? '' : 's'}
+            Total passengers: {counts.adults} adult{counts.adults === 1 ? '' : 's'}
             {counts.children > 0
               ? ` · ${counts.children} child${counts.children === 1 ? '' : 'ren'}`
               : ''}

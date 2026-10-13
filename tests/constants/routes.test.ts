@@ -35,17 +35,11 @@ describe('APP_ROUTES', () => {
       `/app/flights/${encoded}/passengers`,
     );
     expect(APP_ROUTES.customer.flightSeats(flightId)).toBe(`/app/flights/${encoded}/seats`);
-    expect(APP_ROUTES.customer.flightBaggage(flightId)).toBe(
-      `/app/flights/${encoded}/baggage`,
-    );
+    expect(APP_ROUTES.customer.flightBaggage(flightId)).toBe(`/app/flights/${encoded}/baggage`);
     expect(APP_ROUTES.customer.flightMeals(flightId)).toBe(`/app/flights/${encoded}/meals`);
     expect(APP_ROUTES.customer.flightAddons(flightId)).toBe(`/app/flights/${encoded}/addons`);
-    expect(APP_ROUTES.customer.flightSummary(flightId)).toBe(
-      `/app/flights/${encoded}/summary`,
-    );
-    expect(APP_ROUTES.customer.flightPayment(flightId)).toBe(
-      `/app/flights/${encoded}/payment`,
-    );
+    expect(APP_ROUTES.customer.flightSummary(flightId)).toBe(`/app/flights/${encoded}/summary`);
+    expect(APP_ROUTES.customer.flightPayment(flightId)).toBe(`/app/flights/${encoded}/payment`);
   });
 
   it('builds encoded customer booking document paths', () => {
@@ -56,15 +50,9 @@ describe('APP_ROUTES', () => {
     expect(APP_ROUTES.customer.bookingConfirmation(reference)).toBe(
       `/app/bookings/${encoded}/confirmation`,
     );
-    expect(APP_ROUTES.customer.bookingManage(reference)).toBe(
-      `/app/bookings/${encoded}/manage`,
-    );
-    expect(APP_ROUTES.customer.bookingInvoice(reference)).toBe(
-      `/app/bookings/${encoded}/invoice`,
-    );
-    expect(APP_ROUTES.customer.bookingETicket(reference)).toBe(
-      `/app/bookings/${encoded}/eticket`,
-    );
+    expect(APP_ROUTES.customer.bookingManage(reference)).toBe(`/app/bookings/${encoded}/manage`);
+    expect(APP_ROUTES.customer.bookingInvoice(reference)).toBe(`/app/bookings/${encoded}/invoice`);
+    expect(APP_ROUTES.customer.bookingETicket(reference)).toBe(`/app/bookings/${encoded}/eticket`);
     expect(APP_ROUTES.customer.bookingBoardingPass(reference)).toBe(
       `/app/bookings/${encoded}/boarding-pass`,
     );

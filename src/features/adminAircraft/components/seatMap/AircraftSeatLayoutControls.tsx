@@ -1,10 +1,7 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { AppButton, AppInput, AppSelect } from '@/components/common';
-import {
-  ADMIN_SEAT_TYPE_OPTIONS,
-  CABIN_CLASS_OPTIONS,
-} from '../../constants/seatTypes';
+import { ADMIN_SEAT_TYPE_OPTIONS, CABIN_CLASS_OPTIONS } from '../../constants/seatTypes';
 import type { AdminSeatType, AircraftCabinClass } from '../../types/adminAircraft';
 
 export interface AircraftSeatLayoutControlsProps {

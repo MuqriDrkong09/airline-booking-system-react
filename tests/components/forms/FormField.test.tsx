@@ -40,12 +40,7 @@ describe('FormField', () => {
 
   it('prefers errorMessage over helperText in the helper slot', () => {
     renderWithProviders(
-      <FormField
-        id="name"
-        label="Name"
-        helperText="As on passport"
-        errorMessage="Name is required"
-      >
+      <FormField id="name" label="Name" helperText="As on passport" errorMessage="Name is required">
         <AppInput />
       </FormField>,
     );

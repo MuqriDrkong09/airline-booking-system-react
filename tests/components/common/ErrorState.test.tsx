@@ -1,12 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ErrorState } from '@/components/common/ErrorState';
-import {
-  ApiError,
-  DEFAULT_ERROR_MESSAGE,
-  getErrorMessage,
-  getErrorTitle,
-} from '@/services/api';
+import { ApiError, DEFAULT_ERROR_MESSAGE, getErrorMessage, getErrorTitle } from '@/services/api';
 import { renderWithProviders } from '@tests/utils/test-utils';
 
 describe('ErrorState', () => {
@@ -27,7 +22,9 @@ describe('ErrorState', () => {
     renderWithProviders(<ErrorState message="Unable to load flights." />);
 
     const alert = screen.getByRole('alert');
-    expect(screen.getByRole('heading', { level: 1, name: 'Something went wrong' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Something went wrong' }),
+    ).toBeInTheDocument();
     expect(alert).toHaveTextContent('Unable to load flights.');
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
@@ -49,11 +46,7 @@ describe('ErrorState', () => {
     const error = new ApiError('Server exploded.', { status: 500 });
 
     renderWithProviders(
-      <ErrorState
-        error={error}
-        title="Custom failure"
-        message="Please refresh the page."
-      />,
+      <ErrorState error={error} title="Custom failure" message="Please refresh the page." />,
     );
 
     expect(screen.getByRole('heading', { name: 'Custom failure' })).toBeInTheDocument();
@@ -99,9 +92,7 @@ describe('ErrorState', () => {
     const user = userEvent.setup();
     const onRetry = jest.fn();
 
-    renderWithProviders(
-      <ErrorState message="Temporary outage." onRetry={onRetry} />,
-    );
+    renderWithProviders(<ErrorState message="Temporary outage." onRetry={onRetry} />);
 
     await user.click(screen.getByRole('button', { name: 'Try again' }));
     expect(onRetry).toHaveBeenCalledTimes(1);

@@ -1,10 +1,6 @@
 import { memo } from 'react';
 import { AppSelect } from '@/components/common';
-import {
-  FLIGHT_SORT_OPTION_LABELS,
-  FLIGHT_SORT_OPTIONS,
-  type FlightSortOption,
-} from '../../types/flight';
+import { FLIGHT_SORT_SELECT_OPTIONS, type FlightSortOption } from '../../types/flight';
 
 export interface FlightSortProps {
   value: FlightSortOption;
@@ -14,14 +10,6 @@ export interface FlightSortProps {
   id?: string;
   label?: string;
 }
-
-export const FLIGHT_SORT_SELECT_OPTIONS: ReadonlyArray<{
-  value: FlightSortOption;
-  label: string;
-}> = FLIGHT_SORT_OPTIONS.map((value) => ({
-  value,
-  label: FLIGHT_SORT_OPTION_LABELS[value],
-}));
 
 function FlightSortComponent({
   value,

@@ -1,10 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AirportFilters } from '@/features/adminAirports/components/AirportFilters';
-import {
-  EMPTY_ADMIN_AIRPORT_FILTERS,
-  type AdminAirportFilters,
-} from '@/features/adminAirports';
+import { EMPTY_ADMIN_AIRPORT_FILTERS, type AdminAirportFilters } from '@/features/adminAirports';
 import { renderWithProviders } from '@tests/utils/test-utils';
 
 const filters: AdminAirportFilters = {

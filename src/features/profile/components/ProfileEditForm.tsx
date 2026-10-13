@@ -18,10 +18,7 @@ import {
   SEAT_PREFERENCES,
   type UpdateProfileRequest,
 } from '@/types/profile';
-import {
-  getMutationErrorMessage,
-  useUpdateProfileMutation,
-} from '../hooks/useProfile';
+import { getMutationErrorMessage, useUpdateProfileMutation } from '../hooks/useProfile';
 import { updateProfileSchema, type UpdateProfileFormValues } from '../schemas';
 
 export interface ProfileEditFormProps {
@@ -55,7 +52,9 @@ function toFormValues(user: AuthUser): UpdateProfileFormValues {
 
 function getMaxDateOfBirth(): string {
   const today = new Date();
-  const max = new Date(Date.UTC(today.getUTCFullYear() - 18, today.getUTCMonth(), today.getUTCDate()));
+  const max = new Date(
+    Date.UTC(today.getUTCFullYear() - 18, today.getUTCMonth(), today.getUTCDate()),
+  );
   return max.toISOString().slice(0, 10);
 }
 
@@ -351,7 +350,12 @@ export function ProfileEditForm({ user, onSuccess, onCancel }: ProfileEditFormPr
           Save changes
         </AppButton>
         {onCancel ? (
-          <AppButton type="button" variant="outlined" onClick={onCancel} disabled={updateProfile.isPending}>
+          <AppButton
+            type="button"
+            variant="outlined"
+            onClick={onCancel}
+            disabled={updateProfile.isPending}
+          >
             Cancel
           </AppButton>
         ) : null}

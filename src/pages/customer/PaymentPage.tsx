@@ -25,8 +25,8 @@ export function PaymentPage() {
 
   const hasBookingContext = Boolean(
     flightId &&
-      (bookingFlightId === flightId || selectedFlight?.id === flightId) &&
-      (passengers.length > 0 || priceBreakdown.finalTotal > 0 || selectedFlight),
+    (bookingFlightId === flightId || selectedFlight?.id === flightId) &&
+    (passengers.length > 0 || priceBreakdown.finalTotal > 0 || selectedFlight),
   );
 
   const description = useMemo(() => {

@@ -1,20 +1,10 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import {
-  CheckCircle2,
-  CircleX,
-  Plane,
-  Ticket,
-  Users,
-  Wallet,
-} from 'lucide-react';
+import { CheckCircle2, CircleX, Plane, Ticket, Users, Wallet } from 'lucide-react';
 import { DashboardPageSkeleton, ErrorState } from '@/components/common';
 import { useAdminDashboardQuery } from '../hooks/useAdminDashboard';
-import {
-  formatDashboardCurrency,
-  formatDashboardNumber,
-} from '../utils/formatDashboard';
+import { formatDashboardCurrency, formatDashboardNumber } from '../utils/formatDashboard';
 import {
   AirlinePerformanceChart,
   BookingStatusChart,
@@ -119,10 +109,7 @@ export function AdminDashboardView() {
         }}
       >
         <BookingsOverTimeChart data={query.data.bookingsOverTime} />
-        <RevenueOverTimeChart
-          data={query.data.revenueOverTime}
-          currency={metrics.currency}
-        />
+        <RevenueOverTimeChart data={query.data.revenueOverTime} currency={metrics.currency} />
         <PopularDestinationsChart data={query.data.popularDestinations} />
         <BookingStatusChart data={query.data.bookingStatusDistribution} />
         <Box sx={{ gridColumn: { xs: 'auto', lg: '1 / -1' } }}>

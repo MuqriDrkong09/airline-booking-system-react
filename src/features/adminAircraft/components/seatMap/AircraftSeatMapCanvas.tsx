@@ -22,7 +22,28 @@ export function AircraftSeatMapCanvas({
     [config.seats],
   );
 
-  let lastCabinClass: AircraftConfiguredSeat['cabinClass'] | null = null;
+  const rowsWithCabinHeaders = useMemo(() => {
+    const rowNumbers = Array.from({ length: config.rows }, (_, index) => index + 1);
+    return rowNumbers.map((rowNumber, index) => {
+      const rowSeats = config.columns
+        .filter((token) => token !== '|')
+        .map((column) => seatsByPosition.get(`${rowNumber}:${column}`))
+        .filter((seat): seat is AircraftConfiguredSeat => Boolean(seat));
+      const cabinClass = rowSeats[0]?.cabinClass ?? null;
+      const previousRowNumber = index > 0 ? rowNumbers[index - 1] : undefined;
+      const previousCabinClass = previousRowNumber
+        ? (config.columns
+            .filter((token) => token !== '|')
+            .map((column) => seatsByPosition.get(`${previousRowNumber}:${column}`))
+            .find((seat): seat is AircraftConfiguredSeat => Boolean(seat))?.cabinClass ?? null)
+        : null;
+      return {
+        rowNumber,
+        cabinClass,
+        showCabinHeader: Boolean(cabinClass && cabinClass !== previousCabinClass),
+      };
+    });
+  }, [config.columns, config.rows, seatsByPosition]);
 
   return (
     <Box
@@ -56,90 +77,78 @@ export function AircraftSeatMapCanvas({
         </Typography>
 
         <Stack spacing={0.25} role="rowgroup" sx={{ alignItems: 'center' }}>
-          {Array.from({ length: config.rows }, (_, index) => index + 1).map((rowNumber) => {
-            const rowSeats = config.columns
-              .filter((token) => token !== '|')
-              .map((column) => seatsByPosition.get(`${rowNumber}:${column}`))
-              .filter((seat): seat is AircraftConfiguredSeat => Boolean(seat));
-            const cabinClass = rowSeats[0]?.cabinClass ?? null;
-            const showCabinHeader = Boolean(cabinClass && cabinClass !== lastCabinClass);
-            if (cabinClass) {
-              lastCabinClass = cabinClass;
-            }
-
-            return (
-              <Box key={rowNumber} sx={{ width: 'fit-content' }}>
-                {showCabinHeader && cabinClass ? (
-                  <Typography
-                    variant="overline"
-                    color="primary"
-                    sx={{ display: 'block', mt: 1, mb: 0.5, textAlign: 'center' }}
-                  >
-                    {SEAT_CLASS_LABELS[cabinClass]}
-                  </Typography>
-                ) : null}
-
-                <Stack
-                  direction="row"
-                  spacing={{ xs: 0.5, sm: 0.75 }}
-                  sx={{ alignItems: 'center', py: 0.35 }}
-                  role="row"
-                  aria-label={`Row ${rowNumber}`}
+          {rowsWithCabinHeaders.map(({ rowNumber, cabinClass, showCabinHeader }) => (
+            <Box key={rowNumber} sx={{ width: 'fit-content' }}>
+              {showCabinHeader && cabinClass ? (
+                <Typography
+                  variant="overline"
+                  color="primary"
+                  sx={{ display: 'block', mt: 1, mb: 0.5, textAlign: 'center' }}
                 >
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    sx={{ width: 28, textAlign: 'right', fontWeight: 600, flexShrink: 0 }}
-                  >
-                    {rowNumber}
-                  </Typography>
+                  {SEAT_CLASS_LABELS[cabinClass]}
+                </Typography>
+              ) : null}
 
-                  {config.columns.map((cell, cellIndex) => {
-                    if (cell === '|') {
-                      return (
-                        <Box
-                          key={`aisle-${rowNumber}-${cellIndex}`}
-                          aria-hidden
-                          sx={{ width: { xs: 16, sm: 28 }, flexShrink: 0 }}
-                        />
-                      );
-                    }
+              <Stack
+                direction="row"
+                spacing={{ xs: 0.5, sm: 0.75 }}
+                sx={{ alignItems: 'center', py: 0.35 }}
+                role="row"
+                aria-label={`Row ${rowNumber}`}
+              >
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ width: 28, textAlign: 'right', fontWeight: 600, flexShrink: 0 }}
+                >
+                  {rowNumber}
+                </Typography>
 
-                    const seat = seatsByPosition.get(`${rowNumber}:${cell}`);
-                    if (!seat) {
-                      return (
-                        <Box
-                          key={`empty-${rowNumber}-${cell}`}
-                          sx={{
-                            width: { xs: 34, sm: 40 },
-                            height: { xs: 34, sm: 40 },
-                            flexShrink: 0,
-                          }}
-                        />
-                      );
-                    }
-
+                {config.columns.map((cell, cellIndex) => {
+                  if (cell === '|') {
                     return (
-                      <AircraftSeatCell
-                        key={seat.id}
-                        seat={seat}
-                        selected={selectedSeatId === seat.id}
-                        onSelect={onSelectSeat}
+                      <Box
+                        key={`aisle-${rowNumber}-${cellIndex}`}
+                        aria-hidden
+                        sx={{ width: { xs: 16, sm: 28 }, flexShrink: 0 }}
                       />
                     );
-                  })}
+                  }
 
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    sx={{ width: 28, fontWeight: 600, flexShrink: 0 }}
-                  >
-                    {rowNumber}
-                  </Typography>
-                </Stack>
-              </Box>
-            );
-          })}
+                  const seat = seatsByPosition.get(`${rowNumber}:${cell}`);
+                  if (!seat) {
+                    return (
+                      <Box
+                        key={`empty-${rowNumber}-${cell}`}
+                        sx={{
+                          width: { xs: 34, sm: 40 },
+                          height: { xs: 34, sm: 40 },
+                          flexShrink: 0,
+                        }}
+                      />
+                    );
+                  }
+
+                  return (
+                    <AircraftSeatCell
+                      key={seat.id}
+                      seat={seat}
+                      selected={selectedSeatId === seat.id}
+                      onSelect={onSelectSeat}
+                    />
+                  );
+                })}
+
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ width: 28, fontWeight: 600, flexShrink: 0 }}
+                >
+                  {rowNumber}
+                </Typography>
+              </Stack>
+            </Box>
+          ))}
         </Stack>
 
         <Typography

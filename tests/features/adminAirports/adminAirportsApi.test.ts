@@ -69,7 +69,9 @@ describe('filterAdminAirports', () => {
   });
 
   it('returns all airports when filters are empty', () => {
-    expect(filterAdminAirports(airports, EMPTY_ADMIN_AIRPORT_FILTERS)).toHaveLength(airports.length);
+    expect(filterAdminAirports(airports, EMPTY_ADMIN_AIRPORT_FILTERS)).toHaveLength(
+      airports.length,
+    );
   });
 
   it('excludes airports that do not match the country filter', () => {

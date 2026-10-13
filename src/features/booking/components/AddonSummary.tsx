@@ -68,9 +68,7 @@ export function AddonSummary({
           <Typography variant="body2" color="text.secondary">
             Add-ons total
           </Typography>
-          <Typography variant="subtitle2">
-            {formatBookingMoney(addonTotal, currency)}
-          </Typography>
+          <Typography variant="subtitle2">{formatBookingMoney(addonTotal, currency)}</Typography>
         </Stack>
       </Stack>
     </SummarySection>

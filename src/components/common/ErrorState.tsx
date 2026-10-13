@@ -2,11 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { CircleAlert } from 'lucide-react';
 import type { ReactNode } from 'react';
-import {
-  DEFAULT_ERROR_MESSAGE,
-  getErrorMessage,
-  getErrorTitle,
-} from '@/services/api';
+import { DEFAULT_ERROR_MESSAGE, getErrorMessage, getErrorTitle } from '@/services/api';
 import { AppButton } from './AppButton';
 
 export interface ErrorStateProps {
@@ -29,10 +25,10 @@ export function ErrorState({
   action,
   icon,
 }: ErrorStateProps) {
-  const resolvedTitle = title ?? (error !== undefined ? getErrorTitle(error) : 'Something went wrong');
+  const resolvedTitle =
+    title ?? (error !== undefined ? getErrorTitle(error) : 'Something went wrong');
   const resolvedMessage =
-    message ??
-    (error !== undefined ? getErrorMessage(error) : DEFAULT_ERROR_MESSAGE);
+    message ?? (error !== undefined ? getErrorMessage(error) : DEFAULT_ERROR_MESSAGE);
 
   return (
     <Box

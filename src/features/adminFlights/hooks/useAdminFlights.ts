@@ -46,13 +46,8 @@ export function useUpdateAdminFlightStatusMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      flightId,
-      status,
-    }: {
-      flightId: string;
-      status: FlightOperationalStatus;
-    }) => updateAdminFlightStatus(flightId, status),
+    mutationFn: ({ flightId, status }: { flightId: string; status: FlightOperationalStatus }) =>
+      updateAdminFlightStatus(flightId, status),
     onSuccess: async (flight) => {
       await queryClient.invalidateQueries({ queryKey: adminFlightKeys.lists() });
       queryClient.setQueryData(adminFlightKeys.detail(flight.id), flight);

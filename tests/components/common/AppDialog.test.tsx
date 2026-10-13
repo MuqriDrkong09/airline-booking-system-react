@@ -206,4 +206,3 @@ describe('AppDialog', () => {
     expect(titles[0]?.id).not.toBe(titles[1]?.id);
   });
 });
-
