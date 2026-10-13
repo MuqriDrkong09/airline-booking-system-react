@@ -6,6 +6,10 @@ import type { PassengerBaggageSelection } from '@/features/baggage/types/baggage
 import type { CabinClass, FlightOffer, FlightSearchCriteria } from '@/features/flights';
 import type { PassengerMealSelection } from '@/features/meals/types/meal';
 import type { PassengerDraft } from '@/features/passengers';
+import {
+  clearLegacyPiiLocalStorage,
+  sessionPersistStorage,
+} from '@/utils/sessionPersistStorage';
 import type {
   BookingData,
   BookingPaymentInfo,
@@ -18,6 +22,8 @@ import {
   priceBreakdownFromBooking,
   toSafePaymentInfo,
 } from '../utils/priceBreakdown';
+
+clearLegacyPiiLocalStorage();
 
 export interface BookingState extends BookingData {
   setSearchCriteria: (criteria: FlightSearchCriteria | null) => void;
@@ -217,6 +223,7 @@ export const useBookingStore = create<BookingState>()(
     }),
     {
       name: 'aerobook-booking',
+      storage: sessionPersistStorage,
       partialize: (state) => ({
         searchCriteria: state.searchCriteria,
         selectedFlight: state.selectedFlight,

@@ -10,7 +10,8 @@ export interface BookingETicketQrProps {
 }
 
 /**
- * Renders a QR code from a safe booking identifier (SVG, print-friendly).
+ * Renders a QR code from a safe booking identifier (PNG data URL).
+ * Uses an `<img>` instead of `dangerouslySetInnerHTML` to avoid XSS via SVG markup.
  * Loads `qrcode` on demand so it stays out of the initial bundle.
  */
 export function BookingETicketQr({
@@ -18,7 +19,7 @@ export function BookingETicketQr({
   size = 144,
   label = 'Boarding QR',
 }: BookingETicketQrProps) {
-  const [svg, setSvg] = useState<string | null>(null);
+  const [dataUrl, setDataUrl] = useState<string | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -26,8 +27,7 @@ export function BookingETicketQr({
 
     void import('qrcode')
       .then(({ default: QRCode }) =>
-        QRCode.toString(payload, {
-          type: 'svg',
+        QRCode.toDataURL(payload, {
           margin: 1,
           width: size,
           errorCorrectionLevel: 'M',
@@ -36,13 +36,13 @@ export function BookingETicketQr({
       )
       .then((value) => {
         if (!cancelled) {
-          setSvg(value);
+          setDataUrl(value);
           setError(false);
         }
       })
       .catch(() => {
         if (!cancelled) {
-          setSvg(null);
+          setDataUrl(null);
           setError(true);
         }
       });
@@ -74,7 +74,7 @@ export function BookingETicketQr({
     );
   }
 
-  if (!svg) {
+  if (!dataUrl) {
     return (
       <Box
         aria-hidden
@@ -90,15 +90,16 @@ export function BookingETicketQr({
 
   return (
     <Box
-      role="img"
-      aria-label={`${label}: ${payload}`}
+      component="img"
+      src={dataUrl}
+      alt={`${label}: ${payload}`}
+      width={size}
+      height={size}
       sx={{
         width: size,
         height: size,
-        lineHeight: 0,
-        '& svg': { width: '100%', height: '100%', display: 'block' },
+        display: 'block',
       }}
-      dangerouslySetInnerHTML={{ __html: svg }}
     />
   );
 }

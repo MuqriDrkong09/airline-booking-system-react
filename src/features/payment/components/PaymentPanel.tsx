@@ -1,7 +1,7 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppAlert, AppButton } from '@/components/common';
@@ -56,6 +56,13 @@ export function PaymentPanel({ flightId, summaryHref, bookingsHref }: PaymentPan
     defaultValues: emptyCardFormValues,
     mode: 'onBlur',
   });
+
+  // Never leave PAN/CVV sitting in React Hook Form state after leaving payment.
+  useEffect(() => {
+    return () => {
+      cardForm.reset(emptyCardFormValues);
+    };
+  }, [cardForm]);
 
   const locked = uiStatus === 'PROCESSING' || uiStatus === 'SUCCESS';
   const showCardForm = isCardPaymentMethod(method);

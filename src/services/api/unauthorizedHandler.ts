@@ -1,6 +1,7 @@
 import { APP_ROUTES } from '@/constants/routes';
 import type { TokenStorage } from '@/services/auth/tokenStorage';
 import { tokenStorage } from '@/services/auth/tokenStorage';
+import { toSafeInternalPath } from '@/utils/safeInternalPath';
 
 export interface HandleUnauthorizedOptions {
   storage?: TokenStorage;
@@ -9,6 +10,8 @@ export interface HandleUnauthorizedOptions {
   /** Skip redirect (e.g. already on login / unauthorized). */
   skipRedirect?: boolean;
 }
+
+const RETURN_PATH_ROOTS = [APP_ROUTES.customer.root, APP_ROUTES.admin.root] as const;
 
 /**
  * Clears the local session after a 401 from a protected API call.
@@ -34,8 +37,9 @@ export function handleUnauthorizedSession(
   }
 
   const params = new URLSearchParams();
-  if (currentPath && currentPath !== APP_ROUTES.public.home) {
-    params.set('from', currentPath);
+  const safeFrom = toSafeInternalPath(currentPath, RETURN_PATH_ROOTS);
+  if (safeFrom) {
+    params.set('from', safeFrom);
   }
   const query = params.toString();
   window.location.assign(

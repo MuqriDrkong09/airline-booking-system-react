@@ -1,5 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import {
+  clearLegacyPiiLocalStorage,
+  sessionPersistStorage,
+} from '@/utils/sessionPersistStorage';
 import type {
   PassengerDraft,
   PassengerDraftSaveStatus,
@@ -7,6 +11,8 @@ import type {
   PassengersFormValues,
 } from '../types/passenger';
 import { createPassengerSlots } from '../utils/createPassengerSlots';
+
+clearLegacyPiiLocalStorage();
 
 interface PassengerDraftState {
   trip: PassengerTripContext | null;
@@ -103,6 +109,7 @@ export const usePassengerDraftStore = create<PassengerDraftState>()(
     }),
     {
       name: 'aerobook-passenger-draft',
+      storage: sessionPersistStorage,
       partialize: (state) => ({
         trip: state.trip,
         passengers: state.passengers,

@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { env } from '@/config/env';
 import { AuthPageShell } from '@/features/auth/components/AuthPageShell';
 import { LoginForm } from '@/features/auth/components/LoginForm';
 import { getPostLoginRedirect } from '@/features/auth/utils/authHelpers';
@@ -28,11 +29,13 @@ export function LoginPage() {
       title="Sign in"
       description="Access your AeroBook customer or admin workspace."
       footer={
-        <Stack spacing={0.5}>
-          <Typography variant="caption" color="text.secondary">
-            Demo: user@example.com / Password123! or admin@example.com / Password123!
-          </Typography>
-        </Stack>
+        env.useMockAuth ? (
+          <Stack spacing={0.5}>
+            <Typography variant="caption" color="text.secondary">
+              Demo: user@example.com / Password123! or admin@example.com / Password123!
+            </Typography>
+          </Stack>
+        ) : undefined
       }
     >
       <LoginForm

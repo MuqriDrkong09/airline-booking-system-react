@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { todayIsoDate } from '@/features/flights/utils/dates';
+import {
+  clearLegacyPiiLocalStorage,
+  sessionPersistStorage,
+} from '@/utils/sessionPersistStorage';
 import type {
   Booking,
   BookingCancellationInfo,
@@ -17,6 +21,8 @@ import {
   getEligibleCheckInPassengers,
   isPassengerCheckedIn,
 } from '../utils/checkInRules';
+
+clearLegacyPiiLocalStorage();
 
 interface BookingsState {
   bookings: Booking[];
@@ -173,6 +179,7 @@ export const useBookingsStore = create<BookingsState>()(
     }),
     {
       name: 'aerobook-bookings',
+      storage: sessionPersistStorage,
       partialize: (state) => ({
         bookings: state.bookings,
       }),

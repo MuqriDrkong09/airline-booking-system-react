@@ -38,6 +38,17 @@ describe('authHelpers', () => {
       APP_ROUTES.admin.dashboard,
     );
     expect(getPostLoginRedirect(UserRole.ADMIN, null)).toBe(APP_ROUTES.admin.dashboard);
+    // Prefix tricks / open redirects must not be treated as safe app paths.
+    expect(getPostLoginRedirect(UserRole.USER, '/apple')).toBe(APP_ROUTES.customer.home);
+    expect(getPostLoginRedirect(UserRole.USER, '//evil.example')).toBe(
+      APP_ROUTES.customer.home,
+    );
+    expect(getPostLoginRedirect(UserRole.ADMIN, 'https://evil.example/admin')).toBe(
+      APP_ROUTES.admin.dashboard,
+    );
+    expect(getPostLoginRedirect(UserRole.USER, '/app/bookings?tab=upcoming')).toBe(
+      '/app/bookings?tab=upcoming',
+    );
   });
 
   it('trims display names when name parts are blank', () => {

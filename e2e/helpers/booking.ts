@@ -216,7 +216,8 @@ export async function completeBookingThroughConfirmation(
 export async function openCheckInWindowForBooking(page: Page, reference: string) {
   await page.evaluate((bookingReference) => {
     const storageKey = 'aerobook-bookings';
-    const raw = localStorage.getItem(storageKey);
+    // Booking PII persists in sessionStorage (not localStorage) after the security pass.
+    const raw = sessionStorage.getItem(storageKey) ?? localStorage.getItem(storageKey);
     if (!raw) {
       throw new Error('No aerobook-bookings persistence found');
     }
@@ -252,7 +253,8 @@ export async function openCheckInWindowForBooking(page: Page, reference: string)
       booking.flight.arrivalTime = formatLocal(arrival);
     }
 
-    localStorage.setItem(storageKey, JSON.stringify(parsed));
+    sessionStorage.setItem(storageKey, JSON.stringify(parsed));
+    localStorage.removeItem(storageKey);
   }, reference);
 
   await page.reload();

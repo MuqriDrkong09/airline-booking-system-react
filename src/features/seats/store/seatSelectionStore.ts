@@ -1,5 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import {
+  clearLegacyPiiLocalStorage,
+  sessionPersistStorage,
+} from '@/utils/sessionPersistStorage';
 import type {
   Seat,
   SeatAssignment,
@@ -13,6 +17,8 @@ import {
   calculateSeatPriceTotal,
   canPassengerSelectSeats,
 } from '../utils/seatRules';
+
+clearLegacyPiiLocalStorage();
 
 interface SeatSelectionState {
   context: SeatSelectionContext | null;
@@ -206,6 +212,7 @@ export const useSeatSelectionStore = create<SeatSelectionState>()(
     }),
     {
       name: 'aerobook-seat-selection',
+      storage: sessionPersistStorage,
       partialize: (state) => ({
         context: state.context,
         seats: state.seats,
